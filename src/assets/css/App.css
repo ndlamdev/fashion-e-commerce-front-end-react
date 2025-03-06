@@ -1,0 +1,19 @@
+:root {
+  background: #faf9f8;
+}
+
+a {
+  color: black;
+  display: block;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+a:hover {
+  color: black;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
