@@ -22,11 +22,15 @@ function Header({ showMenu }: { showMenu: () => void }) {
             <SolarHamburgerMenuLinear width={30} height={30} />
           </div>
 
-          <div className={"hidden lg:block bg-blue-400 p-4"}>Logo</div>
+          <div className={"hidden lg:block"}>
+            <div className={"flex size-18 items-center justify-center bg-blue-400"}>Logo</div>
+          </div>
           <LucideSearch className={"lg:hidden block"} width={30} height={30} />
         </div>
         <div className="flex justify-center">
-          <div className={"lg:hidden block bg-blue-400 p-4 "}>Logo</div>
+          <div className={"lg:hidden block"}>
+            <div className={"flex size-[60px] items-center justify-center bg-blue-400"}>Logo</div>
+          </div>
           <ul
             className={"hidden lg:flex items-center gap-4 justify-center mb-0"}>
             <li className={"text-lg font-medium"}>Menu 1</li>
@@ -37,18 +41,18 @@ function Header({ showMenu }: { showMenu: () => void }) {
         </div>
         <div className={"lg: flex justify-end gap-3 items-center"}>
           <Input
-            className={"hidden lg:flex p-2 w-[50%] border-1 border-gray-500 hover:border-black  rounded-4xl rounded]"}
+            className={"hidden  items-center lg:flex p-2 w-[50%] border-1 border-gray-500 hover:border-black  rounded-4xl rounded]"}
             placeholder={"Tìm kiếm sản phẩm..."}
             inputClassName={"p-1 text-sm"}
-            rightIcon={<LucideSearch width={30} height={30} />} />
+            rightIcon={<LucideSearch width={28} height={28} />} />
           <a href={"#"}>
-            <SolarUserLinear width={30} height={30} />
+            <SolarUserLinear width={27} height={27} />
           </a>
           <a href={"#"}>
-            <SolarHeartLinear width={30} height={30} />
+            <SolarHeartLinear width={29} height={29} />
           </a>
           <a href={"#"}>
-            <StreamlineShoppingBagHandBag2 width={28} height={28} />
+            <StreamlineShoppingBagHandBag2 width={25} height={25} />
           </a>
         </div>
       </div>

@@ -62,7 +62,7 @@ function VerticalMenu(
         }
       >
         <div className={`sticky top-3 flex justify-end h-[40px] items-center z-1 ${scrollY < 20 ? "pe-3" : "pe-2"}`}>
-          <div className={`${scrollY >= 20 && "bg-gray-200 rounded-circle p-2"}`} onClick={() => {
+          <div className={`${scrollY >= 20 && "bg-gray-100 rounded-circle p-2"}`} onClick={() => {
             setHiddenMenu(true);
             onHidden?.();
           }}>
