@@ -45,7 +45,7 @@ function Input({
         placeholder={placeholder}
         onFocus={() => getState?.("FOCUS")}
         onBlur={() => getState?.("BLUR")}
-        className={`w-[100%] border-none outline-none focus:outline-none focus:border-none active:outline-none active:border-none ${inputClassName && inputClassName}`} />
+        className={`w-full border-none outline-none focus:outline-none focus:border-none active:outline-none active:border-none ${inputClassName && inputClassName}`} />
       {rightIcon && rightIcon}
     </div>
   );
