@@ -3,6 +3,7 @@ import Header from "@/components/header/Header.tsx";
 import { useState } from "react";
 import VerticalMenu from "@/components/menu/VerticalMenu.tsx";
 import Footer from "@/components/footer/Footer.tsx";
+import CardProduct from "@/components/card-product/CardProduct.tsx";
 
 function App() {
 	const [showVerticalMenu, setShowVerticalMenu] = useState<boolean>(false);
@@ -11,6 +12,14 @@ function App() {
 		<div className={"bg-[#faf9f8] h-[100%]"}>
 			<div>
 				<Header showMenu={() => setShowVerticalMenu(true)} />
+				<div className='flex flex-wrap'>
+					<CardProduct />
+					<CardProduct />
+					<CardProduct />
+          <CardProduct />
+          <CardProduct />
+				</div>
+
 				<Footer />
 			</div>
 			<VerticalMenu
