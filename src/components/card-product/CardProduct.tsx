@@ -20,7 +20,7 @@ export default function CardProduct(props: ProductCardProp) {
 		>
 			<CardContent
 				onClick={props.onClick}
-				className={`group relative text-base xl:h-84  lg:h-60 max-lg:h-54 rounded-2 p-0 bg-center bg-no-repeat bg-cover`}
+				className={`group relative text-base h-[50vw] xl:h-84  md:h-62 sm:h-50 rounded-2 p-0 bg-center bg-no-repeat bg-cover`}
 				style={{ backgroundImage: `url(${bgImage})` }}
 				onMouseEnter={() =>
 					setBgImage(props.models[selected].thumbnailHoverUrl)
@@ -30,7 +30,7 @@ export default function CardProduct(props: ProductCardProp) {
 				<div className='absolute grid grid-cols-2 grid-rows-2  top-2 right-2'>
 					<Badge
 						className={
-							" rounded-xl border-0 mb-2 bg-black text-white col-span-2"
+							"lg:text-sx  rounded-xl border-0 mb-2 bg-black text-white col-span-2"
 						}
 					>
 						{props.label}
@@ -47,8 +47,8 @@ export default function CardProduct(props: ProductCardProp) {
 					className={"absolute top-2 left-2 flex align-items-center font-bold"}
 				>
 					<span>{props.numStars}</span>
-					<StarIcon className='size-2 lg:size-3  text-yellow-500' />
-					<span className={" text-blue-600"}>({props.numComments})</span>
+					<StarIcon className='size-2 md:size-3  text-yellow-500' />
+					<span className={"md:text-xs text-[8px]  text-blue-600"}>({props.numComments})</span>
 				</span>
 
 				{props.attachBonusUrl && (
@@ -85,7 +85,7 @@ export default function CardProduct(props: ProductCardProp) {
 				</div>
 			</CardContent>
 
-			<CardFooter className={"block p-0 font-bold"}>
+			<CardFooter className={"max-lg:text-[12px]  block p-0 font-bold"}>
 				<div className='flex items-center flex-wrap gap-2 cursor-pointer'>
 					{props.models.slice(0, numPageModel).map((item, index) => (
 						<div
@@ -108,10 +108,10 @@ export default function CardProduct(props: ProductCardProp) {
 						</span>
 					)}
 				</div>
-				<p>{props.name}</p>
-				<p className={"flex gap-2 text-base max-sm:text-xs"}>
+				<p className={'my-1'}>{props.name}</p>
+				<p className={"flex gap-2"}>
 					<span>{props.originPrice * (1 - props.percentDiscount * 0.01)}</span>
-					<Badge className={"text-white bg-blue-600 p-1"}>
+					<Badge className={"text-xs text-white  rounded-2  bg-blue-700"}>
 						-{props.percentDiscount}%
 					</Badge>
 					<span className={"text-neutral-400 line-through"}>
