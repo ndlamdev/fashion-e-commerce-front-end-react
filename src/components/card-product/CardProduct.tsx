@@ -1,29 +1,38 @@
 import { Card, CardContent, CardFooter } from "@/components/ui/card.tsx";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { Badge } from "../../../@/components/ui/badge.tsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductCardProp from "@/components/card-product/types/productCard.prop.ts";
 
 export default function CardProduct(props: ProductCardProp) {
 	const [selected, setSelected] = useState<number>(0);
-  const [bgImage, setBgImage] = useState<string>(props.models[selected].thumbnailUrl);
+	const [numPageModel, setNumPageModel] = useState<number>(6);
+	const [bgImage, setBgImage] = useState<string>(
+		props.models[selected].thumbnailUrl,
+	);
+	useEffect(() => setBgImage(props.models[selected].thumbnailUrl), [selected]);
 
 	return (
 		<Card
 			className={
-				"w-1/2 xl:w-1/5 lg:w-1/4 md:w-1/3 p-3 rounded-none border-0 shadow-none"
+				"w-1/2 lg:w-1/5 sm:w-1/4 p-2 rounded-none border-0 shadow-none"
 			}
 		>
 			<CardContent
-        onClick={props.onClick}
-				className={`group relative text-base h-60 rounded-2 p-0`}
-      >
-        <img className={'absolute w-full h-full rounded-lg object-cover'}
-             onMouseEnter={() => setBgImage(props.models[selected].thumbnailHoverUrl)}
-             onMouseLeave={() => setBgImage(props.models[selected].thumbnailUrl)}
-             src={bgImage}  alt={props.name}/>
+				onClick={props.onClick}
+				className={`group relative text-base xl:h-84  lg:h-60 max-lg:h-54 rounded-2 p-0 bg-center bg-no-repeat bg-cover`}
+				style={{ backgroundImage: `url(${bgImage})` }}
+				onMouseEnter={() =>
+					setBgImage(props.models[selected].thumbnailHoverUrl)
+				}
+				onMouseLeave={() => setBgImage(props.models[selected].thumbnailUrl)}
+			>
 				<div className='absolute grid grid-cols-2 grid-rows-2  top-2 right-2'>
-					<Badge className={" rounded-2 mb-2 bg-black text-white col-span-2"}>
+					<Badge
+						className={
+							" rounded-xl border-0 mb-2 bg-black text-white col-span-2"
+						}
+					>
 						{props.label}
 					</Badge>
 					<div className=''></div>
@@ -38,10 +47,8 @@ export default function CardProduct(props: ProductCardProp) {
 					className={"absolute top-2 left-2 flex align-items-center font-bold"}
 				>
 					<span>{props.numStars}</span>
-					<StarIcon className='size-4 max-sm:size-2 md:size-4  text-yellow-500' />
-					<span className={"max-sm:text-xs text-blue-600"}>
-						({props.numComments})
-					</span>
+					<StarIcon className='size-2 lg:size-3  text-yellow-500' />
+					<span className={" text-blue-600"}>({props.numComments})</span>
 				</span>
 
 				{props.attachBonusUrl && (
@@ -79,8 +86,8 @@ export default function CardProduct(props: ProductCardProp) {
 			</CardContent>
 
 			<CardFooter className={"block p-0 font-bold"}>
-				<div className='flex items-center flex-wrap gap-1 cursor-pointer'>
-					{props.models.map((item, index = 5) => (
+				<div className='flex items-center flex-wrap gap-2 cursor-pointer'>
+					{props.models.slice(0, numPageModel).map((item, index) => (
 						<div
 							key={index}
 							onClick={() => setSelected(index)}
@@ -91,12 +98,22 @@ export default function CardProduct(props: ProductCardProp) {
 							}`}
 						></div>
 					))}
-					<span className={"font-bold"}>+11</span>
+
+					{props.models.length > 6 && numPageModel === 6 && (
+						<span
+							onClick={() => setNumPageModel(props.models.length)}
+							className={"font-bold"}
+						>
+							{props.models.length > 6 ? ` +${props.models.length - 6}` : ""}
+						</span>
+					)}
 				</div>
 				<p>{props.name}</p>
 				<p className={"flex gap-2 text-base max-sm:text-xs"}>
 					<span>{props.originPrice * (1 - props.percentDiscount * 0.01)}</span>
-					<Badge className={"text-white "}>-{props.percentDiscount}%</Badge>
+					<Badge className={"text-white bg-blue-600 p-1"}>
+						-{props.percentDiscount}%
+					</Badge>
 					<span className={"text-neutral-400 line-through"}>
 						{props.originPrice}
 					</span>
