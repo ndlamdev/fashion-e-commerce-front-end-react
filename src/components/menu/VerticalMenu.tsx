@@ -7,13 +7,13 @@
  **/
 
 import { useEffect, useState } from "react";
-import { AnimatePresence } from "motion/react";
-import Motion from "@/assets/config/frame-animation-config.ts";
+import { AnimatePresence, motion } from "motion/react";
 import { HugeiconsCancel01 } from "@/assets/images/icons/HugeiconsCancel01.tsx";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel.tsx";
 import { Card, CardContent } from "@/components/ui/card.tsx";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion.tsx";
+import useScrolled from "@/utils/useScrolled.ts";
 
 function VerticalMenu(
   {
@@ -28,28 +28,15 @@ function VerticalMenu(
     onExitComplete?: () => void;
   }) {
   const [hiddenMenu, setHiddenMenu] = useState<boolean>(true);
-  const [scrollY, setScrollY] = useState(0);
+  const [, scrollY] = useScrolled();
 
   useEffect(() => {
     setHiddenMenu(!showMenu);
   }, [showMenu]);
 
-  useEffect(() => {
-    console.log(`show menu: ${showMenu}`);
-  }, [hiddenMenu]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <AnimatePresence initial={false} onExitComplete={onExitComplete}>
-      {!hiddenMenu && <Motion.div
+      {!hiddenMenu && <motion.div
         initial={{ left: -1000 }}
         animate={{ left: 0 }}
         transition={{ duration: 0.75 }}
@@ -61,8 +48,8 @@ function VerticalMenu(
           "absolute bg-[#E5E5E5] top-0 w-full lg:hidden"
         }
       >
-        <div className={`sticky top-3 flex justify-end h-[40px] items-center z-1 ${scrollY < 20 ? "pe-3" : "pe-2"}`}>
-          <div className={`${scrollY >= 20 && "bg-gray-100 rounded-circle p-2"}`} onClick={() => {
+        <div className={`sticky top-3 flex justify-end h-[40px] items-center z-1 ${scrollY < 20 ? "pe-3" : "pe-1"}`}>
+          <div className={`${scrollY >= 20 && "bg-gray-100 rounded-full p-2"}`} onClick={() => {
             setHiddenMenu(true);
             onHidden?.();
           }}>
@@ -185,7 +172,7 @@ function VerticalMenu(
             <li className={"py-2 px-3 rounded active:bg-gray-200 hover::bg-gray-200"}>Blog</li>
           </ul>
         </div>
-      </Motion.div>}
+      </motion.div>}
     </AnimatePresence>
   );
 }

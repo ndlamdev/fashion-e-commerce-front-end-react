@@ -11,13 +11,43 @@ import { SolarHamburgerMenuLinear } from "@/assets/images/icons/SolarHamburgerMe
 import { LucideSearch } from "@/assets/images/icons/LucideSearch.tsx";
 import Input from "@/components/form/Input.tsx";
 import { SolarUserLinear } from "@/assets/images/icons/SolarUserLinear.tsx";
+import { motion } from "motion/react";
+import { useEffect, useState } from "react";
+import { SolarArrowRightLinear } from "@/assets/images/icons/SolarArrowRightLinear.tsx";
 
 function Header({ showMenu }: { showMenu: () => void }) {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div>
+    <header className={"relative"}>
+      <motion.div
+        initial={{ top: 0 }}
+        animate={{ top: scrollY >= 20 ? -40 : 0 }}
+        transition={{ duration: 0.75 }}
+        className={`relative bg-gray-500 flex w-full items-center justify-center gap-3 text-gray-100`}
+      >
+        <div className={"hover:bg-gray-800 py-2 px-3 text-sm"}>Về KimiFashion</div>
+        <div className={"hidden lg:flex items-center justify-center"}>
+          <span className={"text-gray-400"}>|</span>
+          <div className={"hover:bg-gray-800 py-2 px-3 text-sm"}>Blog</div>
+          <span className={"text-gray-400"}>|</span>
+          <div className={"hover:bg-gray-800 py-2 px-3 text-sm "}>Trung tâm CSKH</div>
+          <span className={"text-gray-400 "}>|</span>
+          <div className={"hover:bg-gray-800 py-2 px-3 text-sm "}>Đăng nhập</div>
+        </div>
+      </motion.div>
       <div
-        className={"grid grid-cols-3 grid-rows-1 align-items-center py-3 px-4"}>
-        <div className={" flex align-items-center gap-3"}>
+        className={" grid grid-cols-3 grid-rows-1 align-items-center py-3 px-4"}>
+        <div className={"flex items-center gap-3"}>
           <div onClick={showMenu} className={"lg:hidden"}>
             <SolarHamburgerMenuLinear width={30} height={30} />
           </div>
@@ -56,7 +86,26 @@ function Header({ showMenu }: { showMenu: () => void }) {
           </a>
         </div>
       </div>
-    </div>
+      <motion.div
+        initial={{ height: 35 }}
+        animate={{ height: scrollY >= 10 ? 0 : 35 }}
+        transition={{ duration: 0.75 }}
+        className={`bg-gray-700 grid grid-cols-5 lg:grid-cols-3 gap-2 overflow-hidden w-full mb-2 ${scrollY < 10 && "py-1"}`}
+      >
+        <div className={"overflow-hidden col-start-2 col-span-3 lg:col-start-2 lg:col-span-1"}>
+          <motion.div
+            className="text-white overflow-hidden text-nowrap w-[400px] "
+            animate={{ x: ["100%", "-100%"] }}
+            transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
+          >
+            Freeship mọi đơn hàng trong tháng 3 - duy nhất tại website
+          </motion.div>
+        </div>
+        <div className={"text-start"}>
+          <SolarArrowRightLinear color={"white"} />
+        </div>
+      </motion.div>
+    </header>
   );
 }
 

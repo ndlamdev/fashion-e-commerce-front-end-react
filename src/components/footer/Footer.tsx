@@ -9,7 +9,7 @@ import { SolarArrowRightLinear } from "@/assets/images/icons/SolarArrowRightLine
 
 function Footer() {
   return (
-    <div className={"bg-[#E4E4E4] py-[40px]"}>
+    <footer className={"bg-black text-white py-[40px]"}>
       <div className={"xl:mx-[150px] lg:mx-[100px] mx-[50px]"}>
         <div className={"grid grid-cols-4 gap-5 grid-flow-row"}>
           <div className={"md:hidden row-span-1 col-span-4"}>
@@ -63,10 +63,9 @@ function Footer() {
             </div>
             <p className={"flex md:justify-start justify-center mt-3"}>
               <a href="#">
-                <span className={"text-decoration-underline"}>Đọc thêm</span>
+                <span className={"text-decoration-underline text-white"}>Đọc thêm</span>
                 <span>
-									{" "}
-                  <SolarArrowRightLinear className={"inline"} />
+                  <SolarArrowRightLinear className={"inline"} color={"white"} />
 								</span>
               </a>
             </p>
@@ -81,7 +80,7 @@ function Footer() {
           <div className={"p-4 bg-blue-400"}>Logo</div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 }
 

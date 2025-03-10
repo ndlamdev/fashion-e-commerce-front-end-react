@@ -1,8 +1,43 @@
 @import "tailwindcss";
 
+@tailwind utilities;
+
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .scroll-hidden::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .scroll-hidden {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  /* Show scrollbar for Chrome, Safari and Opera */
+  .scroll-show::-webkit-scrollbar {
+    display: block;
+  }
+
+  /* Show scrollbar for IE, Edge and Firefox */
+  .scroll-show {
+    -ms-overflow-style: scrollbar; /* IE and Edge */
+    scrollbar-width: thin; /* Firefox */
+  }
+
+  .md\\:scroll-hidden::-webkit-scrollbar {
+    display: none;
+  }
+
+  .md\\:scroll-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
 
 :root {
   --background: oklch(1 0 0);
