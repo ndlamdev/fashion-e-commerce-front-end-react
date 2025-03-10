@@ -59,6 +59,7 @@ export const productCardSamples: ProductCardProp[] = [
     ],
     attachBonusUrl: undefined,
     onClick: () => console.log("Clicked: Áo Thun Nam Basic"),
+    description: "chi ap dung"
   },
   {
     name: "Giày Sneakers Thể Thao",

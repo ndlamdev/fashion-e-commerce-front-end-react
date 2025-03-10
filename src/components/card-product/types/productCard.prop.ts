@@ -3,13 +3,14 @@ import { ModelProductProps } from "@/components/card-product/types/modelProduct.
 type ProductCardProp = {
   name: string,
   originPrice: number,
-  percentDiscount: number,
   numStars: number,
   numComments: number,
-  label : string, // tempt
   models: ModelProductProps[],
-  attachBonusUrl: string | undefined,
   onClick: () => void ,
+  label? : string | undefined,
+  attachBonusUrl?: string | undefined,
+  percentDiscount?: number,
+  description?: string | undefined,
 }
 
 export default ProductCardProp

@@ -28,13 +28,13 @@ export default function CardProduct(props: ProductCardProp) {
 				onMouseLeave={() => setBgImage(props.models[selected].thumbnailUrl)}
 			>
 				<div className='absolute grid grid-cols-2 grid-rows-2  top-2 right-2'>
-					<Badge
-						className={
-							"lg:text-sx  rounded-xl border-0 mb-2 bg-black text-white col-span-2"
-						}
-					>
-						{props.label}
-					</Badge>
+          {props.label && <Badge
+            className={
+              "lg:text-sx  rounded-xl border-0 mb-2 bg-black text-white col-span-2"
+            }
+          >
+            {props.label}
+          </Badge>}
 					<div className=''></div>
 					<img
 						className={"object-fill size-7 "}
@@ -109,15 +109,16 @@ export default function CardProduct(props: ProductCardProp) {
 					)}
 				</div>
 				<p className={'my-1'}>{props.name}</p>
-				<p className={"flex gap-2"}>
-					<span>{props.originPrice * (1 - props.percentDiscount * 0.01)}</span>
-					<Badge className={"text-xs text-white  rounded-2  bg-blue-700"}>
-						-{props.percentDiscount}%
-					</Badge>
+				<p className={"flex gap-2 mb-1"}>
+          {props.percentDiscount && <span>{props.originPrice * (1 - props.percentDiscount * 0.01)}</span>}
+          {props.percentDiscount && <Badge className={"text-xs text-white  rounded-2  bg-blue-700"}>
+            -{props.percentDiscount}%
+          </Badge>}
 					<span className={"text-neutral-400 line-through"}>
 						{props.originPrice}
 					</span>
 				</p>
+        {props.description && <span className={'text-xs text-blue-700 '}>{props.description}</span>}
 			</CardFooter>
 		</Card>
 	);
