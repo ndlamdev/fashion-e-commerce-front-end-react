@@ -52,6 +52,14 @@ import {
 	RadioGroupItem,
 } from "../../@/components/ui/radio-group.tsx";
 import { Label } from "../../@/components/ui/label.tsx";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../@/components/ui/select.tsx";
+import Comment from "@/components/product-detail/Comment.tsx";
+import {
+  Pagination,
+  PaginationContent, PaginationEllipsis,
+  PaginationItem, PaginationLink, PaginationNext,
+  PaginationPrevious,
+} from "../../@/components/ui/pagination.tsx";
 
 export default function ProductDetailPage() {
 	const images = [
@@ -290,7 +298,7 @@ export default function ProductDetailPage() {
 			</div>
 
 			<Collapsible className={" p-5 bg-neutral-200 text-sm"}>
-				<h2 className={"uppercase text-center"}>Mô tả sản phẩm</h2>
+				<p className={"uppercase text-center font-bold text-4xl"}>Mô tả sản phẩm</p>
 				<div className='grid grid-cols-2 gap-3 mb-3'>
 					<div className='p-3 px-5 '>
 						<p className={"m-0 py-2 border-b-1 border-neutral-300"}>
@@ -335,7 +343,7 @@ export default function ProductDetailPage() {
 				</div>
 			</Collapsible>
 
-			<h2 className={"uppercase text-center py-3"}>Gợi ý sản phẩm</h2>
+			<p className={"uppercase text-center py-3 font-bold text-4xl"}>Gợi ý sản phẩm</p>
 			<Carousel className='w-full'>
 				<CarouselContent>
 					{products.map((card, index) => (
@@ -348,7 +356,7 @@ export default function ProductDetailPage() {
 				<CarouselNext className={"right-2 rounded-2xl! outline-0"} />
 			</Carousel>
 
-			<div className='p-5 bg-neutral-200'>
+			<div className='flex p-5 bg-neutral-200'>
 				<div className='w-1/3'>
 					<h1 className='fw-bold uppercase w-1/2'>Đánh giá sản phẩm</h1>
 					<Input
@@ -385,7 +393,6 @@ export default function ProductDetailPage() {
 								id='r4'
 							/>
 							<Label className={"ml-1"} htmlFor='r4'>
-								{" "}
 								<Rate
 									allowHalf
 									disabled
@@ -401,7 +408,6 @@ export default function ProductDetailPage() {
 								id='r3'
 							/>
 							<Label className={" ml-1"} htmlFor='r3'>
-								{" "}
 								<Rate
 									allowHalf
 									disabled
@@ -417,7 +423,6 @@ export default function ProductDetailPage() {
 								id='r2'
 							/>
 							<Label className={" ml-1"} htmlFor='r2'>
-								{" "}
 								<Rate
 									allowHalf
 									disabled
@@ -433,7 +438,6 @@ export default function ProductDetailPage() {
 								id='r1'
 							/>
 							<Label className={" ml-1"} htmlFor='r1'>
-								{" "}
 								<Rate
 									allowHalf
 									disabled
@@ -450,38 +454,78 @@ export default function ProductDetailPage() {
 							Các review đều đến từ khách hàng đã thực sự mua hàng của Coolmate
 						</span>
 					</div>
+
+          <p className='text-sm text-gray-600 fw-bold mb-1'>Lọc phản hồi</p>
+          <RadioGroup>
+            <div className='flex items-center space-x-2'>
+              <RadioGroupItem
+                className={"size-5 bg-white rounded-sm!"}
+                value='res'
+                id='res'
+              />
+              <Label className={" ml-1 text-gray-600"} htmlFor='res'>
+                Đã phản hồi
+              </Label>
+            </div>
+            <div className='flex items-center space-x-2'>
+              <RadioGroupItem
+                className={"size-5 bg-white rounded-sm!"}
+                value='has-image'
+                id='has-image'
+              />
+              <Label className={"ml-1 text-gray-600"} htmlFor='has-image'>
+                Chỉ có hình ảnh
+              </Label>
+            </div>
+          </RadioGroup>
 				</div>
 
-				<p className='text-sm text-gray-600 fw-bold mb-1'>Lọc phản hồi</p>
-				<RadioGroup>
-					<div className='flex items-center space-x-2'>
-						<RadioGroupItem
-							className={"size-5 bg-white rounded-sm!"}
-							value='res'
-							id='r5'
-						/>
-						<Label className={" ml-1 text-gray-600"} htmlFor='r5'>
-							{" "}
-							Đã phản{" "}
-						</Label>
-					</div>
-					<div className='flex items-center space-x-2'>
-						<RadioGroupItem
-							className={"size-5 bg-white rounded-sm!"}
-							value='has-image'
-							id='r4'
-						/>
-						<Label className={"ml-1 text-gray-600"} htmlFor='r4'>
-							{" "}
-							Chỉ có hình ảnh
-						</Label>
-					</div>
-				</RadioGroup>
+				<div className='w-2/3'>
+          <p className="mb-0 flex items-center font-bold text-8xl">4.5
+            <Rate className={'text-4xl! text-orange-400!'}  allowHalf disabled defaultValue={4.8} />
+          </p>
+          <p className="text-sm text-gray-500 fw-bold">Dựa trên <span className="text-gray-800">X</span> đánh giá đến từ khách hàng</p>
+          <div className="flex justify-between">
+            <p className="text-sm text-gray-500 fw-bold">Hiển thị đánh giá <span className="text-gray-800">1-10</span></p>
+            <Select>
+              <SelectTrigger className="w-60 bg-white rounded-2xl! text-sm! text-center">
+                <SelectValue placeholder="Sắp xếp" />
+              </SelectTrigger>
+              <SelectContent className={'bg-white text-sm'}>
+                <SelectItem  value="z2a">Đánh giá: Cao đến thấp</SelectItem>
+                <SelectItem  value="a2z">Đánh giá: Thấp đến cao</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <Comment id={1} name={'LamHongPhong'} description={'Hello world'} numOfStars={4.1} date={new Date(Date.now())}/>
+          <Pagination className={'py-2'}>
+            <PaginationContent>
+              <PaginationItem >
+                <PaginationPrevious className={'flex!'} href="#" />
+              </PaginationItem>
+              <PaginationItem  >
+                <PaginationLink className={'flex!'} href="#">1</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink  className={'flex!'} href="#" isActive>
+                  2
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink  className={'flex!'} href="#">3</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationNext className={'flex!'} href="#" />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
+      </div>
 
-				<div className='w-2/3'></div>
-			</div>
-
-			<h2 className={"uppercase text-center py-3"}>Sản phẩm bạn đã xem</h2>
+			<p className={"uppercase text-center py-3 font-bold text-4xl"}>Sản phẩm bạn đã xem</p>
 			<Carousel className='w-full'>
 				<CarouselContent>
 					{products.map((card, index) => (
