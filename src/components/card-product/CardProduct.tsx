@@ -1,4 +1,4 @@
-import { Card, CardContent, CardFooter } from "@/components/ui/card.tsx";
+import { Card, CardContent, CardFooter } from "../../../@/components/ui/card.tsx";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { Badge } from "../../../@/components/ui/badge.tsx";
 import { useEffect, useState } from "react";
@@ -15,7 +15,7 @@ export default function CardProduct(props: ProductCardProp) {
 	return (
 		<Card
 			className={
-				"w-1/2 lg:w-1/5 sm:w-1/4 p-2 rounded-none border-0 shadow-none"
+				" p-2 rounded-none border-0 shadow-none"
 			}
 		>
 			<CardContent
@@ -23,7 +23,7 @@ export default function CardProduct(props: ProductCardProp) {
 				className={`group relative text-base h-[50vw] xl:h-84  md:h-62 sm:h-50 rounded-2 p-0 bg-center bg-no-repeat bg-cover`}
 				style={{ backgroundImage: `url(${bgImage})` }}
 				onMouseEnter={() =>
-					setBgImage(props.models[selected].thumbnailHoverUrl)
+					setBgImage(props.models[selected].imageUrls[0])
 				}
 				onMouseLeave={() => setBgImage(props.models[selected].thumbnailUrl)}
 			>
@@ -86,7 +86,7 @@ export default function CardProduct(props: ProductCardProp) {
 			</CardContent>
 
 			<CardFooter className={"max-lg:text-[12px]  block p-0 font-bold"}>
-				<div className='flex items-center flex-wrap gap-2 cursor-pointer'>
+				<div className='flex items-center flex-wrap gap-2 cursor-pointer' >
 					{props.models.slice(0, numPageModel).map((item, index) => (
 						<div
 							key={index}
