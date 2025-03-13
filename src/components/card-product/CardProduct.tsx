@@ -75,7 +75,7 @@ export default function CardProduct(props: ProductCardProp) {
 							<Badge
 								key={index}
 								className={
-									"size-10 bg-white hover:bg-black! border-0 hover:text-white"
+									"size-10 bg-white text-black hover:bg-black! border-0 hover:text-white"
 								}
 							>
 								{size}

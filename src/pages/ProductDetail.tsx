@@ -1,65 +1,32 @@
-import {
-	Breadcrumb,
-	BreadcrumbItem,
-	BreadcrumbLink,
-	BreadcrumbList,
-	BreadcrumbPage,
-	BreadcrumbSeparator,
-} from "../../@/components/ui/breadcrumb.tsx";
-import {
-	CalendarSync,
-	Check,
-	Crown,
-	MapPinHouse,
-	PhoneCall,
-	RefreshCcw,
-	Search,
-	Slash,
-} from "lucide-react";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "../../@/components/ui/breadcrumb.tsx";
+import { CalendarSync, Check, Crown, MapPinHouse, PhoneCall, RefreshCcw, Search, Slash } from "lucide-react";
 import Stack from "@/components/Stack/Stack.tsx";
-import { Input, Popover, Rate } from "antd";
 import { ArrowRightIcon, ShareIcon } from "@heroicons/react/24/solid";
 import { Badge } from "../../@/components/ui/badge.tsx";
-import {
-	ShoppingBagIcon,
-	TicketIcon,
-	TruckIcon,
-} from "@heroicons/react/24/outline";
-import { Button } from "react-bootstrap";
-import {
-	Accordion,
-	AccordionContent,
-	AccordionTrigger,
-} from "../../@/components/ui/accordion.tsx";
+import { ShoppingBagIcon, TicketIcon, TruckIcon } from "@heroicons/react/24/outline";
+import { Accordion, AccordionContent, AccordionTrigger } from "../../@/components/ui/accordion.tsx";
 import { AccordionItem } from "@radix-ui/react-accordion";
 import ZaloIcon from "@/assets/images/icons/ZaloIcon.tsx";
-import {
-	Collapsible,
-	CollapsibleContent,
-	CollapsibleTrigger,
-} from "../../@/components/ui/collapsible.tsx";
-import {
-	Carousel,
-	CarouselContent,
-	CarouselItem,
-	CarouselNext,
-	CarouselPrevious,
-} from "../../@/components/ui/carousel.tsx";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../@/components/ui/collapsible.tsx";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../../@/components/ui/carousel.tsx";
 import { productCardSamples } from "@/assets/data/productCard.data.ts";
 import CardProduct from "@/components/card-product/CardProduct.tsx";
-import {
-	RadioGroup,
-	RadioGroupItem,
-} from "../../@/components/ui/radio-group.tsx";
+import { RadioGroup, RadioGroupItem } from "../../@/components/ui/radio-group.tsx";
 import { Label } from "../../@/components/ui/label.tsx";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../@/components/ui/select.tsx";
 import Comment from "@/components/product-detail/Comment.tsx";
 import {
   Pagination,
-  PaginationContent, PaginationEllipsis,
-  PaginationItem, PaginationLink, PaginationNext,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
   PaginationPrevious,
 } from "../../@/components/ui/pagination.tsx";
+import { Popover, Rate } from "antd";
+import { Button } from "@/components/ui/button.tsx";
+import { Input } from "antd";
 
 export default function ProductDetailPage() {
 	const images = [
@@ -105,7 +72,7 @@ export default function ProductDetailPage() {
 					</BreadcrumbList>
 				</Breadcrumb>
 
-				<div className='grid grid-cols-2 grid-rows-1 gap-1'>
+				<div className='grid grid-cols-2 grid-rows-1 gap-1 mt-2'>
 					<Stack
 						randomRotation={true}
 						sensitivity={90}
@@ -124,9 +91,9 @@ export default function ProductDetailPage() {
 								allowHalf
 								disabled
 								defaultValue={2.5}
-								className={"text-black"}
-							/>{" "}
-							(2.5){" "}
+								className={"text-black!"}
+							/>
+							(2.5)
 							<span
 								className={
 									"ms-6 flex items-center text-blue-600 font-bold text-sm cursor-pointer"
@@ -230,13 +197,13 @@ export default function ProductDetailPage() {
 
 						<div className='flex mb-3'>
 							<Input
-								defaultValue={1}
-								className={"w-1/5! rounded-2xl! me-3 text-center"}
+                defaultValue={1}
+								className={"w-1/4 rounded-2xl! me-3! text-center"}
 								type={"number"}
 							/>
 							<Button
-								className={"w-full rounded-2xl! flex text-center items-center"}
-								variant='dark'
+								className={"w-3/4 rounded-2xl flex text-center items-center cursor-pointer"}
+								variant='default'
 							>
 								<ShoppingBagIcon className={"size-6 inline-block mx-2"} />
 								<span>Lorem ipsum dolor sit amet.</span>
@@ -334,7 +301,7 @@ export default function ProductDetailPage() {
 					<CollapsibleTrigger asChild>
 						<Button
 							className={"w-1/10 h-10 rounded-[50px]!"}
-							variant='outline-dark'
+							variant='outline'
 							size='sm'
 						>
 							More
@@ -361,7 +328,6 @@ export default function ProductDetailPage() {
 					<h1 className='fw-bold uppercase w-1/2'>Đánh giá sản phẩm</h1>
 					<Input
 						className={"rounded-2xl! w-1/2! mb-4"}
-						size='large'
 						placeholder='Tìm kiếm đánh giá'
 						prefix={<Search />}
 					/>
@@ -370,19 +336,18 @@ export default function ProductDetailPage() {
 						Phân loại xếp hạng
 					</p>
 					<RadioGroup>
-						<div className='flex items-center space-x-2'>
+						<div className='flex items-center space-x-2 '>
 							<RadioGroupItem
 								className={"size-5 bg-white rounded-sm!"}
 								value='5'
 								id='r5'
 							/>
 							<Label className={" ml-1"} htmlFor='r5'>
-								{" "}
 								<Rate
 									allowHalf
 									disabled
 									defaultValue={5}
-									className={"text-black"}
+									className={"text-black!"}
 								/>
 							</Label>
 						</div>
@@ -397,7 +362,7 @@ export default function ProductDetailPage() {
 									allowHalf
 									disabled
 									defaultValue={4}
-									className={"text-black"}
+									className={"text-black!"}
 								/>
 							</Label>
 						</div>
@@ -412,7 +377,7 @@ export default function ProductDetailPage() {
 									allowHalf
 									disabled
 									defaultValue={3}
-									className={"text-black"}
+									className={"text-black!"}
 								/>
 							</Label>
 						</div>
@@ -427,7 +392,7 @@ export default function ProductDetailPage() {
 									allowHalf
 									disabled
 									defaultValue={2}
-									className={"text-black"}
+									className={"text-black!"}
 								/>
 							</Label>
 						</div>
@@ -442,7 +407,7 @@ export default function ProductDetailPage() {
 									allowHalf
 									disabled
 									defaultValue={1}
-									className={"text-black"}
+									className={"text-black!"}
 								/>
 							</Label>
 						</div>
@@ -482,18 +447,18 @@ export default function ProductDetailPage() {
 
 				<div className='w-2/3'>
           <p className="mb-0 flex items-center font-bold text-8xl">4.5
-            <Rate className={'text-4xl! text-orange-400!'}  allowHalf disabled defaultValue={4.8} />
+            <Rate className={'text-4xl! text-orange-400!'} allowHalf disabled defaultValue={4.8} />
           </p>
-          <p className="text-sm text-gray-500 fw-bold">Dựa trên <span className="text-gray-800">X</span> đánh giá đến từ khách hàng</p>
-          <div className="flex justify-between">
+          <p className="mb-10 text-sm text-gray-500 fw-bold">Dựa trên <span className="text-gray-800">X</span> đánh giá đến từ khách hàng</p>
+          <div className="flex justify-between items-end">
             <p className="text-sm text-gray-500 fw-bold">Hiển thị đánh giá <span className="text-gray-800">1-10</span></p>
             <Select>
               <SelectTrigger className="w-60 bg-white rounded-2xl! text-sm! text-center">
                 <SelectValue placeholder="Sắp xếp" />
               </SelectTrigger>
               <SelectContent className={'bg-white text-sm'}>
-                <SelectItem  value="z2a">Đánh giá: Cao đến thấp</SelectItem>
-                <SelectItem  value="a2z">Đánh giá: Thấp đến cao</SelectItem>
+                <SelectItem value="z2a">Đánh giá: Cao đến thấp</SelectItem>
+                <SelectItem value="a2z">Đánh giá: Thấp đến cao</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -503,16 +468,16 @@ export default function ProductDetailPage() {
               <PaginationItem >
                 <PaginationPrevious className={'flex!'} href="#" />
               </PaginationItem>
-              <PaginationItem  >
+              <PaginationItem>
                 <PaginationLink className={'flex!'} href="#">1</PaginationLink>
               </PaginationItem>
               <PaginationItem>
-                <PaginationLink  className={'flex!'} href="#" isActive>
+                <PaginationLink className={'flex!'} href="#" isActive>
                   2
                 </PaginationLink>
               </PaginationItem>
               <PaginationItem>
-                <PaginationLink  className={'flex!'} href="#">3</PaginationLink>
+                <PaginationLink className={'flex!'} href="#">3</PaginationLink>
               </PaginationItem>
               <PaginationItem>
                 <PaginationEllipsis />
