@@ -2,6 +2,7 @@ import { RadioGroup, RadioGroupItem } from "../../../@/components/ui/radio-group
 import { Label } from "../../../@/components/ui/label.tsx";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../@/components/ui/select.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
+import { Circle } from "lucide-react";
 
 export default function Gift() {
   return (
@@ -11,7 +12,7 @@ export default function Gift() {
         <div className="flex p-4">
           <RadioGroup defaultValue="option-one">
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="option-one" id="option-one" />
+              <RadioGroupItem value="option-one" id="option-one" children={<Circle className='size-3 fill-blue-800 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' />} />
               <Label htmlFor="option-one">
                 <div className="flex">
                   <img src={'https://media3.coolmate.me/cdn-cgi/image/width=200,height=300,quality=80,format=auto/uploads/January2024/AT.220.TIM.1_11.jpg'} alt="" className="w-20 object-cover rounded-lg mr-2" />

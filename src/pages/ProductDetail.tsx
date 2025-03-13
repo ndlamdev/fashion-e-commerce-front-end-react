@@ -31,6 +31,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog.tsx
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
 import { Slider } from "@/components/ui/slider.tsx";
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table.tsx";
 
 export default function ProductDetailPage() {
 	const images = [
@@ -218,12 +219,12 @@ export default function ProductDetailPage() {
 							    </span>
                 </DialogTrigger>
                 <DialogContent className={"max-w-[910px]!"}>
-                  <Tabs defaultValue="choose-size">
-                    <TabsList className={'h-auto p-0 text-black  border-2 border-gray-300 bg-white rounded-2xl '}>
-                      <TabsTrigger className={'h-12 bg-white data-[state=active]:bg-gray-200 data-[state=active]:shadow-none border-none rounded-xl font-bold'} value="choose-size">Hướng dẫn chọn size</TabsTrigger>
-                      <TabsTrigger className={'h-12 bg-white data-[state=active]:bg-gray-200 data-[state=active]:shadow-none border-none rounded-xl font-bold'} value="size-table">Bảng size</TabsTrigger>
+                  <Tabs className={'relative'} defaultValue="choose-size">
+                    <TabsList className={'h-auto p-0 text-black  border-2 border-gray-300 bg-white rounded-2xl  cursor-pointer'}>
+                      <TabsTrigger className={'h-12 bg-white data-[state=active]:bg-gray-200 data-[state=active]:shadow-none border-none rounded-xl font-bold cursor-pointer'} value="choose-size">Hướng dẫn chọn size</TabsTrigger>
+                      <TabsTrigger className={'h-12 bg-white data-[state=active]:bg-gray-200 data-[state=active]:shadow-none border-none rounded-xl font-bold cursor-pointer'} value="size-table">Bảng size</TabsTrigger>
                     </TabsList>
-                    <TabsContent className={'px-20 py-5'} value="choose-size">
+                    <TabsContent className={'px-20 py-5 peer'} value="choose-size">
                       <div className="w-full flex">
                         <span className="text-gray-500 flex-none px-4">Chiều cao</span>
                         <Slider className={'shrink'} defaultValue={[155]} min={155} max={190} step={1} />
@@ -232,24 +233,104 @@ export default function ProductDetailPage() {
 
                       <div className="w-full flex my-5">
                         <span className="text-gray-500 flex-none px-4">Cân nặng</span>
-                        <Slider className={'shrink'} defaultValue={[155]} min={155} max={190} step={1} />
+                        <Slider className={'shrink'} defaultValue={[40]} min={40} max={90} step={1} />
                         <span className="text-blue-700 flex-none px-4">kg</span>
                       </div>
 
-                      <RadioGroup defaultValue={'option-one'}>
-                        <RadioGroupItem value="option-one" id="option-one">
-                          <img src="https://media3.coolmate.me/cdn-cgi/image/width=1069,height=1575,quality=80,format=auto/uploads/November2023/mceclip1_23.jpg" alt="" className="size-20 object-cover" />
-                        </RadioGroupItem>
-                        <RadioGroupItem value="option-one" id="option-one">
-                          <img src="https://media3.coolmate.me/cdn-cgi/image/width=1069,height=1575,quality=80,format=auto/uploads/November2023/mceclip3_97.jpg" alt="" className="size-20 object-cover" />
-                        </RadioGroupItem>
-                        <RadioGroupItem value="option-one" id="option-one">
-                          <img src="https://media3.coolmate.me/cdn-cgi/image/width=1069,height=1575,quality=80,format=auto/uploads/November2023/mceclip0_45.png" alt="" className="size-20 object-cover" />
-                        </RadioGroupItem>
-
+                      <RadioGroup className={'flex'} defaultValue={'option-1'}>
+                        <div className="relative">
+                          <img src="https://media3.coolmate.me/cdn-cgi/image/width=1069,height=1575,quality=80,format=auto/uploads/November2023/mceclip1_23.jpg" alt="" className="w-55 h-62 object-cover rounded-lg" />
+                          <RadioGroupItem className={'absolute top-0 right-0 w-55 h-62  border-none shadow-none cursor-pointer'} value="option-1" id="option-1">
+                            <div className={' w-55 h-62 border-4 rounded-lg border-blue-700 '}></div>
+                          </RadioGroupItem>
+                        </div>
+                        <div className="relative">
+                          <img src="https://media3.coolmate.me/cdn-cgi/image/width=1069,height=1575,quality=80,format=auto/uploads/November2023/mceclip3_97.jpg" alt="" className="w-55 h-62 object-cover rounded-lg" />
+                          <RadioGroupItem className={'absolute top-0 right-0 w-55 h-62  border-none shadow-none cursor-pointer'} value="option-2" id="option-2">
+                            <div className={' w-55 h-62 border-4 rounded-lg border-blue-700 '}></div>
+                          </RadioGroupItem>
+                        </div>
+                        <div className="relative">
+                          <img src="https://media3.coolmate.me/cdn-cgi/image/width=1069,height=1575,quality=80,format=auto/uploads/November2023/mceclip0_45.png" alt="" className="w-55 h-62 object-cover rounded-lg" />
+                          <RadioGroupItem className={'absolute top-0 right-0 w-55 h-62  border-none shadow-none cursor-pointer'} value="option-3" id="option-3">
+                            <div className={' w-55 h-62 border-4 rounded-lg border-blue-700 '}></div>
+                          </RadioGroupItem>
+                        </div>
                       </RadioGroup>
+                      <p className="font-bold my-3">Coolmate gợi ý bạn:</p>
+                      <div className="grid grid-cols-6 grid-flow-col gap-4">
+                        <div className="bg-black rounded-full p-1 text-white text-center">Lorem ipsum.</div>
+                        <div className="bg-black rounded-full p-1 text-white text-center">Lorem ipsum.</div>
+                        <div className="bg-black rounded-full p-1 text-white text-center">Lorem ipsum.</div>
+                        <div className="bg-black rounded-full p-1 text-white text-center">Lorem ipsum.</div>
+
+                      </div>
                     </TabsContent>
-                    <TabsContent value="size-table">Change your password here.</TabsContent>
+                    <TabsContent value="size-table">
+                      <Table >
+                        <TableCaption>Trường hợp số đo của bạn nằm trong khoảng giữa các size với nhau:
+                          Với áo thun, bạn hãy lựa chọn ưu tiên theo chiều cao
+                          Ví dụ chiều cao của bạn theo size L nhưng cân nặng của bạn theo size M, Hãy chọn L.
+                          97% khách hàng của chúng tôi đã chọn đúng size theo cách này.</TableCaption>
+                        <TableHeader className={'bg-blue-700'}>
+                          <TableRow>
+                            <TableHead className={'text-white'}>Size</TableHead>
+                            <TableHead className={'text-white'}>M</TableHead>
+                            <TableHead className={'text-white'}>L</TableHead>
+                            <TableHead className={'text-white'}>XL</TableHead>
+                            <TableHead className={'text-white'}>2XL</TableHead>
+                            <TableHead className={'text-white'}>3XL</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          <TableRow className="text-sm font-bold">
+                            <TableCell >Chiều cao</TableCell>
+                            <TableCell>1m60 - 1m65</TableCell>
+                            <TableCell>1m66 - 1m72</TableCell>
+                            <TableCell>1m72 - 1m77</TableCell>
+                            <TableCell>1m77 - 1m84</TableCell>
+                            <TableCell>1m85 - 1m92</TableCell>
+                          </TableRow>
+
+                          <TableRow className="text-sm font-bold">
+                            <TableCell >Cân nặng</TableCell>
+                            <TableCell>	55kg - 61kg</TableCell>
+                            <TableCell>62kg - 68kg</TableCell>
+                            <TableCell>69kg - 75kg</TableCell>
+                            <TableCell>76kg - 84kg</TableCell>
+                            <TableCell>85kg - 90kg</TableCell>
+                          </TableRow>
+
+                          <TableRow className="text-sm font-bold">
+                            <TableCell >Dài áo</TableCell>
+                            <TableCell>68.5</TableCell>
+                            <TableCell>70.5</TableCell>
+                            <TableCell>72.5</TableCell>
+                            <TableCell>74.5</TableCell>
+                            <TableCell>76</TableCell>
+                          </TableRow>
+
+                          <TableRow className="text-sm font-bold">
+                            <TableCell >Rộng ngực</TableCell>
+                            <TableCell>52.7</TableCell>
+                            <TableCell>54.7</TableCell>
+                            <TableCell>56.7</TableCell>
+                            <TableCell>59.7</TableCell>
+                            <TableCell>62.7</TableCell>
+                          </TableRow>
+
+                          <TableRow className="text-sm font-bold">
+                            <TableCell >Dài tay</TableCell>
+                            <TableCell>58.5</TableCell>
+                            <TableCell>60.5</TableCell>
+                            <TableCell>62.5</TableCell>
+                            <TableCell>64.5</TableCell>
+                            <TableCell>66.5</TableCell>
+                          </TableRow>
+                        </TableBody>
+                      </Table>
+
+                    </TabsContent>
                   </Tabs>
 
                 </DialogContent>
@@ -301,7 +382,7 @@ export default function ProductDetailPage() {
 						</div>
 
 						<Accordion
-							className={"rounded-xl bg-blue-100 p-2"}
+							className={"rounded-lg bg-blue-50 p-3"}
 							type='single'
 							collapsible
 						>
@@ -312,14 +393,16 @@ export default function ProductDetailPage() {
 										<span className='font-bold px-2'>1000</span>name' Cash.
 									</p>
 								</AccordionTrigger>
-								<AccordionContent className={"p-2"}>
-									<span className=''>
+								<AccordionContent className={"p-2 pb-0"}>
+									<p className="px-2 border-t-1">
+                    <span>
 										Đây là số CoolCash ước tính bạn sẽ được hoàn lại khi mua sản
 										phẩm hôm nay, tương ứng với quyền lợi hạng
 									</span>
-									<span className='text-blue-600 font-bold flex items-center uppercase'>
+                    <span className='text-blue-600 font-bold flex items-center uppercase'>
 										Thành viên mới <Crown className={"ml-1 "} />
 									</span>
+                  </p>
 								</AccordionContent>
 							</AccordionItem>
 						</Accordion>
