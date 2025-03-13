@@ -1,6 +1,5 @@
 import * as React from "react";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
-import { Square } from "lucide-react";
 
 import { cn } from "../lib/utils";
 
@@ -19,6 +18,7 @@ function RadioGroup({
 
 function RadioGroupItem({
 	className,
+  children,
 	...props
 }: React.ComponentProps<typeof RadioGroupPrimitive.Item>) {
 	return (
@@ -34,7 +34,7 @@ function RadioGroupItem({
 				data-slot='radio-group-indicator'
 				className='relative flex items-center justify-center'
 			>
-				<Square className='size-3 fill-blue-800 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' />
+        {children}
 			</RadioGroupPrimitive.Indicator>
 		</RadioGroupPrimitive.Item>
 	);

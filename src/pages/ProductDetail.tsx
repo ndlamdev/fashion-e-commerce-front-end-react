@@ -1,5 +1,5 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "../../@/components/ui/breadcrumb.tsx";
-import { CalendarSync, Check, Crown, MapPinHouse, PhoneCall, RefreshCcw, Search, Slash } from "lucide-react";
+import { CalendarSync, Check, Copy, Crown, MapPinHouse, PhoneCall, RefreshCcw, Search, Share2, Slash, Square } from "lucide-react";
 import Stack from "@/components/Stack/Stack.tsx";
 import { ArrowRightIcon, ShareIcon } from "@heroicons/react/24/solid";
 import { Badge } from "../../@/components/ui/badge.tsx";
@@ -24,9 +24,13 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "../../@/components/ui/pagination.tsx";
-import { Popover, Rate } from "antd";
+import { Input, Popover, Rate } from "antd";
 import { Button } from "@/components/ui/button.tsx";
-import { Input } from "antd";
+import Gift from "@/components/product-detail/Gift.tsx";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog.tsx";
+import { ScrollArea } from "@/components/ui/scroll-area.tsx";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
+import { Slider } from "@/components/ui/slider.tsx";
 
 export default function ProductDetailPage() {
 	const images = [
@@ -72,7 +76,7 @@ export default function ProductDetailPage() {
 					</BreadcrumbList>
 				</Breadcrumb>
 
-				<div className='grid grid-cols-2 grid-rows-1 gap-1 mt-2'>
+				<div className='grid grid-cols-2 grid-rows-1 gap-1 mt-2d'>
 					<Stack
 						randomRotation={true}
 						sensitivity={90}
@@ -93,14 +97,62 @@ export default function ProductDetailPage() {
 								defaultValue={2.5}
 								className={"text-black!"}
 							/>
-							(2.5)
-							<span
-								className={
-									"ms-6 flex items-center text-blue-600 font-bold text-sm cursor-pointer"
-								}
-							>
+							<span className="ml-1">(2.5)</span>
+
+              <Dialog >
+                <DialogTrigger>
+                  <span
+                    className={
+                      "ms-6 flex items-center text-blue-600 font-bold text-sm cursor-pointer"
+                    }
+                  >
 								<ShareIcon className={"size-3 me-1 "} /> <span> chia sẻ</span>
 							</span>
+                </DialogTrigger>
+                <DialogContent className={'pr-0 pb-0 max-w-[660px]!'}>
+                  <ScrollArea className={'h-146 border-none'}>
+                    <div className="grid grid-cols-2">
+                      <div className="">
+                        <p className="pe-6 text-3xl font-bold">Giới thiệu bạn bè
+                          Nhận ngay 10% CoolCash</p>
+                        <p className="text-sm my-5">Bạn sẽ nhận được 10% giá trị đơn hàng đầu tiên của bạn bè và được trả bằng CoolCash khi họ là thành viên CoolClub và mua sản phẩm Coolmate bất kỳ.</p>
+                        <div className="p-3 mb-3 rounded-lg bg-neutral-100 ">
+                          <p className="text-neutral-400 uppercase text-sm">Gửi mã giới thiệu đến với bạn bè</p>
+                          <div className="border-1 border-neutral-300"></div>
+                          <p className="flex items-center p-2">
+                            <span className="uppercase text-lg text-neutral-700 ">Lorem ipsum dolor.</span>
+                            <span className="flex text-blue-700 text-sm cursor-pointer"><Copy className={'mx-1'}/> Copy</span>
+                          </p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-neutral-100 mb-3">
+                          <p className="text-neutral-400 uppercase text-sm">Gửi link giới thiệu đến với bạn bè</p>
+                          <div className="px-2 flex items-center bg-white rounded-3xl border-2 ">
+                            <Input className={'border-none! w-3/4!'} type={'text'} value={'https://mcdn.coolmate.me/image/September2024/mceclip0_28'}/>
+                            <span className="flex text-blue-700 text-sm cursor-pointer"><Copy className={'mx-1'}/> Copy</span>
+                          </div>
+                        </div>
+
+                        <Button className={'w-full mb-2 cursor-pointer rounded-2xl'} variant={'default'}>
+                          <Share2/>
+                          <span>Chia sẻ</span>
+                        </Button>
+
+                        <p className="text-sm font-bold">Bạn sẽ nhận được CoolCash khi:</p>
+                        <ul className={'text-sm'}>
+                          <li className={'flex items-center'}><Check className={'size-4 flex-none mr-1'}/> <span className={'shrink'}>Bạn bè của bạn tham gia CoolClub</span></li>
+                          <li className={'flex items-center'}><Check className={'size-4 flex-none mr-1'}/> <span className={'shrink'}>Bạn bè của bạn hoàn thành đơn hàng đầu tiên trên website</span></li>
+                          <li className={'flex items-center'}><Check className={'size-4 flex-none mr-1'}/> <span className={'shrink'}>Sau 7 ngày kể từ ngày đơn hàng giao thành công và không đổi trả, bạn có thể nhận và sử dụng CoolCash của bạn</span></li>
+                        </ul>
+
+                        <a href="#"><span className="text-xs underline decoration-gray-400 text-gray-400">*Chính sách và điều khoản</span></a>
+                      </div>
+                      <img src="https://mcdn.coolmate.me/image/September2024/mceclip0_28.png" alt="" className="h-120 place-self-end object-cover" />
+                    </div>
+                  </ScrollArea>
+                </DialogContent>
+
+              </Dialog>
+
 						</p>
 						<p className={"text-base line-through text-neutral-400"}>100000</p>
 						<p className='flex font-bold text-2xl '>
@@ -145,6 +197,8 @@ export default function ProductDetailPage() {
 							</Popover>
 						</p>
 
+            <Gift />
+
 						<p className='m-0'>
 							Màu sắc: <span className='font-bold'>Lorem ipsum.</span>
 						</p>
@@ -157,13 +211,49 @@ export default function ProductDetailPage() {
 								Kích thước áo: <span className={"font-bold"}>size</span>{" "}
 								<span>mô tả size</span>
 							</span>
-							<span
-								className={
-									"text-blue-600 cursor-pointer text-decoration-underline"
-								}
-							>
-								Hướng dẫn chọn size
-							</span>
+              <Dialog>
+                <DialogTrigger>
+                  <span className={"text-blue-600 text-decoration-underline decoration-blue-400 cursor-pointer hover:text-black"} >
+                    Hướng dẫn chọn size
+							    </span>
+                </DialogTrigger>
+                <DialogContent className={"max-w-[910px]!"}>
+                  <Tabs defaultValue="choose-size">
+                    <TabsList className={'h-auto p-0 text-black  border-2 border-gray-300 bg-white rounded-2xl '}>
+                      <TabsTrigger className={'h-12 bg-white data-[state=active]:bg-gray-200 data-[state=active]:shadow-none border-none rounded-xl font-bold'} value="choose-size">Hướng dẫn chọn size</TabsTrigger>
+                      <TabsTrigger className={'h-12 bg-white data-[state=active]:bg-gray-200 data-[state=active]:shadow-none border-none rounded-xl font-bold'} value="size-table">Bảng size</TabsTrigger>
+                    </TabsList>
+                    <TabsContent className={'px-20 py-5'} value="choose-size">
+                      <div className="w-full flex">
+                        <span className="text-gray-500 flex-none px-4">Chiều cao</span>
+                        <Slider className={'shrink'} defaultValue={[155]} min={155} max={190} step={1} />
+                        <span className="text-blue-700 flex-none px-4">cm</span>
+                      </div>
+
+                      <div className="w-full flex my-5">
+                        <span className="text-gray-500 flex-none px-4">Cân nặng</span>
+                        <Slider className={'shrink'} defaultValue={[155]} min={155} max={190} step={1} />
+                        <span className="text-blue-700 flex-none px-4">kg</span>
+                      </div>
+
+                      <RadioGroup defaultValue={'option-one'}>
+                        <RadioGroupItem value="option-one" id="option-one">
+                          <img src="https://media3.coolmate.me/cdn-cgi/image/width=1069,height=1575,quality=80,format=auto/uploads/November2023/mceclip1_23.jpg" alt="" className="size-20 object-cover" />
+                        </RadioGroupItem>
+                        <RadioGroupItem value="option-one" id="option-one">
+                          <img src="https://media3.coolmate.me/cdn-cgi/image/width=1069,height=1575,quality=80,format=auto/uploads/November2023/mceclip3_97.jpg" alt="" className="size-20 object-cover" />
+                        </RadioGroupItem>
+                        <RadioGroupItem value="option-one" id="option-one">
+                          <img src="https://media3.coolmate.me/cdn-cgi/image/width=1069,height=1575,quality=80,format=auto/uploads/November2023/mceclip0_45.png" alt="" className="size-20 object-cover" />
+                        </RadioGroupItem>
+
+                      </RadioGroup>
+                    </TabsContent>
+                    <TabsContent value="size-table">Change your password here.</TabsContent>
+                  </Tabs>
+
+                </DialogContent>
+              </Dialog>
 						</p>
 						<div className='flex flex-wrap gap-3 mb-3'>
 							<Popover
@@ -202,7 +292,7 @@ export default function ProductDetailPage() {
 								type={"number"}
 							/>
 							<Button
-								className={"w-3/4 rounded-2xl flex text-center items-center cursor-pointer"}
+								className={"w-3/4  rounded-2xl flex text-center items-center cursor-pointer hover:bg-neutral-300 hover:text-black"}
 								variant='default'
 							>
 								<ShoppingBagIcon className={"size-6 inline-block mx-2"} />
@@ -300,8 +390,8 @@ export default function ProductDetailPage() {
 				<div className='flex justify-center mt-4'>
 					<CollapsibleTrigger asChild>
 						<Button
-							className={"w-1/10 h-10 rounded-[50px]!"}
-							variant='outline'
+							className={"w-1/10 h-10 rounded-[50px] outline-2 outline-black outline-offset-2"}
+							variant='default'
 							size='sm'
 						>
 							More
@@ -341,6 +431,7 @@ export default function ProductDetailPage() {
 								className={"size-5 bg-white rounded-sm!"}
 								value='5'
 								id='r5'
+                children={<Square className='size-3 fill-blue-800 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' />}
 							/>
 							<Label className={" ml-1"} htmlFor='r5'>
 								<Rate
@@ -356,6 +447,7 @@ export default function ProductDetailPage() {
 								className={"size-5 bg-white rounded-sm!"}
 								value='4'
 								id='r4'
+                children={<Square className='size-3 fill-blue-800 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' />}
 							/>
 							<Label className={"ml-1"} htmlFor='r4'>
 								<Rate
@@ -371,6 +463,7 @@ export default function ProductDetailPage() {
 								className={"size-5 bg-white rounded-sm!"}
 								value='3'
 								id='r3'
+                children={<Square className='size-3 fill-blue-800 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' />}
 							/>
 							<Label className={" ml-1"} htmlFor='r3'>
 								<Rate
@@ -386,6 +479,7 @@ export default function ProductDetailPage() {
 								className={"size-5 bg-white rounded-sm!"}
 								value='2'
 								id='r2'
+                children={<Square className='size-3 fill-blue-800 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' />}
 							/>
 							<Label className={" ml-1"} htmlFor='r2'>
 								<Rate
@@ -401,6 +495,7 @@ export default function ProductDetailPage() {
 								className={"size-5 bg-white rounded-sm!"}
 								value='1'
 								id='r1'
+                children={<Square className='size-3 fill-blue-800 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' />}
 							/>
 							<Label className={" ml-1"} htmlFor='r1'>
 								<Rate
@@ -427,6 +522,7 @@ export default function ProductDetailPage() {
                 className={"size-5 bg-white rounded-sm!"}
                 value='res'
                 id='res'
+                children={<Square className='size-3 fill-blue-800 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' />}
               />
               <Label className={" ml-1 text-gray-600"} htmlFor='res'>
                 Đã phản hồi
@@ -437,6 +533,7 @@ export default function ProductDetailPage() {
                 className={"size-5 bg-white rounded-sm!"}
                 value='has-image'
                 id='has-image'
+                children={<Square className='size-3 fill-blue-800 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' />}
               />
               <Label className={"ml-1 text-gray-600"} htmlFor='has-image'>
                 Chỉ có hình ảnh
