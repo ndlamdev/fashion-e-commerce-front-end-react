@@ -13,74 +13,72 @@ import { formatCurrency } from "@/utils/format-data.ts";
 import { Fa6RegularTrashCan } from "@/assets/images/icons/Fa6RegularTrashCan.tsx";
 
 export type CartItemProps = ShoppingBagItemType & {
-  sizes: string[];
-  colors: string[];
+	sizes: string[];
+	colors: string[];
 };
 
 function CartItem({ id, name, image, color, size, amount, colors, sizes, discount, price }: CartItemProps) {
-  return (
-    <div className={"flex items-center pt-4 pb-10 border-b-1  border-gray-300 gap-3 min-h-55 "}>
-      <input type={"checkbox"} className={"w-5 h-5 flex-none"} />
-      <img src={image} alt="image.png" className={"rounded-xl w-33 h-full"} />
-      <div className={"h-full flex flex-col align-bottom w-full justify-between "}>
-        <div>
-          <p>{name}</p>
-          <p className={"text-sm text-gray-600"}>
-            {color} / {size}
-          </p>
-        </div>
-        <div className={"grid sm:grid-rows-1 grid-rows-subgrid sm:grid-cols-2 grid-cols-1 "}>
-          <div className={"flex sm:flex-col gap-y-1 gap-x-5 items-end sm:items-start justify-end flex-row flex-wrap"}>
-            <Select onValueChange={(_) => {
-            }} defaultValue={"Tím"}>
-              <SelectTrigger className="border-0 bg-gray-200 text-black outline-none rounded-full px-3 py-0 sm:w-auto">
-                <SelectValue className={"text-black"}>Tím</SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                {colors.map((color, index) => (
-                  <SelectItem value={color} key={`${id}_color_${index}`}>
-                    {color}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Select onValueChange={(_) => {
-            }} defaultValue={"XS"}>
-              <SelectTrigger className="border-0 bg-gray-200 text-black outline-none rounded-full px-3 py-0 sm:w-auto">
-                <SelectValue className={"text-black"}>XS</SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                {sizes.map((size, index) => (
-                  <SelectItem value={color} key={`${id}_size_${index}`}>
-                    {size}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <button className={"hover:text-red-600 items-center gap-2 text-sm cursor-pointer hidden md:flex"}>
-              <Fa6RegularTrashCan width={13} height={13} />
-              Xóa
-            </button>
-          </div>
-          <div className={"flex sm:items-center items-end justify-end flex-col sm:flex-row mt-2 md:mt-0 flex-wrap gap-x-2"}>
-            <div className={"min-w-20 flex-none flex gap-2 items-center justify-between rounded-full border-1 border-gray-300 overflow-hidden p-2"}>
-              <TablerMinus width={15} height={15} className={"cursor-pointer"} />
-              <p className={"text-center text-sm"}>{amount}</p>
-              <TablerPlus width={15} height={15} className={"cursor-pointer"} />
-            </div>
-            <div className={"flex md:flex-col justify-end flex-row items-end gap-x-2 flex-wrap sm:mt-0 mt-2"}>
-              <p className={"pb-0 mb-0  text-end"}>{formatCurrency(discount ? discount : price)}</p>
-              {discount && <p className={"text-sm  line-through text-end text-gray-400"}>{formatCurrency(price)}</p>}
-            </div>
-          </div>
-          <button className={"hover:text-red-600 items-center gap-2 text-sm cursor-pointer flex md:hidden justify-end sm:justify-start mt-2"}>
-            <Fa6RegularTrashCan width={13} height={13} />
-            Xóa
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+	return (
+		<div className={"flex min-h-55 items-center gap-3 border-b-1 border-gray-300 pt-4 pb-10"}>
+			<input type={"checkbox"} className={"h-5 w-5 flex-none"} />
+			<img src={image} alt='image.png' className={"h-full w-33 rounded-xl"} />
+			<div className={"flex h-full w-full flex-col justify-between align-bottom"}>
+				<div>
+					<p>{name}</p>
+					<p className={"text-sm text-gray-600"}>
+						{color} / {size}
+					</p>
+				</div>
+				<div className={"grid grid-cols-1 grid-rows-subgrid sm:grid-cols-2 sm:grid-rows-1"}>
+					<div className={"flex flex-row flex-wrap items-end justify-end gap-x-5 gap-y-1 sm:flex-col sm:items-start"}>
+						<Select onValueChange={(_) => {}} defaultValue={"Tím"}>
+							<SelectTrigger className='rounded-full border-0 bg-gray-200 px-3 py-0 text-black outline-none sm:w-auto'>
+								<SelectValue className={"text-black"}>Tím</SelectValue>
+							</SelectTrigger>
+							<SelectContent>
+								{colors.map((color, index) => (
+									<SelectItem value={color} key={`${id}_color_${index}`}>
+										{color}
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
+						<Select onValueChange={(_) => {}} defaultValue={"XS"}>
+							<SelectTrigger className='rounded-full border-0 bg-gray-200 px-3 py-0 text-black outline-none sm:w-auto'>
+								<SelectValue className={"text-black"}>XS</SelectValue>
+							</SelectTrigger>
+							<SelectContent>
+								{sizes.map((size, index) => (
+									<SelectItem value={color} key={`${id}_size_${index}`}>
+										{size}
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
+						<button className={"hidden cursor-pointer items-center gap-2 text-sm hover:text-red-600 md:flex"}>
+							<Fa6RegularTrashCan width={13} height={13} />
+							Xóa
+						</button>
+					</div>
+					<div className={"mt-2 flex flex-col flex-wrap items-end justify-end gap-x-2 sm:flex-row sm:items-center md:mt-0"}>
+						<div className={"flex min-w-20 flex-none items-center justify-between gap-2 overflow-hidden rounded-full border-1 border-gray-300 p-2"}>
+							<TablerMinus width={15} height={15} className={"cursor-pointer"} />
+							<p className={"text-center text-sm"}>{amount}</p>
+							<TablerPlus width={15} height={15} className={"cursor-pointer"} />
+						</div>
+						<div className={"mt-2 flex flex-row flex-wrap items-end justify-end gap-x-2 sm:mt-0 md:flex-col"}>
+							<p className={"mb-0 pb-0 text-end"}>{formatCurrency(discount ? discount : price)}</p>
+							{discount && <p className={"text-end text-sm text-gray-400 line-through"}>{formatCurrency(price)}</p>}
+						</div>
+					</div>
+					<button className={"mt-2 flex cursor-pointer items-center justify-end gap-2 text-sm hover:text-red-600 sm:justify-start md:hidden"}>
+						<Fa6RegularTrashCan width={13} height={13} />
+						Xóa
+					</button>
+				</div>
+			</div>
+		</div>
+	);
 }
 
 export default CartItem;

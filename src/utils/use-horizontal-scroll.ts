@@ -8,19 +8,19 @@
 import { useEffect } from "react";
 
 export function useHorizontalScroll<T extends HTMLElement | null>(ref: T | null): T | null {
-  useEffect(() => {
-    if (ref) {
-      const onWheel = (e: WheelEvent) => {
-        if (e.deltaY == 0) return;
-        e.preventDefault();
-        ref.scrollTo({
-          left: ref.scrollLeft + e.deltaY,
-          behavior: "smooth",
-        });
-      };
-      ref.addEventListener("wheel", onWheel);
-      return () => ref.removeEventListener("wheel", onWheel);
-    }
-  }, [ref]);
-  return ref;
+	useEffect(() => {
+		if (ref) {
+			const onWheel = (e: WheelEvent) => {
+				if (e.deltaY == 0) return;
+				e.preventDefault();
+				ref.scrollTo({
+					left: ref.scrollLeft + e.deltaY,
+					behavior: "smooth",
+				});
+			};
+			ref.addEventListener("wheel", onWheel);
+			return () => ref.removeEventListener("wheel", onWheel);
+		}
+	}, [ref]);
+	return ref;
 }

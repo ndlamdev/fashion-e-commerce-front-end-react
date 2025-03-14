@@ -9,21 +9,21 @@
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 
 const VoiceSearch = () => {
-  const { transcript, listening } = useSpeechRecognition();
+	const { transcript, listening } = useSpeechRecognition();
 
-  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-    return <p>Sorry, your browser does not support speech recognition.</p>;
-  }
+	if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+		return <p>Sorry, your browser does not support speech recognition.</p>;
+	}
 
-  return (
-    <div>
-      <button onClick={() => SpeechRecognition.startListening({ language: "vi-VN" })}>Start</button>
-      <br />
-      <button onClick={() => SpeechRecognition.stopListening()}>Stop</button>
-      <p>{listening ? "Listening..." : "Click \"Start\" to start listening"}</p>
-      <p>{transcript}</p>
-    </div>
-  );
+	return (
+		<div>
+			<button onClick={() => SpeechRecognition.startListening({ language: "vi-VN" })}>Start</button>
+			<br />
+			<button onClick={() => SpeechRecognition.stopListening()}>Stop</button>
+			<p>{listening ? "Listening..." : 'Click "Start" to start listening'}</p>
+			<p>{transcript}</p>
+		</div>
+	);
 };
 
 export default VoiceSearch;

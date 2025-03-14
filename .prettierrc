@@ -8,5 +8,8 @@
   "singleQuote": false,
   "jsxSingleQuote": true,
   "jsxBracketSameLine": true,
-  "bracketSpacing": true
+  "bracketSpacing": true,
+  "plugins": [
+    "prettier-plugin-tailwindcss"
+  ]
 }

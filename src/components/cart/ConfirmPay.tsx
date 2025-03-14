@@ -7,14 +7,13 @@
  **/
 import InformationCustomer from "@/components/cart/InformationCustomer.tsx";
 
-
 function ConfirmPay() {
-  return (
-    <div>
-      <p className={"text-xl"}>Xác thực thanh toán</p>
-      <InformationCustomer />
-    </div>
-  );
+	return (
+		<div>
+			<p className={"text-xl"}>Xác thực thanh toán</p>
+			<InformationCustomer />
+		</div>
+	);
 }
 
 export default ConfirmPay;
