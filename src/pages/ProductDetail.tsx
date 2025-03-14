@@ -8,7 +8,6 @@ import {
   MapPinHouse,
   PhoneCall,
   RefreshCcw,
-  Share,
   Share2,
   ShoppingBag,
   Slash,
@@ -72,7 +71,7 @@ export default function ProductDetailPage() {
 
   return (
     <div>
-      <div className={"p-4"}>
+      <div className={"p-4 px-8"}>
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -107,9 +106,12 @@ export default function ProductDetailPage() {
               Lorem ipsum dolor sit amet, consectetur adipisicing elit.
             </p>
             <p className={"text-base text-neutral-400"}>Lorem ipsum dolor.</p>
-            <p className={"flex items-center"}>
+            <p className={"flex items-center mb-5"}>
               <Rate
-                count={3}
+                disabled={true}
+                allowHalf={true}
+                defaultValue={4.5}
+                className={'fill-black'}
               />
               <span className="ml-1">(2.5)</span>
 
@@ -120,7 +122,7 @@ export default function ProductDetailPage() {
                       "ms-6 flex items-center text-blue-600 font-bold text-sm cursor-pointer"
                     }
                   >
-								<Share className={"size-3 me-1 "} /> <span> chia sẻ</span>
+								<Share2 className={"size-3 me-1 fill-blue-800"} /> <span> chia sẻ</span>
 							</span>
                 </DialogTrigger>
                 <DialogContent className={"pr-0 pb-0 max-w-[660px]!"}>
@@ -183,12 +185,24 @@ export default function ProductDetailPage() {
               <Truck className={"size-4 me-3 text-blue-600 "} /> Freeship
             </p>
 
-            <p className="flex items-center">
+            <p className="flex items-center my-5">
 							<span className="me-3 text-lg font-bold text-neutral-400">
 								Mã giảm giá
 							</span>
               <HoverCard>
                 <HoverCardTrigger>
+                  <Badge className="p-2 cursor-pointer bg-orange-100">
+                    <span
+                      className={
+                        " text-xs font-bold text-orange-500"
+                      }
+                    >
+										-20%
+									</span>
+                    <Ticket className={"size-5! text-orange-500"} />
+                  </Badge>
+                </HoverCardTrigger>
+                <HoverCardContent className={'w-100! p-1'}>
                   <div className={"text-center"}>
                     <p className={"m-0"}>
                       Nhập <span className="font-bold">code</span> (còn number
@@ -199,18 +213,7 @@ export default function ProductDetailPage() {
                       Aliquam, autem!
                     </p>
                   </div>
-                </HoverCardTrigger>
-                <HoverCardContent>
-                  <div className="relative cursor-pointer">
-                    <Ticket className={"size-20 text-amber-200"} />
-                    <span
-                      className={
-                        "absolute text-xs top-1/3 left-1/4 font-bold text-orange-500"
-                      }
-                    >
-										-20%
-									</span>
-                  </div>
+
                 </HoverCardContent>
               </HoverCard>
             </p>
@@ -231,7 +234,7 @@ export default function ProductDetailPage() {
 							</span>
               <Dialog>
                 <DialogTrigger>
-                  <span className={"text-blue-600 text-decoration-underline decoration-blue-400 cursor-pointer hover:text-black"}>
+                  <span className={"text-blue-600 underline underline-offset-2 decoration-blue-400 cursor-pointer text-sm"}>
                     Hướng dẫn chọn size
 							    </span>
                 </DialogTrigger>
@@ -363,11 +366,11 @@ export default function ProductDetailPage() {
             <div className="flex flex-wrap gap-3 mb-3">
               <HoverCard>
                 <HoverCardTrigger>
-                  <div className="cursor-pointer w-1/8 h-12 bg-black text-white text-center content-center rounded-2xl">
+                  <div className="cursor-pointer w-24 h-12  bg-black text-white text-center content-center rounded-2xl">
                     Size
                   </div>
                 </HoverCardTrigger>
-                <HoverCardContent>
+                <HoverCardContent className={'p-0'}>
                   <div className={"text-center"}>
                     <p className={"m-0"}>Lorem ipsum.</p>
                     <p className={"m-0"}>Lorem ipsum.</p>
@@ -376,11 +379,11 @@ export default function ProductDetailPage() {
               </HoverCard>
               <HoverCard>
                 <HoverCardTrigger>
-                  <div className="cursor-pointer w-1/8 h-12 bg-neutral-200 text-center content-center rounded-xl">
+                  <div className="cursor-pointer w-24 h-12 bg-neutral-200 text-center content-center rounded-xl">
                     Size
                   </div>
                 </HoverCardTrigger>
-                <HoverCardContent>
+                <HoverCardContent className={'p-0'}>
                   <div className={"text-center"}>
                     <p className={"m-0"}>Lorem ipsum.</p>
                     <p className={"m-0"}>Lorem ipsum.</p>
@@ -521,9 +524,9 @@ export default function ProductDetailPage() {
 
       <div className="flex p-5 bg-neutral-200">
         <div className="w-1/3">
-          <h1 className="fw-bold uppercase w-1/2">Đánh giá sản phẩm</h1>
+          <p className="fw-bold uppercase w-1/2 text-4xl">Đánh giá sản phẩm</p>
           <Input
-            className={"rounded-2xl! w-1/2! mb-4"}
+            className={"rounded-2xl w-1/2 my-4 bg-white "}
             placeholder="Tìm kiếm đánh giá"
           />
 
@@ -540,7 +543,8 @@ export default function ProductDetailPage() {
               />
               <Label className={" ml-1"} htmlFor="r5">
                 <Rate
-                  count={5}
+                  className={'fill-black'}
+                  defaultValue={5}
                 />
               </Label>
             </div>
@@ -553,7 +557,8 @@ export default function ProductDetailPage() {
               />
               <Label className={"ml-1"} htmlFor="r4">
                 <Rate
-                  count={4}
+                  className={'fill-black'}
+                  defaultValue={4}
                 />
               </Label>
             </div>
@@ -566,7 +571,8 @@ export default function ProductDetailPage() {
               />
               <Label className={" ml-1"} htmlFor="r3">
                 <Rate
-                  count={3}
+                  className={'fill-black'}
+                  defaultValue={3}
                 />
               </Label>
             </div>
@@ -579,8 +585,8 @@ export default function ProductDetailPage() {
               />
               <Label className={" ml-1"} htmlFor="r2">
                 <Rate
-                  count={2}
-                  className={"text-black!"}
+                  defaultValue={2}
+                  className={"fill-black"}
                 />
               </Label>
             </div>
@@ -593,8 +599,8 @@ export default function ProductDetailPage() {
               />
               <Label className={" ml-1"} htmlFor="r1">
                 <Rate
-                  count={1}
-                  className={"text-black!"}
+                  className={'fill-black'}
+                  defaultValue={1}
                 />
               </Label>
             </div>
@@ -635,8 +641,8 @@ export default function ProductDetailPage() {
         </div>
 
         <div className="w-2/3">
-          <p className="mb-0 flex items-center font-bold text-8xl">4.5
-            <Rate className={"text-4xl! text-orange-400!"} count={5} />
+          <p className="mb-0 flex items-center font-bold text-8xl">4.8
+            <Rate className={"text-4xl fill-orange-400 stroke-orange-400"} defaultValue={4.8} disabled={true} allowHalf={true} />
           </p>
           <p className="mb-10 text-sm text-gray-500 fw-bold">Dựa trên <span className="text-gray-800">X</span> đánh giá đến từ khách hàng</p>
           <div className="flex justify-between items-end">
@@ -651,7 +657,7 @@ export default function ProductDetailPage() {
               </SelectContent>
             </Select>
           </div>
-          <Comment id={1} name={"LamHongPhong"} description={"Hello world"} numOfStars={4.1} date={new Date(Date.now())} />
+          <Comment id={1} name={"LamHongPhong"} description={"Hello world"} numOfStars={4.5} date={new Date(Date.now())} />
           <Pagination className={"py-2"}>
             <PaginationContent>
               <PaginationItem>

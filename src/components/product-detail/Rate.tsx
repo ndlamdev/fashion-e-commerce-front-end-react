@@ -1,41 +1,60 @@
 import { useState } from "react";
-import { Star } from "lucide-react";
+import { Star, StarHalf } from "lucide-react";
 import clsx from "clsx";
+import { cn } from "@/lib/utils.ts";
 
 const Rate = ({
-                count = 5,
+                defaultValue,
                 onChange,
                 className,
+                disabled = false,
+                allowHalf = false,
               }: {
-  count?: number;
+  defaultValue: number;
   onChange?: (value: number) => void;
   className?: string;
+  disabled?: boolean;
+  allowHalf?: boolean;
 }) => {
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const safeCount = count > 0 ? Math.floor(count) : 5;
-
+  const [selectedIndex, setSelectedIndex] = useState<number>(defaultValue);
   const handleClick = (index: number) => {
-    setSelectedIndex(index);
-    if (onChange) onChange(index + 1);
+    if (!disabled) {
+      setSelectedIndex(index);
+      if (onChange) onChange(index + 1);
+    }
   };
 
   return (
     <div className={clsx("flex space-x-1", className)}>
-      {[...Array(safeCount)].map((_, index) => (
-        <Star
-          key={index}
-          className={clsx(
-            "w-6 h-6 cursor-pointer transition-all duration-200",
-            index <= (hoverIndex ?? selectedIndex)
-              ? "fill-yellow-400 stroke-yellow-400"
-              : "fill-gray-300 stroke-gray-400"
-          )}
-          onMouseEnter={() => setHoverIndex(index)}
-          onMouseLeave={() => setHoverIndex(null)}
-          onClick={() => handleClick(index)}
-        />
-      ))}
+      {[...Array(5)].map((_, index) => {
+        const isHalf :boolean = allowHalf && index + defaultValue%1 === selectedIndex;
+        console.log("isHalf", isHalf);
+        return (
+          <span
+            key={index}
+            className="relative"
+            onMouseEnter={() => !disabled && setHoverIndex(index)}
+            onMouseLeave={() => !disabled && setHoverIndex(null)}
+            onClick={() => handleClick(index)}
+          >
+            {isHalf ? (
+              <Star className={cn("relative stroke-black !fill-none", className)}>
+                <StarHalf className={cn("absolute size-6 ", className)} />
+              </Star>
+            ) : (
+              <Star
+                className={cn(
+                  "size-6 transition-all duration-200",
+                   index < defaultValue
+                    ? className
+                    : clsx(className, "!fill-white"),
+                )}
+              />
+            )}
+          </span>
+        );
+      })}
     </div>
   );
 };

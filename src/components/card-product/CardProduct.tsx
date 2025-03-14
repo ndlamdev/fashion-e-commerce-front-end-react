@@ -44,10 +44,10 @@ export default function CardProduct(props: ProductCardProp) {
 				</div>
 
 				<span
-					className={"absolute top-2 left-2 flex align-items-center font-bold"}
+					className={"absolute top-2 left-2 flex items-center font-bold"}
 				>
 					<span>{props.numStars}</span>
-					<Star className='size-2 md:size-3  text-yellow-500' />
+					<Star className='size-2 md:size-3  fill-black' />
 					<span className={"md:text-xs text-[8px]  text-blue-600"}>({props.numComments})</span>
 				</span>
 

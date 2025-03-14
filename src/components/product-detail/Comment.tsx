@@ -48,8 +48,10 @@ export default function Comment(props: CommentProps) {
 						</DropdownMenu>
 					</CardTitle>
 					<CardDescription> <Rate
-            count={props.numOfStars}
-            className={"text-black "}
+            defaultValue={props.numOfStars}
+            disabled={true}
+            allowHalf={true}
+            className={"fill-black stroke-black"}
           /></CardDescription>
 				</CardHeader>
 				<CardContent>
