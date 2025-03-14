@@ -51,7 +51,7 @@ export default function Comment(props: CommentProps) {
             defaultValue={props.numOfStars}
             disabled={true}
             allowHalf={true}
-            className={"fill-black stroke-black"}
+            className={"fill-black stroke-black xl:size-6 md:size-4!"}
           /></CardDescription>
 				</CardHeader>
 				<CardContent>

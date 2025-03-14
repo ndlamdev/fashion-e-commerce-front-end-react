@@ -20,7 +20,7 @@ export default function CardProduct(props: ProductCardProp) {
 		>
 			<CardContent
 				onClick={props.onClick}
-				className={`group relative text-base h-[50vw] xl:h-84  md:h-62 sm:h-50 rounded-2 p-0 bg-center bg-no-repeat bg-cover`}
+				className={`group relative text-base h-[50vw] xl:h-84  md:h-62 rounded-lg p-0 bg-center bg-no-repeat bg-cover`}
 				style={{ backgroundImage: `url(${bgImage})` }}
 				onMouseEnter={() =>
 					setBgImage(props.models[selected].imageUrls?.[0] ?? '')

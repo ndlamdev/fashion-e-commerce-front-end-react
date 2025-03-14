@@ -4,6 +4,7 @@
 
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useState } from "react";
+import { cn } from "@/lib/utils.ts";
 
 interface CardRotateProps {
 	children: React.ReactNode;
@@ -51,15 +52,17 @@ interface StackProps {
 	sendToBackOnClick?: boolean;
 	cardsData?: { id: number; img: string }[];
 	animationConfig?: { stiffness: number; damping: number };
+  className: string
 }
 
 export default function Stack({
 	randomRotation = false,
 	sensitivity = 200,
-	cardDimensions = { width: 208, height: 208 },
+	// cardDimensions = { width: 208, height: 208 },
 	cardsData = [],
 	animationConfig = { stiffness: 260, damping: 20 },
 	sendToBackOnClick = false,
+  className
 }: StackProps) {
 	const [cards, setCards] = useState(
 		cardsData.length
@@ -96,10 +99,10 @@ export default function Stack({
 
 	return (
 		<div
-			className='relative'
+			className={cn('relative', className)}
 			style={{
-				width: cardDimensions.width,
-				height: cardDimensions.height,
+				// width: cardDimensions.width,
+				// height: cardDimensions.height,
 				perspective: 600,
 			}}
 		>
@@ -120,7 +123,7 @@ export default function Stack({
 							animate={{
 								rotateZ: (cards.length - index - 1) * 4 + randomRotate,
 								scale: 1 + index * 0.06 - cards.length * 0.06,
-								transformOrigin: "80% 60%",
+								transformOrigin: "50% 50%",
 							}}
 							initial={false}
 							transition={{
@@ -129,8 +132,8 @@ export default function Stack({
 								damping: animationConfig.damping,
 							}}
 							style={{
-								width: cardDimensions.width,
-								height: cardDimensions.height,
+								// width: cardDimensions.width,
+								// height: cardDimensions.height,
 							}}
 						>
 							<img

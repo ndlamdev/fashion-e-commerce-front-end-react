@@ -29,7 +29,6 @@ const Rate = ({
     <div className={clsx("flex space-x-1", className)}>
       {[...Array(5)].map((_, index) => {
         const isHalf :boolean = allowHalf && index + defaultValue%1 === selectedIndex;
-        console.log("isHalf", isHalf);
         return (
           <span
             key={index}
@@ -39,13 +38,13 @@ const Rate = ({
             onClick={() => handleClick(index)}
           >
             {isHalf ? (
-              <Star className={cn("relative stroke-black !fill-none", className)}>
+              <Star className={cn("relative  stroke-black !fill-none", className)}>
                 <StarHalf className={cn("absolute size-6 ", className)} />
               </Star>
             ) : (
               <Star
                 className={cn(
-                  "size-6 transition-all duration-200",
+                  "xl:size-6 lg:size-4  transition-all duration-200",
                    index < defaultValue
                     ? className
                     : clsx(className, "!fill-white"),

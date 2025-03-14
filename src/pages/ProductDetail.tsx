@@ -47,6 +47,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card.tsx";
 import { Input } from "../../@/components/ui/input.tsx";
 import Rate from "@/components/product-detail/Rate.tsx";
+import { SameRadioGroup, SameRadioGroupItem } from "@/components/product-detail/SameRadioGroup.tsx";
 
 export default function ProductDetailPage() {
   const images = [
@@ -92,59 +93,64 @@ export default function ProductDetailPage() {
           </BreadcrumbList>
         </Breadcrumb>
 
-        <div className="grid grid-cols-2 grid-rows-1 gap-1 mt-2d">
-          <Stack
-            randomRotation={true}
-            sensitivity={90}
-            sendToBackOnClick={true}
-            cardDimensions={{ width: 537, height: 716 }}
-            cardsData={images}
-          />
+        <div className="md:grid md:grid-cols-2 md:grid-rows-1 md:gap-1 w-full mt-2">
+          <div className="xl:w-120 xl:h-120 lg:w-110 w-full sm:h-200 h-150">
+            <Stack
+              randomRotation={true}
+              sensitivity={90}
+              sendToBackOnClick={true}
+              cardsData={images}
+              className={" transform-none rotate-0 mx-auto"}
+            />
+          </div>
 
-          <div className="">
-            <p className={"text-2xl font-bold mb-0"}>
+          <div className="w-full">
+            <p className={"lg:text-2xl md:text-lg text-base font-bold mb-0"}>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit.
             </p>
-            <p className={"text-base text-neutral-400"}>Lorem ipsum dolor.</p>
-            <p className={"flex items-center mb-5"}>
-              <Rate
-                disabled={true}
-                allowHalf={true}
-                defaultValue={4.5}
-                className={'fill-black'}
-              />
-              <span className="ml-1">(2.5)</span>
+            <p className={"text-base text-neutral-400 mb-4"}>Lorem ipsum dolor.</p>
+            <p className={"grid grid-cols-2 gap-4 mb-5"}>
+              <span className="flex items-center">
+                <Rate
+                  disabled={true}
+                  allowHalf={true}
+                  defaultValue={4.5}
+                  className={"flex-none fill-black xl:size-6 md:size-5! size-4"}
+                />
+                <span className={"grow lg:text-end lg:pe-4 text-center"}>(2.5)</span>
+              </span>
 
               <Dialog>
                 <DialogTrigger>
                   <span
                     className={
-                      "ms-6 flex items-center text-blue-600 font-bold text-sm cursor-pointer"
+                      "flex items-center text-blue-600 font-bold text-sm cursor-pointer"
                     }
                   >
 								<Share2 className={"size-3 me-1 fill-blue-800"} /> <span> chia sẻ</span>
 							</span>
                 </DialogTrigger>
-                <DialogContent className={"pr-0 pb-0 max-w-[660px]!"}>
+                <DialogContent className={" pb-0 xl:max-w-[660px]!"}>
                   <ScrollArea className={"h-146 border-none"}>
-                    <div className="grid grid-cols-2">
+                    <div className="grid xl:grid-cols-2 lg:grid-cols-1">
                       <div className="">
                         <p className="pe-6 text-3xl font-bold">Giới thiệu bạn bè
                           Nhận ngay 10% CoolCash</p>
-                        <p className="text-sm my-5">Bạn sẽ nhận được 10% giá trị đơn hàng đầu tiên của bạn bè và được trả bằng CoolCash khi họ là thành viên
+                        <p className="text-sm my-5" >Bạn sẽ nhận được 10% giá trị đơn hàng đầu tiên của bạn bè và được trả bằng CoolCash khi họ là thành viên
                           CoolClub và mua sản phẩm Coolmate bất kỳ.</p>
                         <div className="p-3 mb-3 rounded-lg bg-neutral-100 ">
                           <p className="text-neutral-400 uppercase text-sm">Gửi mã giới thiệu đến với bạn bè</p>
                           <div className="border-1 border-neutral-300"></div>
-                          <p className="flex items-center p-2">
+                          <p className="flex items-center justify-between p-2">
                             <span className="uppercase text-lg text-neutral-700 ">Lorem ipsum dolor.</span>
                             <span className="flex text-blue-700 text-sm cursor-pointer"><Copy className={"mx-1"} /> Copy</span>
                           </p>
                         </div>
                         <div className="p-3 rounded-lg bg-neutral-100 mb-3">
                           <p className="text-neutral-400 uppercase text-sm">Gửi link giới thiệu đến với bạn bè</p>
-                          <div className="px-2 flex items-center bg-white rounded-3xl border-2 ">
-                            <Input className={"border-none! w-3/4!"} type={"text"} value={"https://mcdn.coolmate.me/image/September2024/mceclip0_28"} />
+                          <div className="px-2 flex items-center justify-between bg-white rounded-3xl border-2 ">
+                            <Input className={"border-none! w-3/4! focus-visible:border-none"} type={"text"}
+                                   value={"https://mcdn.coolmate.me/image/September2024/mceclip0_28"} />
                             <span className="flex text-blue-700 text-sm cursor-pointer"><Copy className={"mx-1"} /> Copy</span>
                           </div>
                         </div>
@@ -156,17 +162,18 @@ export default function ProductDetailPage() {
 
                         <p className="text-sm font-bold">Bạn sẽ nhận được CoolCash khi:</p>
                         <ul className={"text-sm"}>
-                          <li className={"flex items-center"}><Check className={"size-4 flex-none mr-1"} /> <span className={"shrink"}>Bạn bè của bạn tham gia CoolClub</span>
+                          <li className={"flex items-center"}><Check className={"size-4 flex-none mr-1"} /> <span className={"shrink text-sm "}>Bạn bè của bạn tham gia CoolClub</span>
                           </li>
-                          <li className={"flex items-center"}><Check className={"size-4 flex-none mr-1"} /> <span className={"shrink"}>Bạn bè của bạn hoàn thành đơn hàng đầu tiên trên website</span>
-                          </li>
-                          <li className={"flex items-center"}><Check className={"size-4 flex-none mr-1"} /> <span className={"shrink"}>Sau 7 ngày kể từ ngày đơn hàng giao thành công và không đổi trả, bạn có thể nhận và sử dụng CoolCash của bạn</span>
+                          <li className={"flex items-center"}><Check className={"size-4 flex-none mr-1"} /> <span className={"shrink text-sm "}>Bạn bè của bạn hoàn thành đơn hàng đầu tiên trên website</span>
+                          </li>tẽ
+                          <li className={"flex items-center"}><Check className={"size-4 flex-none mr-1"} /> <span className={"shrink text-sm "}>Sau 7 ngày kể từ ngày đơn hàng giao thành công và không đổi trả, bạn có thể nhận và sử dụng CoolCash của bạn</span>
                           </li>
                         </ul>
 
                         <a href="#"><span className="text-xs underline decoration-gray-400 text-gray-400">*Chính sách và điều khoản</span></a>
                       </div>
-                      <img src="https://mcdn.coolmate.me/image/September2024/mceclip0_28.png" alt="" className="h-120 place-self-end object-cover" />
+                      <img src="https://mcdn.coolmate.me/image/September2024/mceclip0_28.png" alt=""
+                           className="xl:w-full xl:h-auto w-0 h-0 place-self-end object-cover" />
                     </div>
                   </ScrollArea>
                 </DialogContent>
@@ -174,10 +181,10 @@ export default function ProductDetailPage() {
               </Dialog>
 
             </p>
-            <p className={"text-base line-through text-neutral-400"}>100000</p>
+            <p className={"md:text-base text-sm line-through text-neutral-400"}>100000</p>
             <p className="flex font-bold text-2xl ">
-              <span className="me-3">100.000</span>
-              <Badge className={"text-white font-bold text-xl bg-blue-700"}>
+              <span className="me-3 text-sm md:text-base">100.000</span>
+              <Badge className={"text-white font-bold md:text-xl text-sm bg-blue-700"}>
                 -10%
               </Badge>
             </p>
@@ -186,7 +193,7 @@ export default function ProductDetailPage() {
             </p>
 
             <p className="flex items-center my-5">
-							<span className="me-3 text-lg font-bold text-neutral-400">
+							<span className="me-3 lg:text-lg md:text-sm font-bold text-neutral-400">
 								Mã giảm giá
 							</span>
               <HoverCard>
@@ -202,7 +209,7 @@ export default function ProductDetailPage() {
                     <Ticket className={"size-5! text-orange-500"} />
                   </Badge>
                 </HoverCardTrigger>
-                <HoverCardContent className={'w-100! p-1'}>
+                <HoverCardContent className={"w-100! p-1"}>
                   <div className={"text-center"}>
                     <p className={"m-0"}>
                       Nhập <span className="font-bold">code</span> (còn number
@@ -220,176 +227,176 @@ export default function ProductDetailPage() {
 
             <Gift />
 
-            <p className="m-0">
+            <p className="lg:text-lg md:text-sm text-xs my-1">
               Màu sắc: <span className="font-bold">Lorem ipsum.</span>
             </p>
             <div className="flex flex-wrap gap-4 mb-4 ">
-              <div className="w-12 h-6 rounded-2xl outline-2 outline-offset-2 outline-neutral-700 bg-blue-600"></div>
+              <div className="w-12 h-6 lg:rounded-2xl rounded-sm outline-2 outline-offset-2 outline-neutral-700 bg-blue-600"></div>
             </div>
 
-            <p className="m-0 flex justify-between">
-							<span>
-								Kích thước áo: <span className={"font-bold"}>size</span>{" "}
-                <span>mô tả size</span>
+            <div className="border-2 border-orange-300 rounded-lg p-2 my-2">
+              <p className="m-0 flex justify-between ">
+							<span className={"lg:text-lg md:text-sm text-xs"}>
+								Kích thước áo: <span className={"font-bold"}>size</span>
+                <span> mô tả size</span>
 							</span>
-              <Dialog>
-                <DialogTrigger>
-                  <span className={"text-blue-600 underline underline-offset-2 decoration-blue-400 cursor-pointer text-sm"}>
+                <Dialog>
+                  <DialogTrigger>
+                  <span className={"text-blue-600 underline underline-offset-2 decoration-blue-400 cursor-pointer md:text-sm text-xs"}>
                     Hướng dẫn chọn size
 							    </span>
-                </DialogTrigger>
-                <DialogContent className={"max-w-[910px]!"}>
-                  <Tabs className={"relative"} defaultValue="choose-size">
-                    <TabsList className={"h-auto p-0 text-black  border-2 border-gray-300 bg-white rounded-2xl  cursor-pointer"}>
-                      <TabsTrigger
-                        className={"h-12 bg-white data-[state=active]:bg-gray-200 data-[state=active]:shadow-none border-none rounded-xl font-bold cursor-pointer"}
-                        value="choose-size">Hướng dẫn chọn size</TabsTrigger>
-                      <TabsTrigger
-                        className={"h-12 bg-white data-[state=active]:bg-gray-200 data-[state=active]:shadow-none border-none rounded-xl font-bold cursor-pointer"}
-                        value="size-table">Bảng size</TabsTrigger>
-                    </TabsList>
-                    <TabsContent className={"px-20 py-5 peer"} value="choose-size">
-                      <div className="w-full flex">
-                        <span className="text-gray-500 flex-none px-4">Chiều cao</span>
-                        <Slider className={"shrink"} defaultValue={[155]} min={155} max={190} step={1} />
-                        <span className="text-blue-700 flex-none px-4">cm</span>
-                      </div>
-
-                      <div className="w-full flex my-5">
-                        <span className="text-gray-500 flex-none px-4">Cân nặng</span>
-                        <Slider className={"shrink"} defaultValue={[40]} min={40} max={90} step={1} />
-                        <span className="text-blue-700 flex-none px-4">kg</span>
-                      </div>
-
-                      <RadioGroup className={"flex"} defaultValue={"option-1"}>
-                        <div className="relative">
-                          <img src="https://media3.coolmate.me/cdn-cgi/image/width=1069,height=1575,quality=80,format=auto/uploads/November2023/mceclip1_23.jpg"
-                               alt="" className="w-55 h-62 object-cover rounded-lg" />
-                          <RadioGroupItem className={"absolute top-0 right-0 w-55 h-62  border-none shadow-none cursor-pointer"} value="option-1" id="option-1">
-                            <div className={" w-55 h-62 border-4 rounded-lg border-blue-700 "}></div>
-                          </RadioGroupItem>
+                  </DialogTrigger>
+                  <DialogContent className={"max-w-[910px]!"}>
+                    <Tabs className={"relative"} defaultValue="choose-size">
+                      <TabsList className={"h-auto p-0 text-black  border-2 border-gray-300 bg-white rounded-2xl  cursor-pointer"}>
+                        <TabsTrigger
+                          className={"h-12 bg-white data-[state=active]:bg-gray-200 data-[state=active]:shadow-none border-none rounded-xl font-bold cursor-pointer"}
+                          value="choose-size">Hướng dẫn chọn size</TabsTrigger>
+                        <TabsTrigger
+                          className={"h-12 bg-white data-[state=active]:bg-gray-200 data-[state=active]:shadow-none border-none rounded-xl font-bold cursor-pointer"}
+                          value="size-table">Bảng size</TabsTrigger>
+                      </TabsList>
+                      <TabsContent className={"lg:px-20 py-5"} value="choose-size">
+                        <div className="w-full flex">
+                          <span className="text-gray-500 flex-none px-4">Chiều cao</span>
+                          <Slider className={"shrink"} defaultValue={[155]} min={155} max={190} step={1} />
+                          <span className="text-blue-700 flex-none px-4">cm</span>
                         </div>
-                        <div className="relative">
-                          <img src="https://media3.coolmate.me/cdn-cgi/image/width=1069,height=1575,quality=80,format=auto/uploads/November2023/mceclip3_97.jpg"
-                               alt="" className="w-55 h-62 object-cover rounded-lg" />
-                          <RadioGroupItem className={"absolute top-0 right-0 w-55 h-62  border-none shadow-none cursor-pointer"} value="option-2" id="option-2">
-                            <div className={" w-55 h-62 border-4 rounded-lg border-blue-700 "}></div>
-                          </RadioGroupItem>
+
+                        <div className="w-full flex my-5">
+                          <span className="text-gray-500 flex-none px-4">Cân nặng</span>
+                          <Slider className={"shrink"} defaultValue={[40]} min={40} max={90} step={1} />
+                          <span className="text-blue-700 flex-none px-4">kg</span>
                         </div>
-                        <div className="relative">
-                          <img src="https://media3.coolmate.me/cdn-cgi/image/width=1069,height=1575,quality=80,format=auto/uploads/November2023/mceclip0_45.png"
-                               alt="" className="w-55 h-62 object-cover rounded-lg" />
-                          <RadioGroupItem className={"absolute top-0 right-0 w-55 h-62  border-none shadow-none cursor-pointer"} value="option-3" id="option-3">
-                            <div className={" w-55 h-62 border-4 rounded-lg border-blue-700 "}></div>
-                          </RadioGroupItem>
+
+                        <SameRadioGroup className={"flex"} defaultValue={"option-1"}>
+                          <div
+                            className="w-1/3 rounded-lg bg-cover bg-center bg-no-repeat bg-[url(https://media3.coolmate.me/cdn-cgi/image/width=1069,height=1575,quality=80,format=auto/uploads/November2023/mceclip1_23.jpg)]">
+                            <SameRadioGroupItem className={`w-full h-full relative border-none shadow-none cursor-pointer`} value="option-1" id="option-1">
+                              <div className={`h-full size-full absolute inset-0 rounded-lg outline-4 outline-offset-2 outline-blue-700 `}></div>
+                            </SameRadioGroupItem>
+                          </div>
+                          <div
+                            className="w-1/3 rounded-lg bg-cover bg-center bg-no-repeat bg-[url(https://media3.coolmate.me/cdn-cgi/image/width=1069,height=1575,quality=80,format=auto/uploads/November2023/mceclip3_97.jpg)]">
+                            <SameRadioGroupItem className={`w-full h-full relative border-none shadow-none cursor-pointer`} value="option-2" id="option-2">
+                              <div className={`h-full size-full absolute inset-0 rounded-lg outline-4 outline-offset-2 outline-blue-700 `}></div>
+                            </SameRadioGroupItem>
+                          </div>
+                          <div
+                            className="w-1/3 rounded-lg bg-cover bg-center bg-no-repeat bg-[url(https://media3.coolmate.me/cdn-cgi/image/width=1069,height=1575,quality=80,format=auto/uploads/November2023/mceclip0_45.png)]">
+                            <SameRadioGroupItem className={`w-full h-full relative border-none shadow-none cursor-pointer`} value="option-3" id="option-3">
+                              <div className={`h-full size-full absolute inset-0 rounded-lg outline-4 outline-offset-2 outline-blue-700 `}></div>
+                            </SameRadioGroupItem>
+                          </div>
+
+                        </SameRadioGroup>
+                        <p className="font-bold my-3">Coolmate gợi ý bạn:</p>
+                        <div className="grid grid-cols-6 grid-flow-col gap-4">
+                          <div className="bg-black rounded-full p-1 text-white text-center">Lorem ipsum.</div>
+                          <div className="bg-black rounded-full p-1 text-white text-center">Lorem ipsum.</div>
+                          <div className="bg-black rounded-full p-1 text-white text-center">Lorem ipsum.</div>
+                          <div className="bg-black rounded-full p-1 text-white text-center">Lorem ipsum.</div>
+
                         </div>
-                      </RadioGroup>
-                      <p className="font-bold my-3">Coolmate gợi ý bạn:</p>
-                      <div className="grid grid-cols-6 grid-flow-col gap-4">
-                        <div className="bg-black rounded-full p-1 text-white text-center">Lorem ipsum.</div>
-                        <div className="bg-black rounded-full p-1 text-white text-center">Lorem ipsum.</div>
-                        <div className="bg-black rounded-full p-1 text-white text-center">Lorem ipsum.</div>
-                        <div className="bg-black rounded-full p-1 text-white text-center">Lorem ipsum.</div>
+                      </TabsContent>
+                      <TabsContent value="size-table">
+                        <Table>
+                          <TableCaption>Trường hợp số đo của bạn nằm trong khoảng giữa các size với nhau:
+                            Với áo thun, bạn hãy lựa chọn ưu tiên theo chiều cao
+                            Ví dụ chiều cao của bạn theo size L nhưng cân nặng của bạn theo size M, Hãy chọn L.
+                            97% khách hàng của chúng tôi đã chọn đúng size theo cách này.</TableCaption>
+                          <TableHeader className={"bg-blue-700"}>
+                            <TableRow>
+                              <TableHead className={"text-white"}>Size</TableHead>
+                              <TableHead className={"text-white"}>M</TableHead>
+                              <TableHead className={"text-white"}>L</TableHead>
+                              <TableHead className={"text-white"}>XL</TableHead>
+                              <TableHead className={"text-white"}>2XL</TableHead>
+                              <TableHead className={"text-white"}>3XL</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            <TableRow className="text-sm font-bold">
+                              <TableCell>Chiều cao</TableCell>
+                              <TableCell>1m60 - 1m65</TableCell>
+                              <TableCell>1m66 - 1m72</TableCell>
+                              <TableCell>1m72 - 1m77</TableCell>
+                              <TableCell>1m77 - 1m84</TableCell>
+                              <TableCell>1m85 - 1m92</TableCell>
+                            </TableRow>
 
-                      </div>
-                    </TabsContent>
-                    <TabsContent value="size-table">
-                      <Table>
-                        <TableCaption>Trường hợp số đo của bạn nằm trong khoảng giữa các size với nhau:
-                          Với áo thun, bạn hãy lựa chọn ưu tiên theo chiều cao
-                          Ví dụ chiều cao của bạn theo size L nhưng cân nặng của bạn theo size M, Hãy chọn L.
-                          97% khách hàng của chúng tôi đã chọn đúng size theo cách này.</TableCaption>
-                        <TableHeader className={"bg-blue-700"}>
-                          <TableRow>
-                            <TableHead className={"text-white"}>Size</TableHead>
-                            <TableHead className={"text-white"}>M</TableHead>
-                            <TableHead className={"text-white"}>L</TableHead>
-                            <TableHead className={"text-white"}>XL</TableHead>
-                            <TableHead className={"text-white"}>2XL</TableHead>
-                            <TableHead className={"text-white"}>3XL</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          <TableRow className="text-sm font-bold">
-                            <TableCell>Chiều cao</TableCell>
-                            <TableCell>1m60 - 1m65</TableCell>
-                            <TableCell>1m66 - 1m72</TableCell>
-                            <TableCell>1m72 - 1m77</TableCell>
-                            <TableCell>1m77 - 1m84</TableCell>
-                            <TableCell>1m85 - 1m92</TableCell>
-                          </TableRow>
+                            <TableRow className="text-sm font-bold">
+                              <TableCell>Cân nặng</TableCell>
+                              <TableCell> 55kg - 61kg</TableCell>
+                              <TableCell>62kg - 68kg</TableCell>
+                              <TableCell>69kg - 75kg</TableCell>
+                              <TableCell>76kg - 84kg</TableCell>
+                              <TableCell>85kg - 90kg</TableCell>
+                            </TableRow>
 
-                          <TableRow className="text-sm font-bold">
-                            <TableCell>Cân nặng</TableCell>
-                            <TableCell> 55kg - 61kg</TableCell>
-                            <TableCell>62kg - 68kg</TableCell>
-                            <TableCell>69kg - 75kg</TableCell>
-                            <TableCell>76kg - 84kg</TableCell>
-                            <TableCell>85kg - 90kg</TableCell>
-                          </TableRow>
+                            <TableRow className="text-sm font-bold">
+                              <TableCell>Dài áo</TableCell>
+                              <TableCell>68.5</TableCell>
+                              <TableCell>70.5</TableCell>
+                              <TableCell>72.5</TableCell>
+                              <TableCell>74.5</TableCell>
+                              <TableCell>76</TableCell>
+                            </TableRow>
 
-                          <TableRow className="text-sm font-bold">
-                            <TableCell>Dài áo</TableCell>
-                            <TableCell>68.5</TableCell>
-                            <TableCell>70.5</TableCell>
-                            <TableCell>72.5</TableCell>
-                            <TableCell>74.5</TableCell>
-                            <TableCell>76</TableCell>
-                          </TableRow>
+                            <TableRow className="text-sm font-bold">
+                              <TableCell>Rộng ngực</TableCell>
+                              <TableCell>52.7</TableCell>
+                              <TableCell>54.7</TableCell>
+                              <TableCell>56.7</TableCell>
+                              <TableCell>59.7</TableCell>
+                              <TableCell>62.7</TableCell>
+                            </TableRow>
 
-                          <TableRow className="text-sm font-bold">
-                            <TableCell>Rộng ngực</TableCell>
-                            <TableCell>52.7</TableCell>
-                            <TableCell>54.7</TableCell>
-                            <TableCell>56.7</TableCell>
-                            <TableCell>59.7</TableCell>
-                            <TableCell>62.7</TableCell>
-                          </TableRow>
+                            <TableRow className="text-sm font-bold">
+                              <TableCell>Dài tay</TableCell>
+                              <TableCell>58.5</TableCell>
+                              <TableCell>60.5</TableCell>
+                              <TableCell>62.5</TableCell>
+                              <TableCell>64.5</TableCell>
+                              <TableCell>66.5</TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
 
-                          <TableRow className="text-sm font-bold">
-                            <TableCell>Dài tay</TableCell>
-                            <TableCell>58.5</TableCell>
-                            <TableCell>60.5</TableCell>
-                            <TableCell>62.5</TableCell>
-                            <TableCell>64.5</TableCell>
-                            <TableCell>66.5</TableCell>
-                          </TableRow>
-                        </TableBody>
-                      </Table>
+                      </TabsContent>
+                    </Tabs>
 
-                    </TabsContent>
-                  </Tabs>
-
-                </DialogContent>
-              </Dialog>
-            </p>
-            <div className="flex flex-wrap gap-3 mb-3">
-              <HoverCard>
-                <HoverCardTrigger>
-                  <div className="cursor-pointer w-24 h-12  bg-black text-white text-center content-center rounded-2xl">
-                    Size
-                  </div>
-                </HoverCardTrigger>
-                <HoverCardContent className={'p-0'}>
-                  <div className={"text-center"}>
-                    <p className={"m-0"}>Lorem ipsum.</p>
-                    <p className={"m-0"}>Lorem ipsum.</p>
-                  </div>
-                </HoverCardContent>
-              </HoverCard>
-              <HoverCard>
-                <HoverCardTrigger>
-                  <div className="cursor-pointer w-24 h-12 bg-neutral-200 text-center content-center rounded-xl">
-                    Size
-                  </div>
-                </HoverCardTrigger>
-                <HoverCardContent className={'p-0'}>
-                  <div className={"text-center"}>
-                    <p className={"m-0"}>Lorem ipsum.</p>
-                    <p className={"m-0"}>Lorem ipsum.</p>
-                  </div>
-                </HoverCardContent>
-              </HoverCard>
+                  </DialogContent>
+                </Dialog>
+              </p>
+              <div className="flex flex-wrap gap-3 mb-3">
+                <HoverCard>
+                  <HoverCardTrigger>
+                    <div className="cursor-pointer xl:w-24 lg:w-16 lg:h-12 md:h-8 md:w-12 h-6 w-20 lg:rounded-2xl md:rounded-lg rounded-md  bg-black text-white text-center content-center ">
+                      Size
+                    </div>
+                  </HoverCardTrigger>
+                  <HoverCardContent className={"p-0"}>
+                    <div className={"text-center"}>
+                      <p className={"m-0"}>Lorem ipsum.</p>
+                      <p className={"m-0"}>Lorem ipsum.</p>
+                    </div>
+                  </HoverCardContent>
+                </HoverCard>
+                <HoverCard>
+                  <HoverCardTrigger>
+                    <div className="cursor-pointer xl:w-24 lg:w-16 lg:h-12 md:h-8 md:w-12 h-6 w-20 lg:rounded-2xl md:rounded-lg rounded-md  bg-neutral-200 text-center content-center">
+                      Size
+                    </div>
+                  </HoverCardTrigger>
+                  <HoverCardContent className={"p-0"}>
+                    <div className={"text-center"}>
+                      <p className={"m-0"}>Lorem ipsum.</p>
+                      <p className={"m-0"}>Lorem ipsum.</p>
+                    </div>
+                  </HoverCardContent>
+                </HoverCard>
+              </div>
             </div>
 
             <div className="flex mb-3">
@@ -442,21 +449,30 @@ export default function ProductDetailPage() {
             </div>
 
             <div className="grid grid-cols-2 grid-rows-2 gap-3">
-              <div className={"flex"}>
-                <RefreshCcw className={"font-bold mr-1"} />
-                Đổi trả cực dễ chỉ cần số điện thoại
+              <div className={"flex items-center"}>
+                <RefreshCcw className={"font-bold mr-1 flex-none"} />
+                <span className="shrink text-xs md:text-sm">
+                  Đổi trả cực dễ chỉ cần số điện thoại
+                </span>
               </div>
-              <div className={"flex"}>
-                <CalendarSync className={"font-bold mr-1"} /> 60 ngày đổi trả vì
+              <div className={"flex items-center"}>
+                <CalendarSync className={"font-bold mr-1 flex-none"} />
+                <span className="shrink text-xs md:text-sm">
+                   60 ngày đổi trả vì
                 bất kỳ lý do gì
+                </span>
               </div>
-              <div className={"flex"}>
-                <PhoneCall className={"font-bold mr-1"} /> Hotline 1900.27.27.37
+              <div className={"flex items-center"}>
+                <PhoneCall className={"font-bold mr-1 flex-none"} /> <span className="shrink text-xs md:text-sm">
+                Hotline 1900.27.27.37
                 hỗ trợ từ 8h30 - 22h mỗi ngày
+              </span>
               </div>
-              <div className={"flex"}>
-                <MapPinHouse className={"font-bold mr-1"} /> Đến tận nơi nhận
+              <div className={"flex items-center"}>
+                <MapPinHouse className={"font-bold mr-1 flex-none"} /> <span className="shrink text-xs md:text-sm">
+                Đến tận nơi nhận
                 hàng trả, hoàn tiền trong 24h
+              </span>
               </div>
             </div>
           </div>
@@ -464,9 +480,9 @@ export default function ProductDetailPage() {
       </div>
 
       <Collapsible className={" p-5 bg-neutral-200 text-sm"}>
-        <p className={"uppercase text-center font-bold text-4xl"}>Mô tả sản phẩm</p>
+        <p className={"uppercase text-center font-bold md:text-4xl sm:text-xl"}>Mô tả sản phẩm</p>
         <div className="grid grid-cols-2 gap-3 mb-3">
-          <div className="p-3 px-5 ">
+          <div className="p-3 px-5 text-xs">
             <p className={"m-0 py-2 border-b-1 border-neutral-300"}>
               Lorem ipsum dolor sit amet.
             </p>
@@ -486,7 +502,7 @@ export default function ProductDetailPage() {
           <img
             src="src/assets/images/product-detail-image/quan-dai-kaki-ecc-pants-den_(4).jpeg"
             alt=""
-            className="object-cover rounded-xl h-150!"
+            className="object-cover rounded-xl md:h-150! h-50!"
           />
         </div>
         <CollapsibleContent>
@@ -499,7 +515,7 @@ export default function ProductDetailPage() {
         <div className="flex justify-center mt-4">
           <CollapsibleTrigger asChild>
             <Button
-              className={"w-1/10 h-10 rounded-[50px] outline-2 outline-black outline-offset-2"}
+              className={"md:w-1/10 w-1/5 h-10 lg:rounded-2xl rounded-lg"}
               variant="default"
               size="sm"
             >
@@ -509,11 +525,11 @@ export default function ProductDetailPage() {
         </div>
       </Collapsible>
 
-      <p className={"uppercase text-center py-3 font-bold text-4xl"}>Gợi ý sản phẩm</p>
+      <p className={"uppercase text-center py-3 font-bold md:text-4xl text-xl"}>Gợi ý sản phẩm</p>
       <Carousel className="w-full">
         <CarouselContent>
           {products.map((card, index) => (
-            <CarouselItem className={" basis-1/4"} key={index}>
+            <CarouselItem className={" lg:basis-1/4 basis-1/2"} key={index}>
               <CardProduct {...card} />
             </CarouselItem>
           ))}
@@ -522,11 +538,19 @@ export default function ProductDetailPage() {
         <CarouselNext className={"right-2 rounded-2xl! outline-0"} />
       </Carousel>
 
-      <div className="flex p-5 bg-neutral-200">
-        <div className="w-1/3">
-          <p className="fw-bold uppercase w-1/2 text-4xl">Đánh giá sản phẩm</p>
+      <div className="px-4 md:flex sm:flex-none md:p-5 sm:ps-5 pt-5 bg-neutral-100">
+        <p className="md:w-1/4  uppercase md:text-4xl text-xl font-bold  md:content-center md:px-12">Đánh giá sản phẩm</p>
+        <div className="md:w-3/4 content-center">
+          <p className="mb-0 flex items-center font-bold md:text-8xl text-3xl">4.8
+            <Rate className={"lg:size-12! md:size-8! fill-orange-400 stroke-orange-400"} defaultValue={4.8} disabled={true} allowHalf={true} />
+          </p>
+          <p className="md:mb-10 text-sm text-gray-500 fw-bold">Dựa trên <span className="text-gray-800">X</span> đánh giá đến từ khách hàng</p>
+        </div>
+      </div>
+      <div className="flex flex-wrap p-5 pt-0 bg-neutral-100">
+        <div className="lg:w-1/4 md:flex-none lg:px-12 px-4 max-md:hidden">
           <Input
-            className={"rounded-2xl w-1/2 my-4 bg-white "}
+            className={"rounded-2xl my-4 bg-white max-md:visible"}
             placeholder="Tìm kiếm đánh giá"
           />
 
@@ -543,7 +567,7 @@ export default function ProductDetailPage() {
               />
               <Label className={" ml-1"} htmlFor="r5">
                 <Rate
-                  className={'fill-black'}
+                  className={"fill-black"}
                   defaultValue={5}
                 />
               </Label>
@@ -557,7 +581,7 @@ export default function ProductDetailPage() {
               />
               <Label className={"ml-1"} htmlFor="r4">
                 <Rate
-                  className={'fill-black'}
+                  className={"fill-black"}
                   defaultValue={4}
                 />
               </Label>
@@ -571,7 +595,7 @@ export default function ProductDetailPage() {
               />
               <Label className={" ml-1"} htmlFor="r3">
                 <Rate
-                  className={'fill-black'}
+                  className={"fill-black"}
                   defaultValue={3}
                 />
               </Label>
@@ -599,14 +623,14 @@ export default function ProductDetailPage() {
               />
               <Label className={" ml-1"} htmlFor="r1">
                 <Rate
-                  className={'fill-black'}
+                  className={"fill-black"}
                   defaultValue={1}
                 />
               </Label>
             </div>
           </RadioGroup>
 
-          <div className="w-1/2 my-4 flex items-center p-2 text-blue-700 bg-violet-100 rounded-xl fw-bold text-sm">
+          <div className="my-4 flex items-center p-2 text-blue-700 bg-violet-100 rounded-xl fw-bold text-sm">
             <Check className={"mr-1! size-10"} />
             <span className="">
 							Các review đều đến từ khách hàng đã thực sự mua hàng của Coolmate
@@ -640,11 +664,7 @@ export default function ProductDetailPage() {
           </RadioGroup>
         </div>
 
-        <div className="w-2/3">
-          <p className="mb-0 flex items-center font-bold text-8xl">4.8
-            <Rate className={"text-4xl fill-orange-400 stroke-orange-400"} defaultValue={4.8} disabled={true} allowHalf={true} />
-          </p>
-          <p className="mb-10 text-sm text-gray-500 fw-bold">Dựa trên <span className="text-gray-800">X</span> đánh giá đến từ khách hàng</p>
+        <div className="lg:w-3/4 md:shrink w-full sm:mt-10 mt-5">
           <div className="flex justify-between items-end">
             <p className="text-sm text-gray-500 fw-bold">Hiển thị đánh giá <span className="text-gray-800">1-10</span></p>
             <Select>
@@ -654,6 +674,11 @@ export default function ProductDetailPage() {
               <SelectContent className={"bg-white text-sm"}>
                 <SelectItem value="z2a">Đánh giá: Cao đến thấp</SelectItem>
                 <SelectItem value="a2z">Đánh giá: Thấp đến cao</SelectItem>
+                <SelectItem className={'md:hidden sm:visible '} value="1">1 sao</SelectItem>
+                <SelectItem className={'md:hidden sm:visible '} value="2">2 sao</SelectItem>
+                <SelectItem className={'md:hidden sm:visible '} value="3">3 sao</SelectItem>
+                <SelectItem className={'md:hidden sm:visible '} value="4">4 sao</SelectItem>
+                <SelectItem className={'md:hidden sm:visible '} value="5">5 sao</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -685,11 +710,11 @@ export default function ProductDetailPage() {
         </div>
       </div>
 
-      <p className={"uppercase text-center py-3 font-bold text-4xl"}>Sản phẩm bạn đã xem</p>
+      <p className={"uppercase text-center py-3 font-bold md:text-4xl sm:text-xl"}>Sản phẩm bạn đã xem</p>
       <Carousel className="w-full">
         <CarouselContent>
           {products.map((card, index) => (
-            <CarouselItem className={" basis-1/4"} key={index}>
+            <CarouselItem className={" lg:basis-1/4 basis-1/2"} key={index}>
               <CardProduct {...card} />
             </CarouselItem>
           ))}
