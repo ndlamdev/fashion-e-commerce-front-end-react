@@ -7,11 +7,11 @@
  **/
 
 function Searcher() {
-	return (
-		<div className={"bg-red-500 size-full absolute top-0"}>
-			Hello
-		</div>
-	);
+  return (
+    <div className={"bg-red-500 size-full absolute top-0"}>
+      Hello
+    </div>
+  );
 }
 
 export default Searcher;

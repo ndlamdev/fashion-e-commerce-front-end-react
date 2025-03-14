@@ -7,13 +7,13 @@
  **/
 
 type ShoppingBagItemType = {
-	id: number;
-	image: string;
-	name: string;
-	price: number;
-	discount?: number;
-	amount: number;
-	color: string;
-	size: string;
+  id: number;
+  image: string;
+  name: string;
+  price: number;
+  discount?: number;
+  amount: number;
+  color: string;
+  size: string;
 };
 export default ShoppingBagItemType;

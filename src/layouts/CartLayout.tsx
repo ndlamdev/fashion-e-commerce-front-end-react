@@ -18,40 +18,40 @@ import VoucherType from "@/types/VoucherType.ts";
 export type Payment = "cash" | "zalo-pay" | "vn-pay" | "momo";
 
 function CartLayout() {
-	const [showVerticalMenu, setShowVerticalMenu] = useState<boolean>(false);
-	const [showVerticalMenuComplete, setShowVerticalMenuComplete] = useState<boolean>(false);
-	const [payment, setPayment] = useState<Payment>("cash");
-	const [voucher, setVoucher] = useState<VoucherType>();
+  const [showVerticalMenu, setShowVerticalMenu] = useState<boolean>(false);
+  const [showVerticalMenuComplete, setShowVerticalMenuComplete] = useState<boolean>(false);
+  const [payment, setPayment] = useState<Payment>("cash");
+  const [voucher, setVoucher] = useState<VoucherType>();
 
-	return (
-		<CartContext
-			value={{
-				payment: payment,
-				setPayment: setPayment,
-				voucher: voucher,
-				setVoucher: setVoucher,
-			}}>
-			<div className={"h-full scroll-hidden"}>
-				<div className={`bg-white ${showVerticalMenuComplete ? "hidden" : "block"} lg:block`}>
-					<Header
-						showMenu={() => {
-							setShowVerticalMenu(true);
-						}}
-					/>
-					<Outlet />
-					<CartLayoutFooter />
-				</div>
-				<VerticalMenu
-					showMenu={showVerticalMenu}
-					onAnimationComplete={() => setShowVerticalMenuComplete(true)}
-					onHidden={() => {
-						setShowVerticalMenu(false);
-						setShowVerticalMenuComplete(false);
-					}}
-				/>
-			</div>
-		</CartContext>
-	);
+  return (
+    <CartContext
+      value={{
+        payment: payment,
+        setPayment: setPayment,
+        voucher: voucher,
+        setVoucher: setVoucher,
+      }}>
+      <div className={"h-full scroll-hidden"}>
+        <div className={`bg-white ${showVerticalMenuComplete ? "hidden" : "block"} lg:block`}>
+          <Header
+            showMenu={() => {
+              setShowVerticalMenu(true);
+            }}
+          />
+          <Outlet />
+          <CartLayoutFooter />
+        </div>
+        <VerticalMenu
+          showMenu={showVerticalMenu}
+          onAnimationComplete={() => setShowVerticalMenuComplete(true)}
+          onHidden={() => {
+            setShowVerticalMenu(false);
+            setShowVerticalMenuComplete(false);
+          }}
+        />
+      </div>
+    </CartContext>
+  );
 }
 
 export default CartLayout;

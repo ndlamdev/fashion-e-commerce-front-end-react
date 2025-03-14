@@ -23,8 +23,9 @@ function CartPage() {
   useHorizontalScroll(voucherRef);
 
   return (
-    <main className={"lg:px-20 px-5 gap-10 pb-40  overflow-hidden grid lg:grid-cols-7 lg:grid-rows-1 grid-rows-subgrid grid-cols-1 mt-10"}>
-      <div id={"left"} className={"lg:col-span-4 order-2 lg:order-1 hidden md:block"}>
+    <main
+      className={"lg:px-20 px-5 gap-10 pb-40 overflow-hidden grid lg:grid-cols-7 lg:grid-rows-1 grid-rows-subgrid grid-cols-1 mt-10"}>
+      <div id={"left"} className={"lg:col-span-4 order-2 lg:order-1 md:block hidden"}>
         <InformationCustomer />
       </div>
       <div id={"right"} className={"lg:col-span-3 order-1 lg:order-2"}>

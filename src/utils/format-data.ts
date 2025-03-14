@@ -7,10 +7,10 @@
  **/
 
 export const formatCurrency = (price: number) =>
-	new Intl.NumberFormat("vi-VN", {
-		style: "currency",
-		currency: "VND",
-	}).format(price);
+  new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(price);
 
 export const formatDate = (date: Date) => new Intl.DateTimeFormat("vi", { day: "2-digit", month: "2-digit", year: "numeric" }).format(date);
 
