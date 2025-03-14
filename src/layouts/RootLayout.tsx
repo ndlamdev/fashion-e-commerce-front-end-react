@@ -26,7 +26,6 @@ function RootLayout() {
         <Outlet />
         <Footer />
       </div>
-      <div className={"static top-[150px] right-4 w-10  h-96 bg-red-600 z-1"}>Hello</div>
       <VerticalMenu
         showMenu={showVerticalMenu}
         onAnimationComplete={() => setShowVerticalMenuComplete(true)}
