@@ -5,7 +5,6 @@ import RootLayout from "@/layouts/RootLayout.tsx";
 import ProductDetailPage from "@/pages/ProductDetail.tsx";
 
 function App() {
-
   return (
     <BrowserRouter>
       <Routes>
