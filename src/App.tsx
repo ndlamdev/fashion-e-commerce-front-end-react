@@ -4,6 +4,7 @@ import HomePage from "@/pages/HomePage.tsx";
 import RootLayout from "@/layouts/RootLayout.tsx";
 import CartPage from "@/pages/CartPage.tsx";
 import CartLayout from "@/layouts/CartLayout.tsx";
+import { Toaster } from "sonner";
 
 function App() {
 	return (
@@ -16,6 +17,7 @@ function App() {
 					<Route index element={<CartPage />} />
 				</Route>
 			</Routes>
+			<Toaster />
 		</BrowserRouter>
 	);
 }

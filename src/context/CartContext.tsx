@@ -7,9 +7,13 @@ export const CartContext = createContext<{
 	payment: Payment;
 	setVoucher: (voucher?: VoucherType) => void;
 	voucher?: VoucherType;
+	showConfirm: boolean;
+	setShowConfirm: (showConfirm: boolean) => void;
 }>({
 	payment: "cash",
 	setPayment: (_: Payment) => {},
 	voucher: undefined,
 	setVoucher: () => {},
+	showConfirm: false,
+	setShowConfirm: () => {},
 });

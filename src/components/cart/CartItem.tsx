@@ -15,9 +15,12 @@ import { Fa6RegularTrashCan } from "@/assets/images/icons/Fa6RegularTrashCan.tsx
 export type CartItemProps = ShoppingBagItemType & {
 	sizes: string[];
 	colors: string[];
+	onDelete?: () => void;
+	onPlus?: () => void;
+	onMinute?: () => void;
 };
 
-function CartItem({ id, name, image, color, size, amount, colors, sizes, discount, price }: CartItemProps) {
+function CartItem({ id, name, image, color, size, amount, colors, sizes, discount, price, onDelete, onPlus, onMinute }: CartItemProps) {
 	return (
 		<div className={"flex min-h-55 items-center gap-3 border-b-1 border-gray-300 pt-4 pb-10"}>
 			<input type={"checkbox"} className={"h-5 w-5 flex-none"} />
@@ -55,23 +58,25 @@ function CartItem({ id, name, image, color, size, amount, colors, sizes, discoun
 								))}
 							</SelectContent>
 						</Select>
-						<button className={"hidden cursor-pointer items-center gap-2 text-sm hover:text-red-600 md:flex"}>
+						<button className={"hidden cursor-pointer items-center gap-2 text-sm hover:text-red-600 md:flex"} onClick={onDelete}>
 							<Fa6RegularTrashCan width={13} height={13} />
 							Xóa
 						</button>
 					</div>
 					<div className={"mt-2 flex flex-col flex-wrap items-end justify-end gap-x-2 sm:flex-row sm:items-center md:mt-0"}>
 						<div className={"flex min-w-20 flex-none items-center justify-between gap-2 overflow-hidden rounded-full border-1 border-gray-300 p-2"}>
-							<TablerMinus width={15} height={15} className={"cursor-pointer"} />
+							<TablerMinus width={15} height={15} className={"cursor-pointer"} onClick={onMinute} />
 							<p className={"text-center text-sm"}>{amount}</p>
-							<TablerPlus width={15} height={15} className={"cursor-pointer"} />
+							<TablerPlus width={15} height={15} className={"cursor-pointer"} onClick={onPlus} />
 						</div>
 						<div className={"mt-2 flex flex-row flex-wrap items-end justify-end gap-x-2 sm:mt-0 md:flex-col"}>
 							<p className={"mb-0 pb-0 text-end"}>{formatCurrency(discount ? discount : price)}</p>
 							{discount && <p className={"text-end text-sm text-gray-400 line-through"}>{formatCurrency(price)}</p>}
 						</div>
 					</div>
-					<button className={"mt-2 flex cursor-pointer items-center justify-end gap-2 text-sm hover:text-red-600 sm:justify-start md:hidden"}>
+					<button
+						className={"mt-2 flex cursor-pointer items-center justify-end gap-2 text-sm hover:text-red-600 sm:justify-start md:hidden"}
+						onClick={onDelete}>
 						<Fa6RegularTrashCan width={13} height={13} />
 						Xóa
 					</button>

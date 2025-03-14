@@ -8,11 +8,11 @@
 
 import { HeroiconsShoppingBagSolid } from "@/assets/images/icons/HeroiconsShoppingBagSolid.tsx";
 
-function ShoppingBag({ countItem = 0 }: { countItem?: number }) {
+function ShoppingBag({ countItem = 0, onClick }: { countItem?: number; onClick?: () => void }) {
 	return (
-		<div className={"relative w-8 h-8"}>
+		<div className={"relative h-8 w-8"} onClick={onClick}>
 			<HeroiconsShoppingBagSolid width={28} height={28} />
-			<div className={`absolute bottom-0 right-0 rounded-full bg-red-600 text-white text-[10px] z-1 w-4 h-4 flex justify-center items-center`}>{countItem}</div>
+			<div className={`absolute right-0 bottom-0 z-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-600 text-[10px] text-white`}>{countItem}</div>
 		</div>
 	);
 }

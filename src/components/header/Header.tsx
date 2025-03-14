@@ -18,10 +18,12 @@ import { useState } from "react";
 import { Separator } from "@/components/ui/separator.tsx";
 import ShoppingBagItem from "@/components/cart/ShoppingBagItem.tsx";
 import dataShoppingBagItems from "@/assets/data/shopping-bag-items.ts";
+import { useNavigate } from "react-router";
 
 function Header({ showMenu }: { showMenu: () => void }) {
 	const [, scrollY] = useScrolled();
 	const [scrollUp, setScrollUp] = useState(false);
+	const navigate = useNavigate();
 
 	return (
 		<motion.header className={"sticky top-0 z-2 bg-white"} initial={{ top: 0 }} animate={{ top: scrollY >= 100 ? -40 : 0 }} transition={{ duration: 0.75 }}>
@@ -43,13 +45,17 @@ function Header({ showMenu }: { showMenu: () => void }) {
 					</div>
 
 					<div className={"hidden lg:block"}>
-						<div className={"flex size-18 items-center justify-center bg-blue-400"}>Logo</div>
+						<div className={"flex size-18 items-center justify-center bg-blue-400"} onClick={() => navigate("/")}>
+							Logo
+						</div>
 					</div>
 					<LucideSearch className={"block lg:hidden"} width={30} height={30} />
 				</div>
 				<div className='flex justify-center'>
 					<div className={"block lg:hidden"}>
-						<div className={"flex size-[60px] items-center justify-center bg-blue-400"}>Logo</div>
+						<div className={"flex size-[60px] items-center justify-center bg-blue-400"} onClick={() => navigate("/")}>
+							Logo
+						</div>
 					</div>
 					<ul className={"mb-0 hidden items-center justify-center gap-4 lg:flex"}>
 						<li className={"text-lg font-medium"}>Menu 1</li>
@@ -73,7 +79,7 @@ function Header({ showMenu }: { showMenu: () => void }) {
 					</a>
 					<div className={"group relative"}>
 						<a href={"#"}>
-							<ShoppingBag countItem={dataShoppingBagItems.length} />
+							<ShoppingBag countItem={dataShoppingBagItems.length} onClick={() => navigate("/cart")} />
 						</a>
 						<div className={"absolute top-0 right-0 z-2 hidden w-[25rem] group-hover:lg:block"}>
 							<div className={"relative top-16 right-0 max-h-[27rem] overflow-y-scroll rounded-2xl bg-white p-4"}>
