@@ -20,8 +20,8 @@ import {
 	Send,
 	Trash,
 } from "lucide-react";
-import { Rate } from "antd";
 import { Input } from "../../../@/components/ui/input.tsx";
+import Rate from "@/components/product-detail/Rate.tsx";
 
 export default function Comment(props: CommentProps) {
 	return (
@@ -48,9 +48,7 @@ export default function Comment(props: CommentProps) {
 						</DropdownMenu>
 					</CardTitle>
 					<CardDescription> <Rate
-            allowHalf
-            disabled
-            defaultValue={props.numOfStars}
+            count={props.numOfStars}
             className={"text-black "}
           /></CardDescription>
 				</CardHeader>

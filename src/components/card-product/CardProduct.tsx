@@ -1,8 +1,8 @@
 import { Card, CardContent, CardFooter } from "../../../@/components/ui/card.tsx";
-import { StarIcon } from "@heroicons/react/24/solid";
 import { Badge } from "../../../@/components/ui/badge.tsx";
 import { useEffect, useState } from "react";
 import ProductCardProp from "@/components/card-product/types/productCard.prop.ts";
+import { Star } from "lucide-react";
 
 export default function CardProduct(props: ProductCardProp) {
 	const [selected, setSelected] = useState<number>(0);
@@ -23,7 +23,7 @@ export default function CardProduct(props: ProductCardProp) {
 				className={`group relative text-base h-[50vw] xl:h-84  md:h-62 sm:h-50 rounded-2 p-0 bg-center bg-no-repeat bg-cover`}
 				style={{ backgroundImage: `url(${bgImage})` }}
 				onMouseEnter={() =>
-					setBgImage(props.models[selected].imageUrls[0])
+					setBgImage(props.models[selected].imageUrls?.[0] ?? '')
 				}
 				onMouseLeave={() => setBgImage(props.models[selected].thumbnailUrl)}
 			>
@@ -47,7 +47,7 @@ export default function CardProduct(props: ProductCardProp) {
 					className={"absolute top-2 left-2 flex align-items-center font-bold"}
 				>
 					<span>{props.numStars}</span>
-					<StarIcon className='size-2 md:size-3  text-yellow-500' />
+					<Star className='size-2 md:size-3  text-yellow-500' />
 					<span className={"md:text-xs text-[8px]  text-blue-600"}>({props.numComments})</span>
 				</span>
 
