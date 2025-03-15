@@ -47,7 +47,8 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card.tsx";
 import { Input } from "../../@/components/ui/input.tsx";
 import Rate from "@/components/product-detail/Rate.tsx";
-import { SameRadioGroup, SameRadioGroupItem } from "@/components/product-detail/SameRadioGroup.tsx";
+import { SameRadioGroup, SameRadioGroupItem } from "@/components/radio-group/SameRadioGroup.tsx";
+import { useEffect, useRef, useState } from "react";
 
 export default function ProductDetailPage() {
   const images = [
@@ -69,6 +70,22 @@ export default function ProductDetailPage() {
     },
   ];
   const products = productCardSamples;
+
+  // handle sticky
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const triggerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!triggerRef.current) return;
+
+      const triggerTop = triggerRef.current.getBoundingClientRect().top;
+      setIsVisible(triggerTop < 0); // Khi trigger vào giữa màn hình thì hiện
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div>
@@ -136,7 +153,7 @@ export default function ProductDetailPage() {
                       <div className="">
                         <p className="pe-6 text-3xl font-bold">Giới thiệu bạn bè
                           Nhận ngay 10% CoolCash</p>
-                        <p className="text-sm my-5" >Bạn sẽ nhận được 10% giá trị đơn hàng đầu tiên của bạn bè và được trả bằng CoolCash khi họ là thành viên
+                        <p className="text-sm my-5">Bạn sẽ nhận được 10% giá trị đơn hàng đầu tiên của bạn bè và được trả bằng CoolCash khi họ là thành viên
                           CoolClub và mua sản phẩm Coolmate bất kỳ.</p>
                         <div className="p-3 mb-3 rounded-lg bg-neutral-100 ">
                           <p className="text-neutral-400 uppercase text-sm">Gửi mã giới thiệu đến với bạn bè</p>
@@ -165,7 +182,8 @@ export default function ProductDetailPage() {
                           <li className={"flex items-center"}><Check className={"size-4 flex-none mr-1"} /> <span className={"shrink text-sm "}>Bạn bè của bạn tham gia CoolClub</span>
                           </li>
                           <li className={"flex items-center"}><Check className={"size-4 flex-none mr-1"} /> <span className={"shrink text-sm "}>Bạn bè của bạn hoàn thành đơn hàng đầu tiên trên website</span>
-                          </li>tẽ
+                          </li>
+                          tẽ
                           <li className={"flex items-center"}><Check className={"size-4 flex-none mr-1"} /> <span className={"shrink text-sm "}>Sau 7 ngày kể từ ngày đơn hàng giao thành công và không đổi trả, bạn có thể nhận và sử dụng CoolCash của bạn</span>
                           </li>
                         </ul>
@@ -372,7 +390,8 @@ export default function ProductDetailPage() {
               <div className="flex flex-wrap gap-3 mb-3">
                 <HoverCard>
                   <HoverCardTrigger>
-                    <div className="cursor-pointer xl:w-24 lg:w-16 lg:h-12 md:h-8 md:w-12 h-6 w-20 lg:rounded-2xl md:rounded-lg rounded-md  bg-black text-white text-center content-center ">
+                    <div
+                      className="cursor-pointer xl:w-24 lg:w-16 lg:h-12 md:h-8 md:w-12 h-6 w-20 lg:rounded-2xl md:rounded-lg rounded-md  bg-black text-white text-center content-center ">
                       Size
                     </div>
                   </HoverCardTrigger>
@@ -385,7 +404,8 @@ export default function ProductDetailPage() {
                 </HoverCard>
                 <HoverCard>
                   <HoverCardTrigger>
-                    <div className="cursor-pointer xl:w-24 lg:w-16 lg:h-12 md:h-8 md:w-12 h-6 w-20 lg:rounded-2xl md:rounded-lg rounded-md  bg-neutral-200 text-center content-center">
+                    <div
+                      className="cursor-pointer xl:w-24 lg:w-16 lg:h-12 md:h-8 md:w-12 h-6 w-20 lg:rounded-2xl md:rounded-lg rounded-md  bg-neutral-200 text-center content-center">
                       Size
                     </div>
                   </HoverCardTrigger>
@@ -440,7 +460,7 @@ export default function ProductDetailPage() {
               </AccordionItem>
             </Accordion>
 
-            <div className="flex my-3 items-center">
+            <div className="flex my-10 items-center">
               <ZaloIcon />
               <a className="text-blue-700! px-2 cursor-pointer">
                 Chat để coolmate tư vấn ngay (8:30 - 22:00)
@@ -448,7 +468,7 @@ export default function ProductDetailPage() {
               <ArrowRight className={"size-4"} />
             </div>
 
-            <div className="grid grid-cols-2 grid-rows-2 gap-3">
+            <div className="grid grid-cols-2 grid-rows-2 gap-6">
               <div className={"flex items-center"}>
                 <RefreshCcw className={"font-bold mr-1 flex-none"} />
                 <span className="shrink text-xs md:text-sm">
@@ -468,7 +488,7 @@ export default function ProductDetailPage() {
                 hỗ trợ từ 8h30 - 22h mỗi ngày
               </span>
               </div>
-              <div className={"flex items-center"}>
+              <div ref={triggerRef} className={"flex items-center"}>
                 <MapPinHouse className={"font-bold mr-1 flex-none"} /> <span className="shrink text-xs md:text-sm">
                 Đến tận nơi nhận
                 hàng trả, hoàn tiền trong 24h
@@ -479,7 +499,7 @@ export default function ProductDetailPage() {
         </div>
       </div>
 
-      <Collapsible className={" p-5 bg-neutral-200 text-sm"}>
+      <Collapsible className={"relative group p-5 bg-neutral-200 text-sm"}>
         <p className={"uppercase text-center font-bold md:text-4xl sm:text-xl"}>Mô tả sản phẩm</p>
         <div className="grid grid-cols-2 gap-3 mb-3">
           <div className="p-3 px-5 text-xs">
@@ -674,11 +694,11 @@ export default function ProductDetailPage() {
               <SelectContent className={"bg-white text-sm"}>
                 <SelectItem value="z2a">Đánh giá: Cao đến thấp</SelectItem>
                 <SelectItem value="a2z">Đánh giá: Thấp đến cao</SelectItem>
-                <SelectItem className={'md:hidden sm:visible '} value="1">1 sao</SelectItem>
-                <SelectItem className={'md:hidden sm:visible '} value="2">2 sao</SelectItem>
-                <SelectItem className={'md:hidden sm:visible '} value="3">3 sao</SelectItem>
-                <SelectItem className={'md:hidden sm:visible '} value="4">4 sao</SelectItem>
-                <SelectItem className={'md:hidden sm:visible '} value="5">5 sao</SelectItem>
+                <SelectItem className={"md:hidden sm:visible "} value="1">1 sao</SelectItem>
+                <SelectItem className={"md:hidden sm:visible "} value="2">2 sao</SelectItem>
+                <SelectItem className={"md:hidden sm:visible "} value="3">3 sao</SelectItem>
+                <SelectItem className={"md:hidden sm:visible "} value="4">4 sao</SelectItem>
+                <SelectItem className={"md:hidden sm:visible "} value="5">5 sao</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -722,6 +742,106 @@ export default function ProductDetailPage() {
         <CarouselPrevious className={"left-2 rounded-2xl! outline-0"} />
         <CarouselNext className={"right-2 rounded-2xl! outline-0"} />
       </Carousel>
+
+      <div className={`fixed top-0 z-50 bg-white w-full border-gray-200 opacity-1 overflow-hidden -translate-y-full ease-in-out transition-all duration-900 ${isVisible? "opacity-100 h-auto translate-y-0" : "opacity-0  overflow-hidden -translate-y-full"}`}>
+        <div className="flex">
+          <div className="flex-none border-r-1 flex">
+            <img src="src/assets/images/product/t-shirt-1.webp" alt="name product" className="object-cover w-16" />
+            <div className="p-4">
+              <p className="grid grid-cols-3 gap-1">
+                <Rate className={"fill-black stroke-black"} defaultValue={3.5} allowHalf={true} disabled={true} />
+                <p className="col-span-2 text-sm">
+                  <span className="before:content-['|'] pe-2"> 56</span>
+                  <span className="before:content-['|']"> Đã bán (web): 14</span>
+                </p>
+              </p>
+              <p className="flex items-center gap-4 font-bold flex-none">
+                <span className="text-xl">Lorem ipsum.</span>
+                <Badge className="text-sm  rounded-lg bg-blue-700 text-white">-40%</Badge>
+                <span className=" text-sm line-through text-gray-400">lorem</span>
+              </p>
+            </div>
+          </div>
+
+          <div className="flex-none border-r-1 border-gray-200">
+            <div className="p-2">
+              <p className="text-sm mb-3"><span>Màu sắc:</span><span className={"font-bold"}> Lorem ipsum.</span></p>
+              <SameRadioGroup defaultValue="option-one" className="flex gap-4">
+                <SameRadioGroupItem className={'px-6 py-4 rounded-sm bg-black '} value="option-one" id="option-one">
+                  <span className="px-6 py-4 rounded-xs outline-2 outline-offset-2 outline-blue-700"></span>
+                </SameRadioGroupItem>
+                <SameRadioGroupItem className={'px-6 py-4 rounded-sm bg-black '} value="option-two" id="option-two">
+                  <span className="px-6 py-4 rounded-xs outline-2 outline-offset-2 outline-blue-700"></span>
+                </SameRadioGroupItem>
+              </SameRadioGroup>
+            </div>
+          </div>
+
+          <div className="flex-none border-r-1 border-gray-200">
+            <div className="p-2">
+              <p className="text-sm mb-3"><span>Kích thước:</span><span className={"font-bold"}> Lorem ipsum.</span></p>
+              <SameRadioGroup className="flex flex-wrap gap-4">
+                <HoverCard>
+                  <HoverCardTrigger className={'relative'}>
+                    <div className={'w-12 h-10 bg-gray-200 rounded-sm  text-center place-content-center uppercase'}><span>M</span></div>
+                    <SameRadioGroupItem className={'absolute rounded-sm cursor-pointer top-0 w-12 h-10'} value="sticky-size-m" id="sticky-size-m">
+                      <span className="w-12 h-10 rounded-sm bg-black text-white text-center place-content-center uppercase">M</span>
+                    </SameRadioGroupItem>
+                  </HoverCardTrigger>
+                  <HoverCardContent className={'p-2 w-auto'}>
+                    <div className="">
+                      <p>Lorem ipsum.</p><p>Lorem ipsum.</p>
+                    </div>
+                  </HoverCardContent>
+                </HoverCard>
+
+                <HoverCard>
+                  <HoverCardTrigger className={'relative'}>
+                    <div className={'w-12 h-10 bg-gray-200 rounded-sm  text-center place-content-center uppercase'}><span>l</span></div>
+                    <SameRadioGroupItem className={'absolute rounded-sm cursor-pointer top-0 w-12 h-10'} value="sticky-size-l" id="sticky-size-l">
+                      <span className="w-12 h-10 rounded-sm bg-black text-white text-center place-content-center uppercase">l</span>
+                    </SameRadioGroupItem>
+                  </HoverCardTrigger>
+                  <HoverCardContent className={'p-2 w-auto'}>
+                    <div className="">
+                      <p>Lorem ipsum.</p><p>Lorem ipsum.</p>
+                    </div>
+                  </HoverCardContent>
+                </HoverCard>
+
+                <HoverCard>
+                  <HoverCardTrigger className={'relative'}>
+                    <div className={'w-12 h-10 bg-gray-200 rounded-sm text-center place-content-center uppercase'}><span>xl</span></div>
+                    <SameRadioGroupItem className={'absolute rounded-sm top-0 w-12 h-10 cursor-pointer'} value="sticky-size-xl" id="sticky-size-xl">
+                      <span className="w-12 h-10 rounded-sm bg-black text-white text-center place-content-center uppercase">xl</span>
+                    </SameRadioGroupItem>
+                  </HoverCardTrigger>
+                  <HoverCardContent className={'p-2 w-auto'}>
+                    <div className="">
+                      <p>Lorem ipsum.</p><p>Lorem ipsum.</p>
+                    </div>
+                  </HoverCardContent>
+                </HoverCard>
+              </SameRadioGroup>
+            </div>
+          </div>
+
+          <div className="grow flex items-center px-2">
+            <Input
+              defaultValue={1}
+              className={"w-1/4 rounded-2xl! me-3! text-center"}
+              type={"number"}
+            />
+            <Button
+              className={"w-3/4 rounded-2xl flex text-center items-center cursor-pointer hover:bg-neutral-300 hover:text-black"}
+              variant="default"
+            >
+              <ShoppingBag className={"size-6 inline-block mx-2"} />
+              <span>Lorem ipsum dolor sit amet.</span>
+            </Button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
