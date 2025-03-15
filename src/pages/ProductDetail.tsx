@@ -49,6 +49,7 @@ import { Input } from "../../@/components/ui/input.tsx";
 import Rate from "@/components/product-detail/Rate.tsx";
 import { SameRadioGroup, SameRadioGroupItem } from "@/components/radio-group/SameRadioGroup.tsx";
 import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 
 export default function ProductDetailPage() {
   const images = [
@@ -213,7 +214,15 @@ export default function ProductDetailPage() {
 							</span>
               <HoverCard>
                 <HoverCardTrigger>
-                  <Badge className="p-2 cursor-pointer bg-orange-100">
+                  <Badge
+                    onClick={() =>
+                      toast("Lưu code thành công", {
+                        action: "info",
+                        description: "Hello world1",
+                        className: ""
+
+                      })}
+                    className="p-2 cursor-pointer bg-orange-100">
                     <span
                       className={
                         " text-xs font-bold text-orange-500"

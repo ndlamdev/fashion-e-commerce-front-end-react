@@ -12,6 +12,7 @@ import { useState } from "react";
 import VerticalMenu from "@/components/menu/VerticalMenu.tsx";
 import Footer from "@/components/footer/Footer.tsx";
 import { Outlet } from "react-router";
+import { Toaster } from "@/components/ui/sonner.tsx";
 
 function RootLayout() {
   const [showVerticalMenu, setShowVerticalMenu] = useState<boolean>(false);
@@ -23,6 +24,7 @@ function RootLayout() {
         <Header showMenu={() => {
           setShowVerticalMenu(true);
         }} />
+        <Toaster />
         <Outlet />
         <Footer />
       </div>
