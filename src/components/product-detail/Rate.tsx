@@ -38,13 +38,13 @@ const Rate = ({
             onClick={() => handleClick(index)}
           >
             {isHalf ? (
-              <Star className={cn("relative  stroke-black !fill-none", className)}>
-                <StarHalf className={cn("absolute size-6 ", className)} />
+              <Star className={cn("relative stroke-black !fill-none size-4", className)}>
+                <StarHalf className={cn("absolute top-0 size-4", className)} />
               </Star>
             ) : (
               <Star
                 className={cn(
-                  "xl:size-6 lg:size-4  transition-all duration-200",
+                  "size-4 transition-all duration-200",
                    index < defaultValue
                     ? className
                     : clsx(className, "!fill-white"),
