@@ -1,16 +1,7 @@
-import { ModelProductProps } from "@/components/card-product/types/modelProduct.props.ts";
+import ProductType from "@/types/product/product.type.ts";
 
-type ProductCardProp = {
-  name: string,
-  originPrice: number,
-  numStars: number,
-  numComments: number,
-  models: ModelProductProps[],
+type ProductCardProp = ProductType & {
   onClick: () => void ,
-  label? : string | undefined,
-  attachBonusUrl?: string | undefined,
-  percentDiscount?: number,
-  description?: string | undefined,
 }
 
 export default ProductCardProp

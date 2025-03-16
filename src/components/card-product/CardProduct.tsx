@@ -3,15 +3,16 @@ import { Badge } from "../../../@/components/ui/badge.tsx";
 import { useEffect, useState } from "react";
 import ProductCardProp from "@/components/card-product/types/productCard.prop.ts";
 import { Star } from "lucide-react";
+import { useNavigate } from "react-router";
 
 export default function CardProduct(props: ProductCardProp) {
 	const [selected, setSelected] = useState<number>(0);
 	const [numPageModel, setNumPageModel] = useState<number>(6);
 	const [bgImage, setBgImage] = useState<string>(
-		props.models[selected].thumbnailUrl,
+		props.models[selected].imageUrls[0],
 	);
-	useEffect(() => setBgImage(props.models[selected].thumbnailUrl), [selected]);
-
+	useEffect(() => setBgImage(props.models[selected].imageUrls[0]),[selected]);
+  const navigate = useNavigate();
 	return (
 		<Card
 			className={
@@ -19,13 +20,13 @@ export default function CardProduct(props: ProductCardProp) {
 			}
 		>
 			<CardContent
-				onClick={props.onClick}
+				onClick={() => navigate(`product-detail/${props.id}`)}
 				className={`group relative text-base h-[50vw] xl:h-84  md:h-62 rounded-lg p-0 bg-center bg-no-repeat bg-cover`}
 				style={{ backgroundImage: `url(${bgImage})` }}
 				onMouseEnter={() =>
-					setBgImage(props.models[selected].imageUrls?.[0] ?? '')
+					setBgImage(props.models[selected].imageUrls.length > 1 ? props.models[selected].imageUrls?.[1] :props.models[selected].imageUrls?.[0])
 				}
-				onMouseLeave={() => setBgImage(props.models[selected].thumbnailUrl)}
+				onMouseLeave={() => setBgImage(props.models[selected].imageUrls[0])}
 			>
 				<div className='absolute grid grid-cols-2 grid-rows-2  top-2 right-2'>
           {props.label && <Badge
@@ -51,12 +52,12 @@ export default function CardProduct(props: ProductCardProp) {
 					<span className={"md:text-xs text-[8px]  text-blue-600"}>({props.numComments})</span>
 				</span>
 
-				{props.attachBonusUrl && (
+				{props.attachGiftThumbnail && (
 					<div className='absolute bottom-0 '>
 						<img
 							className={"rounded-b-lg"}
-							src={`${props.attachBonusUrl}`}
-							alt='bonus'
+							src={props.attachGiftThumbnail}
+							alt={props.models[selected].name}
 						/>
 					</div>
 				)}
@@ -91,7 +92,7 @@ export default function CardProduct(props: ProductCardProp) {
 						<div
 							key={index}
 							onClick={() => setSelected(index)}
-							className={`w-8 h-4 rounded-2xl ${item.titleColor} ${
+							className={`w-8 h-4 rounded-2xl bg-[${item.codeColor}] ${
 								selected === index
 									? "outline-2 outline-offset-2 outline-neutral-700"
 									: "outline-none"
@@ -110,12 +111,13 @@ export default function CardProduct(props: ProductCardProp) {
 				</div>
 				<p className={'my-1'}>{props.name}</p>
 				<p className={"flex gap-2 mb-1"}>
-          {props.percentDiscount && <span>{props.originPrice * (1 - props.percentDiscount * 0.01)}</span>}
-          {props.percentDiscount && <Badge className={"text-xs text-white  rounded-2  bg-blue-700"}>
-            -{props.percentDiscount}%
+          {/*discount handle*/}
+          {props.discount && <span>{props.price * (1 - props.discount * 0.01)}</span>}
+          {props.discount && <Badge className={"text-xs text-white  rounded-2  bg-blue-700"}>
+            -{props.discount}%
           </Badge>}
 					<span className={"text-neutral-400 line-through"}>
-						{props.originPrice}
+						{props.price}
 					</span>
 				</p>
         {props.description && <span className={'text-xs text-blue-700 '}>{props.description}</span>}

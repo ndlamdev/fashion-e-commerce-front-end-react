@@ -50,27 +50,28 @@ import Rate from "@/components/product-detail/Rate.tsx";
 import { SameRadioGroup, SameRadioGroupItem } from "@/components/radio-group/SameRadioGroup.tsx";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import ProductDetailProp from "@/components/product-detail/types/productDetail.prop.ts";
+import { NavLink } from "react-router";
 
-export default function ProductDetailPage() {
-  const images = [
-    {
-      id: 1,
-      img: "src/assets/images/product-detail-image/quan-dai-kaki-ecc-pants-den_(4).jpeg",
-    },
-    {
-      id: 2,
-      img: "src/assets/images/product-detail-image/quan-dai-kaki-ecc-pants-den_(7).jpeg",
-    },
-    {
-      id: 3,
-      img: "src/assets/images/product/hover-t-shirt.webp",
-    },
-    {
-      id: 5,
-      img: "src/assets/images/product/t-shirt-1.webp",
-    },
-  ];
+export default function ProductDetailPage(props: ProductDetailProp) {
   const products = productCardSamples;
+  // convert urls arr to object
+  const [selectModelIndex, setSelectModelIndex] = useState<number>(0)
+  const imageUrls = props.models[selectModelIndex].imageUrls.map((url, index) => ({
+    id: index + 1,
+    img: url
+  }));
+
+  // handle save text to clipboard
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      console.log("Copied to clipboard!");
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
+
 
   // handle fixed
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -115,24 +116,24 @@ export default function ProductDetailPage() {
             randomRotation={true}
             sensitivity={90}
             sendToBackOnClick={true}
-            cardsData={images}
+            cardsData={imageUrls}
             className={"w-full min-md:h-auto h-dvw"}
           />
 
           <div className="w-full">
             <p className={"lg:text-2xl md:text-lg text-base font-bold mb-0"}>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              {props.name}
             </p>
-            <p className={"text-base text-neutral-400 mb-4"}>Lorem ipsum dolor.</p>
+            <p className={"text-base text-neutral-400 mb-4"}>{props?.material}</p>
             <p className={"flex space-x-10 mb-5"}>
               <p className="flex space-x-25 items-center">
                 <Rate
                   disabled={true}
                   allowHalf={true}
-                  defaultValue={4.5}
+                  defaultValue={props?.numStars}
                   className={"flex-none! fill-black xl:size-6 md:size-5! size-4"}
                 />
-                <span className={" lg:text-start lg:pe-4 sm:text-center text-end"}>(2.5)</span>
+                <span className={" lg:text-start lg:pe-4 sm:text-center text-end"}>({props?.numComments})</span>
               </p>
 
               <Dialog>
@@ -157,20 +158,26 @@ export default function ProductDetailPage() {
                           <p className="text-neutral-400 uppercase text-sm">Gửi mã giới thiệu đến với bạn bè</p>
                           <div className="border-1 border-neutral-300"></div>
                           <p className="flex items-center justify-between p-2">
-                            <span className="uppercase text-lg text-neutral-700 ">Lorem ipsum dolor.</span>
-                            <span className="flex text-blue-700 text-sm cursor-pointer"><Copy className={"mx-1"} /> Copy</span>
+                            <span className="uppercase text-lg text-neutral-700 ">{props.models[selectModelIndex].codeModel}</span>
+                            <span onClick={() => {
+                              copyToClipboard(props.models[selectModelIndex].codeModel);
+                              toast("Đã copy mã giới thiệu");
+                            }} className="flex text-blue-700 text-sm cursor-pointer"><Copy className={"mx-1"} /> Copy</span>
                           </p>
                         </div>
                         <div className="p-3 rounded-lg bg-neutral-100 mb-3">
                           <p className="text-neutral-400 uppercase text-sm">Gửi link giới thiệu đến với bạn bè</p>
                           <div className="px-2 flex items-center justify-between bg-white rounded-3xl border-2 ">
                             <Input className={"border-none! w-3/4! focus-visible:border-none"} type={"text"}
-                                   value={"https://mcdn.coolmate.me/image/September2024/mceclip0_28"} />
-                            <span className="flex text-blue-700 text-sm cursor-pointer"><Copy className={"mx-1"} /> Copy</span>
+                                   value={"http://localhost:5173/product-detail"} />
+                            <span onClick={() => {
+                              copyToClipboard(props.models[selectModelIndex].codeModel);
+                              toast("Đã copy mã giới thiệu");
+                            }} className="flex text-blue-700 text-sm cursor-pointer"><Copy className={"mx-1"} /> Copy</span>
                           </div>
                         </div>
 
-                        <Button className={"w-full mb-2 cursor-pointer rounded-2xl"} variant={"default"}>
+                        <Button onClick={() => toast('Đã copy link giới thiệu')} className={"w-full mb-2 cursor-pointer rounded-2xl"} variant={"default"}>
                           <Share2 />
                           <span>Chia sẻ</span>
                         </Button>
@@ -186,7 +193,7 @@ export default function ProductDetailPage() {
                           </li>
                         </ul>
 
-                        <a href="#"><span className="text-xs underline decoration-gray-400 text-gray-400">*Chính sách và điều khoản</span></a>
+                        <NavLink to={'/'}><span className="text-xs underline decoration-gray-400 text-gray-400">*Chính sách và điều khoản</span></NavLink>
                       </div>
                       <img src="https://mcdn.coolmate.me/image/September2024/mceclip0_28.png" alt=""
                            className="xl:w-full xl:h-auto w-0 h-0 place-self-end object-cover" />
@@ -197,12 +204,12 @@ export default function ProductDetailPage() {
               </Dialog>
 
             </p>
-            <p className={"md:text-base text-sm line-through text-neutral-400"}>100000</p>
+            {props?.discount && <p className={"md:text-base text-sm line-through text-neutral-400"}>{props.price}</p>}
             <p className="flex font-bold ">
-              <span className="me-3 text-sm lg:text-2xl md:text-base">100.000</span>
-              <Badge className={"text-white font-bold md:text-xl text-xs bg-blue-700"}>
-                -10%
-              </Badge>
+              <span className="me-3 text-sm lg:text-2xl md:text-base">{props.discount ? (props.price*(1 - props.discount)) : props.price}</span>
+              {props?.discount && (<Badge className={"text-white font-bold md:text-xl text-xs bg-blue-700"}>
+                -{props.discount * 100}%
+              </Badge>)}
             </p>
             <p className="flex items-center">
               <Truck className={"size-4 me-3 text-blue-600 "} /> Freeship
@@ -869,8 +876,6 @@ export default function ProductDetailPage() {
           </div>
         </div>
       </div>
-
-      <Rate defaultValue={3.5}  ></Rate>
     </div>
   );
 }
