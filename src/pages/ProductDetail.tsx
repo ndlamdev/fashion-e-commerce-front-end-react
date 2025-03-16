@@ -869,6 +869,8 @@ export default function ProductDetailPage() {
           </div>
         </div>
       </div>
+
+      <Rate defaultValue={3.5}  ></Rate>
     </div>
   );
 }
