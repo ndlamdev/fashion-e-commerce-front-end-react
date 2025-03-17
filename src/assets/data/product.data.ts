@@ -118,6 +118,7 @@ const sampleProducts: ProductDetailProp[] = [
     description: "Balo có nhiều ngăn, chống nước tốt.",
     createdAt: new Date(),
     updatedAt: new Date(),
+    label: "Outlet"
   },
   {
     id: 5,

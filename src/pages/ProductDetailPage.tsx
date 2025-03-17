@@ -97,11 +97,7 @@ export default function ProductDetailPage() {
   };
 
   // handle choose size change
-  const [sizeSelected, setSizeSelected] = useState<SizeName | null>(null); // Giá trị mặc định
-
-  const handleSizeChange = (value: SizeName) => {
-    setSizeSelected(value);
-  };
+  const [sizeSelected, setSizeSelected] = useState<SizeName | undefined>(undefined); // Giá trị mặc định
 
   // handle decrement/increment quanlity buy
   const [boughtQuantity, setBoughtQuantity] = useState<number>(1);
@@ -455,7 +451,7 @@ export default function ProductDetailPage() {
                 </Dialog>
               </p>
               <div className="flex flex-wrap gap-3 mb-3">
-                <SameRadioGroup className="flex flex-wrap gap-4" onValueChange={handleSizeChange}>
+                <SameRadioGroup className="flex flex-wrap gap-4" value={sizeSelected} onValueChange={setSizeSelected}>
                   {model.sizes.map((value, index) => {
                     return (<HoverCard>
                       <HoverCardTrigger className={"relative"}>
@@ -582,14 +578,14 @@ export default function ProductDetailPage() {
             </p>
           </div>
           <img
-            src="src/assets/images/product-detail-image/quan-dai-kaki-ecc-pants-den_(4).jpeg"
+            src="https://mcdn.coolmate.me/image/February2023/mceclip10_61.jpg"
             alt=""
             className="object-cover rounded-xl md:h-150! h-50!"
           />
         </div>
         <CollapsibleContent>
           <img
-            src="src/assets/images/product-detail-image/QDECC.webp"
+            src="https://mcdn.coolmate.me/image/February2023/mceclip12_56.jpg"
             alt="QDECC"
             className=""
           />
@@ -854,7 +850,7 @@ export default function ProductDetailPage() {
                     {getSizeSuggestion(sizeSelected)?.weightRange.min}kg - {getSizeSuggestion(sizeSelected)?.weightRange.max}kg)</span>
                 }
               </p>
-              <SameRadioGroup className="flex flex-wrap gap-4">
+              <SameRadioGroup onValueChange={setSizeSelected} value={sizeSelected} className="flex flex-wrap gap-4">
                 {model.sizes.map((item) => {
                   return (<HoverCard>
                     <HoverCardTrigger className={"relative"}>
