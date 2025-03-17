@@ -48,7 +48,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
 import { Input } from "../../@/components/ui/input.tsx";
 import Rate from "@/components/product-detail/Rate.tsx";
 import { SameRadioGroup, SameRadioGroupItem } from "@/components/radio-group/SameRadioGroup.tsx";
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { NavLink, useParams } from "react-router";
 import { formatCurrency } from "@/utils/format-data.ts";
@@ -58,12 +58,14 @@ import { ProductModelType, SizeName } from "@/types/product/productModels.type.t
 export default function ProductDetailPage() {
   const { id } = useParams();
   const products = sampleProducts;
-  const product = products[parseInt(id ?? "1") -1];
-  // handle model change
-  const [model, setModel] = useState<ProductModelType>(product.models[0]);
-  const handleModelChange = (value: string) => {
-      setModel(product.models.find((m) => m.id+'' === value) ?? product.models[0]);
-  };
+  const product = products[parseInt(id ?? "1") - 1];
+
+  // sync radio group
+  const [chooseModel, setChooseModel] = useState<string>(product.models[0].id+'');
+
+  // find model
+  const model: ProductModelType = product.models.find((m) => m.id === Number(chooseModel)) ?? product.models[0];
+
   // convert urls arr to object
   const imageUrls = model.imageUrls.map((url: string, index: number) => ({
     id: index + 1,
@@ -85,7 +87,6 @@ export default function ProductDetailPage() {
 
   const handleHeightChange = (newValue: number[]) => {
     setHeightValue(newValue);
-    console.log("Slider height Value:", newValue); // Xem giá trị khi thay đổi
   };
 
   // handle data weight range Slider component
@@ -93,7 +94,6 @@ export default function ProductDetailPage() {
 
   const handleWeightChange = (newValue: number[]) => {
     setWeightValue(newValue);
-    console.log("Slider weight Value:", newValue); // Xem giá trị khi thay đổi
   };
 
   // handle choose size change
@@ -101,7 +101,12 @@ export default function ProductDetailPage() {
 
   const handleSizeChange = (value: SizeName) => {
     setSizeSelected(value);
-    console.log("Selected Value:", value);
+  };
+
+  // handle decrement/increment quanlity buy
+  const [boughtQuantity, setBoughtQuantity] = useState<number>(1);
+  const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setBoughtQuantity(Number(event.target.value));
   };
 
   // handle fixed
@@ -148,7 +153,7 @@ export default function ProductDetailPage() {
             sensitivity={90}
             sendToBackOnClick={true}
             cardsData={imageUrls}
-            className={"w-full min-md:h-auto h-dvw"}
+            className={"w-full h-dvw xl:h-200 lg:h-200 md:h-150 grid place-items-center"}
           />
 
           <div className="w-full">
@@ -238,7 +243,7 @@ export default function ProductDetailPage() {
             {product?.discount && <p className={"md:text-base text-sm line-through text-neutral-400"}>{formatCurrency(product.price)}</p>}
             <p className="flex font-bold ">
               <span
-                className="me-3 text-sm lg:text-2xl md:text-base">{formatCurrency(product.discount ? (product.price * (1 - product.discount/100)) : product.price)}</span>
+                className="me-3 text-sm lg:text-2xl md:text-base">{formatCurrency(product.discount ? (product.price * (1 - product.discount / 100)) : product.price)}</span>
               {product?.discount && (<Badge className={"text-white font-bold md:text-xl text-xs bg-blue-700"}>
                 -{product.discount}%
               </Badge>)}
@@ -285,15 +290,16 @@ export default function ProductDetailPage() {
               </HoverCard>
             </p>
 
-            <Gift className={"mb-4"} />
+            {product.attachGift && <Gift className={"mb-4"} />}
 
             <p className="lg:text-lg md:text-sm text-xs my-1">
               Màu sắc: <span className="font-bold">{model.name}</span>
             </p>
-            <SameRadioGroup onValueChange={handleModelChange} defaultValue={model.id+''} className="flex flex-wrap gap-4">
+            <SameRadioGroup onValueChange={setChooseModel} value={chooseModel} className="flex flex-wrap gap-4">
               {product.models.map((model) => (
-                <SameRadioGroupItem style={{ backgroundColor: model.codeColor }} className={"px-4 py-2 lg:px-6 lg:py-4 rounded-sm lg:rounded-full cursor-pointer"}
-                                    value={model.id+''} id={model.id + ""}>
+                <SameRadioGroupItem style={{ backgroundColor: model.codeColor }}
+                                    className={"px-4 py-2 lg:px-6 lg:py-4 rounded-sm lg:rounded-full cursor-pointer"}
+                                    value={model.id + ""} id={model.id + ""}>
                   <span className="px-4 py-2 lg:px-6 lg:py-4 rounded-sm lg:rounded-full outline-2 outline-offset-2 outline-blue-700"></span>
                 </SameRadioGroupItem>
               ))}
@@ -475,7 +481,8 @@ export default function ProductDetailPage() {
 
             <div className="flex mb-3">
               <Input
-                defaultValue={1}
+                onChange={handleQuantityChange}
+                value={boughtQuantity}
                 className={"w-1/4 rounded-2xl! me-3! text-center"}
                 type={"number"}
               />
@@ -484,7 +491,7 @@ export default function ProductDetailPage() {
                 variant="default"
               >
                 <ShoppingBag className={""} />
-                <span>{sizeSelected ? "Chọn kích thước" : "Thêm vào giỏ hàng"}</span>
+                <span>{sizeSelected ? "Thêm vào giỏ hàng" : "Chọn kích thước"}</span>
               </Button>
             </div>
 
@@ -807,89 +814,71 @@ export default function ProductDetailPage() {
         className={`fixed top-0 z-50 bg-white w-full border-gray-200 opacity-1 overflow-hidden -translate-y-full ease-in-out transition-all duration-900 ${isVisible ? "lg:opacity-100 lg:h-auto lg:translate-y-0" : "opacity-0  overflow-hidden -translate-y-full"}`}>
         <div className="flex">
           <div className="border-r-1 flex">
-            <img src="src/assets/images/product/t-shirt-1.webp" alt="name product" className="object-cover w-16" />
+            <img src={model.imageUrls[0]} alt={`${product.name}-` + model.name} className="object-cover w-16" />
             <div className="p-4 ">
               <p className="flex flex-wrap gap-1">
-                <Rate className={"fill-black stroke-black "} defaultValue={3.5} allowHalf={true} disabled={true} />
+                <Rate className={"fill-black stroke-black "} defaultValue={3.5} allowHalf disabled />
                 <p className="col-span-2 xl:text-sm text-xs">
-                  <span className="before:content-['|'] pe-2"> 56</span>
-                  <span className="before:content-['|']"> Đã bán (web): 14</span>
+                  <span className="before:content-['|'] pe-2"> {product.numComments}</span>
+                  <span className="before:content-['|']"> Đã bán (web): {product?.sold ?? Number.NaN}</span>
                 </p>
               </p>
               <p className="flex flex-wrap items-center gap-4 font-bold">
-                <span className="xl:text-xl text-lg">Lorem ipsum.</span>
-                <Badge className="text-sm  rounded-lg bg-blue-700 text-white">-40%</Badge>
-                <span className=" text-sm line-through text-gray-400">lorem</span>
+                <p className={"xl:text-xl text-lg"}>{formatCurrency(product?.discount ? product.price * (1 - product?.discount / 100) : product.price)}</p>
+                {product?.discount && <Badge className="text-sm  rounded-lg bg-blue-700 text-white">-{product.discount}%</Badge>}
+                <span className=" text-sm line-through text-gray-400">{product.price}</span>
               </p>
             </div>
           </div>
 
           <div className="border-r-1 border-gray-200">
             <div className="p-2">
-              <p className="text-sm mb-3"><span>Màu sắc:</span><span className={"font-bold"}> Lorem ipsum.</span></p>
-              <SameRadioGroup defaultValue="option-one" className="flex flex-wrap gap-4">
-                <SameRadioGroupItem className={"px-6 py-4 rounded-sm bg-black "} value="option-one" id="option-one">
-                  <span className="px-6 py-4 rounded-xs outline-2 outline-offset-2 outline-blue-700"></span>
-                </SameRadioGroupItem>
-                <SameRadioGroupItem className={"px-6 py-4 rounded-sm bg-black "} value="option-two" id="option-two">
-                  <span className="px-6 py-4 rounded-xs outline-2 outline-offset-2 outline-blue-700"></span>
-                </SameRadioGroupItem>
+              <p className="text-sm mb-3"><span>Màu sắc:</span><span className={"font-bold"}> {model.name}</span></p>
+              <SameRadioGroup onValueChange={setChooseModel} value={chooseModel} className="flex flex-wrap gap-4">
+                {product.models.map((item) => (
+                  <SameRadioGroupItem style={{ backgroundColor: item.codeColor }} className={"px-6 py-4 rounded-sm bg-black "} value={item.id + ""}
+                                      id={`${item.id}` + item.name}>
+                    <span className="px-6 py-4 rounded-xs outline-2 outline-offset-2 outline-blue-700"></span>
+                  </SameRadioGroupItem>
+                ))}
               </SameRadioGroup>
             </div>
           </div>
 
           <div className="flex-none border-r-1 border-gray-200">
             <div className="p-2">
-              <p className="text-sm mb-3"><span>Kích thước:</span><span className={"font-bold"}> Lorem ipsum.</span></p>
+              <p className="text-sm mb-3">
+                <span>Kích thước:</span><span className={"font-bold"}>{sizeSelected ?? ""}</span>
+                {sizeSelected &&
+                  <span>({getSizeSuggestion(sizeSelected)?.heightRange.min}cm - {getSizeSuggestion(sizeSelected)?.heightRange.max}cm |
+                    {getSizeSuggestion(sizeSelected)?.weightRange.min}kg - {getSizeSuggestion(sizeSelected)?.weightRange.max}kg)</span>
+                }
+              </p>
               <SameRadioGroup className="flex flex-wrap gap-4">
-                <HoverCard>
-                  <HoverCardTrigger className={"relative"}>
-                    <div className={"w-12 h-10 bg-gray-200 rounded-sm  text-center place-content-center uppercase"}><span>M</span></div>
-                    <SameRadioGroupItem className={"absolute rounded-sm cursor-pointer top-0 w-12 h-10"} value="sticky-size-m" id="sticky-size-m">
-                      <span className="w-12 h-10 rounded-sm bg-black text-white text-center place-content-center uppercase">M</span>
-                    </SameRadioGroupItem>
-                  </HoverCardTrigger>
-                  <HoverCardContent className={"p-2 w-auto"}>
-                    <div className="">
-                      <p>Lorem ipsum.</p><p>Lorem ipsum.</p>
-                    </div>
-                  </HoverCardContent>
-                </HoverCard>
-
-                <HoverCard>
-                  <HoverCardTrigger className={"relative"}>
-                    <div className={"w-12 h-10 bg-gray-200 rounded-sm  text-center place-content-center uppercase"}><span>l</span></div>
-                    <SameRadioGroupItem className={"absolute rounded-sm cursor-pointer top-0 w-12 h-10"} value="sticky-size-l" id="sticky-size-l">
-                      <span className="w-12 h-10 rounded-sm bg-black text-white text-center place-content-center uppercase">l</span>
-                    </SameRadioGroupItem>
-                  </HoverCardTrigger>
-                  <HoverCardContent className={"p-2 w-auto"}>
-                    <div className="">
-                      <p>Lorem ipsum.</p><p>Lorem ipsum.</p>
-                    </div>
-                  </HoverCardContent>
-                </HoverCard>
-
-                <HoverCard>
-                  <HoverCardTrigger className={"relative"}>
-                    <div className={"w-12 h-10 bg-gray-200 rounded-sm text-center place-content-center uppercase"}><span>xl</span></div>
-                    <SameRadioGroupItem className={"absolute rounded-sm top-0 w-12 h-10 cursor-pointer"} value="sticky-size-xl" id="sticky-size-xl">
-                      <span className="w-12 h-10 rounded-sm bg-black text-white text-center place-content-center uppercase">xl</span>
-                    </SameRadioGroupItem>
-                  </HoverCardTrigger>
-                  <HoverCardContent className={"p-2 w-auto"}>
-                    <div className="">
-                      <p>Lorem ipsum.</p><p>Lorem ipsum.</p>
-                    </div>
-                  </HoverCardContent>
-                </HoverCard>
+                {model.sizes.map((item) => {
+                  return (<HoverCard>
+                    <HoverCardTrigger className={"relative"}>
+                      <div className={"w-12 h-10 bg-gray-200 rounded-sm  text-center place-content-center uppercase"}><span>{item}</span></div>
+                      <SameRadioGroupItem className={"absolute rounded-sm cursor-pointer top-0 w-12 h-10"} value={item} id={item}>
+                        <span className="w-12 h-10 rounded-sm bg-black text-white text-center place-content-center uppercase">{item}</span>
+                      </SameRadioGroupItem>
+                    </HoverCardTrigger>
+                    <HoverCardContent className={"p-2 w-auto"}>
+                      <div className="">
+                        <p>{getSizeSuggestion(item)?.heightRange.min}cm - {getSizeSuggestion(item)?.heightRange.max}cm </p>
+                        <p>{getSizeSuggestion(item)?.weightRange.min}kg - {getSizeSuggestion(item)?.weightRange.max}kg</p>
+                      </div>
+                    </HoverCardContent>
+                  </HoverCard>)
+                })}
               </SameRadioGroup>
             </div>
           </div>
 
           <div className="grow flex items-center px-2">
             <Input
-              defaultValue={1}
+              onChange={handleQuantityChange}
+              value={boughtQuantity}
               className={"w-1/4 rounded-2xl! me-3! text-center"}
               type={"number"}
             />
@@ -898,7 +887,7 @@ export default function ProductDetailPage() {
               variant="default"
             >
               <ShoppingBag className={"size-6 inline-block mx-2"} />
-              <span>Lorem ipsum dolor sit amet.</span>
+              <span>{sizeSelected ? "Thêm vào giỏ hàng" : "Chọn kích thước"}</span>
             </Button>
           </div>
         </div>

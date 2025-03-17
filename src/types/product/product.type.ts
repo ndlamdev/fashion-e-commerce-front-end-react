@@ -17,5 +17,6 @@ type ProductType = {
   label?: string | undefined;
   attachGiftThumbnail?: string | undefined;
   attachGift?: ProductType;
+  sold?: number
 }
 export default ProductType;
