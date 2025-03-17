@@ -92,7 +92,7 @@ const sampleProducts: ProductDetailProp[] = [
     models: [
       {
         id: 104,
-        name: "Balo Chống Nước",
+        name: "đen",
         sizes: ["S", "M"],
         imageUrls: ["https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/November2024/24CMCW.QD004__Trang_6.jpg",
           "https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/June2024/Trang_6.jpg",
@@ -102,8 +102,8 @@ const sampleProducts: ProductDetailProp[] = [
       },
 
       {
-        id: 104,
-        name: "xanh nhạtw",
+        id: 105,
+        name: "xanh nhạt",
         sizes: ["S", "M", "L"],
         imageUrls: ["https://media3.coolmate.me/cdn-cgi/image/width=80,height=80,quality=80,format=auto/uploads/May2023/cf5.jpg",
           "https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/February2025/ASMC_Somi_Cafe_-_27_XN.jpg",

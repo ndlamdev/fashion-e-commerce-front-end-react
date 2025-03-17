@@ -53,22 +53,19 @@ import { toast } from "sonner";
 import { NavLink, useParams } from "react-router";
 import { formatCurrency } from "@/utils/format-data.ts";
 import { getMaxSize, getMinSize, getSizeSuggestion } from "@/utils/sizeModelManage.ts";
-import { SizeName } from "@/types/product/productModels.type.ts";
+import { ProductModelType, SizeName } from "@/types/product/productModels.type.ts";
 
 export default function ProductDetailPage() {
   const { id } = useParams();
   const products = sampleProducts;
-  console.log(id);
-  const product = products[parseInt(id ?? "0") -1];
+  const product = products[parseInt(id ?? "1") -1];
   // handle model change
-  const [selectModelIndex, setSelectModelIndex] = useState<number>(0);
+  const [model, setModel] = useState<ProductModelType>(product.models[0]);
   const handleModelChange = (value: string) => {
-    const model = product.models.find((m) => m.name === value);
-    setSelectModelIndex(model ? (model.id - 1) : 0);
-    console.log(value);
+      setModel(product.models.find((m) => m.id+'' === value) ?? product.models[0]);
   };
   // convert urls arr to object
-  const imageUrls = product?.models[selectModelIndex].imageUrls.map((url: string, index: number) => ({
+  const imageUrls = model.imageUrls.map((url: string, index: number) => ({
     id: index + 1,
     img: url,
   }));
@@ -84,7 +81,7 @@ export default function ProductDetailPage() {
   };
 
   // handle data height range Slider component
-  const [heightValue, setHeightValue] = useState<number[]>([getSizeSuggestion(getMinSize(product.models[selectModelIndex].sizes) ?? "S")?.heightRange.min ?? 0]); // Giá trị mặc định
+  const [heightValue, setHeightValue] = useState<number[]>([getSizeSuggestion(getMinSize(model.sizes) ?? "S")?.heightRange.min ?? 0]); // Giá trị mặc định
 
   const handleHeightChange = (newValue: number[]) => {
     setHeightValue(newValue);
@@ -92,7 +89,7 @@ export default function ProductDetailPage() {
   };
 
   // handle data weight range Slider component
-  const [weightValue, setWeightValue] = useState<number[]>([getSizeSuggestion(getMinSize(product.models[selectModelIndex].sizes) ?? "S")?.weightRange.min ?? 0]); // Giá trị mặc định
+  const [weightValue, setWeightValue] = useState<number[]>([getSizeSuggestion(getMinSize(model.sizes) ?? "S")?.weightRange.min ?? 0]); // Giá trị mặc định
 
   const handleWeightChange = (newValue: number[]) => {
     setWeightValue(newValue);
@@ -192,9 +189,9 @@ export default function ProductDetailPage() {
                           <p className="text-neutral-400 uppercase text-sm">Gửi mã giới thiệu đến với bạn bè</p>
                           <div className="border-1 border-neutral-300"></div>
                           <p className="flex items-center justify-between p-2">
-                            <span className="uppercase text-lg text-neutral-700 ">{product.models[selectModelIndex].codeModel}</span>
+                            <span className="uppercase text-lg text-neutral-700 ">{model.codeModel}</span>
                             <span onClick={() => {
-                              copyToClipboard(product.models[selectModelIndex].codeModel);
+                              copyToClipboard(model.codeModel);
                               toast("Đã copy mã giới thiệu");
                             }} className="flex text-blue-700 text-sm cursor-pointer"><Copy className={"mx-1"} /> Copy</span>
                           </p>
@@ -205,7 +202,7 @@ export default function ProductDetailPage() {
                             <Input className={"border-none! w-3/4! focus-visible:border-none"} type={"text"}
                                    value={"http://localhost:5173/product-detail"} />
                             <span onClick={() => {
-                              copyToClipboard(product.models[selectModelIndex].codeModel);
+                              copyToClipboard(model.codeModel);
                               toast("Đã copy mã giới thiệu");
                             }} className="flex text-blue-700 text-sm cursor-pointer"><Copy className={"mx-1"} /> Copy</span>
                           </div>
@@ -258,7 +255,7 @@ export default function ProductDetailPage() {
                 <HoverCardTrigger>
                   <Badge
                     onClick={() => {
-                      copyToClipboard(product.models[selectModelIndex].codeModel);
+                      copyToClipboard(model.codeModel);
                       toast("Lưu mã giảm giá thành công");
                     }}
                     className="p-2 cursor-pointer bg-orange-100">
@@ -291,12 +288,12 @@ export default function ProductDetailPage() {
             <Gift className={"mb-4"} />
 
             <p className="lg:text-lg md:text-sm text-xs my-1">
-              Màu sắc: <span className="font-bold">{product.models[selectModelIndex].name}</span>
+              Màu sắc: <span className="font-bold">{model.name}</span>
             </p>
-            <SameRadioGroup onValueChange={handleModelChange} defaultValue={product.models[selectModelIndex].name} className="flex flex-wrap gap-4">
+            <SameRadioGroup onValueChange={handleModelChange} defaultValue={model.id+''} className="flex flex-wrap gap-4">
               {product.models.map((model) => (
                 <SameRadioGroupItem style={{ backgroundColor: model.codeColor }} className={"px-4 py-2 lg:px-6 lg:py-4 rounded-sm lg:rounded-full cursor-pointer"}
-                                    value={model.name} id={model.id + ""}>
+                                    value={model.id+''} id={model.id + ""}>
                   <span className="px-4 py-2 lg:px-6 lg:py-4 rounded-sm lg:rounded-full outline-2 outline-offset-2 outline-blue-700"></span>
                 </SameRadioGroupItem>
               ))}
@@ -335,8 +332,8 @@ export default function ProductDetailPage() {
                           <Slider className={"shrink"}
                                   onValueChange={handleHeightChange}
                                   defaultValue={heightValue}
-                                  min={getSizeSuggestion(getMinSize(product.models[selectModelIndex].sizes) ?? "S")?.heightRange.min ?? 0}
-                                  max={getSizeSuggestion(getMaxSize(product.models[selectModelIndex].sizes) ?? "3XL")?.heightRange.max ?? 0}
+                                  min={getSizeSuggestion(getMinSize(model.sizes) ?? "S")?.heightRange.min ?? 0}
+                                  max={getSizeSuggestion(getMaxSize(model.sizes) ?? "3XL")?.heightRange.max ?? 0}
                                   step={1} />
                           <span className="text-blue-700 flex-none px-4">{heightValue} cm</span>
                         </div>
@@ -346,8 +343,8 @@ export default function ProductDetailPage() {
                           <Slider className={"shrink"}
                                   onValueChange={handleWeightChange}
                                   defaultValue={heightValue}
-                                  min={getSizeSuggestion(getMinSize(product.models[selectModelIndex].sizes) ?? "S")?.weightRange.min ?? 0}
-                                  max={getSizeSuggestion(getMaxSize(product.models[selectModelIndex].sizes) ?? "3XL")?.weightRange.max ?? 0}
+                                  min={getSizeSuggestion(getMinSize(model.sizes) ?? "S")?.weightRange.min ?? 0}
+                                  max={getSizeSuggestion(getMaxSize(model.sizes) ?? "3XL")?.weightRange.max ?? 0}
                                   step={1} />
                           <span className="text-blue-700 flex-none px-4">{weightValue} kg</span>
                         </div>
@@ -453,7 +450,7 @@ export default function ProductDetailPage() {
               </p>
               <div className="flex flex-wrap gap-3 mb-3">
                 <SameRadioGroup className="flex flex-wrap gap-4" onValueChange={handleSizeChange}>
-                  {product.models[selectModelIndex].sizes.map((value, index) => {
+                  {model.sizes.map((value, index) => {
                     return (<HoverCard>
                       <HoverCardTrigger className={"relative"}>
                         <div className={"w-12 h-8 lg:w-20 lg:h-8 bg-gray-200 rounded-sm lg:rounded-full  text-center place-content-center uppercase"}>
