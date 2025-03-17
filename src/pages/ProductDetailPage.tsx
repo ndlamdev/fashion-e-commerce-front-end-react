@@ -22,7 +22,7 @@ import { AccordionItem } from "@radix-ui/react-accordion";
 import ZaloIcon from "@/assets/images/icons/ZaloIcon.tsx";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../@/components/ui/collapsible.tsx";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../../@/components/ui/carousel.tsx";
-import { productCardSamples } from "@/assets/data/productCard.data.ts";
+import sampleProducts from "@/assets/data/product.data.ts";
 import CardProduct from "@/components/card-product/CardProduct.tsx";
 import { RadioGroup, RadioGroupItem } from "../../@/components/ui/radio-group.tsx";
 import { Label } from "../../@/components/ui/label.tsx";
@@ -50,16 +50,27 @@ import Rate from "@/components/product-detail/Rate.tsx";
 import { SameRadioGroup, SameRadioGroupItem } from "@/components/radio-group/SameRadioGroup.tsx";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
-import ProductDetailProp from "@/components/product-detail/types/productDetail.prop.ts";
-import { NavLink } from "react-router";
+import { NavLink, useParams } from "react-router";
+import { formatCurrency } from "@/utils/format-data.ts";
+import { getMaxSize, getMinSize, getSizeSuggestion } from "@/utils/sizeModelManage.ts";
+import { SizeName } from "@/types/product/productModels.type.ts";
 
-export default function ProductDetailPage(props: ProductDetailProp) {
-  const products = productCardSamples;
+export default function ProductDetailPage() {
+  const { id } = useParams();
+  const products = sampleProducts;
+  console.log(id);
+  const product = products[parseInt(id ?? "0") -1];
+  // handle model change
+  const [selectModelIndex, setSelectModelIndex] = useState<number>(0);
+  const handleModelChange = (value: string) => {
+    const model = product.models.find((m) => m.name === value);
+    setSelectModelIndex(model ? (model.id - 1) : 0);
+    console.log(value);
+  };
   // convert urls arr to object
-  const [selectModelIndex, setSelectModelIndex] = useState<number>(0)
-  const imageUrls = props.models[selectModelIndex].imageUrls.map((url, index) => ({
+  const imageUrls = product?.models[selectModelIndex].imageUrls.map((url: string, index: number) => ({
     id: index + 1,
-    img: url
+    img: url,
   }));
 
   // handle save text to clipboard
@@ -72,6 +83,29 @@ export default function ProductDetailPage(props: ProductDetailProp) {
     }
   };
 
+  // handle data height range Slider component
+  const [heightValue, setHeightValue] = useState<number[]>([getSizeSuggestion(getMinSize(product.models[selectModelIndex].sizes) ?? "S")?.heightRange.min ?? 0]); // Giá trị mặc định
+
+  const handleHeightChange = (newValue: number[]) => {
+    setHeightValue(newValue);
+    console.log("Slider height Value:", newValue); // Xem giá trị khi thay đổi
+  };
+
+  // handle data weight range Slider component
+  const [weightValue, setWeightValue] = useState<number[]>([getSizeSuggestion(getMinSize(product.models[selectModelIndex].sizes) ?? "S")?.weightRange.min ?? 0]); // Giá trị mặc định
+
+  const handleWeightChange = (newValue: number[]) => {
+    setWeightValue(newValue);
+    console.log("Slider weight Value:", newValue); // Xem giá trị khi thay đổi
+  };
+
+  // handle choose size change
+  const [sizeSelected, setSizeSelected] = useState<SizeName | null>(null); // Giá trị mặc định
+
+  const handleSizeChange = (value: SizeName) => {
+    setSizeSelected(value);
+    console.log("Selected Value:", value);
+  };
 
   // handle fixed
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -122,18 +156,18 @@ export default function ProductDetailPage(props: ProductDetailProp) {
 
           <div className="w-full">
             <p className={"lg:text-2xl md:text-lg text-base font-bold mb-0"}>
-              {props.name}
+              {product.name}
             </p>
-            <p className={"text-base text-neutral-400 mb-4"}>{props?.material}</p>
+            <p className={"text-base text-neutral-400 mb-4"}>{product?.material}</p>
             <p className={"flex space-x-10 mb-5"}>
               <p className="flex space-x-25 items-center">
                 <Rate
                   disabled={true}
                   allowHalf={true}
-                  defaultValue={props?.numStars}
+                  defaultValue={product?.numStars}
                   className={"flex-none! fill-black xl:size-6 md:size-5! size-4"}
                 />
-                <span className={" lg:text-start lg:pe-4 sm:text-center text-end"}>({props?.numComments})</span>
+                <span className={" lg:text-start lg:pe-4 sm:text-center text-end"}>({product?.numComments})</span>
               </p>
 
               <Dialog>
@@ -158,9 +192,9 @@ export default function ProductDetailPage(props: ProductDetailProp) {
                           <p className="text-neutral-400 uppercase text-sm">Gửi mã giới thiệu đến với bạn bè</p>
                           <div className="border-1 border-neutral-300"></div>
                           <p className="flex items-center justify-between p-2">
-                            <span className="uppercase text-lg text-neutral-700 ">{props.models[selectModelIndex].codeModel}</span>
+                            <span className="uppercase text-lg text-neutral-700 ">{product.models[selectModelIndex].codeModel}</span>
                             <span onClick={() => {
-                              copyToClipboard(props.models[selectModelIndex].codeModel);
+                              copyToClipboard(product.models[selectModelIndex].codeModel);
                               toast("Đã copy mã giới thiệu");
                             }} className="flex text-blue-700 text-sm cursor-pointer"><Copy className={"mx-1"} /> Copy</span>
                           </p>
@@ -171,13 +205,13 @@ export default function ProductDetailPage(props: ProductDetailProp) {
                             <Input className={"border-none! w-3/4! focus-visible:border-none"} type={"text"}
                                    value={"http://localhost:5173/product-detail"} />
                             <span onClick={() => {
-                              copyToClipboard(props.models[selectModelIndex].codeModel);
+                              copyToClipboard(product.models[selectModelIndex].codeModel);
                               toast("Đã copy mã giới thiệu");
                             }} className="flex text-blue-700 text-sm cursor-pointer"><Copy className={"mx-1"} /> Copy</span>
                           </div>
                         </div>
 
-                        <Button onClick={() => toast('Đã copy link giới thiệu')} className={"w-full mb-2 cursor-pointer rounded-2xl"} variant={"default"}>
+                        <Button onClick={() => toast("Đã copy link giới thiệu")} className={"w-full mb-2 cursor-pointer rounded-2xl"} variant={"default"}>
                           <Share2 />
                           <span>Chia sẻ</span>
                         </Button>
@@ -193,7 +227,7 @@ export default function ProductDetailPage(props: ProductDetailProp) {
                           </li>
                         </ul>
 
-                        <NavLink to={'/'}><span className="text-xs underline decoration-gray-400 text-gray-400">*Chính sách và điều khoản</span></NavLink>
+                        <NavLink to={"/"}><span className="text-xs underline decoration-gray-400 text-gray-400">*Chính sách và điều khoản</span></NavLink>
                       </div>
                       <img src="https://mcdn.coolmate.me/image/September2024/mceclip0_28.png" alt=""
                            className="xl:w-full xl:h-auto w-0 h-0 place-self-end object-cover" />
@@ -204,11 +238,12 @@ export default function ProductDetailPage(props: ProductDetailProp) {
               </Dialog>
 
             </p>
-            {props?.discount && <p className={"md:text-base text-sm line-through text-neutral-400"}>{props.price}</p>}
+            {product?.discount && <p className={"md:text-base text-sm line-through text-neutral-400"}>{formatCurrency(product.price)}</p>}
             <p className="flex font-bold ">
-              <span className="me-3 text-sm lg:text-2xl md:text-base">{props.discount ? (props.price*(1 - props.discount)) : props.price}</span>
-              {props?.discount && (<Badge className={"text-white font-bold md:text-xl text-xs bg-blue-700"}>
-                -{props.discount * 100}%
+              <span
+                className="me-3 text-sm lg:text-2xl md:text-base">{formatCurrency(product.discount ? (product.price * (1 - product.discount/100)) : product.price)}</span>
+              {product?.discount && (<Badge className={"text-white font-bold md:text-xl text-xs bg-blue-700"}>
+                -{product.discount}%
               </Badge>)}
             </p>
             <p className="flex items-center">
@@ -222,13 +257,10 @@ export default function ProductDetailPage(props: ProductDetailProp) {
               <HoverCard>
                 <HoverCardTrigger>
                   <Badge
-                    onClick={() =>
-                      toast("Lưu code thành công", {
-                        action: "info",
-                        description: "Hello world1",
-                        className: ""
-
-                      })}
+                    onClick={() => {
+                      copyToClipboard(product.models[selectModelIndex].codeModel);
+                      toast("Lưu mã giảm giá thành công");
+                    }}
                     className="p-2 cursor-pointer bg-orange-100">
                     <span
                       className={
@@ -259,22 +291,27 @@ export default function ProductDetailPage(props: ProductDetailProp) {
             <Gift className={"mb-4"} />
 
             <p className="lg:text-lg md:text-sm text-xs my-1">
-              Màu sắc: <span className="font-bold">Lorem ipsum.</span>
+              Màu sắc: <span className="font-bold">{product.models[selectModelIndex].name}</span>
             </p>
-            <SameRadioGroup defaultValue="option-one" className="flex flex-wrap gap-4">
-              <SameRadioGroupItem className={"px-4 py-2 lg:px-6 lg:py-4 rounded-sm lg:rounded-full bg-black "} value="option-one" id="option-one">
-                <span className="px-4 py-2 lg:px-6 lg:py-4 rounded-sm lg:rounded-full outline-2 outline-offset-2 outline-blue-700"></span>
-              </SameRadioGroupItem>
-              <SameRadioGroupItem className={"px-4 py-2 lg:px-6 lg:py-4 rounded-sm lg:rounded-full bg-black "} value="option-two" id="option-two">
-                <span className="px-4 py-2 lg:px-6 lg:py-4 rounded-sm lg:rounded-full outline-2 outline-offset-2 outline-blue-700"></span>
-              </SameRadioGroupItem>
+            <SameRadioGroup onValueChange={handleModelChange} defaultValue={product.models[selectModelIndex].name} className="flex flex-wrap gap-4">
+              {product.models.map((model) => (
+                <SameRadioGroupItem style={{ backgroundColor: model.codeColor }} className={"px-4 py-2 lg:px-6 lg:py-4 rounded-sm lg:rounded-full cursor-pointer"}
+                                    value={model.name} id={model.id + ""}>
+                  <span className="px-4 py-2 lg:px-6 lg:py-4 rounded-sm lg:rounded-full outline-2 outline-offset-2 outline-blue-700"></span>
+                </SameRadioGroupItem>
+              ))}
             </SameRadioGroup>
 
             <div className="">
               <p className="m-0 flex justify-between items-center">
 							<span className={"lg:text-lg md:text-sm text-xs"}>
-								Kích thước áo: <span className={"font-bold"}>size</span>
-                <span> mô tả size</span>
+								Kích thước áo: <span className={"font-bold mx-1"}>{sizeSelected ?? ""}</span>
+                <span>
+                  {sizeSelected &&
+                    <span>({getSizeSuggestion(sizeSelected)?.heightRange.min}cm - {getSizeSuggestion(sizeSelected)?.heightRange.max}cm |
+                      {getSizeSuggestion(sizeSelected)?.weightRange.min}kg - {getSizeSuggestion(sizeSelected)?.weightRange.max}kg)</span>
+                  }
+                </span>
 							</span>
                 <Dialog>
                   <DialogTrigger>
@@ -295,14 +332,24 @@ export default function ProductDetailPage(props: ProductDetailProp) {
                       <TabsContent className={"lg:px-20 py-5"} value="choose-size">
                         <div className="w-full flex">
                           <span className="text-gray-500 flex-none px-4">Chiều cao</span>
-                          <Slider className={"shrink"} defaultValue={[155]} min={155} max={190} step={1} />
-                          <span className="text-blue-700 flex-none px-4">cm</span>
+                          <Slider className={"shrink"}
+                                  onValueChange={handleHeightChange}
+                                  defaultValue={heightValue}
+                                  min={getSizeSuggestion(getMinSize(product.models[selectModelIndex].sizes) ?? "S")?.heightRange.min ?? 0}
+                                  max={getSizeSuggestion(getMaxSize(product.models[selectModelIndex].sizes) ?? "3XL")?.heightRange.max ?? 0}
+                                  step={1} />
+                          <span className="text-blue-700 flex-none px-4">{heightValue} cm</span>
                         </div>
 
                         <div className="w-full flex my-5">
                           <span className="text-gray-500 flex-none px-4">Cân nặng</span>
-                          <Slider className={"shrink"} defaultValue={[40]} min={40} max={90} step={1} />
-                          <span className="text-blue-700 flex-none px-4">kg</span>
+                          <Slider className={"shrink"}
+                                  onValueChange={handleWeightChange}
+                                  defaultValue={heightValue}
+                                  min={getSizeSuggestion(getMinSize(product.models[selectModelIndex].sizes) ?? "S")?.weightRange.min ?? 0}
+                                  max={getSizeSuggestion(getMaxSize(product.models[selectModelIndex].sizes) ?? "3XL")?.weightRange.max ?? 0}
+                                  step={1} />
+                          <span className="text-blue-700 flex-none px-4">{weightValue} kg</span>
                         </div>
 
                         <SameRadioGroup className={"flex"} defaultValue={"option-1"}>
@@ -335,69 +382,69 @@ export default function ProductDetailPage(props: ProductDetailProp) {
 
                         </div>
                       </TabsContent>
-                      <TabsContent value="size-table" >
-                          <Table>
-                            <TableCaption className={'break-all'}>Trường hợp số đo của bạn nằm trong khoảng giữa các size với nhau:
-                              Với áo thun, bạn hãy lựa chọn ưu tiên theo chiều cao
-                              Ví dụ chiều cao của bạn theo size L nhưng cân nặng của bạn theo size M, Hãy chọn L.
-                              97% khách hàng của chúng tôi đã chọn đúng size theo cách này.</TableCaption>
-                            <TableHeader className={"bg-blue-700"}>
-                              <TableRow>
-                                <TableHead className={"text-white"}>Size</TableHead>
-                                <TableHead className={"text-white"}>M</TableHead>
-                                <TableHead className={"text-white"}>L</TableHead>
-                                <TableHead className={"text-white"}>XL</TableHead>
-                                <TableHead className={"text-white"}>2XL</TableHead>
-                                <TableHead className={"text-white"}>3XL</TableHead>
-                              </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                              <TableRow className="text-sm font-bold break-all">
-                                <TableCell>Chiều cao</TableCell>
-                                <TableCell>1m60 - 1m65</TableCell>
-                                <TableCell>1m66 - 1m72</TableCell>
-                                <TableCell>1m72 - 1m77</TableCell>
-                                <TableCell>1m77 - 1m84</TableCell>
-                                <TableCell><span>1m85 - 1m92</span></TableCell>
-                              </TableRow>
+                      <TabsContent value="size-table">
+                        <Table>
+                          <TableCaption className={"break-all"}>Trường hợp số đo của bạn nằm trong khoảng giữa các size với nhau:
+                            Với áo thun, bạn hãy lựa chọn ưu tiên theo chiều cao
+                            Ví dụ chiều cao của bạn theo size L nhưng cân nặng của bạn theo size M, Hãy chọn L.
+                            97% khách hàng của chúng tôi đã chọn đúng size theo cách này.</TableCaption>
+                          <TableHeader className={"bg-blue-700"}>
+                            <TableRow>
+                              <TableHead className={"text-white"}>Size</TableHead>
+                              <TableHead className={"text-white"}>M</TableHead>
+                              <TableHead className={"text-white"}>L</TableHead>
+                              <TableHead className={"text-white"}>XL</TableHead>
+                              <TableHead className={"text-white"}>2XL</TableHead>
+                              <TableHead className={"text-white"}>3XL</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            <TableRow className="text-sm font-bold break-all">
+                              <TableCell>Chiều cao</TableCell>
+                              <TableCell>1m60 - 1m65</TableCell>
+                              <TableCell>1m66 - 1m72</TableCell>
+                              <TableCell>1m72 - 1m77</TableCell>
+                              <TableCell>1m77 - 1m84</TableCell>
+                              <TableCell><span>1m85 - 1m92</span></TableCell>
+                            </TableRow>
 
-                              <TableRow className="text-sm font-bold">
-                                <TableCell>Cân nặng</TableCell>
-                                <TableCell> 55kg - 61kg</TableCell>
-                                <TableCell>62kg - 68kg</TableCell>
-                                <TableCell>69kg - 75kg</TableCell>
-                                <TableCell>76kg - 84kg</TableCell>
-                                <TableCell>85kg - 90kg</TableCell>
-                              </TableRow>
+                            <TableRow className="text-sm font-bold">
+                              <TableCell>Cân nặng</TableCell>
+                              <TableCell> 55kg - 61kg</TableCell>
+                              <TableCell>62kg - 68kg</TableCell>
+                              <TableCell>69kg - 75kg</TableCell>
+                              <TableCell>76kg - 84kg</TableCell>
+                              <TableCell>85kg - 90kg</TableCell>
+                            </TableRow>
 
-                              <TableRow className="text-sm font-bold">
-                                <TableCell>Dài áo</TableCell>
-                                <TableCell>68.5</TableCell>
-                                <TableCell>70.5</TableCell>
-                                <TableCell>72.5</TableCell>
-                                <TableCell>74.5</TableCell>
-                                <TableCell>76</TableCell>
-                              </TableRow>
+                            <TableRow className="text-sm font-bold">
+                              <TableCell>Dài áo</TableCell>
+                              <TableCell>68.5</TableCell>
+                              <TableCell>70.5</TableCell>
+                              <TableCell>72.5</TableCell>
+                              <TableCell>74.5</TableCell>
+                              <TableCell>76</TableCell>
+                            </TableRow>
 
-                              <TableRow className="text-sm font-bold">
-                                <TableCell>Rộng ngực</TableCell>
-                                <TableCell>52.7</TableCell>
-                                <TableCell>54.7</TableCell>
-                                <TableCell>56.7</TableCell>
-                                <TableCell>59.7</TableCell>
-                                <TableCell>62.7</TableCell>
-                              </TableRow>
+                            <TableRow className="text-sm font-bold">
+                              <TableCell>Rộng ngực</TableCell>
+                              <TableCell>52.7</TableCell>
+                              <TableCell>54.7</TableCell>
+                              <TableCell>56.7</TableCell>
+                              <TableCell>59.7</TableCell>
+                              <TableCell>62.7</TableCell>
+                            </TableRow>
 
-                              <TableRow className="text-sm font-bold">
-                                <TableCell>Dài tay</TableCell>
-                                <TableCell>58.5</TableCell>
-                                <TableCell>60.5</TableCell>
-                                <TableCell>62.5</TableCell>
-                                <TableCell>64.5</TableCell>
-                                <TableCell>66.5</TableCell>
-                              </TableRow>
-                            </TableBody>
-                          </Table>
+                            <TableRow className="text-sm font-bold">
+                              <TableCell>Dài tay</TableCell>
+                              <TableCell>58.5</TableCell>
+                              <TableCell>60.5</TableCell>
+                              <TableCell>62.5</TableCell>
+                              <TableCell>64.5</TableCell>
+                              <TableCell>66.5</TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
                       </TabsContent>
                     </Tabs>
 
@@ -405,48 +452,26 @@ export default function ProductDetailPage(props: ProductDetailProp) {
                 </Dialog>
               </p>
               <div className="flex flex-wrap gap-3 mb-3">
-                <SameRadioGroup className="flex flex-wrap gap-4">
-                  <HoverCard>
-                    <HoverCardTrigger className={"relative"}>
-                      <div className={"w-12 h-8 lg:w-20 lg:h-8 bg-gray-200 rounded-sm lg:rounded-full  text-center place-content-center uppercase"}><span>M</span></div>
-                      <SameRadioGroupItem className={"absolute rounded-sm lg:rounded-full cursor-pointer top-0 w-12 h-8 lg:w-20 l:h-8"} value="sticky-size-m" id="sticky-size-m">
-                        <span className="w-12 h-8 lg:w-20 lg:h-8 rounded-sm lg:rounded-full bg-black text-white text-center place-content-center uppercase">M</span>
-                      </SameRadioGroupItem>
-                    </HoverCardTrigger>
-                    <HoverCardContent className={"p-2 w-auto"}>
-                      <div className="">
-                        <p>Lorem ipsum.</p><p>Lorem ipsum.</p>
-                      </div>
-                    </HoverCardContent>
-                  </HoverCard>
-
-                  <HoverCard>
-                    <HoverCardTrigger className={"relative"}>
-                      <div className={"w-12 h-8 lg:w-20 lg:h-8 bg-gray-200 rounded-sm lg:rounded-full  text-center place-content-center uppercase"}><span>l</span></div>
-                      <SameRadioGroupItem className={"absolute rounded-sm lg:rounded-full cursor-pointer top-0 w-12 h-8 lg:w-20 l:h-8"} value="sticky-size-l" id="sticky-size-l">
-                        <span className="w-12 h-8 lg:w-20 l:h-8 rounded-sm lg:rounded-full bg-black text-white text-center place-content-center uppercase">l</span>
-                      </SameRadioGroupItem>
-                    </HoverCardTrigger>
-                    <HoverCardContent className={"p-2 w-auto"}>
-                      <div className="">
-                        <p>Lorem ipsum.</p><p>Lorem ipsum.</p>
-                      </div>
-                    </HoverCardContent>
-                  </HoverCard>
-
-                  <HoverCard>
-                    <HoverCardTrigger className={"relative"}>
-                      <div className={"w-12 h-8 lg:w-20 lg:h-8 bg-gray-200 rounded-sm lg:rounded-full text-center place-content-center uppercase"}><span>xl</span></div>
-                      <SameRadioGroupItem className={"absolute rounded-sm lg:rounded-full top-0 w-12 h-8 lg:w-20 l:h-8 cursor-pointer"} value="sticky-size-xl" id="sticky-size-xl">
-                        <span className="w-12 h-8 lg:w-20 lg:h-8 rounded-sm lg:rounded-full bg-black text-white text-center place-content-center uppercase">xl</span>
-                      </SameRadioGroupItem>
-                    </HoverCardTrigger>
-                    <HoverCardContent className={"p-2 w-auto"}>
-                      <div className="">
-                        <p>Lorem ipsum.</p><p>Lorem ipsum.</p>
-                      </div>
-                    </HoverCardContent>
-                  </HoverCard>
+                <SameRadioGroup className="flex flex-wrap gap-4" onValueChange={handleSizeChange}>
+                  {product.models[selectModelIndex].sizes.map((value, index) => {
+                    return (<HoverCard>
+                      <HoverCardTrigger className={"relative"}>
+                        <div className={"w-12 h-8 lg:w-20 lg:h-8 bg-gray-200 rounded-sm lg:rounded-full  text-center place-content-center uppercase"}>
+                          <span>{value}</span></div>
+                        <SameRadioGroupItem
+                          className={"absolute rounded-sm lg:rounded-full cursor-pointer top-0 w-12 h-8 lg:w-20 l:h-8"} value={value} id={`${value}` + index}>
+                          <span
+                            className="w-12 h-8 lg:w-20 lg:h-8 rounded-sm lg:rounded-full bg-black text-white text-center place-content-center uppercase">{value}</span>
+                        </SameRadioGroupItem>
+                      </HoverCardTrigger>
+                      <HoverCardContent className={"p-2 w-auto"}>
+                        <div className="">
+                          <p>{getSizeSuggestion(value)?.heightRange.min}cm - {getSizeSuggestion(value)?.heightRange.max}cm</p>
+                          <p>{getSizeSuggestion(value)?.weightRange.min}kg - {getSizeSuggestion(value)?.weightRange.max}kg</p>
+                        </div>
+                      </HoverCardContent>
+                    </HoverCard>);
+                  })}
                 </SameRadioGroup>
               </div>
             </div>
@@ -462,7 +487,7 @@ export default function ProductDetailPage(props: ProductDetailProp) {
                 variant="default"
               >
                 <ShoppingBag className={""} />
-                <span>Lorem ipsum dolor sit amet.</span>
+                <span>{sizeSelected ? "Chọn kích thước" : "Thêm vào giỏ hàng"}</span>
               </Button>
             </div>
 
@@ -620,6 +645,7 @@ export default function ProductDetailPage(props: ProductDetailProp) {
               />
               <Label className={" ml-1"} htmlFor="r5">
                 <Rate
+                  disabled
                   className={"fill-black"}
                   defaultValue={5}
                 />
@@ -634,6 +660,7 @@ export default function ProductDetailPage(props: ProductDetailProp) {
               />
               <Label className={"ml-1"} htmlFor="r4">
                 <Rate
+                  disabled
                   className={"fill-black"}
                   defaultValue={4}
                 />
@@ -648,6 +675,7 @@ export default function ProductDetailPage(props: ProductDetailProp) {
               />
               <Label className={" ml-1"} htmlFor="r3">
                 <Rate
+                  disabled
                   className={"fill-black"}
                   defaultValue={3}
                 />
@@ -662,6 +690,7 @@ export default function ProductDetailPage(props: ProductDetailProp) {
               />
               <Label className={" ml-1"} htmlFor="r2">
                 <Rate
+                  disabled
                   defaultValue={2}
                   className={"fill-black"}
                 />
@@ -676,6 +705,7 @@ export default function ProductDetailPage(props: ProductDetailProp) {
               />
               <Label className={" ml-1"} htmlFor="r1">
                 <Rate
+                  disabled
                   className={"fill-black"}
                   defaultValue={1}
                 />

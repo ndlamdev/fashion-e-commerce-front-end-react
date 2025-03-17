@@ -5,12 +5,15 @@ import RootLayout from "@/layouts/RootLayout.tsx";
 import ProductDetailPage from "@/pages/ProductDetailPage.tsx";
 
 function App() {
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<RootLayout />}>
           <Route index element={<HomePage />} />
-          <Route path={'product-detail/:id'} element={<ProductDetailPage />}/>
+          <Route path={'product-detail'} >
+            <Route path={':id'} element={<ProductDetailPage />}/>
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

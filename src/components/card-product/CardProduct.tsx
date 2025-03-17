@@ -6,13 +6,13 @@ import { Star } from "lucide-react";
 import { useNavigate } from "react-router";
 
 export default function CardProduct(props: ProductCardProp) {
+  const navigate = useNavigate();
 	const [selected, setSelected] = useState<number>(0);
 	const [numPageModel, setNumPageModel] = useState<number>(6);
 	const [bgImage, setBgImage] = useState<string>(
 		props.models[selected].imageUrls[0],
 	);
 	useEffect(() => setBgImage(props.models[selected].imageUrls[0]),[selected]);
-  const navigate = useNavigate();
 	return (
 		<Card
 			className={
@@ -20,8 +20,8 @@ export default function CardProduct(props: ProductCardProp) {
 			}
 		>
 			<CardContent
-				onClick={() => navigate(`product-detail/${props.id}`)}
-				className={`group relative text-base h-[50vw] xl:h-84  md:h-62 rounded-lg p-0 bg-center bg-no-repeat bg-cover`}
+				onClick={() => navigate(`/product-detail/${props.id}`, { replace: true })}
+				className={`group relative text-base h-[50vw] xl:h-84  md:h-62 rounded-lg p-0 bg-center bg-no-repeat bg-cover cursor-pointer`}
 				style={{ backgroundImage: `url(${bgImage})` }}
 				onMouseEnter={() =>
 					setBgImage(props.models[selected].imageUrls.length > 1 ? props.models[selected].imageUrls?.[1] :props.models[selected].imageUrls?.[0])
@@ -72,7 +72,7 @@ export default function CardProduct(props: ProductCardProp) {
 						Thêm nhanh vào giỏ hàng +
 					</p>
 					<div className={"flex flex-wrap gap-2 cursor-pointer "}>
-						{props.models[selected].sizes.map((size, index) => (
+						{props.models[selected].sizes.map((size: string, index: number) => (
 							<Badge
 								key={index}
 								className={
@@ -92,7 +92,8 @@ export default function CardProduct(props: ProductCardProp) {
 						<div
 							key={index}
 							onClick={() => setSelected(index)}
-							className={`w-8 h-4 rounded-2xl bg-[${item.codeColor}] ${
+              style={{backgroundColor: item.codeColor}}
+							className={`w-8 h-4 rounded-2xl] ${
 								selected === index
 									? "outline-2 outline-offset-2 outline-neutral-700"
 									: "outline-none"

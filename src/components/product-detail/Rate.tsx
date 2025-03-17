@@ -29,8 +29,6 @@ const Rate = ({
     <div className={clsx("flex space-x-1", className)}>
       {[...Array(5)].map((_, index) => {
         const isHalf :boolean = allowHalf && index + defaultValue%1 === selectedIndex;
-        console.log('index', index);
-        console.log('isHalf', isHalf);
         return (
           <span
             key={index}

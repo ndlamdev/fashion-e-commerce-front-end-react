@@ -1,4 +1,4 @@
-import ProductModelType from "@/types/product/productModels.type.ts";
+import { ProductModelType } from "@/types/product/productModels.type.ts";
 
 type ProductType = {
   id: number;
