@@ -7,8 +7,8 @@
   "useTabs": true,
   "singleQuote": false,
   "jsxSingleQuote": true,
-  "jsxBracketSameLine": true,
   "bracketSpacing": true,
+  "jsxBracketSameLine": true,
   "plugins": [
     "prettier-plugin-tailwindcss"
   ]
