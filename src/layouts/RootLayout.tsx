@@ -12,32 +12,32 @@ import { useState } from "react";
 import VerticalMenu from "@/components/menu/VerticalMenu.tsx";
 import Footer from "@/components/footer/Footer.tsx";
 import { Outlet } from "react-router";
-import { Toaster } from "@/components/ui/sonner.tsx";
 
 function RootLayout() {
-  const [showVerticalMenu, setShowVerticalMenu] = useState<boolean>(false);
-  const [showVerticalMenuComplete, setShowVerticalMenuComplete] = useState<boolean>(false);
+	const [showVerticalMenu, setShowVerticalMenu] = useState<boolean>(false);
+	const [showVerticalMenuComplete, setShowVerticalMenuComplete] = useState<boolean>(false);
 
-  return (
-    <div className={"h-full"}>
-      <div className={`bg-white ${showVerticalMenuComplete ? "hidden" : "block"} lg:block`}>
-        <Header showMenu={() => {
-          setShowVerticalMenu(true);
-        }} />
-        <Toaster />
-        <Outlet />
-        <Footer />
-      </div>
-      <VerticalMenu
-        showMenu={showVerticalMenu}
-        onAnimationComplete={() => setShowVerticalMenuComplete(true)}
-        onHidden={() => {
-          setShowVerticalMenu(false);
-          setShowVerticalMenuComplete(false);
-        }}
-      />
-    </div>
-  );
+	return (
+		<div className={"h-full"}>
+			<div className={`bg-white ${showVerticalMenuComplete ? "hidden" : "block"} lg:block`}>
+				<Header
+					showMenu={() => {
+						setShowVerticalMenu(true);
+					}}
+				/>
+				<Outlet />
+				<Footer />
+			</div>
+			<VerticalMenu
+				showMenu={showVerticalMenu}
+				onAnimationComplete={() => setShowVerticalMenuComplete(true)}
+				onHidden={() => {
+					setShowVerticalMenu(false);
+					setShowVerticalMenuComplete(false);
+				}}
+			/>
+		</div>
+	);
 }
 
 export default RootLayout;

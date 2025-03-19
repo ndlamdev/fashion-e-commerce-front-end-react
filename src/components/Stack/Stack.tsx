@@ -19,10 +19,7 @@ function CardRotate({ children, onSendToBack, sensitivity }: CardRotateProps) {
 	const rotateY = useTransform(x, [-100, 100], [-60, 60]);
 
 	function handleDragEnd(_: never, info: { offset: { x: number; y: number } }) {
-		if (
-			Math.abs(info.offset.x) > sensitivity ||
-			Math.abs(info.offset.y) > sensitivity
-		) {
+		if (Math.abs(info.offset.x) > sensitivity || Math.abs(info.offset.y) > sensitivity) {
 			onSendToBack();
 		} else {
 			x.set(0);
@@ -38,8 +35,7 @@ function CardRotate({ children, onSendToBack, sensitivity }: CardRotateProps) {
 			dragConstraints={{ top: 0, right: 0, bottom: 0, left: 0 }}
 			dragElastic={0.6}
 			whileTap={{ cursor: "grabbing" }}
-			onDragEnd={handleDragEnd}
-		>
+			onDragEnd={handleDragEnd}>
 			{children}
 		</motion.div>
 	);
@@ -52,7 +48,7 @@ interface StackProps {
 	sendToBackOnClick?: boolean;
 	cardsData?: { id: number; img: string }[];
 	animationConfig?: { stiffness: number; damping: number };
-  className: string
+	className: string;
 }
 
 export default function Stack({
@@ -62,7 +58,7 @@ export default function Stack({
 	cardsData = [],
 	animationConfig = { stiffness: 260, damping: 20 },
 	sendToBackOnClick = false,
-  className
+	className,
 }: StackProps) {
 	const [cards, setCards] = useState(
 		cardsData.length
@@ -99,26 +95,21 @@ export default function Stack({
 
 	return (
 		<div
-			className={cn('relative', className)}
+			className={cn("relative", className)}
 			style={{
 				// width: cardDimensions.width,
 				// height: cardDimensions.height,
 				perspective: 600,
-			}}
-		>
+			}}>
 			{cards.map((card, index) => {
 				const randomRotate = randomRotation
 					? Math.random() * 10 - 5 // Random degree between -5 and 5
 					: 0;
 
 				return (
-					<CardRotate
-						key={card.id}
-						onSendToBack={() => sendToBack(card.id)}
-						sensitivity={sensitivity}
-					>
+					<CardRotate key={card.id} onSendToBack={() => sendToBack(card.id)} sensitivity={sensitivity}>
 						<motion.div
-							className={cn('rounded-2xl overflow-hidden border-4 border-neutral-400', className)}
+							className={cn("overflow-hidden rounded-2xl border-4 border-neutral-400", className)}
 							onClick={() => sendToBackOnClick && sendToBack(card.id)}
 							animate={{
 								rotateZ: (cards.length - index - 1) * 4 + randomRotate,
@@ -131,16 +122,13 @@ export default function Stack({
 								stiffness: animationConfig.stiffness,
 								damping: animationConfig.damping,
 							}}
-							style={{
-								// width: cardDimensions.width,
-								// height: cardDimensions.height,
-							}}
-						>
-							<img
-								src={card.img}
-								alt={`card-${card.id}`}
-								className='w-full h-full object-cover pointer-events-none'
-							/>
+							style={
+								{
+									// width: cardDimensions.width,
+									// height: cardDimensions.height,
+								}
+							}>
+							<img src={card.img} alt={`card-${card.id}`} className='pointer-events-none h-full w-full object-cover' />
 						</motion.div>
 					</CardRotate>
 				);
