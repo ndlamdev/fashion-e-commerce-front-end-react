@@ -136,11 +136,11 @@ function InformationCustomer() {
 					<div className={`flex flex-col gap-3 rounded-2xl bg-gray-200 p-5 ${otherReceiver ? "block" : "hidden"}`}>
 						<div className={"flex gap-4"}>
 							<label className={"flex gap-3"}>
-								<input type={"radio"} name={"sex"} value={"male"} />
+								<input type={"radio"} name={"sex"} value={"male"} onChange={() => {}} />
 								Nam
 							</label>
 							<label className={"flex gap-3"}>
-								<input type={"radio"} name={"sex"} value={"female"} />
+								<input type={"radio"} name={"sex"} value={"female"} onChange={() => {}} />
 								Nữ
 							</label>
 						</div>
@@ -160,7 +160,7 @@ function InformationCustomer() {
 						onMouseEnter={() => setPaymentHover("cash")}
 						onMouseLeave={() => setPaymentHover(null)}
 						onClick={() => setPayment("cash")}>
-						<input type={"radio"} className={"h-5 w-5"} checked={payment === "cash" || paymentHover === "cash"} />
+						<input type={"radio"} className={"h-5 w-5"} checked={payment === "cash" || paymentHover === "cash"} onChange={() => {}} />
 						<LaShippingFast width={40} height={40} />
 						<p className={"text-[0.9rem] font-bold"}>Thanh toán khi nhận hàng</p>
 					</div>
@@ -171,7 +171,7 @@ function InformationCustomer() {
 						onMouseEnter={() => setPaymentHover("momo")}
 						onMouseLeave={() => setPaymentHover(null)}
 						onClick={() => setPayment("momo")}>
-						<input type={"radio"} className={"h-5 w-5"} checked={payment === "momo" || paymentHover === "momo"} />
+						<input type={"radio"} className={"h-5 w-5"} checked={payment === "momo" || paymentHover === "momo"} onChange={() => {}} />
 						<img src={momo} alt={"momo.png"} className={"h-13 w-13"} />
 						<p className={"text-[0.9rem] font-bold"}>Ví MoMo</p>
 					</div>
@@ -182,7 +182,7 @@ function InformationCustomer() {
 						onMouseEnter={() => setPaymentHover("zalo-pay")}
 						onMouseLeave={() => setPaymentHover(null)}
 						onClick={() => setPayment("zalo-pay")}>
-						<input type={"radio"} className={"h-5 w-5"} checked={payment === "zalo-pay" || paymentHover === "zalo-pay"} />
+						<input type={"radio"} className={"h-5 w-5"} checked={payment === "zalo-pay" || paymentHover === "zalo-pay"} onChange={() => {}} />
 						<img src={zaloPay} alt={"zalo-pay.png"} className={"h-13 w-13 rounded-[0.5rem]"} />
 						<div>
 							<p className={"text-[0.9rem] font-bold"}>Thanh toán qua ZaloPay</p>
@@ -199,7 +199,7 @@ function InformationCustomer() {
 						onMouseEnter={() => setPaymentHover("vn-pay")}
 						onMouseLeave={() => setPaymentHover(null)}
 						onClick={() => setPayment("vn-pay")}>
-						<input type={"radio"} className={"h-5 w-5"} checked={payment === "vn-pay" || paymentHover === "vn-pay"} />
+						<input type={"radio"} className={"h-5 w-5"} checked={payment === "vn-pay" || paymentHover === "vn-pay"} onChange={() => {}} />
 						<img src={vnPay} alt={"vn-pay.png"} className={"h-13 w-13 rounded-[0.5rem]"} />
 						<div>
 							<p className={"text-[0.9rem] font-bold"}>Ví điện tử VNPAY</p>

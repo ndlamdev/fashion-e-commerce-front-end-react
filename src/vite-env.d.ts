@@ -1,1 +1,1 @@
-/// <reference types="vite/client" />
+/// <reference props="vite/client" />

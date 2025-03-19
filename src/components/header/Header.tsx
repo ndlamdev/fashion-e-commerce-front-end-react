@@ -19,8 +19,9 @@ import { Separator } from "@/components/ui/separator.tsx";
 import ShoppingBagItem from "@/components/cart/ShoppingBagItem.tsx";
 import dataShoppingBagItems from "@/assets/data/shopping-bag-items.ts";
 import { useNavigate } from "react-router";
+import HeaderProps from "@/components/header/props/header-prop.ts";
 
-function Header({ showMenu }: { showMenu: () => void }) {
+function Header({ showMenu }: HeaderProps) {
 	const [, scrollY] = useScrolled();
 	const [scrollUp, setScrollUp] = useState(false);
 	const navigate = useNavigate();
@@ -45,7 +46,7 @@ function Header({ showMenu }: { showMenu: () => void }) {
 					</div>
 
 					<div className={"hidden lg:block"}>
-						<div className={"flex size-18 items-center justify-center bg-blue-400"} onClick={() => navigate("/")}>
+						<div className={"flex size-18 cursor-pointer items-center justify-center bg-blue-400"} onClick={() => navigate("/")}>
 							Logo
 						</div>
 					</div>
@@ -53,7 +54,7 @@ function Header({ showMenu }: { showMenu: () => void }) {
 				</div>
 				<div className='flex justify-center'>
 					<div className={"block lg:hidden"}>
-						<div className={"flex size-[60px] items-center justify-center bg-blue-400"} onClick={() => navigate("/")}>
+						<div className={"flex size-[60px] cursor-pointer items-center justify-center bg-blue-400"} onClick={() => navigate("/")}>
 							Logo
 						</div>
 					</div>
@@ -78,8 +79,8 @@ function Header({ showMenu }: { showMenu: () => void }) {
 						<SolarHeartBold width={29} height={29} />
 					</a>
 					<div className={"group relative"}>
-						<a href={"#"}>
-							<ShoppingBag countItem={dataShoppingBagItems.length} onClick={() => navigate("/cart")} />
+						<a href={"/cart"} className={"relative z-3"}>
+							<ShoppingBag countItem={dataShoppingBagItems.length} />
 						</a>
 						<div className={"absolute top-0 right-0 z-2 hidden w-[25rem] group-hover:lg:block"}>
 							<div className={"relative top-16 right-0 max-h-[27rem] overflow-y-scroll rounded-2xl bg-white p-4"}>
@@ -87,7 +88,7 @@ function Header({ showMenu }: { showMenu: () => void }) {
 									<div className={"h-full overflow-auto"}>
 										<div className={"flex justify-between"}>
 											<p>{dataShoppingBagItems.length} sản phẩm</p>
-											<a href={"#"} className={"text-blue-500"}>
+											<a href={"/cart"} className={"text-blue-500"}>
 												Xem tất cả
 											</a>
 										</div>
@@ -111,7 +112,7 @@ function Header({ showMenu }: { showMenu: () => void }) {
 				animate={{ height: scrollY >= 10 ? 0 : 35 }}
 				transition={{ duration: 0.75 }}
 				onUpdate={(latest) => {
-					if (scrollUp) window.scrollTo({ top: window.scrollY - (latest as { height: number }).height - 5 });
+					if (scrollUp) window.scrollTo({ top: (window.scrollY - (latest as { height: number }).height) * 1.5 - 5 });
 				}}
 				onAnimationStart={(value) => setScrollUp((value as { height: number }).height != 0)}
 				className={`mb-2 grid w-full grid-cols-5 gap-2 overflow-hidden bg-gray-700 lg:grid-cols-3 ${scrollY < 10 && "py-1"}`}>

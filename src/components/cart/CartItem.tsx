@@ -5,20 +5,12 @@
  * Create at: 7:19PM - 13/03/2025
  *  User: lam-nguyen
  **/
-import ShoppingBagItemType from "@/types/ShoppingBagItemType.ts";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select.tsx";
 import { TablerPlus } from "@/assets/images/icons/TablerPlus.tsx";
 import { TablerMinus } from "@/assets/images/icons/TablerMinus.tsx";
 import { formatCurrency } from "@/utils/format-data.ts";
 import { Fa6RegularTrashCan } from "@/assets/images/icons/Fa6RegularTrashCan.tsx";
-
-export type CartItemProps = ShoppingBagItemType & {
-	sizes: string[];
-	colors: string[];
-	onDelete?: () => void;
-	onPlus?: () => void;
-	onMinute?: () => void;
-};
+import CartItemProps from "@/components/cart/props/cart-item.prop.ts";
 
 function CartItem({ id, name, image, color, size, amount, colors, sizes, discount, price, onDelete, onPlus, onMinute }: CartItemProps) {
 	return (

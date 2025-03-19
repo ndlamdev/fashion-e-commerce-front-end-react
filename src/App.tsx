@@ -1,10 +1,11 @@
-import "@/assets/css/App.css";
-import { BrowserRouter, Route, Routes } from "react-router";
-import HomePage from "@/pages/HomePage.tsx";
-import RootLayout from "@/layouts/RootLayout.tsx";
-import CartPage from "@/pages/CartPage.tsx";
-import CartLayout from "@/layouts/CartLayout.tsx";
-import { Toaster } from "sonner";
+import '@/assets/css/App.css';
+import { Toaster } from 'sonner';
+import { BrowserRouter, Route, Routes } from 'react-router';
+import RootLayout from '@/layouts/RootLayout.tsx';
+import CartLayout from '@/layouts/CartLayout.tsx';
+import HomePage from '@/pages/HomePage.tsx';
+import CartPage from '@/pages/CartPage.tsx';
+import ProductDetailPage from '@/pages/ProductDetailPage.tsx';
 
 function App() {
 	return (
@@ -12,6 +13,9 @@ function App() {
 			<Routes>
 				<Route path='/' element={<RootLayout />}>
 					<Route index element={<HomePage />} />
+					<Route path={'product-detail'}>
+						<Route path={':id'} element={<ProductDetailPage />} />
+					</Route>
 				</Route>
 				<Route path='/cart' element={<CartLayout />}>
 					<Route index element={<CartPage />} />

@@ -7,8 +7,9 @@
  **/
 
 import { HeroiconsShoppingBagSolid } from "@/assets/images/icons/HeroiconsShoppingBagSolid.tsx";
+import ShoppingBagProps from "@/components/cart/props/shopping-bag.prop.ts";
 
-function ShoppingBag({ countItem = 0, onClick }: { countItem?: number; onClick?: () => void }) {
+function ShoppingBag({ countItem = 0, onClick }: ShoppingBagProps) {
 	return (
 		<div className={"relative h-8 w-8"} onClick={onClick}>
 			<HeroiconsShoppingBagSolid width={28} height={28} />

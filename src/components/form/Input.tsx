@@ -5,31 +5,9 @@
  * Create at: 2:37PM - 06/03/2025
  *  User: lam-nguyen
  **/
-import { CSSProperties, ReactNode } from "react";
+import InputProps from "@/components/form/props/input.prop.ts";
 
-type InputState = "HOLDER" | "FOCUS" | "BLUR" | "LEAVE";
-
-function Input({
-	leftIcon,
-	rightIcon,
-	getState,
-	className,
-	inputClassName,
-	inputStyle,
-	style,
-	onChange,
-	placeholder,
-}: {
-	leftIcon?: ReactNode;
-	rightIcon?: ReactNode;
-	getState?: (state: InputState) => void;
-	className?: string;
-	inputClassName?: string;
-	inputStyle?: CSSProperties;
-	style?: CSSProperties;
-	onChange?: (input: string) => void;
-	placeholder?: string;
-}) {
+function Input({ leftIcon, rightIcon, getState, className, inputClassName, inputStyle, style, onChange, placeholder }: InputProps) {
 	return (
 		<div className={`${className && className}`} style={style} onMouseLeave={() => getState?.("LEAVE")} onMouseEnter={() => getState?.("HOLDER")}>
 			{leftIcon && leftIcon}

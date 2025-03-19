@@ -7,12 +7,10 @@
  **/
 
 import { formatDate } from "@/utils/format-data.ts";
-import VoucherType from "@/types/VoucherType.ts";
 import { SheetTrigger } from "@/components/ui/sheet.tsx";
+import VoucherProps from "@/components/cart/props/voucher.prop.ts";
 
-type VoucherProps = VoucherType & { onClick?: () => void; selected?: boolean };
-
-function Voucher({ code, detail, expiryDate, remaining, selected, onClick }: VoucherProps & { onClick?: () => void }) {
+function Voucher({ code, detail, expiryDate, remaining, selected, onClick }: VoucherProps) {
 	return (
 		<div className={"flex h-30 w-80 flex-none overflow-hidden rounded-lg bg-gray-200"} onClick={onClick}>
 			<div className={"relative h-full w-10 border-r-[2px] border-dashed border-gray-300"}>
@@ -28,7 +26,7 @@ function Voucher({ code, detail, expiryDate, remaining, selected, onClick }: Vou
 					<p className={"text-[0.75rem]"}>HSD: {formatDate(expiryDate)}</p>
 				</div>
 				<div className={"relative flex h-full w-20 items-end justify-center"}>
-					<input type='radio' className={"absolute top-10 h-5 w-5"} checked={selected} />
+					<input type='radio' className={"absolute top-10 h-5 w-5"} checked={selected} onChange={() => {}} />
 					<SheetTrigger asChild>
 						<button className={"text-[0.75rem] text-blue-800"}>Điều kiện</button>
 					</SheetTrigger>

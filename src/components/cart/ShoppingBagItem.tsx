@@ -7,25 +7,25 @@
  **/
 
 import { formatCurrency } from "@/utils/format-data.ts";
-import ShoppingBagItemType from "@/types/ShoppingBagItemType.ts";
+import ShoppingBagProps from "@/components/cart/props/shopping-bag-item.prop.ts";
 
-function ShoppingBagItem({ image, name, price, discount, amount, color, size }: ShoppingBagItemType) {
+function ShoppingBagItem({ image, name, price, discount, amount, color, size }: ShoppingBagProps) {
 	return (
-		<div className={"flex gap-4 items-center"}>
+		<div className={"flex items-center gap-4"}>
 			<img className={"h-1/6 w-25 rounded-xl"} src={image} alt='img.png' />
-			<div className={"w-full "}>
-				<div className={"flex justify-between flex-nowrap items-center"}>
-					<p className={"overflow-hidden font-bold text-[0.8rem]"}>{name}</p>
+			<div className={"w-full"}>
+				<div className={"flex flex-nowrap items-center justify-between"}>
+					<p className={"overflow-hidden text-[0.8rem] font-bold"}>{name}</p>
 					<button>x</button>
 				</div>
 				<p className={"text-[0.8rem]"}>
 					{color} / {size}
 				</p>
-				<div className={"flex gap-2 items-end mt-2"}>
+				<div className={"mt-2 flex items-end gap-2"}>
 					<p className={"text-[1.25rem]"}>{discount ? formatCurrency(discount) : formatCurrency(price)}</p>
-					{discount && <p className={"text-[0.9rem] line-through text-gray-400"}>{formatCurrency(price)}</p>}
+					{discount && <p className={"text-[0.9rem] text-gray-400 line-through"}>{formatCurrency(price)}</p>}
 				</div>
-				<p className={"text-[0.8rem] mt-[-5px]"}>x{amount}</p>
+				<p className={"mt-[-5px] text-[0.8rem]"}>x{amount}</p>
 			</div>
 		</div>
 	);

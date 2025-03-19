@@ -59,7 +59,7 @@ function CartPage() {
 								</div>
 								<ul>
 									{dataCartItems.map((it) => (
-										<li>
+										<li key={`adfafdasdf_${it.id}`}>
 											<CartItem {...it} />
 										</li>
 									))}
@@ -88,6 +88,7 @@ function CartPage() {
 									className={"grow rounded-full border-1 bg-gray-200 px-4 py-2 outline-none"}
 									placeholder={"Nhập mã giảm giá"}
 									value={voucher ? voucher.code : ""}
+									onChange={() => {}}
 								/>
 								<button className={"rounded-4xl bg-black px-5 py-2 text-white hover:bg-gray-300 hover:text-black"}>Áp dụng voucher</button>
 							</div>
