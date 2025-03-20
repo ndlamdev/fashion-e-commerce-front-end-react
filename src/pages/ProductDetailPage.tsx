@@ -64,7 +64,7 @@ export default function ProductDetailPage() {
 	const [chooseModel, setChooseModel] = useState<string>(product.models[0].id + "");
 
 	// find model
-	const model: ProductModelType = product.models.find((m) => m.id === Number(chooseModel)) ?? product.models[0];
+	const model: ProductModelType = product.models.find((m: ProductModelType) => m.id === Number(chooseModel)) ?? product.models[0];
 
 	// convert urls arr to object
 	const imageUrls = model.imageUrls.map((url: string, index: number) => ({
@@ -285,7 +285,7 @@ export default function ProductDetailPage() {
 							Màu sắc: <span className={"font-bold"}>{model.name}</span>
 						</p>
 						<SameRadioGroup onValueChange={setChooseModel} value={chooseModel} className={"flex flex-wrap gap-4"}>
-							{product.models.map((model) => (
+							{product.models.map((model: ProductModelType) => (
 								<SameRadioGroupItem
 									style={{ backgroundColor: model.codeColor }}
 									className={"cursor-pointer rounded-sm px-4 py-2 lg:rounded-full lg:px-6 lg:py-4"}
@@ -793,7 +793,7 @@ export default function ProductDetailPage() {
 								<span className={"font-bold"}> {model.name}</span>
 							</p>
 							<SameRadioGroup onValueChange={setChooseModel} value={chooseModel} className='flex flex-wrap gap-4'>
-								{product.models.map((item) => (
+								{product.models.map((item: ProductModelType) => (
 									<SameRadioGroupItem
 										style={{ backgroundColor: item.codeColor }}
 										className={"rounded-sm bg-black px-6 py-4"}
