@@ -3,10 +3,10 @@ import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils.ts";
 
 const AccordionCustom = (
-  props:
-  {trigger: ReactNode, content: ReactNode, className?: string},
+  { isDown = false, ...props }:
+  {trigger: ReactNode, content: ReactNode, className?: string, isDown?: boolean},
 ) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(isDown);
   const [contentHeight, setContentHeight] = useState("0px");
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -33,7 +33,7 @@ const AccordionCustom = (
       <div
         ref={contentRef}
         style={{ height: contentHeight }}
-        className="overflow-hidden transition-all duration-1000 ease-in-out"
+        className="overflow-hidden transition-all duration-700 ease-in-out"
       >
         <div className="p-4 bg-white">
           {props.content}

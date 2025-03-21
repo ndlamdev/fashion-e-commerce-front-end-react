@@ -13,6 +13,7 @@ export default function CollectionFilter(props: CollectionFilterProps) {
     <div className={"overscroll-auto text-gray-500 text-sm font-bold"}>
       {props.categoryGroup &&
         <AccordionCustom
+          isDown
           className={"w-full"}
           trigger={
             <span className={"cursor-pointer"}>
