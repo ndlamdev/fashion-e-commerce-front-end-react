@@ -7,7 +7,7 @@
  **/
 import InputProps from "@/components/form/props/input.prop.ts";
 
-function Input({ leftIcon, rightIcon, getState, className, inputClassName, inputStyle, style, onChange, placeholder }: InputProps) {
+function Input({ leftIcon, rightIcon, getState, className, inputClassName, inputStyle, style, onChange, placeholder, disabled = false }: InputProps) {
 	return (
 		<div className={`${className && className}`} style={style} onMouseLeave={() => getState?.("LEAVE")} onMouseEnter={() => getState?.("HOLDER")}>
 			{leftIcon && leftIcon}
@@ -20,7 +20,8 @@ function Input({ leftIcon, rightIcon, getState, className, inputClassName, input
 				onFocus={() => getState?.("FOCUS")}
 				onBlur={() => getState?.("BLUR")}
 				className={`w-full border-none outline-none focus:border-none focus:outline-none active:border-none active:outline-none ${inputClassName && inputClassName}`}
-			/>
+        disabled={disabled}
+      />
 			{rightIcon && rightIcon}
 		</div>
 	);
