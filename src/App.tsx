@@ -6,6 +6,7 @@ import CartLayout from '@/layouts/CartLayout.tsx';
 import HomePage from '@/pages/HomePage.tsx';
 import CartPage from '@/pages/CartPage.tsx';
 import ProductDetailPage from '@/pages/ProductDetailPage.tsx';
+import CollectionLayout from "@/layouts/CollectionLayout.tsx";
 
 function App() {
 	return (
@@ -16,6 +17,8 @@ function App() {
 					<Route path={'product-detail'}>
 						<Route path={':id'} element={<ProductDetailPage />} />
 					</Route>
+          <Route path={'collection'} element={<CollectionLayout/>}>
+          </Route>
 				</Route>
 				<Route path='/cart' element={<CartLayout />}>
 					<Route index element={<CartPage />} />
