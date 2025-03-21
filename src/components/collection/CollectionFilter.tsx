@@ -28,8 +28,8 @@ export default function CollectionFilter(props: CollectionFilterProps) {
               }
               content={
                 <SameRadioGroup>
-                  {props.categoryGroup.map((item: CategoryType) => (
-                    <div className="flex items-center space-x-2">
+                  {props.categoryGroup.map((item: CategoryType, index) => (
+                    <div key={index} className="flex items-center space-x-2">
                       <SameRadioGroupItem className={"cursor-pointer size-5 "} value={item.name} id={item.id + ""}>
                         <CircleIcon className={"fill-blue-700 absolute top-1/2 left-1/2 size-3 -translate-x-1/2 -translate-y-1/2"} />
                       </SameRadioGroupItem>
@@ -49,7 +49,7 @@ export default function CollectionFilter(props: CollectionFilterProps) {
             content={
               <div className={"flex items-center space-x-2"}>
                 {props.size.map((item: string, index: number) => (
-                  <div className={"relative border-1 border-gray-300 uppercase px-6 py-2 rounded-sm"}>
+                  <div key={index} className={"relative border-1 border-gray-300 uppercase px-6 py-2 rounded-sm"}>
                     <CheckboxCustom className={"absolute top-0 left-0 border-4 border-none size-full rounded-sm cursor-pointer"}>
                       <div key={index} className={"size-full text-center uppercase px-6 py-2 rounded-sm bg-blue-700 cursor-pointer"}>
                         {item}
@@ -70,8 +70,8 @@ export default function CollectionFilter(props: CollectionFilterProps) {
             }
             content={
               <SameRadioGroup className={"flex flex-wrap items-center space-x-2 "}>
-                {props.color.map((item) => (
-                  <div className={"py-3"}>
+                {props.color.map((item, index) => (
+                  <div key={index} className={"py-3"}>
                     <div className="relative rounded-full size-6  cursor-pointer" style={{ backgroundColor: `${item.codeColor}` }}>
                       <SameRadioGroupItem className={"size-6 border-none rounded-full cursor-pointer"} value={item.name} id={item.codeColor}>
                         <span className={"absolute rounded-full size-6 outline-2 outline-offset-2 outline-blue-700"}></span>
@@ -95,7 +95,7 @@ export default function CollectionFilter(props: CollectionFilterProps) {
               content={
                 <div className={""}>
                   {props.material.map((item: string, index: number) => (
-                    <div className={"flex items-center space-x-2 space-y-2 "}>
+                    <div key={index} className={"flex items-center space-x-2 space-y-2 "}>
                       <Checkbox className={"cursor-pointer size-5 data-[state=checked]:bg-blue-700 data-[state=checked]:border-none"} id={item + index} />
                       <Label className={"cursor-pointer"} htmlFor={item + index}>{item}</Label>
                     </div>
@@ -115,7 +115,7 @@ export default function CollectionFilter(props: CollectionFilterProps) {
               content={
                 <div className={""}>
                   {props.fitWith.map((item: string, index: number) => (
-                    <div className={"flex items-center space-x-2 space-y-2 "}>
+                    <div key={index} className={"flex items-center space-x-2 space-y-2 "}>
                       <Checkbox className={"cursor-pointer size-5 data-[state=checked]:bg-blue-700 data-[state=checked]:border-none"} id={item + index} />
                       <Label className={"cursor-pointer"} htmlFor={item + index}>{item}</Label>
                     </div>

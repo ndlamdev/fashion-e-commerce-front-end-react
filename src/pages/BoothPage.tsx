@@ -1,28 +1,31 @@
 import { CollectionFilterProps } from "@/components/collection/props/collectionFilter.props.ts";
-import { mockCollectionFilters } from "@/assets/data/collectionFileterProp.data.ts";
+import { mockCollectionFilters } from "@/assets/data/collection/collectionFileterProp.data.ts";
 import CollectionFilter from "@/components/collection/CollectionFilter.tsx";
 import ZoneOfProducts from "@/components/collection/ZoneOfProducts.tsx";
 import sampleProducts from "@/assets/data/product.data.ts";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
+import CategoryDescription from "@/components/collection/CategoryDescription.tsx";
+import { categoryDescriptionSamples } from "@/assets/data/collection/categoryDescription.data.ts";
 
 export default function BoothPage() {
-  const filters: CollectionFilterProps = mockCollectionFilters
-  const products = sampleProducts
+  const filters: CollectionFilterProps = mockCollectionFilters;
+  const products = sampleProducts;
+  const sportDescriptions = categoryDescriptionSamples
   return (
     <>
-        <div className="flex p-6">
-          <div className="w-1/4">
-            <CollectionFilter {...filters} />
-          </div>
-          <div className="w-3/4 p-2">
-            <ScrollArea className={'h-dvh'}>
-              <ZoneOfProducts currentCategory={'lorem'} showProducts={products} TotalProducts={12}/>
-            </ScrollArea>
-          </div>
+      <div className="flex p-6">
+        <div className="w-1/4">
+          <CollectionFilter {...filters} />
         </div>
-
+        <div className="w-3/4 p-2">
+          <ScrollArea className={"h-dvh"}>
+            <ZoneOfProducts currentCategory={"lorem"} showProducts={products} TotalProducts={12} />
+          </ScrollArea>
+        </div>
+      </div>
+      <CategoryDescription {...sportDescriptions} />
       <section className={"px-5 md:px-10 md:py-10 lg:px-15 lg:py-14"}>
         <div className={"flex flex-col items-center gap-8 rounded-2xl bg-[#F1F1F1] p-5 md:flex-row md:p-8 lg:p-10"}>
           <div className={"flex-2/3"}>
@@ -96,5 +99,5 @@ export default function BoothPage() {
         </div>
       </section>
     </>
-  )
+  );
 }
