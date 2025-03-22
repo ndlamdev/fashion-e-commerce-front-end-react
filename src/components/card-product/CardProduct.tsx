@@ -5,6 +5,7 @@ import ProductCardProp from "@/components/card-product/props/productCard.prop.ts
 import { Star } from "lucide-react";
 import { useNavigate } from "react-router";
 import { formatCurrency } from "@/utils/format-data.ts";
+import { cn } from "@/lib/utils.ts";
 
 export default function CardProduct(props: ProductCardProp) {
 	const navigate = useNavigate();
@@ -13,10 +14,10 @@ export default function CardProduct(props: ProductCardProp) {
 	const [bgImage, setBgImage] = useState<string>(props.models[selected].imageUrls[0]);
 	useEffect(() => setBgImage(props.models[selected].imageUrls[0]), [selected]);
 	return (
-		<Card className={`rounded-none border-0 p-2 shadow-none ${props.className}`}>
+		<Card className={cn(`rounded-none border-0 p-2 shadow-none`, props.className)}>
 			<CardContent
 				onClick={() => navigate(`/product-detail/${props.id}`, { replace: true })}
-				className={`group relative h-[50vw] cursor-pointer rounded-lg bg-cover bg-center bg-no-repeat p-0 text-base md:h-62 xl:h-84`}
+				className={`group relative h-[50vw] md:h-62 xl:h-84 cursor-pointer rounded-lg bg-cover bg-center bg-no-repeat p-0 text-base `}
 				style={{ backgroundImage: `url(${bgImage})` }}
 				onMouseEnter={() =>
 					setBgImage(props.models[selected].imageUrls.length > 1 ? props.models[selected].imageUrls?.[1] : props.models[selected].imageUrls?.[0])
@@ -60,7 +61,7 @@ export default function CardProduct(props: ProductCardProp) {
 				</div>
 			</CardContent>
 
-			<CardFooter className={"block p-0 font-bold max-lg:text-[12px]"}>
+			<CardFooter className={"block p-0 font-bold text-xs sm:text-sm"}>
 				<div className='flex flex-wrap items-center gap-2'>
 					{props.models.slice(0, numPageModel).map((item, index) => (
 						<div
@@ -77,13 +78,13 @@ export default function CardProduct(props: ProductCardProp) {
 					)}
 				</div>
 				<p className={"my-1"}>{props.name}</p>
-				<p className={"mb-1 flex gap-2"}>
+				<p className={"mb-1 flex flex-wrap gap-2"}>
 					{/*discount handle*/}
 					<span>{formatCurrency(props.discount ? props.price * (1 - props.discount * 0.01) : props.price)}</span>
 					{props.discount && <Badge className={"rounded-2 bg-blue-700 text-xs font-bold text-white"}>-{props.discount}%</Badge>}
 					{props.discount && <span className={"text-neutral-400 line-through"}>{formatCurrency(props.price)}</span>}
 				</p>
-				{props.description && <span className={"text-xs text-blue-700"}>{props.description}</span>}
+				{props.description && <span className={"text-xs text-blue-700 line-clamp-1"}>{props.description}</span>}
 			</CardFooter>
 		</Card>
 	);

@@ -15,11 +15,11 @@ export default function BoothPage() {
   const sportDescriptions = categoryDescriptionSamples
   return (
     <>
-      <div className="flex p-6">
-        <div className="w-1/4">
+      <div className="sm:flex p-3">
+        <div className="sm:w-1/4 sm:block hidden">
           <CollectionFilter {...filters} />
         </div>
-        <div className="w-3/4 p-2">
+        <div className="sm:w-3/4 ">
           <ScrollArea className={"h-dvh"}>
             <ZoneOfProducts currentCategory={"lorem"} showProducts={products} TotalProducts={12} />
           </ScrollArea>
