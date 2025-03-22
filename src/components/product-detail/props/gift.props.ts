@@ -1,8 +1,8 @@
-import { ProductModelProps } from "@/components/card-product/props/productModel.props.ts";
+import { ProductModelType } from "@/types/product/productModels.type.ts";
 
 export type GiftProps = {
 	id: number;
 	name: string;
 	promotion: number;
-	models: ProductModelProps;
+	models: ProductModelType ;
 };
