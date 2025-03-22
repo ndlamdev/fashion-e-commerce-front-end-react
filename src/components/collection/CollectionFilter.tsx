@@ -10,14 +10,23 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer.tsx";
 import Input from "@/components/form/Input.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
-import { useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import FilterItem, { FilterReducer } from "@/components/collection/FilterItem.tsx";
 import { filterItemInitial } from "@/assets/data/collection/filterItem.data.ts";
 
 export default function CollectionFilter(props: CollectionFilterProps) {
   const isDesktop = useMediaQuery("(min-width: 640px)");
   const [filterItems, dispatch] = useReducer(FilterReducer, filterItemInitial);
-  let nextId = 2;
+  const [checkedItems, setCheckedItems] = useState<string[]>([]);
+
+  // Xử lý khi checkbox thay đổi
+  const handleToggle = (item: string) => {
+    setCheckedItems((prev) =>
+      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item],
+    );
+  };
+
+  let nextId = 10;
   const handleAddFilterItem = (item: string) => {
     dispatch({
       type: "add",
@@ -26,7 +35,7 @@ export default function CollectionFilter(props: CollectionFilterProps) {
         name: item,
       },
     });
-    console.log(filterItems);
+
   };
   if (isDesktop) {
     return (
@@ -45,7 +54,8 @@ export default function CollectionFilter(props: CollectionFilterProps) {
                 <SameRadioGroup>
                   {props.categoryGroup.map((item: CategoryType, index) => (
                     <div key={index} className="flex items-center space-x-2">
-                      <SameRadioGroupItem onClick={() => handleAddFilterItem(item.name)} className={"cursor-pointer size-5 "} value={item.name} id={item.id + ""}>
+                      <SameRadioGroupItem onClick={() => handleAddFilterItem(item.name)} className={"cursor-pointer size-5 "} value={item.name}
+                                          id={item.id + ""}>
                         <CircleIcon className={"fill-blue-700 absolute top-1/2 left-1/2 size-3 -translate-x-1/2 -translate-y-1/2"} />
                       </SameRadioGroupItem>
                       <Label className={"cursor-pointer"} htmlFor={item.id + ""}>{item.name}</Label>
@@ -65,7 +75,16 @@ export default function CollectionFilter(props: CollectionFilterProps) {
               <div className={"flex flex-wrap gap-2 items-center"}>
                 {props.size.map((item: string, index: number) => (
                   <div key={index} className={"relative border-1 border-gray-300 uppercase px-6 py-2 rounded-sm"}>
-                    <CheckboxCustom className={"absolute top-0 left-0 border-4 border-none size-full rounded-sm cursor-pointer"}>
+                    <CheckboxCustom onCheckedChange={() => {
+                      handleToggle(item)
+                      dispatch({
+                        type: "add",
+                        payload: {
+                          id: nextId++,
+                          name: item
+                        }
+                      })
+                    }} className={"absolute top-0 left-0 border-4 border-none size-full rounded-sm cursor-pointer"}>
                       <div key={index} className={"size-full text-center uppercase px-6 py-2 rounded-sm bg-blue-700 cursor-pointer"}>
                         {item}
                       </div>
@@ -153,12 +172,12 @@ export default function CollectionFilter(props: CollectionFilterProps) {
             {filterItems.length > 0 ?
               (<div className="max-sm:visible hi' flex items-center space-x-2">
                 {filterItems.map((item) => (<FilterItem {...item} key={item.id} />))}
-                <span className={'text-sm text-blue-700 hover:underline cursor-pointer'}>xóa lọc</span>
+                <span className={"text-sm text-blue-700 hover:underline cursor-pointer"}>xóa lọc</span>
               </div>) : (<span>Vui lòng chọn bộ lọc</span>)}
 
           </DrawerDescription>
         </DrawerHeader>
-        <DrawerFooter className={'p-0'}>
+        <DrawerFooter className={"p-0"}>
           <ScrollArea className={"h-100 w-full overflow-y-auto scroll-smooth "}>
             <div className={"p-5 text-gray-500 text-sm font-bold"}>
               {props.categoryGroup &&

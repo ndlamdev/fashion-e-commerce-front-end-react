@@ -19,7 +19,12 @@ export function FilterReducer(items: FilterProps[], action: {payload: FilterProp
       return [...items, action.payload]
     }
     case 'deleted': {
+      console.log('dispatched run');
       return items.filter(item => item.id !== action.payload.id);
+    }
+    case 'clear': {
+      console.log('dispatched clear');
+      return items = [];
     }
     default: {
       throw new Error("Unknown action type" + action.type);

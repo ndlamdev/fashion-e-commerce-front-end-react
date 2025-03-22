@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button.tsx";
 import { useReducer } from "react";
 import FilterItem, { FilterReducer } from "@/components/collection/FilterItem.tsx";
 import { filterItemInitial } from "@/assets/data/collection/filterItem.data.ts";
-import { FilterProps } from "@/components/collection/props/filter.props.ts";
 import { CollectionFilterProps } from "@/components/collection/props/collectionFilter.props.ts";
 import { mockCollectionFilters } from "@/assets/data/collection/collectionFileterProp.data.ts";
 import CollectionFilter from "@/components/collection/CollectionFilter.tsx";
@@ -16,16 +15,9 @@ export default function ZoneOfProducts(props: ZoneOfProductsProps) {
   const filters: CollectionFilterProps = mockCollectionFilters;
   const [filterItems, dispatch] = useReducer(FilterReducer, filterItemInitial);
 
-  const handleDeleteFilterItem = (item: FilterProps) => {
-    dispatch({
-      type: "deleted",
-      payload: {id: item.id, name: item.name},
-    });
-    console.log(filterItemInitial);
-  };
   return (
     <div className={"w-full px-2 "}>
-      <Breadcrumb className={'text-xs lg:text-sm'}>
+      <Breadcrumb className={"text-xs lg:text-sm"}>
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink href="/">Trang chủ</BreadcrumbLink>
@@ -47,7 +39,12 @@ export default function ZoneOfProducts(props: ZoneOfProductsProps) {
         <div className=" flex items-center space-x-2">
           <p className="font-bold"><span className="mx-1">{props.TotalProducts ?? "0"}</span> kết quả</p>
           <div className="max-sm:hidden  flex items-center space-x-2">
-            {filterItems.map((item) => (<FilterItem onDelete={() => handleDeleteFilterItem(item)} {...item} key={item.id} />))}
+            {filterItems.map((item) => (<FilterItem onDelete={() => dispatch({
+              type: "deleted",
+              payload: { id: item.id, name: "" },
+            })} {...item} key={item.id} />))}
+            {filterItems.length > 0 && (<span onClick={
+              () => dispatch({ type: "clear", payload: {id: 0, name:''} })} className={"text-sm text-blue-700 hover:underline cursor-pointer"}>Xóa lọc</span>)}
           </div>
         </div>
         <div className="max-sm:hidden flex items-center space-x-2 text-gray-500">
