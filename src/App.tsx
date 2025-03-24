@@ -20,53 +20,52 @@ function App() {
 	const [callbacks, setCallback] = useState<((args?: Map<string, object>) => any)[] | undefined>();
 
 	return (
-    <GlobalContext.Provider
-      value={{
-        showDialog: (type, callback) => {
-          setDialog(type);
-          setCallback(callback);
-        },
-      }}>
-      <>
-        <BrowserRouter>
-          <Routes>
-            <Route path='/' element={<RootLayout />}>
-              <Route index element={<HomePage />} />
-              <Route path={"product-detail"}>
-                <Route path={":id"} element={<ProductDetailPage />} />
-              </Route>
-              <Route path={'collection'} element={<BoothPage/>}>
-              </Route>
-            </Route>
-            <Route path='/cart' element={<CartLayout />}>
-              <Route index element={<CartPage />} />
-            </Route>
-          </Routes>
-          <Toaster />
-        </BrowserRouter>
-        <LoginDialog open={dialog === "login"} />
-        <RegisterDialog open={dialog === "register"} />
-        <ForgotPasswordDialog open={dialog === "forgot-password"} />
-        <NewPasswordDialog open={dialog === "new-password"} />
-        <InputOTPDialog
-          open={dialog === "input-otp"}
-          onSubmit={
-            !callbacks || callbacks.length < 0
-              ? undefined
-              : async (data) => {
-                callbacks[0](new Map<string, any>([["otp", data]]));
-              }
-          }
-          onResendHandle={
-            !callbacks || callbacks.length < 1
-              ? undefined
-              : async () => {
-                callbacks[1]();
-              }
-          }
-        />
-      </>
-    </GlobalContext.Provider>
+		<GlobalContext.Provider
+			value={{
+				showDialog: (type, callback) => {
+					setDialog(type);
+					setCallback(callback);
+				},
+			}}>
+			<>
+				<BrowserRouter>
+					<Routes>
+						<Route path='/' element={<RootLayout />}>
+							<Route index element={<HomePage />} />
+							<Route path={"product-detail"}>
+								<Route path={":id"} element={<ProductDetailPage />} />
+							</Route>
+						</Route>
+						<Route path={'collection'} element={<BoothPage/>} />
+						<Route path='/cart' element={<CartLayout />}>
+							<Route index element={<CartPage />} />
+						</Route>
+					</Routes>
+					<Toaster />
+				</BrowserRouter>
+				<LoginDialog open={dialog === "login"} />
+				<RegisterDialog open={dialog === "register"} />
+				<ForgotPasswordDialog open={dialog === "forgot-password"} />
+				<NewPasswordDialog open={dialog === "new-password"} />
+				<InputOTPDialog
+					open={dialog === "input-otp"}
+					onSubmit={
+						!callbacks || callbacks.length < 0
+							? undefined
+							: async (data) => {
+									callbacks[0](new Map<string, any>([["otp", data]]));
+								}
+					}
+					onResendHandle={
+						!callbacks || callbacks.length < 1
+							? undefined
+							: async () => {
+									callbacks[1]();
+								}
+					}
+				/>
+			</>
+		</GlobalContext.Provider>
 	);
 }
 
