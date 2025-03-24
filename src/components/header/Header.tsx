@@ -8,23 +8,25 @@
 import { SolarHamburgerMenuLinear } from "@/assets/images/icons/SolarHamburgerMenuLinear.tsx";
 import { LucideSearch } from "@/assets/images/icons/LucideSearch.tsx";
 import Input from "@/components/form/Input.tsx";
-import { FaSolidUserAlt } from "@/assets/images/icons/FaSolidUserAlt.tsx";
 import { SolarHeartBold } from "@/assets/images/icons/SolarHeartBold.tsx";
 import ShoppingBag from "@/components/cart/ShoppingBag.tsx";
 import { motion } from "motion/react";
 import { SolarArrowRightLinear } from "@/assets/images/icons/SolarArrowRightLinear";
 import useScrolled from "@/utils/use-scrolled.ts";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Separator } from "@/components/ui/separator.tsx";
 import ShoppingBagItem from "@/components/cart/ShoppingBagItem.tsx";
 import dataShoppingBagItems from "@/assets/data/shopping-bag-items.ts";
 import { useNavigate } from "react-router";
 import HeaderProps from "@/components/header/props/header-prop.ts";
+import { GlobalContext } from "@/context/GlobalContext.tsx";
+import { FaSolidUserAlt } from "@/assets/images/icons/FaSolidUserAlt.tsx";
 
 function Header({ showMenu }: HeaderProps) {
 	const [, scrollY] = useScrolled();
 	const [scrollUp, setScrollUp] = useState(false);
 	const navigate = useNavigate();
+	const { showDialog } = useContext(GlobalContext);
 
 	return (
 		<motion.header className={"sticky top-0 z-2 bg-white"} initial={{ top: 0 }} animate={{ top: scrollY >= 100 ? -40 : 0 }} transition={{ duration: 0.75 }}>
@@ -36,7 +38,9 @@ function Header({ showMenu }: HeaderProps) {
 					<span className={"text-gray-400"}>|</span>
 					<div className={"px-3 py-2 text-sm hover:bg-gray-800"}>Trung tâm CSKH</div>
 					<span className={"text-gray-400"}>|</span>
-					<div className={"px-3 py-2 text-sm hover:bg-gray-800"}>Đăng nhập</div>
+					<div className={"px-3 py-2 text-sm hover:bg-gray-800"} onClick={() => showDialog("login")}>
+						Đăng nhập
+					</div>
 				</div>
 			</div>
 			<div className={"align-items-center grid grid-cols-3 grid-rows-1 px-4 py-1 lg:mx-16"}>
@@ -65,17 +69,17 @@ function Header({ showMenu }: HeaderProps) {
 						<li className={"text-lg font-medium"}>Menu 4</li>
 					</ul>
 				</div>
-				<div className={"lg: flex items-center justify-end gap-3"}>
+				<div className={"lg: relative flex items-center justify-end gap-3"}>
 					<Input
-						className={"rounded] hidden w-[50%] items-center rounded-4xl border-1 border-gray-500 p-2 hover:border-black lg:flex"}
+						className={"rounded] z-4 hidden w-[50%] items-center rounded-4xl border-1 border-gray-500 p-2 hover:border-black lg:flex"}
 						placeholder={"Tìm kiếm sản phẩm..."}
 						inputClassName={"p-1 text-sm"}
 						rightIcon={<LucideSearch width={28} height={28} />}
 					/>
-					<a href={"#"}>
-						<FaSolidUserAlt width={24} height={24} />
+					<a href={"#"} className={"z-4"}>
+						<FaSolidUserAlt width={24} height={24} onClick={() => showDialog("login")} />
 					</a>
-					<a href={"#"}>
+					<a href={"#"} className={"z-4"}>
 						<SolarHeartBold width={29} height={29} />
 					</a>
 					<div className={"group relative"}>
