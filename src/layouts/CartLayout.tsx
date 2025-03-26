@@ -6,7 +6,6 @@
  *  User: lam-nguyen
  **/
 
-import "@/assets/css/App.css";
 import Header from "@/components/header/Header.tsx";
 import { useState } from "react";
 import VerticalMenu from "@/components/menu/VerticalMenu.tsx";

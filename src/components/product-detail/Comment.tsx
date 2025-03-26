@@ -1,9 +1,9 @@
-import { CommentProps } from "@/components/product-detail/types/comment.props.ts";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card.tsx";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu.tsx";
 import { CloudUpload, EllipsisVertical, Pencil, Send, Trash } from "lucide-react";
 import { Input } from "@/components/ui/input.tsx";
 import Rate from "@/components/product-detail/Rate.tsx";
+import { CommentProps } from "@/components/product-detail/props/comment.props.ts";
 
 export default function Comment(props: CommentProps) {
 	return (

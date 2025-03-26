@@ -1,4 +1,4 @@
-import ProductDetailProp from "@/components/product-detail/types/productDetail.prop.ts";
+import ProductDetailProp from "@/components/product-detail/props/productDetail.prop.ts";
 
 const sampleProducts: ProductDetailProp[] = [
 	{
