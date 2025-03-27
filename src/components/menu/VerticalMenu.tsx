@@ -6,7 +6,7 @@
  *  User: lam-nguyen
  **/
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { HugeiconsCancel01 } from "@/assets/images/icons/HugeiconsCancel01.tsx";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel.tsx";
@@ -14,11 +14,13 @@ import { Card, CardContent } from "@/components/ui/card.tsx";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion.tsx";
 import useScrolled from "@/utils/use-scrolled.ts";
-import VerticalMenuProps from "@/components/menu/type/vertical-menu.prop.ts";
+import VerticalMenuProps from "@/components/menu/props/vertical-menu.prop.ts";
+import { GlobalContext } from "@/context/GlobalContext.tsx";
 
 function VerticalMenu({ showMenu, onHidden, onAnimationComplete, onExitComplete }: VerticalMenuProps) {
 	const [hiddenMenu, setHiddenMenu] = useState<boolean>(true);
 	const [, scrollY] = useScrolled();
+	const { showDialog } = useContext(GlobalContext);
 
 	useEffect(() => {
 		setHiddenMenu(!showMenu);
@@ -35,7 +37,7 @@ function VerticalMenu({ showMenu, onHidden, onAnimationComplete, onExitComplete 
 					onUpdate={(value) => {
 						if (value.left == 0) onAnimationComplete?.();
 					}}
-					className={"absolute top-0 w-full bg-[#E5E5E5] lg:hidden"}>
+					className={"absolute top-0 z-999 w-full bg-[#E5E5E5] lg:hidden"}>
 					<div className={`sticky top-3 z-1 flex h-[40px] items-center justify-end ${scrollY < 20 ? "pe-3" : "pe-1"}`}>
 						<div
 							className={`${scrollY >= 20 && "rounded-full bg-gray-100 p-2"}`}
@@ -167,7 +169,13 @@ function VerticalMenu({ showMenu, onHidden, onAnimationComplete, onExitComplete 
 						<ul className={"flex flex-col"}>
 							<li className={"hover::bg-gray-200 rounded px-3 py-2 active:bg-gray-200"}>Trung tâm CSKH</li>
 							<li className={"hover::bg-gray-200 rounded px-3 py-2 active:bg-gray-200"}>Về KimiFashion</li>
-							<li className={"hover::bg-gray-200 rounded px-3 py-2 active:bg-gray-200"}>Đăng nhập</li>
+							<li
+								className={"hover::bg-gray-200 rounded px-3 py-2 active:bg-gray-200"}
+								onClick={() => {
+									showDialog("login");
+								}}>
+								Đăng nhập
+							</li>
 							<li className={"hover::bg-gray-200 rounded px-3 py-2 active:bg-gray-200"}>Blog</li>
 						</ul>
 					</div>
