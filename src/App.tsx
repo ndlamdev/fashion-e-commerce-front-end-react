@@ -15,10 +15,13 @@ import InputOTPDialog from "@/components/authentication/InputOTPDialog.tsx";
 import NewPasswordDialog from "@/components/authentication/NewPasswordDialog.tsx";
 import BoothPage from "@/pages/BoothPage.tsx";
 import TestPage from "@/pages/TestPage.tsx";
+import SheetAccount from "@/components/header/SheetAccount.tsx";
+import { Sheet } from "@/components/ui/sheet.tsx";
 
 function App() {
 	const [dialog, setDialog] = useState<DialogTypeEnum>("none");
 	const [callbackDialog, setCallbackDialog] = useState<CallbackDialogProps | undefined>({});
+	const [sheetAccount, setSheetAccount] = useState(false);
 
 	return (
 		<GlobalContext.Provider
@@ -28,29 +31,35 @@ function App() {
 					setCallbackDialog(callback);
 				},
 				callBacksDialog: callbackDialog,
+				sheetAccount: setSheetAccount,
 			}}>
 			<BrowserRouter>
-				<Routes>
-					<Route path='/' element={<RootLayout />}>
-						<Route index element={<HomePage />} />
-						<Route path={"/test"} element={<TestPage />} />
-						<Route path={"product-detail"}>
-							<Route path={":id"} element={<ProductDetailPage />} />
+				<Sheet open={sheetAccount} onOpenChange={(value) => setSheetAccount(value)}>
+					<Routes>
+						<Route path='/' element={<RootLayout />}>
+							<Route index element={<HomePage />} />
+							<Route path={"/test"} element={<TestPage />} />
+							<Route path={"product-detail"}>
+								<Route path={":id"} element={<ProductDetailPage />} />
+							</Route>
+							<Route path={"collection"} element={<BoothPage />}></Route>
 						</Route>
-						<Route path={"collection"} element={<BoothPage />}></Route>
-					</Route>
-					<Route path='/cart' element={<CartLayout />}>
-						<Route index element={<CartPage />} />
-					</Route>
-				</Routes>
-				<Toaster />
-				<>
-					<LoginDialog open={dialog === "login"} />
-					<RegisterDialog open={dialog === "register"} />
-					<ForgotPasswordDialog open={dialog === "forgot-password"} />
-					<NewPasswordDialog open={dialog === "new-password"} />
-					<InputOTPDialog open={dialog === "input-otp"} sendOtp={callbackDialog?.sendOtp} resendOtp={callbackDialog?.resendOtp} />
-				</>
+						<Route path='/cart' element={<CartLayout />}>
+							<Route index element={<CartPage />} />
+						</Route>
+					</Routes>
+					<Toaster />
+					<>
+						<LoginDialog open={dialog === "login"} />
+						<RegisterDialog open={dialog === "register"} />
+						<ForgotPasswordDialog open={dialog === "forgot-password"} />
+						<NewPasswordDialog open={dialog === "new-password"} />
+						<InputOTPDialog open={dialog === "input-otp"} sendOtp={callbackDialog?.sendOtp} resendOtp={callbackDialog?.resendOtp} />
+					</>
+					<>
+						<SheetAccount />
+					</>
+				</Sheet>
 			</BrowserRouter>
 		</GlobalContext.Provider>
 	);
