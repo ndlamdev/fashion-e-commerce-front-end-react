@@ -17,7 +17,7 @@ export default function CardProduct(props: ProductCardProp) {
 		<Card className={cn(`rounded-none border-0 p-2 shadow-none`, props.className)}>
 			<CardContent
 				onClick={() => navigate(`/product-detail/${props.id}`, { replace: true })}
-				className={`group relative h-[50vw] md:h-62 xl:h-84 cursor-pointer rounded-lg bg-cover bg-center bg-no-repeat p-0 text-base `}
+				className={`group relative h-[50vw] cursor-pointer rounded-lg bg-cover bg-center bg-no-repeat p-0 text-base md:h-62 xl:h-84`}
 				style={{ backgroundImage: `url(${bgImage})` }}
 				onMouseEnter={() =>
 					setBgImage(props.models[selected].imageUrls.length > 1 ? props.models[selected].imageUrls?.[1] : props.models[selected].imageUrls?.[0])
@@ -61,7 +61,7 @@ export default function CardProduct(props: ProductCardProp) {
 				</div>
 			</CardContent>
 
-			<CardFooter className={"block p-0 font-bold text-xs sm:text-sm"}>
+			<CardFooter className={"block p-0 text-xs font-bold sm:text-sm"}>
 				<div className='flex flex-wrap items-center gap-2'>
 					{props.models.slice(0, numPageModel).map((item, index) => (
 						<div
@@ -84,7 +84,7 @@ export default function CardProduct(props: ProductCardProp) {
 					{props.discount && <Badge className={"rounded-2 bg-blue-700 text-xs font-bold text-white"}>-{props.discount}%</Badge>}
 					{props.discount && <span className={"text-neutral-400 line-through"}>{formatCurrency(props.price)}</span>}
 				</p>
-				{props.description && <span className={"text-xs text-blue-700 line-clamp-1"}>{props.description}</span>}
+				{props.description && <span className={"line-clamp-1 text-xs text-blue-700"}>{props.description}</span>}
 			</CardFooter>
 		</Card>
 	);

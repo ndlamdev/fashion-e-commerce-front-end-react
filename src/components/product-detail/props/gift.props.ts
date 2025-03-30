@@ -4,5 +4,5 @@ export type GiftProps = {
 	id: number;
 	name: string;
 	promotion: number;
-	models: ProductModelType ;
+	models: ProductModelType;
 };

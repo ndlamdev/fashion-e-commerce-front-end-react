@@ -8,9 +8,14 @@
 
 import { createContext } from "react";
 import DialogTypeEnum from "@/utils/dialog.type.enum.ts";
+import { EventInputOTPDialog } from "@/components/authentication/props/InputOTPDialog.props.ts";
 
 export const GlobalContext = createContext<{
-	showDialog: (type: DialogTypeEnum, callbacks?: ((args?: Map<string, any>) => any)[]) => void;
+	showDialog: (type: DialogTypeEnum, callbacks?: CallbackDialogProps) => void;
+	callBacksDialog?: CallbackDialogProps;
 }>({
 	showDialog: () => {},
+	callBacksDialog: {},
 });
+
+export type CallbackDialogProps = EventInputOTPDialog & {};
