@@ -5,9 +5,10 @@
  * Create at: 6:48PM - 24/03/2025
  * User: lam-nguyen
  **/
+import EmailRequest from "@/domain/resquest/email.request.ts";
 
-interface OTPRequest {
-	otp: string;
+interface OTPRequest extends EmailRequest {
+	code: string;
 }
 
 export default OTPRequest;

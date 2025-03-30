@@ -15,7 +15,7 @@ function InputAuthentication(props: InputAuthenticationProps) {
 				className={`form-control w-full rounded-full border-1 border-gray-300 px-4 py-3.5 text-sm transition-all duration-200 outline-none focus:border-blue-500 ${props.className}`}
 				{...props}
 			/>
-			{props.error && <p className={"mt-1 pl-4 text-sm text-red-600"}>{props.error}</p>}
+			{props.error && <small className={"mt-1 pl-4 text-sm text-red-600"}>{props.error}</small>}
 		</div>
 	);
 }

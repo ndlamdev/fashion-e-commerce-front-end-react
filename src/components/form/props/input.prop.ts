@@ -19,6 +19,7 @@ type InputProps = {
 	style?: CSSProperties;
 	onChange?: (input: string) => void;
 	placeholder?: string;
+	disabled?: boolean;
 };
 
 export default InputProps;
