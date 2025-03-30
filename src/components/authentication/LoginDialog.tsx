@@ -15,19 +15,25 @@ import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentic
 import InputAuthentication from "@/components/authentication/ui/InputAuthentication.tsx";
 import LoginRequest from "@/domain/resquest/login.request.ts";
 import { SubmitHandler, useForm } from "react-hook-form";
+import authenticationService from "@/services/authentication.service.ts";
+import { useNavigate } from "react-router";
 
 function LoginDialog({ open }: LoginDialogProps) {
 	const { showDialog } = useContext(GlobalContext);
+	const navigation = useNavigate();
 	const {
 		register,
 		handleSubmit,
+		reset,
 		formState: { errors },
-	} = useForm<LoginRequest>({
-		mode: "all",
-	});
+	} = useForm<LoginRequest>();
 
-	const onSubmit: SubmitHandler<LoginRequest> = (data) => {
-		console.log(data);
+	const onSubmit: SubmitHandler<LoginRequest> = async (data) => {
+		await authenticationService.login(data).then(() => {
+			showDialog("none");
+			navigation("/test");
+			reset();
+		});
 	};
 
 	return (
