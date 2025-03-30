@@ -6,7 +6,7 @@
  *  User: lam-nguyen
  **/
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
-import { useCallback, useContext } from "react";
+import { KeyboardEvent, useCallback, useContext } from "react";
 import { GlobalContext } from "@/context/GlobalContext.tsx";
 import ForgotPasswordDialogProps from "@/components/authentication/props/forgotPasswordDialog.props.ts";
 import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentication.tsx";
@@ -22,6 +22,8 @@ function ForgotPasswordDialog({ open }: ForgotPasswordDialogProps) {
 		register,
 		handleSubmit,
 		reset,
+		trigger,
+		getValues,
 		formState: { errors },
 	} = useForm<EmailRequest>();
 
@@ -45,6 +47,15 @@ function ForgotPasswordDialog({ open }: ForgotPasswordDialogProps) {
 		});
 	};
 
+	const enterKeyHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+		if (!event.key || event.key.toLowerCase() !== "enter") return;
+		trigger().then((result) => {
+			if (!result) return;
+			const values = getValues();
+			onSubmit(values);
+		});
+	};
+
 	return (
 		<Dialog open={open} onOpenChange={(value) => !value && showDialog("none")}>
 			<DialogContent
@@ -57,6 +68,7 @@ function ForgotPasswordDialog({ open }: ForgotPasswordDialogProps) {
 				<div className='grid gap-4'>
 					<form id='login-form' className={"flex flex-col gap-3"}>
 						<InputAuthentication
+							onKeyDown={enterKeyHandler}
 							type={"email"}
 							placeholder={"Email của bạn"}
 							error={errors.email?.message}
@@ -68,7 +80,9 @@ function ForgotPasswordDialog({ open }: ForgotPasswordDialogProps) {
 								},
 							})}
 						/>
-						<ButtonAuthentication onClick={handleSubmit(onSubmit)}>Kiểm tra</ButtonAuthentication>
+						<ButtonAuthentication type={"button"} onClick={handleSubmit(onSubmit)}>
+							Kiểm tra
+						</ButtonAuthentication>
 					</form>
 				</div>
 			</DialogContent>

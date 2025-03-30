@@ -6,7 +6,7 @@
  *  User: lam-nguyen
  **/
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
-import { useContext } from "react";
+import { KeyboardEvent, useCallback, useContext } from "react";
 import { GlobalContext } from "@/context/GlobalContext.tsx";
 import LoginDialogProps from "@/components/authentication/props/loginDialog.props.ts";
 import { LogosGoogleIcon } from "@/assets/images/icons/LogosGoogleIcon.tsx";
@@ -23,6 +23,8 @@ function LoginDialog({ open }: LoginDialogProps) {
 	const navigation = useNavigate();
 	const {
 		register,
+		trigger,
+		getValues,
 		handleSubmit,
 		reset,
 		formState: { errors },
@@ -35,6 +37,18 @@ function LoginDialog({ open }: LoginDialogProps) {
 			reset();
 		});
 	};
+
+	const enterKeyHandler = useCallback(
+		(event: KeyboardEvent<HTMLInputElement>) => {
+			if (!event.key || event.key.toLowerCase() !== "enter") return;
+			trigger().then((result) => {
+				if (!result) return;
+				const values = getValues();
+				onSubmit(values);
+			});
+		},
+		[getValues, onSubmit, trigger],
+	);
 
 	return (
 		<Dialog open={open} onOpenChange={(value) => !value && showDialog("none")}>
@@ -71,6 +85,7 @@ function LoginDialog({ open }: LoginDialogProps) {
 						<div className={"flex flex-col gap-3"}>
 							<div>
 								<InputAuthentication
+									onKeyDown={enterKeyHandler}
 									type={"email"}
 									placeholder={"Email của bạn"}
 									error={errors.email?.message}
@@ -83,7 +98,7 @@ function LoginDialog({ open }: LoginDialogProps) {
 									})}
 								/>
 							</div>
-							<InputAuthentication type={"password"} placeholder={"Mật khẩu"} {...register("password")} />
+							<InputAuthentication onKeyDown={enterKeyHandler} type={"password"} placeholder={"Mật khẩu"} {...register("password")} />
 							<ButtonAuthentication onClick={handleSubmit(onSubmit)}>Đăng nhập</ButtonAuthentication>
 						</div>
 						<div className='auth-actions mt-2 flex w-full justify-between text-blue-800'>

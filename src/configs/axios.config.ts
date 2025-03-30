@@ -12,7 +12,7 @@ import AxiosResponseCustom from "@/domain/ApiResponse.ts";
 const api = axios.create({
 	// baseURL: "https://fashion-server.ndlamdev.website/fashion-e-commerce/",
 	baseURL: "http://localhost:8080/fashion-e-commerce/",
-	timeout: 1000,
+	timeout: 5000,
 	withCredentials: true,
 	headers: {
 		"Content-Type": "application/json",

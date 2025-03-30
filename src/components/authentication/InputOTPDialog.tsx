@@ -26,6 +26,10 @@ function InputOTPDialog({ open, sendOtp, resendOtp }: InputOTPDialogProps) {
 		values: { code: "" },
 	});
 
+	useEffect(() => {
+		if (open) setOpenDialog("show-dialog");
+	}, [open]);
+
 	const onSubmitHandler = async () => {
 		const otp = getValues("code");
 		if (!otp || otp.length < 6) {
@@ -37,10 +41,6 @@ function InputOTPDialog({ open, sendOtp, resendOtp }: InputOTPDialogProps) {
 			setOpenDialog("none");
 		});
 	};
-
-	useEffect(() => {
-		if (open) setOpenDialog("show-dialog");
-	}, [open]);
 
 	return (
 		<>
