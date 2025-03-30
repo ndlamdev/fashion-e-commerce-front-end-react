@@ -46,7 +46,6 @@ async function register(request: RegisterRequest): Promise<EmailResponse> {
 }
 
 async function verifyRegister(otp?: string): Promise<void> {
-	console.log("running");
 	const email = SessionStorage.getValue("EMAIL_REGISTER");
 	if (!email || !otp) {
 		toast.error("Otp request not found.");

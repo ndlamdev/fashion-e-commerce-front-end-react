@@ -21,6 +21,9 @@ import { useNavigate } from "react-router";
 import HeaderProps from "@/components/header/props/header-prop.ts";
 import { GlobalContext } from "@/context/GlobalContext.tsx";
 import { FaSolidUserAlt } from "@/assets/images/icons/FaSolidUserAlt.tsx";
+import LocalStorage from "@/utils/LocalStorage.ts";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar.tsx";
+import { SheetTrigger } from "@/components/ui/sheet.tsx";
 
 function Header({ showMenu }: HeaderProps) {
 	const [, scrollY] = useScrolled();
@@ -77,7 +80,16 @@ function Header({ showMenu }: HeaderProps) {
 						rightIcon={<LucideSearch width={28} height={28} />}
 					/>
 					<a href={"#"} className={"z-4"}>
-						<FaSolidUserAlt width={24} height={24} onClick={() => showDialog("login")} />
+						{LocalStorage.getValue("ACCESS_TOKEN") ? (
+							<SheetTrigger>
+								<Avatar>
+									<AvatarImage src='https://github.com/shadcn.png' alt='@shadcn' />
+									<AvatarFallback>CN</AvatarFallback>
+								</Avatar>
+							</SheetTrigger>
+						) : (
+							<FaSolidUserAlt width={24} height={24} onClick={() => showDialog("login")} />
+						)}
 					</a>
 					<a href={"#"} className={"z-4"}>
 						<SolarHeartBold width={29} height={29} />

@@ -13,9 +13,11 @@ import { EventInputOTPDialog } from "@/components/authentication/props/InputOTPD
 export const GlobalContext = createContext<{
 	showDialog: (type: DialogTypeEnum, callbacks?: CallbackDialogProps) => void;
 	callBacksDialog?: CallbackDialogProps;
+	sheetAccount: (show: boolean) => void;
 }>({
 	showDialog: () => {},
 	callBacksDialog: {},
+	sheetAccount: () => {},
 });
 
 export type CallbackDialogProps = EventInputOTPDialog & {};
