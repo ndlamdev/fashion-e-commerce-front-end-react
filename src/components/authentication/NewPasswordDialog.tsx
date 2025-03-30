@@ -6,7 +6,7 @@
  *  User: lam-nguyen
  **/
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
-import { useContext } from "react";
+import { KeyboardEvent, useContext } from "react";
 import { GlobalContext } from "@/context/GlobalContext.tsx";
 import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentication.tsx";
 import InputAuthentication from "@/components/authentication/ui/InputAuthentication.tsx";
@@ -20,12 +20,23 @@ function ForgotPasswordDialog({ open }: NewPasswordDialogProps) {
 	const {
 		register,
 		handleSubmit,
+		trigger,
+		getValues,
 		formState: { errors },
 	} = useForm<Omit<NewPasswordRequest, "token">>();
 
 	const onSubmit: SubmitHandler<Omit<NewPasswordRequest, "token">> = (data) => {
 		authenticationService.setNewPassword(data).then(() => {
 			showDialog("login");
+		});
+	};
+
+	const enterKeyHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+		if (!event.key || event.key.toLowerCase() !== "enter") return;
+		trigger().then((result) => {
+			if (!result) return;
+			const values = getValues();
+			onSubmit(values);
 		});
 	};
 
@@ -42,6 +53,7 @@ function ForgotPasswordDialog({ open }: NewPasswordDialogProps) {
 					<form id='login-form' className={"flex flex-col gap-3"}>
 						<InputAuthentication
 							type='password'
+							onKeyDown={enterKeyHandler}
 							error={errors?.password?.message}
 							placeholder='Nhập mật khẩu của bạn'
 							{...register("password", {
@@ -54,6 +66,7 @@ function ForgotPasswordDialog({ open }: NewPasswordDialogProps) {
 						/>
 						<InputAuthentication
 							type='password'
+							onKeyDown={enterKeyHandler}
 							placeholder='Nhập lại mật khẩu của bạn'
 							error={errors?.["confirm-password"]?.message}
 							{...register("confirm-password", {

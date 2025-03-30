@@ -45,30 +45,24 @@ function RegisterDialog({ open }: RegisterDialogProps) {
 		return authenticationService.resendCodeVerify();
 	}, []);
 
-	const registerHandler: SubmitHandler<RegisterRequest> = useCallback(
-		(data: RegisterRequest) => {
-			authenticationService.register(data).then(() => {
-				showDialog("input-otp", {
-					sendOtp: onVerifyHandler,
-					resendOtp: onResendHandler,
-				});
-				reset();
+	const registerHandler: SubmitHandler<RegisterRequest> = (data: RegisterRequest) => {
+		authenticationService.register(data).then(() => {
+			showDialog("input-otp", {
+				sendOtp: onVerifyHandler,
+				resendOtp: onResendHandler,
 			});
-		},
-		[onResendHandler, onVerifyHandler, reset, showDialog],
-	);
+			reset();
+		});
+	};
 
-	const enterKeyHandler = useCallback(
-		(event: KeyboardEvent<HTMLInputElement>) => {
-			if (!event.key || event.key.toLowerCase() !== "enter") return;
-			trigger().then((result) => {
-				if (!result) return;
-				const values = getValues();
-				registerHandler(values);
-			});
-		},
-		[getValues, registerHandler, trigger],
-	);
+	const enterKeyHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+		if (!event.key || event.key.toLowerCase() !== "enter") return;
+		trigger().then((result) => {
+			if (!result) return;
+			const values = getValues();
+			registerHandler(values);
+		});
+	};
 
 	return (
 		<Dialog open={open} onOpenChange={(value) => !value && showDialog("none")}>

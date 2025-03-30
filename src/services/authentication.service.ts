@@ -109,7 +109,9 @@ async function logout() {
 }
 
 async function renewAccessToken() {
-	return await api.post<any, AxiosResponseCustom<void>>(PATH_BASE_URL + "/renew-access-token");
+	return await api.post<any, AxiosResponseCustom<TokenResponse>>(PATH_BASE_URL + "/renew-access-token").then((result) => {
+		LocalStorage.setValue("ACCESS_TOKEN", result.data.data.token);
+	});
 }
 
 async function greeting() {
