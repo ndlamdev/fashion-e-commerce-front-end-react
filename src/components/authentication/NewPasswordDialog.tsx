@@ -13,6 +13,7 @@ import InputAuthentication from "@/components/authentication/ui/InputAuthenticat
 import NewPasswordDialogProps from "@/components/authentication/props/newPasswordDialog.props.ts";
 import { SubmitHandler, useForm } from "react-hook-form";
 import NewPasswordRequest from "@/domain/resquest/newPassword.request.ts";
+import authenticationService from "@/services/authentication.service.ts";
 
 function ForgotPasswordDialog({ open }: NewPasswordDialogProps) {
 	const { showDialog } = useContext(GlobalContext);
@@ -20,11 +21,12 @@ function ForgotPasswordDialog({ open }: NewPasswordDialogProps) {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<NewPasswordRequest>();
+	} = useForm<Omit<NewPasswordRequest, "token">>();
 
-	const onSubmit: SubmitHandler<NewPasswordRequest> = (data) => {
-		console.log(data);
-		showDialog("none");
+	const onSubmit: SubmitHandler<Omit<NewPasswordRequest, "token">> = (data) => {
+		authenticationService.setNewPassword(data).then(() => {
+			showDialog("login");
+		});
 	};
 
 	return (
@@ -53,8 +55,8 @@ function ForgotPasswordDialog({ open }: NewPasswordDialogProps) {
 						<InputAuthentication
 							type='password'
 							placeholder='Nhập lại mật khẩu của bạn'
-							error={errors?.confirmPassword?.message}
-							{...register("confirmPassword", {
+							error={errors?.["confirm-password"]?.message}
+							{...register("confirm-password", {
 								required: "Vui lòng nhập lại mật khẩu  của bạn",
 								validate: (value, formValues) => {
 									if (value == formValues.password) return undefined;

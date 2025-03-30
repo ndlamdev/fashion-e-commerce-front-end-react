@@ -8,8 +8,9 @@
 import LoginRequest from "@/domain/resquest/login.request.ts";
 
 type RegisterRequest = LoginRequest & {
-	phoneNumber: string;
-	fullName: string;
+	phone: string;
+	"full-name": string;
+	"confirm-password": string;
 };
 
 export default RegisterRequest;

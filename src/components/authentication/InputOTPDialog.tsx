@@ -14,7 +14,7 @@ import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentic
 import { useForm } from "react-hook-form";
 import OTPRequest from "@/domain/resquest/otp.request.ts";
 
-function InputOTPDialog({ open, onSubmit, onResendHandle }: InputOTPDialogProps) {
+function InputOTPDialog({ open, sendOtp, resendOtp }: InputOTPDialogProps) {
 	const { showDialog } = useContext(GlobalContext);
 	const [openDialog, setOpenDialog] = useState<"none" | "show-confirm" | "show-dialog">("none");
 	const {
@@ -22,18 +22,18 @@ function InputOTPDialog({ open, onSubmit, onResendHandle }: InputOTPDialogProps)
 		setError,
 		getValues,
 		formState: { errors },
-	} = useForm<OTPRequest>({
-		values: { otp: "" },
+	} = useForm<Omit<OTPRequest, "email">>({
+		values: { code: "" },
 	});
 
 	const onSubmitHandler = async () => {
-		const otp = getValues("otp");
+		const otp = getValues("code");
 		if (!otp || otp.length < 6) {
-			setError("otp", { type: "minLength", message: "Vui lòng điền đẩy đủ mã" });
+			setError("code", { type: "minLength", message: "Vui lòng điền đẩy đủ mã" });
 			return;
 		}
 
-		await onSubmit?.({ otp: otp }).then(() => {
+		await sendOtp?.(otp).then(() => {
 			setOpenDialog("none");
 		});
 	};
@@ -57,8 +57,8 @@ function InputOTPDialog({ open, onSubmit, onResendHandle }: InputOTPDialogProps)
 						<InputOTP
 							maxLength={6}
 							onChange={(value) => {
-								if (value.length == 6) setError("otp", {});
-								setValue("otp", value);
+								if (value.length == 6) setError("code", {});
+								setValue("code", value);
 							}}>
 							<InputOTPGroup>
 								<InputOTPSlot index={0} className={"size-12 text-lg"} />
@@ -69,7 +69,7 @@ function InputOTPDialog({ open, onSubmit, onResendHandle }: InputOTPDialogProps)
 								<InputOTPSlot index={5} className={"size-12 text-lg"} />
 							</InputOTPGroup>
 						</InputOTP>
-						{errors.otp && <p className={"mt-1 text-red-600"}>{errors.otp.message}</p>}
+						{errors.code && <small className={"mt-1 text-red-600"}>{errors.code.message}</small>}
 					</div>
 					<ButtonAuthentication onClick={onSubmitHandler}>Xác nhận</ButtonAuthentication>
 					<div className={"flex items-center gap-3"}>
@@ -77,7 +77,7 @@ function InputOTPDialog({ open, onSubmit, onResendHandle }: InputOTPDialogProps)
 						<button
 							className={"rounded-2xl border-1 border-black px-4 py-1 hover:border-white hover:bg-green-400 hover:text-white"}
 							onClick={async () => {
-								await onResendHandle?.().then();
+								await resendOtp?.().then();
 							}}>
 							Gửi
 						</button>
