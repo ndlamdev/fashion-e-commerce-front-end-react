@@ -12,7 +12,10 @@ export default defineConfig({
 			"@": path.resolve(__dirname, "src"),
 		},
 	},
+	optimizeDeps: {
+		entries: ["quill"],
+	},
 	server: {
-		allowedHosts: ["f164-14-161-7-63.ngrok-free.app"],
+		allowedHosts: ["f164-14-161-7-63.ngrok-free.app", "9861-115-79-239-47.ngrok-free.app"],
 	},
 });
