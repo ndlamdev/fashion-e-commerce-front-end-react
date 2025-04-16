@@ -8,20 +8,16 @@
 
 import { Input } from "@/components/ui/input.tsx";
 import QuillEditor from "@/components/editor/QuillEditor.tsx";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import "katex/dist/katex.min.css";
 import QuillEditorConfig from "@/components/editor/QuillEditorConfig.ts";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select.tsx";
 import { Separator } from "@/components/ui/separator.tsx";
-import { HumbleiconsPlusCircle } from "@/assets/images/icons/HumbleiconsPlusCircle.tsx";
-import { CodexMenu } from "@/assets/images/icons/CodexMenu.tsx";
-import OptionVariantType from "@/types/admin/option-variant.type.ts";
+import VariantManagerComponent from "@/components/admin/product/VariantManagerComponent.tsx";
 
 function CreateProductPage({ titlePage = "Add product" }: { titlePage?: string }) {
-	const [optionVariants, setOptionVariants] = useState<OptionVariantType[]>([]);
-
 	const refQuill = useRef<Quill | undefined>(undefined);
 	useEffect(() => {
 		if (refQuill.current) return;
@@ -31,10 +27,6 @@ function CreateProductPage({ titlePage = "Add product" }: { titlePage?: string }
 			},
 		});
 	});
-
-	const createNewOption = () => {
-		setOptionVariants((prevState) => [...prevState, { name: "", value: [] }]);
-	};
 
 	return (
 		<div>
@@ -176,71 +168,7 @@ function CreateProductPage({ titlePage = "Add product" }: { titlePage?: string }
 					</div>
 					<div className={"flex flex-col rounded-xl bg-white p-5"}>
 						<h3 className={"mb-2 pb-0 font-medium"}>Variants</h3>
-						{!optionVariants.length ? (
-							<button className={"flex w-[210px] items-center gap-2 rounded-md p-1 text-sm hover:bg-gray-100"} onClick={createNewOption}>
-								<HumbleiconsPlusCircle width={15} height={15} />
-								Add options like size or color
-							</button>
-						) : (
-							<div className={"rounded-md border-1 border-gray-200"}>
-								{optionVariants.map((option, index) => (
-									<div className={"flex flex-row border-b-1 border-gray-200 p-4"} key={option.name + "_" + index}>
-										<div className={"w-8"}>
-											<CodexMenu color={"gray"} className={"mt-7.5"} />
-										</div>
-										<div className={"flex flex-1 flex-col gap-1"}>
-											<div>
-												<label htmlFor='product-option-name' className={"text-sm"}>
-													Option name
-												</label>
-												<Input
-													id={"product-option-name"}
-													placeholder={"Option name"}
-													value={option.name}
-													onChange={(event) => {
-														setOptionVariants((prevState) => prevState.map((item, i) => (index === i ? { ...item, name: event.target.value } : item)));
-													}}
-												/>
-											</div>
-											<div>
-												<label htmlFor='product-option-value' className={"text-sm"}>
-													Option value
-												</label>
-												<Input
-													id={"product-option-value"}
-													placeholder={"Option value"}
-													value={option.value}
-													onKeyDown={(event) => {
-														const value = event.key;
-														console.log(value);
-														// if (value.length < 2) return;
-														// setOptionVariants((prevState) => prevState.map((item, i) => (index === i ? { ...item, value: [event.target.value] } : item)));
-													}}
-													onChange={(event) => {
-														const value = event.target.value;
-														if (value.length < 2) return;
-														setOptionVariants((prevState) => prevState.map((item, i) => (index === i ? { ...item, value: [event.target.value] } : item)));
-													}}
-												/>
-												<div></div>
-											</div>
-											<div className={"mt-2 flex justify-between"}>
-												<button className={"rounded-md border-1 border-gray-300 px-2 py-0.5 text-sm text-red-500 hover:bg-gray-100"}>Delete</button>
-												<button className={"rounded-md border-1 border-gray-300 bg-[rgba(0,0,0,0.8)] px-2 py-0.5 text-sm text-white hover:bg-black"}>
-													Done
-												</button>
-											</div>
-										</div>
-									</div>
-								))}
-								<div className={"p-1 hover:bg-gray-100"}>
-									<button className={"flex w-full items-center gap-2 p-1 text-sm"} onClick={createNewOption}>
-										<HumbleiconsPlusCircle width={15} height={15} />
-										Add another options
-									</button>
-								</div>
-							</div>
-						)}
+						<VariantManagerComponent />
 					</div>
 				</div>
 				<div className={"col-span-3 rounded-xl border bg-white p-5"}>Right status with status</div>

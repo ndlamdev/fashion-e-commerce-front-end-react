@@ -8,7 +8,11 @@
 
 type OptionVariantType = {
 	name: string;
-	value: string[];
+	values: {
+		oldValue: string;
+		newValue: string;
+	}[];
+	canAddNewValueOption: boolean;
 };
 
 export default OptionVariantType;
