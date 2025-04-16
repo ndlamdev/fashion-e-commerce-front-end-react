@@ -13,7 +13,7 @@ import { DetailedHTMLProps, HTMLAttributes } from "react";
 function QuillEditor(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>) {
 	return (
 		<div {...props}>
-			<div id='toolbar-container' className={"rounded-tl-md rounded-tr-md border-gray-400"}>
+			<div id='toolbar-container' className={"rounded-tl-md rounded-tr-md border-gray-400 bg-gray-50"}>
 				<span className='ql-formats'>
 					<select className='ql-font'></select>
 					<select className='ql-size'></select>

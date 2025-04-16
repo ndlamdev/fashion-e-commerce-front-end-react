@@ -8,10 +8,10 @@
 import { HumbleiconsPlusCircle } from "@/assets/images/icons/HumbleiconsPlusCircle.tsx";
 import { CodexMenu } from "@/assets/images/icons/CodexMenu.tsx";
 import { Input } from "@/components/ui/input.tsx";
-import { useState } from "react";
+import { DetailedHTMLProps, HTMLAttributes, useState } from "react";
 import OptionVariantType from "@/types/admin/option-variant.type.ts";
 
-function VariantManager() {
+function VariantManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>) {
 	const [optionVariants, setOptionVariants] = useState<OptionVariantType[]>([]);
 
 	const createNewOption = () => {
@@ -76,7 +76,7 @@ function VariantManager() {
 	};
 
 	return (
-		<>
+		<div {...props}>
 			{!optionVariants.length ? (
 				<button className={"flex w-[210px] items-center gap-2 rounded-md p-1 text-sm hover:bg-gray-100"} onClick={createNewOption}>
 					<HumbleiconsPlusCircle width={15} height={15} />
@@ -126,7 +126,7 @@ function VariantManager() {
 					</div>
 				</div>
 			)}
-		</>
+		</div>
 	);
 }
 

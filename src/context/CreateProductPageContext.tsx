@@ -9,6 +9,7 @@ import { createContext } from "react";
 
 const CreateProductPageContext = createContext<{
 	borderStyle: string;
-}>({ borderStyle: "" });
+	sectionStyle: string;
+}>({ borderStyle: "", sectionStyle: "" });
 
 export default CreateProductPageContext;

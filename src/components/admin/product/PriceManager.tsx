@@ -7,17 +7,17 @@
  **/
 
 import { Separator } from "@/components/ui/separator.tsx";
-import { useContext, useState } from "react";
+import { DetailedHTMLProps, HTMLAttributes, useContext, useState } from "react";
 import CreateProductPageContext from "@/context/CreateProductPageContext.tsx";
 
 export type PriceManagerProps = { price: number; compareAtPrice: number; costPerItem: number; profit: number; margin: number };
 
-function PriceManager({ onDataChange }: { onDataChange: (value: PriceManagerProps) => void }) {
+function PriceManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & { onDataChange: (value: PriceManagerProps) => void }) {
 	const createProductPageContext = useContext(CreateProductPageContext);
 	const [data] = useState<PriceManagerProps>({ compareAtPrice: 0, margin: 0, costPerItem: 0, profit: 0, price: 0 });
 
 	return (
-		<>
+		<div {...props}>
 			<div className={"grid grid-cols-3 grid-rows-1 gap-3"}>
 				<div>
 					<label htmlFor='product-price' className={"text-sm"}>
@@ -32,7 +32,7 @@ function PriceManager({ onDataChange }: { onDataChange: (value: PriceManagerProp
 							placeholder={"0"}
 							value={data.price}
 							onChange={(event) => {
-								onDataChange({ ...data, price: parseInt(event.target.value) });
+								props.onDataChange({ ...data, price: parseInt(event.target.value) });
 							}}
 							className={"w-full border-0 shadow-none outline-none focus:outline-none"}></input>
 					</div>
@@ -50,7 +50,7 @@ function PriceManager({ onDataChange }: { onDataChange: (value: PriceManagerProp
 							placeholder={"0"}
 							value={data.compareAtPrice}
 							onChange={(event) => {
-								onDataChange({ ...data, compareAtPrice: parseInt(event.target.value) });
+								props.onDataChange({ ...data, compareAtPrice: parseInt(event.target.value) });
 							}}
 							className={"w-full border-0 shadow-none outline-none focus:outline-none"}></input>
 					</div>
@@ -71,7 +71,7 @@ function PriceManager({ onDataChange }: { onDataChange: (value: PriceManagerProp
 							placeholder={"0"}
 							value={data.costPerItem}
 							onChange={(event) => {
-								onDataChange({ ...data, costPerItem: parseInt(event.target.value) });
+								props.onDataChange({ ...data, costPerItem: parseInt(event.target.value) });
 							}}
 							className={"w-full border-0 shadow-none outline-none focus:outline-none"}></input>
 					</div>
@@ -89,7 +89,7 @@ function PriceManager({ onDataChange }: { onDataChange: (value: PriceManagerProp
 							placeholder={"0"}
 							value={data.profit}
 							onChange={(event) => {
-								onDataChange({ ...data, profit: parseInt(event.target.value) });
+								props.onDataChange({ ...data, profit: parseInt(event.target.value) });
 							}}
 							className={"w-full border-0 shadow-none outline-none focus:outline-none"}></input>
 					</div>
@@ -107,13 +107,13 @@ function PriceManager({ onDataChange }: { onDataChange: (value: PriceManagerProp
 							placeholder={"0"}
 							value={data.margin}
 							onChange={(event) => {
-								onDataChange({ ...data, margin: parseInt(event.target.value) });
+								props.onDataChange({ ...data, margin: parseInt(event.target.value) });
 							}}
 							className={"w-full border-0 shadow-none outline-none focus:outline-none"}></input>
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }
 
