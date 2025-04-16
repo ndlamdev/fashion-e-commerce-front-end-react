@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input.tsx";
 import { useState } from "react";
 import OptionVariantType from "@/types/admin/option-variant.type.ts";
 
-function VariantManagerComponent() {
+function VariantManager() {
 	const [optionVariants, setOptionVariants] = useState<OptionVariantType[]>([]);
 
 	const createNewOption = () => {
@@ -130,4 +130,4 @@ function VariantManagerComponent() {
 	);
 }
 
-export default VariantManagerComponent;
+export default VariantManager;
