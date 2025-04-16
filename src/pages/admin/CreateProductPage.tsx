@@ -2,20 +2,20 @@ import { Input } from "@/components/ui/input.tsx";
 import QuillEditor from "@/components/editor/QuillEditor.tsx";
 import { useEffect, useRef } from "react";
 import Quill from "quill";
+import "quill/dist/quill.snow.css";
+import "katex/dist/katex.min.css";
+import QuillEditorConfig from "@/components/editor/QuillEditorConfig.ts";
 
 function CreateProductPage({ titlePage = "Add product" }: { titlePage?: string }) {
 	const refQuill = useRef<Quill | undefined>(undefined);
 	useEffect(() => {
-		refQuill.current = new Quill("#editor", {
-			modules: {
-				syntax: true,
-				toolbar: "#toolbar-container",
-			},
-			theme: "snow",
-		});
+		if (refQuill.current) return;
+		refQuill.current = QuillEditorConfig.initQuill();
 	});
 
-	const getDescription = () => console.log(refQuill.current?.getSemanticHTML());
+	const getDescription = () => {
+		console.log(refQuill.current?.getSemanticHTML());
+	};
 
 	return (
 		<div>

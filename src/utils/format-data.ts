@@ -14,4 +14,21 @@ export const formatCurrency = (price: number) =>
 
 export const formatDate = (date: Date) => new Intl.DateTimeFormat("vi", { day: "2-digit", month: "2-digit", year: "numeric" }).format(date);
 
-export default { formatCurrency, formatDate };
+function convertImageToBase64(file: File): Promise<string> {
+	return new Promise((resolve, reject) => {
+		const reader = new FileReader();
+
+		reader.onload = () => {
+			const base64String = reader.result as string;
+			resolve(base64String);
+		};
+
+		reader.onerror = (error) => {
+			reject(error);
+		};
+
+		reader.readAsDataURL(file);
+	});
+}
+
+export default { formatCurrency, formatDate, convertImageToBase64 };

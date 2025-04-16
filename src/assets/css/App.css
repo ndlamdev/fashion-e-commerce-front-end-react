@@ -18,3 +18,7 @@ ul {
   margin: 0;
   padding: 0;
 }
+
+.ql-align-center img {
+  display: inline !important;
+}

@@ -1,3 +1,5 @@
+import "quill/dist/quill.snow.css";
+
 function QuillEditor() {
 	return (
 		<div>
