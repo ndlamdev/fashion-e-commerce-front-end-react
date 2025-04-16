@@ -5,7 +5,7 @@
  * Create at: 9:08AM - 13/03/2025
  * User: lam-nguyen
  **/
-import ShoppingBagItemType from "@/types/ShoppingBagItemType.ts";
+import ShoppingBagItemType from "@/types/shopping-bag-item.type.ts";
 
 const dataShoppingBagItems: ShoppingBagItemType[] = [
 	{

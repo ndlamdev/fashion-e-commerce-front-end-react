@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { Payment } from "@/layouts/CartLayout.tsx";
-import VoucherType from "@/types/VoucherType.ts";
+import VoucherType from "@/types/voucher.type.ts";
 
 export const CartContext = createContext<{
 	setPayment: (payment: Payment) => void;

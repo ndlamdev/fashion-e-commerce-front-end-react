@@ -12,7 +12,7 @@ import VerticalMenu from "@/components/menu/VerticalMenu.tsx";
 import { Outlet } from "react-router";
 import CartLayoutFooter from "@/components/footer/CartLayoutFooter.tsx";
 import { CartContext } from "../context/CartContext.tsx";
-import VoucherType from "@/types/VoucherType.ts";
+import VoucherType from "@/types/voucher.type.ts";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "@/components/ui/sheet.tsx";
 import { Button } from "@/components/ui/button.tsx";
 

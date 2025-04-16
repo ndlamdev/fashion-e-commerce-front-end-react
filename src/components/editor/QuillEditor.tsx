@@ -1,15 +1,24 @@
+/**
+ * Author: Nguyen Dinh Lam
+ * Email: kiminonawa1305@gmail.com
+ * Phone number: +84 855354919
+ * Create at: 10:23 AM - 16/04/2025
+ *  User: Lam Nguyen
+ **/
+
 import "quill/dist/quill.snow.css";
 import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
+import { DetailedHTMLProps, HTMLAttributes } from "react";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 window.hljs = hljs;
 
-function QuillEditor() {
+function QuillEditor(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>) {
 	return (
-		<div>
-			<div id='toolbar-container'>
+		<div {...props}>
+			<div id='toolbar-container' className={"rounded-tl-md rounded-tr-md"}>
 				<span className='ql-formats'>
 					<select className='ql-font'></select>
 					<select className='ql-size'></select>
@@ -54,7 +63,7 @@ function QuillEditor() {
 					<button className='ql-clean'></button>
 				</span>
 			</div>
-			<div id='editor' className={"h-20"}></div>
+			<div id='editor' className={"h-20 max-h-60 overflow-x-hidden overflow-y-auto rounded-br-md rounded-bl-md"}></div>
 		</div>
 	);
 }

@@ -5,7 +5,7 @@
  * Create at: 8:07PM - 13/03/2025
  * User: lam-nguyen
  **/
-import VoucherType from "@/types/VoucherType.ts";
+import VoucherType from "@/types/voucher.type.ts";
 
 export const dataVouchers: VoucherType[] = [
 	{
