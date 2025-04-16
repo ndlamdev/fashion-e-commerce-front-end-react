@@ -1,4 +1,10 @@
 import "quill/dist/quill.snow.css";
+import hljs from "highlight.js";
+import "highlight.js/styles/github.css";
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+window.hljs = hljs;
 
 function QuillEditor() {
 	return (
