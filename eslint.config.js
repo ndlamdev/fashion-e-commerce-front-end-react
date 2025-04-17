@@ -41,6 +41,7 @@ export default tseslint.config(
 				},
 			],
 			"@typescript-eslint/no-explicit-any": "off",
+			"@typescript-eslint/no-empty-object-type": "off",
 			"no-trailing-spaces": "error", // Xóa space ở đầu và cuối dòng
 			"no-multi-spaces": "error", // Xóa khoảng trắng thừa giữa các từ
 		},

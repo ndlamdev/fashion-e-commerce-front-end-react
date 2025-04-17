@@ -7,8 +7,9 @@
  **/
 
 type NewPasswordRequest = {
+	token: string;
 	password: string;
-	confirmPassword: string;
+	"confirm-password": string;
 };
 
 export default NewPasswordRequest;

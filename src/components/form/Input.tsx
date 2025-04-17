@@ -20,8 +20,8 @@ function Input({ leftIcon, rightIcon, getState, className, inputClassName, input
 				onFocus={() => getState?.("FOCUS")}
 				onBlur={() => getState?.("BLUR")}
 				className={`w-full border-none outline-none focus:border-none focus:outline-none active:border-none active:outline-none ${inputClassName && inputClassName}`}
-        disabled={disabled}
-      />
+				disabled={disabled}
+			/>
 			{rightIcon && rightIcon}
 		</div>
 	);

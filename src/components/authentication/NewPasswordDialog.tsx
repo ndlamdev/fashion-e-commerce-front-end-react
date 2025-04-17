@@ -6,25 +6,38 @@
  *  User: lam-nguyen
  **/
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
-import { useContext } from "react";
+import { KeyboardEvent, useContext } from "react";
 import { GlobalContext } from "@/context/GlobalContext.tsx";
 import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentication.tsx";
 import InputAuthentication from "@/components/authentication/ui/InputAuthentication.tsx";
 import NewPasswordDialogProps from "@/components/authentication/props/newPasswordDialog.props.ts";
 import { SubmitHandler, useForm } from "react-hook-form";
 import NewPasswordRequest from "@/domain/resquest/newPassword.request.ts";
+import authenticationService from "@/services/authentication.service.ts";
 
 function ForgotPasswordDialog({ open }: NewPasswordDialogProps) {
 	const { showDialog } = useContext(GlobalContext);
 	const {
 		register,
 		handleSubmit,
+		trigger,
+		getValues,
 		formState: { errors },
-	} = useForm<NewPasswordRequest>();
+	} = useForm<Omit<NewPasswordRequest, "token">>();
 
-	const onSubmit: SubmitHandler<NewPasswordRequest> = (data) => {
-		console.log(data);
-		showDialog("none");
+	const onSubmit: SubmitHandler<Omit<NewPasswordRequest, "token">> = (data) => {
+		authenticationService.setNewPassword(data).then(() => {
+			showDialog("login");
+		});
+	};
+
+	const enterKeyHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+		if (!event.key || event.key.toLowerCase() !== "enter") return;
+		trigger().then((result) => {
+			if (!result) return;
+			const values = getValues();
+			onSubmit(values);
+		});
 	};
 
 	return (
@@ -40,6 +53,7 @@ function ForgotPasswordDialog({ open }: NewPasswordDialogProps) {
 					<form id='login-form' className={"flex flex-col gap-3"}>
 						<InputAuthentication
 							type='password'
+							onKeyDown={enterKeyHandler}
 							error={errors?.password?.message}
 							placeholder='Nhập mật khẩu của bạn'
 							{...register("password", {
@@ -52,9 +66,10 @@ function ForgotPasswordDialog({ open }: NewPasswordDialogProps) {
 						/>
 						<InputAuthentication
 							type='password'
+							onKeyDown={enterKeyHandler}
 							placeholder='Nhập lại mật khẩu của bạn'
-							error={errors?.confirmPassword?.message}
-							{...register("confirmPassword", {
+							error={errors?.["confirm-password"]?.message}
+							{...register("confirm-password", {
 								required: "Vui lòng nhập lại mật khẩu  của bạn",
 								validate: (value, formValues) => {
 									if (value == formValues.password) return undefined;

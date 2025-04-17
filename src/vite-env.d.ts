@@ -1,1 +1,2 @@
-/// <reference props="vite/client" />
+declare module "*.jpg";
+declare module "*.png";

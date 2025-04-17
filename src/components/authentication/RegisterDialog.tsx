@@ -6,7 +6,7 @@
  *  User: lam-nguyen
  **/
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
-import { useCallback, useContext } from "react";
+import { KeyboardEvent, useCallback, useContext } from "react";
 import { GlobalContext } from "@/context/GlobalContext.tsx";
 import { LogosGoogleIcon } from "@/assets/images/icons/LogosGoogleIcon.tsx";
 import { GgFacebook } from "@/assets/images/icons/GgFacebook.tsx";
@@ -15,21 +15,54 @@ import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentic
 import InputAuthentication from "@/components/authentication/ui/InputAuthentication.tsx";
 import { SubmitHandler, useForm } from "react-hook-form";
 import RegisterRequest from "@/domain/resquest/register.request.ts";
+import authenticationService from "@/services/authentication.service.ts";
 
 function RegisterDialog({ open }: RegisterDialogProps) {
 	const { showDialog } = useContext(GlobalContext);
 	const {
 		register,
 		handleSubmit,
+		getValues,
+		reset,
+		trigger,
 		formState: { errors },
-	} = useForm<RegisterRequest>();
+	} = useForm<RegisterRequest>({
+		resetOptions: {
+			keepValues: false,
+		},
+	});
 
-	const onSubmit: SubmitHandler<RegisterRequest> = (data) => {
-		console.log(data);
-		showDialog("input-otp", [onSubmitOTPHandler, onResendHandler]);
+	const onVerifyHandler = useCallback(
+		async (otp: string): Promise<void> => {
+			return authenticationService.verifyRegister(otp).then(() => {
+				showDialog("login");
+			});
+		},
+		[showDialog],
+	);
+
+	const onResendHandler = useCallback(async () => {
+		return authenticationService.resendCodeVerify();
+	}, []);
+
+	const registerHandler: SubmitHandler<RegisterRequest> = (data: RegisterRequest) => {
+		authenticationService.register(data).then(() => {
+			showDialog("input-otp", {
+				sendOtp: onVerifyHandler,
+				resendOtp: onResendHandler,
+			});
+			reset();
+		});
 	};
-	const onSubmitOTPHandler = useCallback(() => {}, []);
-	const onResendHandler = useCallback(() => {}, []);
+
+	const enterKeyHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+		if (!event.key || event.key.toLowerCase() !== "enter") return;
+		trigger().then((result) => {
+			if (!result) return;
+			const values = getValues();
+			registerHandler(values);
+		});
+	};
 
 	return (
 		<Dialog open={open} onOpenChange={(value) => !value && showDialog("none")}>
@@ -49,7 +82,7 @@ function RegisterDialog({ open }: RegisterDialogProps) {
 						</div>
 					</div>
 				</DialogHeader>
-				<div className='grid gap-4 pt-4'>
+				<div className={"scroll-show grid gap-4 overflow-y-scroll pt-4 sm:max-h-[350px]"}>
 					<div className={"flex items-center gap-2"}>
 						<p className={"font-bold text-gray-500"}>Đăng nhập bằng:</p>
 						<button className={"rounded-lg border-1 border-black p-2"}>
@@ -67,16 +100,18 @@ function RegisterDialog({ open }: RegisterDialogProps) {
 							<InputAuthentication
 								type='text'
 								placeholder='Tên của bạn'
-								error={errors.fullName?.message}
-								{...register("fullName", {
+								onKeyDown={enterKeyHandler}
+								error={errors["full-name"]?.message}
+								{...register("full-name", {
 									required: "Vui lòng nhập họ tên của bạn",
 								})}
 							/>
 							<InputAuthentication
 								type='tel'
 								placeholder='SĐT của bạn'
-								error={errors.phoneNumber?.message}
-								{...register("phoneNumber", {
+								onKeyDown={enterKeyHandler}
+								error={errors.phone?.message}
+								{...register("phone", {
 									required: "Vui lòng nhập số điện thoại của bạn",
 									minLength: {
 										value: 10,
@@ -89,6 +124,7 @@ function RegisterDialog({ open }: RegisterDialogProps) {
 							<InputAuthentication
 								type={"email"}
 								placeholder={"Email của bạn"}
+								onKeyDown={enterKeyHandler}
 								error={errors.email?.message}
 								{...register("email", {
 									required: "Vui lòng nhập email hợp lệ",
@@ -101,6 +137,7 @@ function RegisterDialog({ open }: RegisterDialogProps) {
 							<InputAuthentication
 								type='password'
 								placeholder='Mật khẩu'
+								onKeyDown={enterKeyHandler}
 								error={errors.password?.message}
 								{...register("password", {
 									required: "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số, ký tự đặc biệt",
@@ -110,7 +147,20 @@ function RegisterDialog({ open }: RegisterDialogProps) {
 									},
 								})}
 							/>
-							<ButtonAuthentication onClick={handleSubmit(onSubmit)}>Đăng ký</ButtonAuthentication>
+							<InputAuthentication
+								type='password'
+								placeholder='Nhập lại mật khẩu'
+								onKeyDown={enterKeyHandler}
+								error={errors["confirm-password"]?.message}
+								{...register("confirm-password", {
+									required: "Vui lòng nhập lại mật khẩu",
+									validate: (value, formValues) => {
+										if (value == formValues.password) return undefined;
+										return "Mật khẩu nhập lại không chính xác";
+									},
+								})}
+							/>
+							<ButtonAuthentication onClick={handleSubmit(registerHandler)}>Đăng ký</ButtonAuthentication>
 						</div>
 						<div className='auth-actions mt-2 flex w-full text-blue-800'>
 							<a href='#' className='!tw-text-base !tw-text-cm-blue' onClick={() => showDialog("login")}>

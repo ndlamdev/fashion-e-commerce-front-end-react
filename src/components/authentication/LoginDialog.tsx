@@ -6,7 +6,7 @@
  *  User: lam-nguyen
  **/
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
-import { useContext } from "react";
+import { KeyboardEvent, useCallback, useContext } from "react";
 import { GlobalContext } from "@/context/GlobalContext.tsx";
 import LoginDialogProps from "@/components/authentication/props/loginDialog.props.ts";
 import { LogosGoogleIcon } from "@/assets/images/icons/LogosGoogleIcon.tsx";
@@ -15,20 +15,40 @@ import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentic
 import InputAuthentication from "@/components/authentication/ui/InputAuthentication.tsx";
 import LoginRequest from "@/domain/resquest/login.request.ts";
 import { SubmitHandler, useForm } from "react-hook-form";
+import authenticationService from "@/services/authentication.service.ts";
+import { useNavigate } from "react-router";
 
 function LoginDialog({ open }: LoginDialogProps) {
 	const { showDialog } = useContext(GlobalContext);
+	const navigation = useNavigate();
 	const {
 		register,
+		trigger,
+		getValues,
 		handleSubmit,
+		reset,
 		formState: { errors },
-	} = useForm<LoginRequest>({
-		mode: "all",
-	});
+	} = useForm<LoginRequest>();
 
-	const onSubmit: SubmitHandler<LoginRequest> = (data) => {
-		console.log(data);
+	const onSubmit: SubmitHandler<LoginRequest> = async (data) => {
+		await authenticationService.login(data).then(() => {
+			showDialog("none");
+			navigation("/test");
+			reset();
+		});
 	};
+
+	const enterKeyHandler = useCallback(
+		(event: KeyboardEvent<HTMLInputElement>) => {
+			if (!event.key || event.key.toLowerCase() !== "enter") return;
+			trigger().then((result) => {
+				if (!result) return;
+				const values = getValues();
+				onSubmit(values);
+			});
+		},
+		[getValues, onSubmit, trigger],
+	);
 
 	return (
 		<Dialog open={open} onOpenChange={(value) => !value && showDialog("none")}>
@@ -65,6 +85,7 @@ function LoginDialog({ open }: LoginDialogProps) {
 						<div className={"flex flex-col gap-3"}>
 							<div>
 								<InputAuthentication
+									onKeyDown={enterKeyHandler}
 									type={"email"}
 									placeholder={"Email của bạn"}
 									error={errors.email?.message}
@@ -77,7 +98,7 @@ function LoginDialog({ open }: LoginDialogProps) {
 									})}
 								/>
 							</div>
-							<InputAuthentication type={"password"} placeholder={"Mật khẩu"} {...register("password")} />
+							<InputAuthentication onKeyDown={enterKeyHandler} type={"password"} placeholder={"Mật khẩu"} {...register("password")} />
 							<ButtonAuthentication onClick={handleSubmit(onSubmit)}>Đăng nhập</ButtonAuthentication>
 						</div>
 						<div className='auth-actions mt-2 flex w-full justify-between text-blue-800'>
