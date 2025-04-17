@@ -54,6 +54,7 @@ function ForgotPasswordDialog({ open }: ForgotPasswordDialogProps) {
 			const values = getValues();
 			onSubmit(values);
 		});
+		event.preventDefault();
 	};
 
 	return (
@@ -66,7 +67,7 @@ function ForgotPasswordDialog({ open }: ForgotPasswordDialogProps) {
 					<DialogTitle className={"text-center text-4xl"}>Cấp lại mật khẩu</DialogTitle>
 				</DialogHeader>
 				<div className='grid gap-4'>
-					<form id='login-form' className={"flex flex-col gap-3"}>
+					<form className={"flex flex-col gap-3"}>
 						<InputAuthentication
 							onKeyDown={enterKeyHandler}
 							type={"email"}
@@ -80,9 +81,7 @@ function ForgotPasswordDialog({ open }: ForgotPasswordDialogProps) {
 								},
 							})}
 						/>
-						<ButtonAuthentication type={"button"} onClick={handleSubmit(onSubmit)}>
-							Kiểm tra
-						</ButtonAuthentication>
+						<ButtonAuthentication onClick={handleSubmit(onSubmit)}>Kiểm tra</ButtonAuthentication>
 					</form>
 				</div>
 			</DialogContent>

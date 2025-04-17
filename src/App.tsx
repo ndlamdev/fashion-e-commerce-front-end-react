@@ -36,13 +36,13 @@ function App() {
 			<BrowserRouter>
 				<Sheet open={sheetAccount} onOpenChange={(value) => setSheetAccount(value)}>
 					<Routes>
-						<Route path='/' element={<RootLayout />}>
+						<Route path={"/"} element={<RootLayout />}>
 							<Route index element={<HomePage />} />
 							<Route path={"/test"} element={<TestPage />} />
 							<Route path={"product-detail"}>
 								<Route path={":id"} element={<ProductDetailPage />} />
 							</Route>
-							<Route path={"collection"} element={<BoothPage />}></Route>
+							<Route path={"collection"} element={<BoothPage />} />
 						</Route>
 						<Route path='/cart' element={<CartLayout />}>
 							<Route index element={<CartPage />} />
