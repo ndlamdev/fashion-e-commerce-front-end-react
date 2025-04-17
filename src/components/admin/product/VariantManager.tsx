@@ -90,14 +90,14 @@ function VariantManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>,
 								<CodexMenu color={"gray"} className={"mt-7.5"} />
 							</div>
 							<div className={"flex flex-1 flex-col gap-1"}>
-								<div>
-									<label className={"text-sm"}>Option name</label>
+								<label className={"text-sm"}>
+									<span>Option name</span>
 									<Input
 										placeholder={"Option name"}
 										value={optionVariant.name}
 										onChange={(event) => onChangeNameOptionVariant(indexOptionVariant, event.target.value)}
 									/>
-								</div>
+								</label>
 								<div>
 									<label className={"text-sm"}>Option value</label>
 									{optionVariant.values.map((valueOptionVariant, indexValueOptionVariant) => (

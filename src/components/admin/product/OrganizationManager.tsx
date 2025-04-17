@@ -14,30 +14,22 @@ function OrganizationManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElem
 
 	return (
 		<div {...props}>
-			<div>
-				<label htmlFor={"product-type"} className={"fw-semibold text-sm text-gray-700"}>
-					Type
-				</label>
-				<Input id={"product-type"} type='text' className={`mt-1 text-sm ${createProductPageContext.borderStyle}`} />
-			</div>
-			<div>
-				<label htmlFor={"product-vendor"} className={"fw-semibold text-sm text-gray-700"}>
-					Vendor
-				</label>
-				<Input id={"product-vendor"} type='text' className={`mt-1 text-sm ${createProductPageContext.borderStyle}`} />
-			</div>
-			<div>
-				<label htmlFor={"product-collections"} className={"fw-semibold text-sm text-gray-700"}>
-					Collections
-				</label>
-				<Input id={"product-collections"} type='text' className={`mt-1 text-sm ${createProductPageContext.borderStyle}`} />
-			</div>
-			<div>
-				<label htmlFor={"product-tags"} className={"fw-semibold text-sm text-gray-700"}>
-					Tags
-				</label>
-				<Input id={"product-tags"} type='text' className={`mt-1 text-sm ${createProductPageContext.borderStyle}`} />
-			</div>
+			<label className={"fw-semibold text-sm text-gray-700"}>
+				<span>Type</span>
+				<Input type='text' className={`mt-1 text-sm ${createProductPageContext.borderStyle}`} />
+			</label>
+			<label className={"fw-semibold text-sm text-gray-700"}>
+				<span>Vendor</span>
+				<Input type='text' className={`mt-1 text-sm ${createProductPageContext.borderStyle}`} />
+			</label>
+			<label className={"fw-semibold text-sm text-gray-700"}>
+				<span>Collections</span>
+				<Input type='text' className={`mt-1 text-sm ${createProductPageContext.borderStyle}`} />
+			</label>
+			<label className={"fw-semibold text-sm text-gray-700"}>
+				<span>Tags</span>
+				<Input type='text' className={`mt-1 text-sm ${createProductPageContext.borderStyle}`} />
+			</label>
 		</div>
 	);
 }

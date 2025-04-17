@@ -19,14 +19,11 @@ function PriceManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, H
 	return (
 		<div {...props}>
 			<div className={"grid grid-cols-3 grid-rows-1 gap-3"}>
-				<div>
-					<label htmlFor='product-price' className={"text-sm"}>
-						Price
-					</label>
+				<label className={"text-sm"}>
+					<span>Price</span>
 					<div className={`mt-1 flex items-center gap-1 rounded-md px-3 py-2 text-sm ${createProductPageContext.borderStyle}`}>
 						<span className={"text-decoration-underline"}>₫</span>
 						<input
-							id={"product-price"}
 							type={"number"}
 							min={0}
 							placeholder={"0"}
@@ -36,15 +33,12 @@ function PriceManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, H
 							}}
 							className={"w-full border-0 shadow-none outline-none focus:outline-none"}></input>
 					</div>
-				</div>
-				<div>
-					<label htmlFor='product-compare-at-price' className={"text-sm"}>
-						Compare-at price
-					</label>
+				</label>
+				<label className={"text-sm"}>
+					<span>Compare-at price</span>
 					<div className={`mt-1 flex items-center gap-1 rounded-md px-3 py-2 text-sm ${createProductPageContext.borderStyle}`}>
 						<span className={"text-decoration-underline"}>₫</span>
 						<input
-							id={"product-compare-at-price"}
 							type={"number"}
 							min={0}
 							placeholder={"0"}
@@ -54,18 +48,15 @@ function PriceManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, H
 							}}
 							className={"w-full border-0 shadow-none outline-none focus:outline-none"}></input>
 					</div>
-				</div>
+				</label>
 			</div>
 			<Separator className={"my-5"} />
 			<div className={"grid grid-cols-3 grid-rows-1 gap-3"}>
-				<div>
-					<label htmlFor='product-price' className={"text-sm"}>
-						Cost per item
-					</label>
+				<label className={"text-sm"}>
+					<span>Cost per item</span>
 					<div className={`mt-1 flex items-center gap-1 rounded-md px-3 py-2 text-sm ${createProductPageContext.borderStyle}`}>
 						<span className={"text-decoration-underline"}>₫</span>
 						<input
-							id={"product-cost-per-item"}
 							type={"number"}
 							min={0}
 							placeholder={"0"}
@@ -75,33 +66,29 @@ function PriceManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, H
 							}}
 							className={"w-full border-0 shadow-none outline-none focus:outline-none"}></input>
 					</div>
-				</div>
+				</label>
 				<div>
-					<label htmlFor='product-compare-at-price' className={"text-sm"}>
-						Profit
+					<label className={"text-sm"}>
+						<span>Profit</span>
+						<div className={`mt-1 flex items-center gap-1 rounded-md px-3 py-2 text-sm ${createProductPageContext.borderStyle}`}>
+							<span className={"text-decoration-underline"}>₫</span>
+							<input
+								type={"number"}
+								min={0}
+								placeholder={"0"}
+								value={data.profit}
+								onChange={(event) => {
+									props.onDataChange({ ...data, profit: parseInt(event.target.value) });
+								}}
+								className={"w-full border-0 shadow-none outline-none focus:outline-none"}></input>
+						</div>
 					</label>
+				</div>
+				<label className={"text-sm"}>
+					<span>Margin</span>
 					<div className={`mt-1 flex items-center gap-1 rounded-md px-3 py-2 text-sm ${createProductPageContext.borderStyle}`}>
 						<span className={"text-decoration-underline"}>₫</span>
 						<input
-							id={"product-profit"}
-							type={"number"}
-							min={0}
-							placeholder={"0"}
-							value={data.profit}
-							onChange={(event) => {
-								props.onDataChange({ ...data, profit: parseInt(event.target.value) });
-							}}
-							className={"w-full border-0 shadow-none outline-none focus:outline-none"}></input>
-					</div>
-				</div>
-				<div>
-					<label htmlFor='product-price' className={"text-sm"}>
-						Margin
-					</label>
-					<div className={`mt-1 flex items-center gap-1 rounded-md px-3 py-2 text-sm ${createProductPageContext.borderStyle}`}>
-						<span className={"text-decoration-underline"}>₫</span>
-						<input
-							id={"product-margin"}
 							type={"number"}
 							min={0}
 							placeholder={"0"}
@@ -111,7 +98,7 @@ function PriceManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, H
 							}}
 							className={"w-full border-0 shadow-none outline-none focus:outline-none"}></input>
 					</div>
-				</div>
+				</label>
 			</div>
 		</div>
 	);

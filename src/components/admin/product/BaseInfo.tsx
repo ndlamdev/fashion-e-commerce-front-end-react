@@ -17,10 +17,10 @@ function BaseInfo(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLD
 
 	return (
 		<div {...props}>
-			<div>
-				<label htmlFor={"title-product"}>Title</label>
-				<Input placeholder={"Title product"} id={"title-product"} className={`mt-1 text-sm ${createProductPageContext.borderStyle}`} />
-			</div>
+			<label>
+				<span>Title</span>
+				<Input id={"title-product"} className={`mt-1 text-sm ${createProductPageContext.borderStyle}`} />
+			</label>
 			<div>
 				<label htmlFor={"description-product"}>Description</label>
 				<QuillEditor className={"mt-1"} />

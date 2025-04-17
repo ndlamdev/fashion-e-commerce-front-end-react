@@ -20,6 +20,7 @@ import OrganizationManager from "@/components/admin/product/OrganizationManager.
 import { SolarInfoCircleLinear } from "@/assets/images/icons/SolarInfoCircleLinear.tsx";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select.tsx";
 import PublishManager from "@/components/admin/product/PublishManager.tsx";
+import ShippingManager from "@/components/admin/product/ShippingManager.tsx";
 
 function CreateProductPage({ titlePage = "Add product" }: { titlePage?: string }) {
 	return (
@@ -67,6 +68,7 @@ const CreateProductMainPage = ({ titlePage }: { titlePage: string }) => {
 					</section>
 					<section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
 						<h3 className={"mb-2 pb-0 font-semibold"}>Shipping</h3>
+						<ShippingManager />
 					</section>
 					<section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
 						<h3 className={"mb-2 pb-0 font-semibold"}>Variants</h3>
