@@ -18,6 +18,8 @@ import CreateProductPageContext from "@/context/CreateProductPageContext";
 import { SolarArrowLeftLinear } from "@/assets/images/icons/SolarArrowLeftLinear.tsx";
 import OrganizationManager from "@/components/admin/product/OrganizationManager.tsx";
 import { SolarInfoCircleLinear } from "@/assets/images/icons/SolarInfoCircleLinear.tsx";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select.tsx";
+import PublishManager from "@/components/admin/product/PublishManager.tsx";
 
 function CreateProductPage({ titlePage = "Add product" }: { titlePage?: string }) {
 	return (
@@ -30,6 +32,7 @@ function CreateProductPage({ titlePage = "Add product" }: { titlePage?: string }
 const CreateProductMainPage = ({ titlePage }: { titlePage: string }) => {
 	const refQuill = useRef<Quill | undefined>(undefined);
 	const createProductPageContext = useContext(CreateProductPageContext);
+
 	useEffect(() => {
 		document.title = titlePage;
 		if (refQuill.current) return;
@@ -52,7 +55,7 @@ const CreateProductMainPage = ({ titlePage }: { titlePage: string }) => {
 						<BaseInfo className={"flex flex-col gap-5"} />
 					</section>
 					<section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
-						<h3 className={"mb-2 pb-0 font-medium"}>Pricing</h3>
+						<h3 className={"mb-2 pb-0 font-semibold"}>Pricing</h3>
 						<PriceManager
 							onDataChange={(data) => {
 								console.log(data);
@@ -60,19 +63,43 @@ const CreateProductMainPage = ({ titlePage }: { titlePage: string }) => {
 						/>
 					</section>
 					<section className={`${createProductPageContext.sectionStyle}`}>
-						<h3 className={"mb-2 pb-0 font-medium"}>Inventory</h3>
+						<h3 className={"mb-2 pb-0 font-semibold"}>Inventory</h3>
 					</section>
 					<section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
-						<h3 className={"mb-2 pb-0 font-medium"}>Shipping</h3>
+						<h3 className={"mb-2 pb-0 font-semibold"}>Shipping</h3>
 					</section>
 					<section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
-						<h3 className={"mb-2 pb-0 font-medium"}>Variants</h3>
+						<h3 className={"mb-2 pb-0 font-semibold"}>Variants</h3>
 						<VariantManager />
 					</section>
 				</div>
-				<div className={"col-span-3"}>
+				<div className={"col-span-3 flex flex-col gap-3"}>
 					<section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
-						<h3 className={"mb-2 pb-0 text-[15px] font-medium"}>
+						<h3 className={"mb-2 pb-0 text-[15px] font-semibold"}>
+							<span>Status</span>
+						</h3>
+						<Select defaultValue={"Active"}>
+							<SelectTrigger className={`mt-1 w-full ${createProductPageContext.borderStyle}`}>
+								<SelectValue placeholder='Active' />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectItem value='Active'>Active</SelectItem>
+								<SelectItem value='Draft'>Draft</SelectItem>
+							</SelectContent>
+						</Select>
+					</section>
+					<section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
+						<h3 className={"mb-2 pb-0 text-[15px] font-semibold"}>
+							<span>Publishing</span>
+						</h3>
+						<PublishManager
+							onDateOpenStoreChange={(value) => {
+								console.log(value);
+							}}
+						/>
+					</section>
+					<section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
+						<h3 className={"mb-2 pb-0 text-[15px] font-semibold"}>
 							<span>Product organization</span>
 							<SolarInfoCircleLinear width={15} height={15} className={"ml-2 inline"} color={"gray"} strokeWidth={2.5} />
 						</h3>
