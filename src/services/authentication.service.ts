@@ -21,7 +21,7 @@ import LoginResponse from "@/domain/response/login.response.ts";
 import LocalStorage from "@/utils/LocalStorage.ts";
 import LoginRequest from "@/domain/resquest/login.request.ts";
 
-const PATH_BASE_URL = "/v1/auth";
+const PATH_BASE_URL = "/auth/v1";
 
 async function register(request: RegisterRequest): Promise<EmailResponse> {
 	return api
@@ -32,13 +32,17 @@ async function register(request: RegisterRequest): Promise<EmailResponse> {
 		})
 		.catch((error) => {
 			if (error instanceof AxiosError) {
-				const err = error as AxiosErrorCustom<any>;
-				const code = err.response?.data.code;
-				if (code == 90003) {
-					SessionStorage.setValue("EMAIL_REGISTER", request.email);
-					return { email: request.email } as EmailResponse;
+				if (!error.response) {
+					toast.error(error.message);
 				} else {
-					toast.error(err.response?.data.detail);
+					const err = error as AxiosErrorCustom<any>;
+					const code = err.response?.data.code;
+					if (code == 90013) {
+						SessionStorage.setValue("EMAIL_REGISTER", request.email);
+						return { email: request.email } as EmailResponse;
+					} else {
+						toast.error(err.response?.data.detail);
+					}
 				}
 			}
 			return Promise.reject(error);

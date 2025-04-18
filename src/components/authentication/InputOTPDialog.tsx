@@ -7,15 +7,14 @@
  **/
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
 import { useContext, useEffect, useState } from "react";
-import { GlobalContext } from "@/context/GlobalContext.tsx";
+import { DialogAuthContext } from "@/context/DialogAuthContext.tsx";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp.tsx";
-import InputOTPDialogProps from "@/components/authentication/props/InputOTPDialog.props.ts";
 import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentication.tsx";
 import { useForm } from "react-hook-form";
 import OTPRequest from "@/domain/resquest/otp.request.ts";
 
-function InputOTPDialog({ open, sendOtp, resendOtp }: InputOTPDialogProps) {
-	const { showDialog } = useContext(GlobalContext);
+function InputOTPDialog() {
+	const { showDialog, dialog, callBacksDialog } = useContext(DialogAuthContext);
 	const [openDialog, setOpenDialog] = useState<"none" | "show-confirm" | "show-dialog">("none");
 	const {
 		setValue,
@@ -27,8 +26,8 @@ function InputOTPDialog({ open, sendOtp, resendOtp }: InputOTPDialogProps) {
 	});
 
 	useEffect(() => {
-		if (open) setOpenDialog("show-dialog");
-	}, [open]);
+		if (dialog === "input-otp") setOpenDialog("show-dialog");
+	}, [dialog]);
 
 	const onSubmitHandler = async () => {
 		const otp = getValues("code");
@@ -37,7 +36,7 @@ function InputOTPDialog({ open, sendOtp, resendOtp }: InputOTPDialogProps) {
 			return;
 		}
 
-		await sendOtp?.(otp).then(() => {
+		await callBacksDialog?.sendOtp?.(otp).then(() => {
 			setOpenDialog("none");
 		});
 	};
@@ -77,7 +76,7 @@ function InputOTPDialog({ open, sendOtp, resendOtp }: InputOTPDialogProps) {
 						<button
 							className={"rounded-2xl border-1 border-black px-4 py-1 hover:border-white hover:bg-green-400 hover:text-white"}
 							onClick={async () => {
-								await resendOtp?.().then();
+								await callBacksDialog?.resendOtp?.().then();
 							}}>
 							Gửi
 						</button>

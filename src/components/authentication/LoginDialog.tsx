@@ -6,9 +6,8 @@
  *  User: lam-nguyen
  **/
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
-import { KeyboardEvent, useCallback, useContext } from "react";
-import { GlobalContext } from "@/context/GlobalContext.tsx";
-import LoginDialogProps from "@/components/authentication/props/loginDialog.props.ts";
+import { KeyboardEvent, useCallback, useContext, useEffect } from "react";
+import { DialogAuthContext } from "@/context/DialogAuthContext.tsx";
 import { LogosGoogleIcon } from "@/assets/images/icons/LogosGoogleIcon.tsx";
 import { GgFacebook } from "@/assets/images/icons/GgFacebook.tsx";
 import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentication.tsx";
@@ -17,9 +16,12 @@ import LoginRequest from "@/domain/resquest/login.request.ts";
 import { SubmitHandler, useForm } from "react-hook-form";
 import authenticationService from "@/services/authentication.service.ts";
 import { useNavigate } from "react-router";
+import { useGoogleLogin } from "@react-oauth/google";
+import { useLoginWithGoogleMutation } from "@/redux/query/authentication.query.ts";
 
-function LoginDialog({ open }: LoginDialogProps) {
-	const { showDialog } = useContext(GlobalContext);
+function LoginDialog() {
+	const [loginWithGoogleApi, loginWithGoogleApiResult] = useLoginWithGoogleMutation();
+	const { showDialog, dialog } = useContext(DialogAuthContext);
 	const navigation = useNavigate();
 	const {
 		register,
@@ -30,13 +32,26 @@ function LoginDialog({ open }: LoginDialogProps) {
 		formState: { errors },
 	} = useForm<LoginRequest>();
 
-	const onSubmit: SubmitHandler<LoginRequest> = async (data) => {
-		await authenticationService.login(data).then(() => {
-			showDialog("none");
-			navigation("/test");
-			reset();
-		});
-	};
+	const onSubmit: SubmitHandler<LoginRequest> = useCallback(
+		async (data) => {
+			await authenticationService.login(data).then(() => {
+				showDialog("none");
+				navigation("/test");
+				reset();
+			});
+		},
+		[navigation, reset, showDialog],
+	);
+
+	useEffect(() => {
+		if (!loginWithGoogleApiResult.isError) return;
+		console.error("Error: ", loginWithGoogleApiResult.error);
+	}, [loginWithGoogleApiResult.error, loginWithGoogleApiResult.isError]);
+
+	useEffect(() => {
+		if (!loginWithGoogleApiResult.isSuccess) return;
+		showDialog("none");
+	}, [loginWithGoogleApiResult.data, loginWithGoogleApiResult.isSuccess, showDialog]);
 
 	const enterKeyHandler = useCallback(
 		(event: KeyboardEvent<HTMLInputElement>) => {
@@ -50,8 +65,17 @@ function LoginDialog({ open }: LoginDialogProps) {
 		[getValues, onSubmit, trigger],
 	);
 
+	const login = useGoogleLogin({
+		onSuccess: async (tokenResponse) => {
+			console.log(tokenResponse);
+			loginWithGoogleApi({ "auth-code": tokenResponse.code });
+		},
+		onError: (errorResponse) => console.log(errorResponse),
+		flow: "auth-code",
+	});
+
 	return (
-		<Dialog open={open} onOpenChange={(value) => !value && showDialog("none")}>
+		<Dialog open={dialog === "login"} onOpenChange={(value) => !value && showDialog("none")}>
 			<DialogContent className={"sm:max-w-[525px]"} classIcon={"bg-black p-4 border-2 border-gray-200 text-white !rounded-full top-[-20px] right-[-20px]"}>
 				<DialogHeader>
 					<DialogTitle className={"text-4xl"}>Đăng nhập ngay</DialogTitle>
@@ -71,7 +95,7 @@ function LoginDialog({ open }: LoginDialogProps) {
 				<div className='grid gap-4 pt-4'>
 					<div className={"flex items-center gap-2"}>
 						<p className={"font-bold text-gray-500"}>Đăng nhập bằng:</p>
-						<button className={"rounded-lg border-1 border-black p-2"}>
+						<button className={"rounded-lg border-1 border-black p-2"} onClick={() => login()}>
 							<LogosGoogleIcon width={35} height={35} />
 						</button>
 						<button className={"rounded-lg border-1 border-black p-1"}>

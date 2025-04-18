@@ -7,8 +7,7 @@
  **/
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
 import { KeyboardEvent, useCallback, useContext } from "react";
-import { GlobalContext } from "@/context/GlobalContext.tsx";
-import ForgotPasswordDialogProps from "@/components/authentication/props/forgotPasswordDialog.props.ts";
+import { DialogAuthContext } from "@/context/DialogAuthContext.tsx";
 import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentication.tsx";
 import InputAuthentication from "@/components/authentication/ui/InputAuthentication.tsx";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -16,8 +15,8 @@ import EmailRequest from "@/domain/resquest/email.request.ts";
 import authenticationService from "@/services/authentication.service.ts";
 import SessionStorage from "@/utils/SessionStorage.ts";
 
-function ForgotPasswordDialog({ open }: ForgotPasswordDialogProps) {
-	const { showDialog } = useContext(GlobalContext);
+function ForgotPasswordDialog() {
+	const { showDialog, dialog } = useContext(DialogAuthContext);
 	const {
 		register,
 		handleSubmit,
@@ -58,7 +57,7 @@ function ForgotPasswordDialog({ open }: ForgotPasswordDialogProps) {
 	};
 
 	return (
-		<Dialog open={open} onOpenChange={(value) => !value && showDialog("none")}>
+		<Dialog open={dialog === "forgot-password"} onOpenChange={(value) => !value && showDialog("none")}>
 			<DialogContent
 				aria-describedby={""}
 				className={"sm:max-w-[525px]"}

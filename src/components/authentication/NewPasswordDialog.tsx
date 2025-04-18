@@ -7,16 +7,15 @@
  **/
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
 import { KeyboardEvent, useContext } from "react";
-import { GlobalContext } from "@/context/GlobalContext.tsx";
+import { DialogAuthContext } from "@/context/DialogAuthContext.tsx";
 import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentication.tsx";
 import InputAuthentication from "@/components/authentication/ui/InputAuthentication.tsx";
-import NewPasswordDialogProps from "@/components/authentication/props/newPasswordDialog.props.ts";
 import { SubmitHandler, useForm } from "react-hook-form";
 import NewPasswordRequest from "@/domain/resquest/newPassword.request.ts";
 import authenticationService from "@/services/authentication.service.ts";
 
-function ForgotPasswordDialog({ open }: NewPasswordDialogProps) {
-	const { showDialog } = useContext(GlobalContext);
+function ForgotPasswordDialog() {
+	const { showDialog, dialog } = useContext(DialogAuthContext);
 	const {
 		register,
 		handleSubmit,
@@ -41,7 +40,7 @@ function ForgotPasswordDialog({ open }: NewPasswordDialogProps) {
 	};
 
 	return (
-		<Dialog open={open} onOpenChange={(value) => !value && showDialog("none")}>
+		<Dialog open={dialog === "new-password"} onOpenChange={(value) => !value && showDialog("none")}>
 			<DialogContent
 				aria-describedby={""}
 				className={"sm:max-w-[525px]"}

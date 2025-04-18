@@ -6,52 +6,31 @@
  *  User: lam-nguyen
  **/
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
-import { KeyboardEvent, useCallback, useContext } from "react";
+import { KeyboardEvent, useContext } from "react";
 import { DialogAuthContext } from "@/context/DialogAuthContext.tsx";
 import { LogosGoogleIcon } from "@/assets/images/icons/LogosGoogleIcon.tsx";
 import { GgFacebook } from "@/assets/images/icons/GgFacebook.tsx";
 import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentication.tsx";
 import InputAuthentication from "@/components/authentication/ui/InputAuthentication.tsx";
 import { SubmitHandler, useForm } from "react-hook-form";
-import RegisterRequest from "@/domain/resquest/register.request.ts";
-import authenticationService from "@/services/authentication.service.ts";
+import RegisterWithGoogleRequest from "@/domain/resquest/registerWithGoogle.request.ts";
 
-function RegisterDialog() {
+function RegisterWithGoogleDialog() {
 	const { showDialog, dialog } = useContext(DialogAuthContext);
 	const {
 		register,
 		handleSubmit,
 		getValues,
-		reset,
 		trigger,
 		formState: { errors },
-	} = useForm<RegisterRequest>({
+	} = useForm<RegisterWithGoogleRequest>({
 		resetOptions: {
 			keepValues: false,
 		},
 	});
 
-	const onVerifyHandler = useCallback(
-		async (otp: string): Promise<void> => {
-			return authenticationService.verifyRegister(otp).then(() => {
-				showDialog("login");
-			});
-		},
-		[showDialog],
-	);
-
-	const onResendHandler = useCallback(async () => {
-		return authenticationService.resendCodeVerify();
-	}, []);
-
-	const registerHandler: SubmitHandler<RegisterRequest> = (data: RegisterRequest) => {
-		authenticationService.register(data).then(() => {
-			showDialog("input-otp", {
-				sendOtp: onVerifyHandler,
-				resendOtp: onResendHandler,
-			});
-			reset();
-		});
+	const registerHandler: SubmitHandler<RegisterWithGoogleRequest> = (data: RegisterWithGoogleRequest) => {
+		console.log(data);
 	};
 
 	const enterKeyHandler = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -64,7 +43,7 @@ function RegisterDialog() {
 	};
 
 	return (
-		<Dialog open={dialog === "register"} onOpenChange={(value) => !value && showDialog("none")}>
+		<Dialog open={dialog === "register-with-google"} onOpenChange={(value) => !value && showDialog("none")}>
 			<DialogContent className={"sm:max-w-[525px]"} classIcon={"bg-black p-4 border-2 border-gray-200 text-white !rounded-full top-[-20px] right-[-20px]"}>
 				<DialogHeader>
 					<DialogTitle className={"text-4xl"}>Đăng ký ngay</DialogTitle>
@@ -97,15 +76,6 @@ function RegisterDialog() {
 						</div>
 						<div className={"my-3 flex w-full flex-col gap-3 md:flex-row"}>
 							<InputAuthentication
-								type='text'
-								placeholder='Tên của bạn'
-								onKeyDown={enterKeyHandler}
-								error={errors["full-name"]?.message}
-								{...register("full-name", {
-									required: "Vui lòng nhập họ tên của bạn",
-								})}
-							/>
-							<InputAuthentication
 								type='tel'
 								placeholder='SĐT của bạn'
 								onKeyDown={enterKeyHandler}
@@ -120,19 +90,6 @@ function RegisterDialog() {
 							/>
 						</div>
 						<div className={"flex flex-col gap-3"}>
-							<InputAuthentication
-								type={"email"}
-								placeholder={"Email của bạn"}
-								onKeyDown={enterKeyHandler}
-								error={errors.email?.message}
-								{...register("email", {
-									required: "Vui lòng nhập email hợp lệ",
-									pattern: {
-										value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-										message: "Vui lòng nhập email hợp lệ",
-									},
-								})}
-							/>
 							<InputAuthentication
 								type='password'
 								placeholder='Mật khẩu'
@@ -173,4 +130,4 @@ function RegisterDialog() {
 	);
 }
 
-export default RegisterDialog;
+export default RegisterWithGoogleDialog;

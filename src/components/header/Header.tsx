@@ -19,7 +19,7 @@ import ShoppingBagItem from "@/components/cart/ShoppingBagItem.tsx";
 import dataShoppingBagItems from "@/assets/data/shopping-bag-items.ts";
 import { useNavigate } from "react-router";
 import HeaderProps from "@/components/header/props/header-prop.ts";
-import { GlobalContext } from "@/context/GlobalContext.tsx";
+import { DialogAuthContext } from "@/context/DialogAuthContext.tsx";
 import { FaSolidUserAlt } from "@/assets/images/icons/FaSolidUserAlt.tsx";
 import LocalStorage from "@/utils/LocalStorage.ts";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar.tsx";
@@ -29,7 +29,7 @@ function Header({ showMenu }: HeaderProps) {
 	const [, scrollY] = useScrolled();
 	const [scrollUp, setScrollUp] = useState(false);
 	const navigate = useNavigate();
-	const { showDialog } = useContext(GlobalContext);
+	const { showDialog } = useContext(DialogAuthContext);
 
 	return (
 		<motion.header className={"sticky top-0 z-2 bg-white"} initial={{ top: 0 }} animate={{ top: scrollY >= 100 ? -40 : 0 }} transition={{ duration: 0.75 }}>
