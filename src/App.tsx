@@ -14,9 +14,9 @@ import ForgotPasswordDialog from "@/components/authentication/ForgotPasswordDial
 import InputOTPDialog from "@/components/authentication/InputOTPDialog.tsx";
 import NewPasswordDialog from "@/components/authentication/NewPasswordDialog.tsx";
 import BoothPage from "@/pages/BoothPage.tsx";
-import TestPage from "@/pages/TestPage.tsx";
 import SheetAccount from "@/components/header/SheetAccount.tsx";
 import { Sheet } from "@/components/ui/sheet.tsx";
+import ProfilePage from "@/pages/ProfilePage.tsx";
 
 function App() {
 	const [dialog, setDialog] = useState<DialogTypeEnum>("none");
@@ -38,11 +38,11 @@ function App() {
 					<Routes>
 						<Route path={"/"} element={<RootLayout />}>
 							<Route index element={<HomePage />} />
-							<Route path={"/test"} element={<TestPage />} />
 							<Route path={"product-detail"}>
 								<Route path={":id"} element={<ProductDetailPage />} />
 							</Route>
 							<Route path={"collection"} element={<BoothPage />} />
+							<Route path={"/profile"} element={<ProfilePage />} />
 						</Route>
 						<Route path='/cart' element={<CartLayout />}>
 							<Route index element={<CartPage />} />
