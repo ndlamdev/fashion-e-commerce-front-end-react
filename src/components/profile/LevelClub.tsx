@@ -5,6 +5,8 @@ import { CrownIcon } from "lucide-react";
 
 interface Props {
 	level: LevelType;
+	styleName?: string;
+	styleIcon?: string;
 }
 
 export const LevelClub: React.FC<Props> = (prop) => {
@@ -12,10 +14,10 @@ export const LevelClub: React.FC<Props> = (prop) => {
 	return (
 		<>
 			<div className="flex items-center space-x-2">
-				<span className={cn(`text-base uppercase font-extrabold bg-clip-text text-transparent`, club[prop.level].styleGradient)}>{club[prop.level].name}</span>
-				<div className={cn("p-1 rounded bg-clip-border", club[prop.level].styleGradient)}>
-					<div className="w-6 h-6 rounded bg-white flex items-center justify-center">
-						<CrownIcon className={cn(`w-4 h-4 bg-clip-text `, club[prop.level].color)} />
+				<span className={cn(`text-base  uppercase font-extrabold bg-clip-text text-transparent`, prop.styleName, club[prop.level].styleGradient)}>{club[prop.level].name}</span>
+				<div className={cn("p-1 rounded-lg bg-clip-border", club[prop.level].styleGradient)}>
+					<div className="p-1 rounded-lg bg-neutral-100 flex items-center justify-center">
+						<CrownIcon className={cn(`size-4 bg-clip-text `, prop.styleIcon, club[prop.level].color)} />
 					</div>
 				</div>
 			</div>
