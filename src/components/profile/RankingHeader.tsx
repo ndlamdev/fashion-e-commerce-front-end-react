@@ -44,9 +44,9 @@ export default function RankingHeader(props: RankingHeaderProps) {
 						<p className="flex flex-wrap items-center space-x-2 font-bold text-lg">
 							<BadgeCentIcon /> {props.point ?? 0} Point</p>
 						<p
-							className="flex flex-wrap items-center space-x-1 text-lg text-neutral-500">Chờ: {props.pendingPoint ?? 0} Point
+							className="flex flex-wrap items-center space-x-2 text-lg text-neutral-500">Chờ: {props.pendingPoint ?? 0} Point
 							<HoverCard>
-								<HoverCardTrigger><InfoIcon/></HoverCardTrigger>
+								<HoverCardTrigger className={'px-1'}><InfoIcon className={'cursor-pointer'}/></HoverCardTrigger>
 								<HoverCardContent>
 									<p className="">Đây là số point bạn sẽ nhận được khi nhận các đơn hàng đang chờ thành công</p>
 								</HoverCardContent>

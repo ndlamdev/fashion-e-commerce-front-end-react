@@ -17,6 +17,14 @@ import BoothPage from "@/pages/BoothPage.tsx";
 import SheetAccount from "@/components/header/SheetAccount.tsx";
 import { Sheet } from "@/components/ui/sheet.tsx";
 import ProfilePage from "@/pages/ProfilePage.tsx";
+import InfoTab from "@/components/profile/InfoTab.tsx";
+import ReferFriendTab from "@/components/profile/ReferFriendTab.tsx";
+import HistoryOrderTab from "@/components/profile/ReviewTab.tsx";
+import VoucherWalletTab from "@/components/profile/VoucherWalletTab.tsx";
+import HistoryPointTab from "@/components/profile/HistoryPointTab.tsx";
+import AddressTab from "@/components/profile/AddressTab.tsx";
+import ReviewTab from "@/components/profile/ReviewTab.tsx";
+import FAQTab from "@/components/profile/FAQTab.tsx";
 
 function App() {
 	const [dialog, setDialog] = useState<DialogTypeEnum>("none");
@@ -42,7 +50,16 @@ function App() {
 								<Route path={":id"} element={<ProductDetailPage />} />
 							</Route>
 							<Route path={"collection"} element={<BoothPage />} />
-							<Route path={"/profile"} element={<ProfilePage />} />
+							<Route path={"profile"} element={<ProfilePage />} >
+								<Route path={'info'} index element={<InfoTab />} />
+								<Route path={'refer-friend'} element={<ReferFriendTab />} />
+								<Route path={'orders'} element={<HistoryOrderTab />} />
+								<Route path={'voucher-wallet'} element={<VoucherWalletTab />} />
+								<Route path={'points'} element={<HistoryPointTab />} />
+								<Route path={'addresses'} element={<AddressTab />} />
+								<Route path={'reviews'} element={<ReviewTab />} />
+								<Route path={'faq'} element={<FAQTab />} />
+							</Route>
 						</Route>
 						<Route path='/cart' element={<CartLayout />}>
 							<Route index element={<CartPage />} />

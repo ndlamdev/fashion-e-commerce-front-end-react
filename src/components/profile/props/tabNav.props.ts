@@ -7,4 +7,7 @@ export type TabNavProps = {
 	iconRight?: ReactNode;
 	style?: CSSProperties;
 	tailwindStyle?: string
+	onclick?: () => void;
 }
+
+
