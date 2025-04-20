@@ -32,7 +32,6 @@ export default function ProfilePage() {
 	const [activeTab, setActiveTab] = useState<number>(0);
 	const handleTabClick = useCallback((index: number) => {
 		setActiveTab(index);
-		return;
 	}, []);
 	return (
 			<main className={'p-8 bg-neutral-300'}>
@@ -45,7 +44,7 @@ export default function ProfilePage() {
 							{
 								Array.from(Object.keys(tabNavValues)).map((_, key: number) => {
 									return (
-										<TabNav key={key} onclick={() => handleTabClick(key)} style={{
+										<TabNav key={key} onClick={() => handleTabClick(key)} style={{
 											backgroundColor: activeTab === key ? 'black' : '',
 											color: activeTab === key ? 'white' : '',
 										}} tailwindStyle={`hover:bg-black hover:text-white`} iconLeft={tabNavValues[key].iconLeft} title={tabNavValues[key].title} to={tabNavValues[key].to} iconRight={<ArrowRightIcon className={' hover:text-white'} />}/>

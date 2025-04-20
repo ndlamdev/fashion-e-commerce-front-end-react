@@ -6,6 +6,6 @@
  * User: lam-nguyen
  **/
 
-type DialogTypeEnum = "login" | "register" | "forgot-password" | "input-otp" | "new-password" | "none";
+type DialogTypeEnum = "login" | "register" | "forgot-password" | "input-otp" | "new-password" | "edit-info-profile" | "reset-password" | "none";
 
 export default DialogTypeEnum;

@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode } from "react";
+import { CSSProperties, MouseEventHandler, ReactNode } from "react";
 
 export type TabNavProps = {
 	title: string;
@@ -7,7 +7,7 @@ export type TabNavProps = {
 	iconRight?: ReactNode;
 	style?: CSSProperties;
 	tailwindStyle?: string
-	onclick?: () => void;
+	onClick?: MouseEventHandler<HTMLAnchorElement> ;
 }
 
 

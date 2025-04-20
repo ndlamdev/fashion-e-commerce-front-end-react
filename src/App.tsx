@@ -17,14 +17,15 @@ import BoothPage from "@/pages/BoothPage.tsx";
 import SheetAccount from "@/components/header/SheetAccount.tsx";
 import { Sheet } from "@/components/ui/sheet.tsx";
 import ProfilePage from "@/pages/ProfilePage.tsx";
-import InfoTab from "@/components/profile/InfoTab.tsx";
+import Info from "@/components/profile/InfoTab.tsx";
 import ReferFriendTab from "@/components/profile/ReferFriendTab.tsx";
 import HistoryOrderTab from "@/components/profile/ReviewTab.tsx";
+import ReviewTab from "@/components/profile/ReviewTab.tsx";
 import VoucherWalletTab from "@/components/profile/VoucherWalletTab.tsx";
 import HistoryPointTab from "@/components/profile/HistoryPointTab.tsx";
 import AddressTab from "@/components/profile/AddressTab.tsx";
-import ReviewTab from "@/components/profile/ReviewTab.tsx";
 import FAQTab from "@/components/profile/FAQTab.tsx";
+import EditInfoProfileDialog from "@/components/profile/EditInfoProfileDialog.tsx";
 
 function App() {
 	const [dialog, setDialog] = useState<DialogTypeEnum>("none");
@@ -51,7 +52,7 @@ function App() {
 							</Route>
 							<Route path={"collection"} element={<BoothPage />} />
 							<Route path={"profile"} element={<ProfilePage />} >
-								<Route path={'info'} index element={<InfoTab />} />
+								<Route path={'info'} index element={<Info />} />
 								<Route path={'refer-friend'} element={<ReferFriendTab />} />
 								<Route path={'orders'} element={<HistoryOrderTab />} />
 								<Route path={'voucher-wallet'} element={<VoucherWalletTab />} />
@@ -72,6 +73,7 @@ function App() {
 						<ForgotPasswordDialog open={dialog === "forgot-password"} />
 						<NewPasswordDialog open={dialog === "new-password"} />
 						<InputOTPDialog open={dialog === "input-otp"} sendOtp={callbackDialog?.sendOtp} resendOtp={callbackDialog?.resendOtp} />
+						<EditInfoProfileDialog open={dialog === "edit-info-profile"} />
 					</>
 					<>
 						<SheetAccount />
