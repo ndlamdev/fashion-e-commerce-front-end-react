@@ -18,7 +18,7 @@ import SheetAccount from "@/components/header/SheetAccount.tsx";
 import { Sheet } from "@/components/ui/sheet.tsx";
 import ProfilePage from "@/pages/ProfilePage.tsx";
 import Info from "@/components/profile/InfoTab.tsx";
-import ReferFriendTab from "@/components/profile/ReferFriendTab.tsx";
+import ReferFriend from "@/components/profile/ReferFriendTab.tsx";
 import HistoryOrderTab from "@/components/profile/ReviewTab.tsx";
 import ReviewTab from "@/components/profile/ReviewTab.tsx";
 import VoucherWalletTab from "@/components/profile/VoucherWalletTab.tsx";
@@ -54,7 +54,7 @@ function App() {
 							<Route path={"collection"} element={<BoothPage />} />
 							<Route path={"profile"} element={<ProfilePage />} >
 								<Route path={'info'} index element={<Info />} />
-								<Route path={'refer-friend'} element={<ReferFriendTab />} />
+								<Route path={'refer-friend'} element={<ReferFriend />} />
 								<Route path={'orders'} element={<HistoryOrderTab />} />
 								<Route path={'voucher-wallet'} element={<VoucherWalletTab />} />
 								<Route path={'points'} element={<HistoryPointTab />} />
