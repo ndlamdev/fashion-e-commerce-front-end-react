@@ -32,7 +32,7 @@ const InfoTab = memo((props: InfoTabProps) => {
 				<span className={"text-neutral-500 italic text-sm"}>Chưa cập nhật</span>}
 				<span>Mật khẩu</span> <span>******************</span>
 
-				<Button className={'text-xl bg-white text-black font-bold p-5 border border-black hover:border-neutral-500 hover:text-white hover:bg-black cursor-pointer rounded-full'}>Cập nhật</Button>
+				<Button onClick={() => showDialog('reset-password')} className={'text-xl bg-white text-black font-bold p-5 border border-black hover:border-neutral-500 hover:text-white hover:bg-black cursor-pointer rounded-full'}>Cập nhật</Button>
 			</div>
 		</div>
 	);

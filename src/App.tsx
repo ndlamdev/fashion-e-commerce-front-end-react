@@ -26,6 +26,7 @@ import HistoryPointTab from "@/components/profile/HistoryPointTab.tsx";
 import AddressTab from "@/components/profile/AddressTab.tsx";
 import FAQTab from "@/components/profile/FAQTab.tsx";
 import EditInfoProfileDialog from "@/components/profile/EditInfoProfileDialog.tsx";
+import ResetPasswordDialog from "@/components/profile/ResetPasswordDialog.tsx";
 
 function App() {
 	const [dialog, setDialog] = useState<DialogTypeEnum>("none");
@@ -74,6 +75,7 @@ function App() {
 						<NewPasswordDialog open={dialog === "new-password"} />
 						<InputOTPDialog open={dialog === "input-otp"} sendOtp={callbackDialog?.sendOtp} resendOtp={callbackDialog?.resendOtp} />
 						<EditInfoProfileDialog open={dialog === "edit-info-profile"} />
+						<ResetPasswordDialog open={dialog === "reset-password"} />
 					</>
 					<>
 						<SheetAccount />
