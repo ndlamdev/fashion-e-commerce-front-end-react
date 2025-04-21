@@ -14,10 +14,10 @@ export const LevelClub: React.FC<Props> = (prop) => {
 	return (
 		<>
 			<div className="flex items-center space-x-2">
-				<span className={cn(`text-base  uppercase font-extrabold bg-clip-text text-transparent`, prop.styleName, club[prop.level].styleGradient)}>{club[prop.level].name}</span>
-				<div className={cn("p-1 rounded-lg bg-clip-border", club[prop.level].styleGradient)}>
-					<div className="p-1 rounded-lg bg-neutral-100 flex items-center justify-center">
-						<CrownIcon className={cn(`size-4 bg-clip-text `, prop.styleIcon, club[prop.level].color)} />
+				<span className={cn(`hidden md:visible text-base uppercase font-extrabold bg-clip-text text-transparent`, prop.styleName, club[prop.level].styleGradient)}>{club[prop.level].name}</span>
+				<div className={cn("p-1 rounded-md md:rounded-lg bg-clip-border", club[prop.level].styleGradient)}>
+					<div className="p-1 rounded-md md:rounded-lg bg-neutral-100 flex items-center justify-center">
+						<CrownIcon className={cn(`size-2 md:size-4 bg-clip-text `, prop.styleIcon, club[prop.level].color)} />
 					</div>
 				</div>
 			</div>

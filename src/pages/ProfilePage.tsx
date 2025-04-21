@@ -4,7 +4,7 @@ import {
 	BaggageClaimIcon,
 	LogOutIcon,
 	MapPinHouseIcon,
-	MessageCircleQuestionIcon,
+	MessageCircleQuestionIcon, MoveLeftIcon,
 	ReceiptIcon,
 	SquareUserRoundIcon,
 	StarIcon,
@@ -15,6 +15,9 @@ import { Outlet } from "react-router";
 import { TabNavProps } from "@/components/profile/props/tabNav.props.ts";
 import { TabNav } from "@/components/profile/TabNav.tsx";
 import { useCallback, useState } from "react";
+import { useMediaQuery } from "@uidotdev/usehooks";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet.tsx";
+import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 
 const tabNavValues: Record<number, TabNavProps> = {
 	0: { title: "Thông tin tài khoản", to: "info", iconLeft: <SquareUserRoundIcon className={'hover:text-white'}/> },
@@ -33,29 +36,43 @@ export default function ProfilePage() {
 	const handleTabClick = useCallback((index: number) => {
 		setActiveTab(index);
 	}, []);
+	const isDesktop = useMediaQuery("(min-width: 769px)");
 	return (
-			<main className={'p-8 bg-neutral-300'}>
+			<main className={'p-4 md:p-8 bg-neutral-300'}>
 				<section>
 					<RankingHeader fullName={'LamHongPhong'} levelClub={0} nextLevel={1} resetRankingDate={new Date()} nextResetRankingDate={new Date()}/>
 				</section>
 				<section className={'my-9 flex space-x-20'}>
 					<nav className={'w-1/4'}>
-						<div className="space-y-2">
-							{
-								Array.from(Object.keys(tabNavValues)).map((_, key: number) => {
-									return (
-										<TabNav key={key} onClick={() => handleTabClick(key)} style={{
-											backgroundColor: activeTab === key ? 'black' : '',
-											color: activeTab === key ? 'white' : '',
-										}} tailwindStyle={`hover:bg-black hover:text-white`} iconLeft={tabNavValues[key].iconLeft} title={tabNavValues[key].title} to={tabNavValues[key].to} iconRight={<ArrowRightIcon className={' hover:text-white'} />}/>
-									)
-								})
+						<Sheet >
+							<div className="space-y-2" >
+								{
+									Array.from(Object.keys(tabNavValues)).map((_, key: number) => {
+										return (
+											<SheetTrigger key={key} asChild>
+												<TabNav onClick={() => handleTabClick(key)} style={{
+													backgroundColor: activeTab === key ? 'black' : '',
+													color: activeTab === key ? 'white' : '',
+												}} tailwindStyle={`hover:bg-black hover:text-white`} iconLeft={tabNavValues[key].iconLeft} title={tabNavValues[key].title} to={tabNavValues[key].to} iconRight={<ArrowRightIcon className={' hover:text-white'} />}/>
+											</SheetTrigger>
+										)
+									})
+								}
+							</div>
+							{!isDesktop &&
+								<SheetContent className={'!w-screen !max-w-none rounded-none bg-white p-10'} iconRight={<MoveLeftIcon className={'size-6 text-black'} />}>
+									<ScrollArea className={'h-screen overflow-auto scrollbar-none'}>
+										<Outlet/>
+									</ScrollArea>
+								</SheetContent>
 							}
-						</div>
+						</Sheet>
 					</nav>
-					<aside className={'w-3/4 rounded-md bg-white p-10 shadow-lg'}>
-						<Outlet/>
-					</aside>
+					{isDesktop &&
+						<aside className={'w-3/4 rounded-md bg-white p-10 shadow-lg'}>
+							<Outlet/>
+						</aside>
+					}
 				</section>
 			</main>
 	);
