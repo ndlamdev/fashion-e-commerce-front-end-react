@@ -20,6 +20,10 @@ import NewPasswordRequest from "@/domain/resquest/newPassword.request.ts";
 import LoginResponse from "@/domain/response/login.response.ts";
 import LocalStorage from "@/utils/LocalStorage.ts";
 import LoginRequest from "@/domain/resquest/login.request.ts";
+import LoginWithGoogleRequest from "@/domain/resquest/loginWithGoogle.request.ts";
+import { authenticationApi } from "@/redux/query/authentication.query";
+import { appDispatch } from "@/configs/store.config.ts";
+import { loginSuccess } from "@/redux/slice/auth.slice.ts";
 
 const PATH_BASE_URL = "/auth/v1";
 
@@ -178,6 +182,20 @@ async function setNewPassword(request: Omit<NewPasswordRequest, "token">) {
 		});
 }
 
+const loginWithGoogle = async (data: LoginWithGoogleRequest) => {
+	return await appDispatch(authenticationApi.endpoints.loginWithGoogle.initiate(data, { track: false })).then(({ data, error }) => {
+		if (error) {
+			console.error(error);
+			return Promise.reject(error);
+		}
+
+		const token = data.data["access-token"];
+		appDispatch(loginSuccess({ access_token: token, user: data.data.user }));
+		LocalStorage.setValue("ACCESS_TOKEN", token);
+		LocalStorage.setObjectValue("USER", data.data.user);
+	});
+};
+
 const showError = (error: any) => {
 	if (error instanceof AxiosError) {
 		const err = error as AxiosErrorCustom<any>;
@@ -203,6 +221,7 @@ const authenticationService = {
 	verifyResetPassword,
 	resetPassword,
 	greeting,
+	loginWithGoogle,
 };
 
 export default authenticationService;

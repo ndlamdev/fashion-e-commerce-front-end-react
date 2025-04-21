@@ -5,10 +5,11 @@
  * Create at: 10:49AM - 30/03/2025
  * User: lam-nguyen
  **/
-import EmailResponse from "@/domain/response/email.response.ts";
+import UserDto from "@/domain/dto/user.dto.ts";
 
-type LoginResponse = EmailResponse & {
+type LoginResponse = {
 	"access-token": string;
+	user: UserDto;
 };
 
 export default LoginResponse;

@@ -18,9 +18,10 @@ import authenticationService from "@/services/authentication.service.ts";
 import { useNavigate } from "react-router";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useLoginWithGoogleMutation } from "@/redux/query/authentication.query.ts";
+import FacebookLogin from "@greatsumini/react-facebook-login";
 
 function LoginDialog() {
-	const [loginWithGoogleApi, loginWithGoogleApiResult] = useLoginWithGoogleMutation();
+	const [, loginWithGoogleApiResult] = useLoginWithGoogleMutation();
 	const { showDialog, dialog } = useContext(DialogAuthContext);
 	const navigation = useNavigate();
 	const {
@@ -65,10 +66,11 @@ function LoginDialog() {
 		[getValues, onSubmit, trigger],
 	);
 
-	const login = useGoogleLogin({
+	const googleLogin = useGoogleLogin({
 		onSuccess: async (tokenResponse) => {
-			console.log(tokenResponse);
-			loginWithGoogleApi({ "auth-code": tokenResponse.code });
+			await authenticationService.loginWithGoogle({ "auth-code": tokenResponse.code }).then(() => {
+				showDialog("none");
+			});
 		},
 		onError: (errorResponse) => console.log(errorResponse),
 		flow: "auth-code",
@@ -95,11 +97,25 @@ function LoginDialog() {
 				<div className='grid gap-4 pt-4'>
 					<div className={"flex items-center gap-2"}>
 						<p className={"font-bold text-gray-500"}>Đăng nhập bằng:</p>
-						<button className={"rounded-lg border-1 border-black p-2"} onClick={() => login()}>
+						<button className={"rounded-lg border-1 border-black p-2"} onClick={() => googleLogin()}>
 							<LogosGoogleIcon width={35} height={35} />
 						</button>
 						<button className={"rounded-lg border-1 border-black p-1"}>
-							<GgFacebook width={43} height={43} color={"#2959A7"} />
+							<FacebookLogin
+								appId={"1371816417281846"}
+								onSuccess={(response) => {
+									console.log("Login Success!", response);
+								}}
+								dialogParams={{
+									state: "facebookdirect",
+									response_type: "code",
+									redirect_uri: "https://www.facebook.com/connect/login_success.html",
+								}}
+								onFail={(error) => {
+									console.log("Login Failed!", error);
+								}}
+								render={({ onClick }) => <GgFacebook onClick={onClick} width={43} height={43} color={"#2959A7"} />}
+							/>
 						</button>
 					</div>
 					<form id='login-form'>
