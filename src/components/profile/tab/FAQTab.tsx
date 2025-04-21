@@ -1,7 +1,27 @@
-export default function FAQTab() {
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion.tsx";
+import { faqValues } from "@/components/profile/props/faq.props.ts";
+
+const FAQTab = () => {
 	return (
-		<>
-			Refer friend
-		</>
+		<article>
+			<h1 className={"text-4xl font-bold"}>FAQ - Câu hỏi thường gặp</h1>
+			<Accordion type="single" collapsible>
+				{Object.keys(faqValues).map((key, index) => {
+						return (
+							<AccordionItem value={key}>
+								<AccordionTrigger className={'font-bold'}>{faqValues[index].title}</AccordionTrigger>
+								<AccordionContent>
+									{faqValues[index].content}
+								</AccordionContent>
+							</AccordionItem>
+						)
+					})}
+			</Accordion>
+
+		</article>
 	);
+};
+
+export default function FAQ() {
+	return <FAQTab />;
 }
