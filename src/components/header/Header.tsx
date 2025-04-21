@@ -12,7 +12,7 @@ import { SolarHeartBold } from "@/assets/images/icons/SolarHeartBold.tsx";
 import ShoppingBag from "@/components/cart/ShoppingBag.tsx";
 import { motion } from "motion/react";
 import { SolarArrowRightLinear } from "@/assets/images/icons/SolarArrowRightLinear";
-import useScrolled from "@/utils/use-scrolled.ts";
+import useScrolled from "@/utils/helper/use-scrolled.ts";
 import { useContext, useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator.tsx";
 import ShoppingBagItem from "@/components/cart/ShoppingBagItem.tsx";

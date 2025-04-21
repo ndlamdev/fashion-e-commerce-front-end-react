@@ -6,17 +6,24 @@
  *  User: lam-nguyen
  **/
 import { useContext, useState } from "react";
-import { useHorizontalScroll } from "@/utils/use-horizontal-scroll.ts";
+import { useHorizontalScroll } from "@/utils/helper/use-horizontal-scroll.ts";
 import InformationCustomer from "@/components/cart/InformationCustomer.tsx";
 import { CartContext } from "@/context/CartContext";
 import { dataVouchers } from "@/assets/data/vouchers.ts";
 import Voucher from "@/components/cart/Voucher";
 import { Separator } from "@/components/ui/separator.tsx";
-import { formatCurrency } from "@/utils/format-data.ts";
+import { formatCurrency } from "@/utils/helper/format-data.ts";
 import CartItem from "@/components/cart/CartItem.tsx";
 import dataCartItems from "@/assets/data/cart-items.ts";
 import { ArrowLeft } from "lucide-react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "@/components/ui/dialog";
 
 function CartPage() {
 	const [voucherRef, setVoucherRef] = useState<HTMLElement | null>(null);

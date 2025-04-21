@@ -6,6 +6,6 @@
  * User: lam-nguyen
  **/
 
-type DialogTypeEnum = "login" | "register" | "forgot-password" | "input-otp" | "new-password" | "none" | "register-with-google";
+type DialogTypeEnum = "login" | "register" | "forgot-password" | "input-otp" | "new-password" | "none" | "register-with-google" | "register-with-facebook";
 
 export default DialogTypeEnum;

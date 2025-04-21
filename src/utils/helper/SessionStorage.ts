@@ -6,7 +6,7 @@
  * User: lam-nguyen
  **/
 
-type KeySessionStorage = "EMAIL_FORGET_PASSWORD" | "EMAIL_REGISTER" | "TOKEN_RESET_PASSWORD";
+type KeySessionStorage = "EMAIL_FORGET_PASSWORD" | "EMAIL_REGISTER" | "TOKEN_RESET_PASSWORD" | "REGISTER_TOKEN_USING_GOOGLE" | "REGISTER_TOKEN_USING_FACEBOOK";
 
 const setValue = (key: KeySessionStorage, value: string) => {
 	sessionStorage.setItem(key, value);

@@ -10,45 +10,42 @@ import { KeyboardEvent, useContext, useEffect, useState } from "react";
 import { DialogAuthContext } from "@/context/DialogAuthContext.tsx";
 import InputAuthentication from "@/components/authentication/ui/InputAuthentication.tsx";
 import { SubmitHandler, useForm } from "react-hook-form";
-import RegisterWithGoogleRequest from "@/domain/resquest/registerWithGoogle.request.ts";
-import SessionStorage from "@/utils/helper/SessionStorage.ts";
 import authenticationService from "@/services/authentication.service.ts";
-import { ApiResponseError } from "@/domain/ApiResponseError.ts";
+import RegisterWithFacebookRequest from "@/domain/resquest/registerWithFacebook.request.ts";
 import ConfirmDialog from "@/components/authentication/ConfirmDialog.tsx";
+import SessionStorage from "@/utils/helper/SessionStorage.ts";
 import OtherLogin from "@/components/authentication/ui/OtherLogin.tsx";
 import InputPassword from "@/components/authentication/ui/InputPassword.tsx";
 
-function RegisterWithGoogleDialog() {
+function RegisterWithFacebookDialog() {
 	const { showDialog, dialog } = useContext(DialogAuthContext);
 	const [localDialog, setLocalDialog] = useState<"dialog" | "none" | "confirm">("none");
 	const {
 		register,
 		handleSubmit,
 		getValues,
+		reset,
 		trigger,
 		formState: { errors },
-	} = useForm<RegisterWithGoogleRequest>({
+	} = useForm<RegisterWithFacebookRequest>({
 		resetOptions: {
 			keepValues: false,
 		},
 	});
 
 	useEffect(() => {
-		if (dialog === "register-with-google") setLocalDialog("dialog");
+		if (dialog === "register-with-facebook") setLocalDialog("dialog");
 	}, [dialog]);
 
-	const registerHandler: SubmitHandler<RegisterWithGoogleRequest> = (data: RegisterWithGoogleRequest) => {
+	const registerHandler: SubmitHandler<RegisterWithFacebookRequest> = (data: RegisterWithFacebookRequest) => {
 		authenticationService
-			.registerWithGoogle(data)
+			.registerWithFacebook(data)
 			.then(() => {
-				setLocalDialog("dialog");
-				showDialog("none");
+				showDialog("login");
+				reset();
 			})
-			.catch((error: ApiResponseError<string>) => {
-				if (error.code == 90000012) {
-					setLocalDialog("dialog");
-					showDialog("none");
-				}
+			.catch(() => {
+				showDialog("login");
 			});
 	};
 
@@ -66,7 +63,6 @@ function RegisterWithGoogleDialog() {
 			<Dialog open={localDialog === "dialog"}>
 				<DialogContent
 					className={"sm:max-w-[525px]"}
-					aria-describedby={""}
 					classIcon={"bg-black p-4 border-2 border-gray-200 text-white !rounded-full top-[-20px] right-[-20px]"}
 					onClosed={() => setLocalDialog("confirm")}>
 					<DialogHeader>
@@ -122,7 +118,7 @@ function RegisterWithGoogleDialog() {
 					setLocalDialog("dialog");
 				}}
 				onClickSubmit={() => {
-					SessionStorage.deleteValue("REGISTER_TOKEN_USING_GOOGLE");
+					SessionStorage.deleteValue("REGISTER_TOKEN_USING_FACEBOOK");
 					setLocalDialog("none");
 					showDialog("none");
 				}}
@@ -131,4 +127,4 @@ function RegisterWithGoogleDialog() {
 	);
 }
 
-export default RegisterWithGoogleDialog;
+export default RegisterWithFacebookDialog;

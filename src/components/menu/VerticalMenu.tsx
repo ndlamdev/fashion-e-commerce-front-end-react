@@ -13,7 +13,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Card, CardContent } from "@/components/ui/card.tsx";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion.tsx";
-import useScrolled from "@/utils/use-scrolled.ts";
+import useScrolled from "@/utils/helper/use-scrolled.ts";
 import VerticalMenuProps from "@/components/menu/props/vertical-menu.prop.ts";
 import { DialogAuthContext } from "@/context/DialogAuthContext.tsx";
 

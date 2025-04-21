@@ -7,7 +7,7 @@
  **/
 
 import { createContext } from "react";
-import DialogTypeEnum from "@/utils/dialog.type.enum.ts";
+import DialogTypeEnum from "@/utils/enums/dialog.type.enum.ts";
 import EventInputOTPDialog from "@/components/authentication/props/InputOTPDialog.props.ts";
 
 export const DialogAuthContext = createContext<DialogAuthContextProps>({

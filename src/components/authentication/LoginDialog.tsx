@@ -8,17 +8,14 @@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
 import { KeyboardEvent, useCallback, useContext, useEffect } from "react";
 import { DialogAuthContext } from "@/context/DialogAuthContext.tsx";
-import { LogosGoogleIcon } from "@/assets/images/icons/LogosGoogleIcon.tsx";
-import { GgFacebook } from "@/assets/images/icons/GgFacebook.tsx";
 import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentication.tsx";
 import InputAuthentication from "@/components/authentication/ui/InputAuthentication.tsx";
 import LoginRequest from "@/domain/resquest/login.request.ts";
 import { SubmitHandler, useForm } from "react-hook-form";
 import authenticationService from "@/services/authentication.service.ts";
 import { useNavigate } from "react-router";
-import { useGoogleLogin } from "@react-oauth/google";
 import { useLoginWithGoogleMutation } from "@/redux/query/authentication.query.ts";
-import FacebookLogin from "@greatsumini/react-facebook-login";
+import OtherLogin from "@/components/authentication/ui/OtherLogin.tsx";
 
 function LoginDialog() {
 	const [, loginWithGoogleApiResult] = useLoginWithGoogleMutation();
@@ -66,16 +63,6 @@ function LoginDialog() {
 		[getValues, onSubmit, trigger],
 	);
 
-	const googleLogin = useGoogleLogin({
-		onSuccess: async (tokenResponse) => {
-			await authenticationService.loginWithGoogle({ "auth-code": tokenResponse.code }).then(() => {
-				showDialog("none");
-			});
-		},
-		onError: (errorResponse) => console.log(errorResponse),
-		flow: "auth-code",
-	});
-
 	return (
 		<Dialog open={dialog === "login"} onOpenChange={(value) => !value && showDialog("none")}>
 			<DialogContent className={"sm:max-w-[525px]"} classIcon={"bg-black p-4 border-2 border-gray-200 text-white !rounded-full top-[-20px] right-[-20px]"}>
@@ -95,29 +82,7 @@ function LoginDialog() {
 					</div>
 				</DialogHeader>
 				<div className='grid gap-4 pt-4'>
-					<div className={"flex items-center gap-2"}>
-						<p className={"font-bold text-gray-500"}>Đăng nhập bằng:</p>
-						<button className={"rounded-lg border-1 border-black p-2"} onClick={() => googleLogin()}>
-							<LogosGoogleIcon width={35} height={35} />
-						</button>
-						<button className={"rounded-lg border-1 border-black p-1"}>
-							<FacebookLogin
-								appId={"1371816417281846"}
-								onSuccess={(response) => {
-									console.log("Login Success!", response);
-								}}
-								dialogParams={{
-									state: "facebookdirect",
-									response_type: "code",
-									redirect_uri: "https://www.facebook.com/connect/login_success.html",
-								}}
-								onFail={(error) => {
-									console.log("Login Failed!", error);
-								}}
-								render={({ onClick }) => <GgFacebook onClick={onClick} width={43} height={43} color={"#2959A7"} />}
-							/>
-						</button>
-					</div>
+					<OtherLogin />
 					<form id='login-form'>
 						<div className='tw-my-4 mb-5'>
 							<span className='tw-text-base tw-text-cm-gray text-gray-500'>Hoặc đăng nhập tài khoản:</span>

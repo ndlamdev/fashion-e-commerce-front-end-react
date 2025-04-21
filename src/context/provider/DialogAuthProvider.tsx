@@ -6,7 +6,7 @@
  *  User: kimin
  **/
 import { CallbackDialogProps, DialogAuthContext } from "@/context/DialogAuthContext.tsx";
-import DialogTypeEnum from "@/utils/dialog.type.enum.ts";
+import DialogTypeEnum from "@/utils/enums/dialog.type.enum.ts";
 import { ReactNode, useState } from "react";
 import { Dialog } from "@/components/ui/dialog.tsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -16,6 +16,7 @@ import RegisterWithGoogleDialog from "@/components/authentication/RegisterWithGo
 import ForgotPasswordDialog from "@/components/authentication/ForgotPasswordDialog.tsx";
 import NewPasswordDialog from "@/components/authentication/NewPasswordDialog.tsx";
 import InputOTPDialog from "@/components/authentication/InputOTPDialog.tsx";
+import RegisterWithFacebookDialog from "@/components/authentication/RegisterWithFacebookDialog";
 
 function DialogAuthProvider({ children }: { children: ReactNode }) {
 	const [dialog, setDialog] = useState<DialogTypeEnum>("none");
@@ -37,6 +38,8 @@ function DialogAuthProvider({ children }: { children: ReactNode }) {
 				return <InputOTPDialog />;
 			case "new-password":
 				return <NewPasswordDialog />;
+			case "register-with-facebook":
+				return <RegisterWithFacebookDialog />;
 		}
 	};
 

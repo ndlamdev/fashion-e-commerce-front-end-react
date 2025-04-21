@@ -12,6 +12,7 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp
 import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentication.tsx";
 import { useForm } from "react-hook-form";
 import OTPRequest from "@/domain/resquest/otp.request.ts";
+import ConfirmDialog from "@/components/authentication/ConfirmDialog.tsx";
 
 function InputOTPDialog() {
 	const { showDialog, dialog, callBacksDialog } = useContext(DialogAuthContext);
@@ -83,32 +84,17 @@ function InputOTPDialog() {
 					</div>
 				</DialogContent>
 			</Dialog>
-			<Dialog open={openDialog === "show-confirm"} onOpenChange={(value) => !value && showDialog("none")}>
-				<DialogContent
-					className={"sm:max-w-[525px]"}
-					classIcon={"bg-black p-4 border-2 border-gray-200 text-white !rounded-full top-[-20px] right-[-20px] !hidden"}>
-					<DialogHeader>
-						<DialogTitle className={"text-4xl"}>Bạn có chắc muốn thoát khỏi bước xác không</DialogTitle>
-					</DialogHeader>
-					<div className={"flex gap-2"}>
-						<ButtonAuthentication
-							className={"border-1 border-black bg-white !text-black"}
-							onClick={() => {
-								setOpenDialog("show-dialog");
-							}}>
-							Hủy
-						</ButtonAuthentication>
-						<ButtonAuthentication
-							className={"bg-green-700 hover:bg-green-200"}
-							onClick={() => {
-								setOpenDialog("none");
-								showDialog("none");
-							}}>
-							Xác nhận
-						</ButtonAuthentication>
-					</div>
-				</DialogContent>
-			</Dialog>
+			<ConfirmDialog
+				open={openDialog === "show-confirm"}
+				onOpenChange={(value) => !value && showDialog("none")}
+				onClickCancel={() => {
+					setOpenDialog("show-dialog");
+				}}
+				onClickSubmit={() => {
+					setOpenDialog("none");
+					showDialog("none");
+				}}
+			/>
 		</>
 	);
 }

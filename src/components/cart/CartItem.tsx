@@ -8,7 +8,7 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select.tsx";
 import { TablerPlus } from "@/assets/images/icons/TablerPlus.tsx";
 import { TablerMinus } from "@/assets/images/icons/TablerMinus.tsx";
-import { formatCurrency } from "@/utils/format-data.ts";
+import { formatCurrency } from "@/utils/helper/format-data.ts";
 import { Fa6RegularTrashCan } from "@/assets/images/icons/Fa6RegularTrashCan.tsx";
 import CartItemProps from "@/components/cart/props/cart-item.prop.ts";
 

@@ -13,7 +13,9 @@ import InputAuthentication from "@/components/authentication/ui/InputAuthenticat
 import { SubmitHandler, useForm } from "react-hook-form";
 import EmailRequest from "@/domain/resquest/email.request.ts";
 import authenticationService from "@/services/authentication.service.ts";
-import SessionStorage from "@/utils/SessionStorage.ts";
+import SessionStorage from "@/utils/helper/SessionStorage.ts";
+import { AxiosError } from "axios";
+import AxiosErrorCustom from "@/domain/ApiResponseError.ts";
 
 function ForgotPasswordDialog() {
 	const { showDialog, dialog } = useContext(DialogAuthContext);
@@ -40,10 +42,20 @@ function ForgotPasswordDialog() {
 	}, []);
 
 	const onSubmit: SubmitHandler<EmailRequest> = (data) => {
-		authenticationService.resetPassword(data.email).then(() => {
-			showDialog("input-otp", { sendOtp: onVerifyHandler, resendOtp: onResendHandler });
-			reset();
-		});
+		authenticationService
+			.resetPassword(data.email)
+			.then(() => {
+				showDialog("input-otp", { sendOtp: onVerifyHandler, resendOtp: onResendHandler });
+				reset();
+			})
+			.catch((error) => {
+				if (!(error instanceof AxiosError)) return;
+
+				const err = error as AxiosErrorCustom<any>;
+				if (err.response == null || err.response.data.code !== 90006) return;
+				showDialog("input-otp", { sendOtp: onVerifyHandler, resendOtp: onResendHandler });
+				reset();
+			});
 	};
 
 	const enterKeyHandler = (event: KeyboardEvent<HTMLInputElement>) => {

@@ -10,6 +10,10 @@ import LoginRequest from "@/domain/resquest/login.request.ts";
 import LoginResponse from "@/domain/response/login.response.ts";
 import { ApiResponse } from "@/domain/ApiResponse.ts";
 import LoginWithGoogleRequest from "@/domain/resquest/loginWithGoogle.request.ts";
+import EmailResponse from "@/domain/response/email.response.ts";
+import RegisterWithGoogleRequest from "@/domain/resquest/registerWithGoogle.request.ts";
+import RegisterWithFacebookRequest from "@/domain/resquest/registerWithFacebook.request";
+import AccessTokenRequest from "@/domain/resquest/accesToken.request.ts";
 
 const baseQuery = fetchBaseQuery({ baseUrl: "http://localhost:8001/api/auth/v1/" });
 
@@ -31,6 +35,28 @@ export const authenticationApi = createApi({
 				method: "POST",
 				body: request,
 				credentials: "include",
+			}),
+		}),
+		registerWithGoogle: build.mutation<ApiResponse<EmailResponse>, RegisterWithGoogleRequest>({
+			query: (request) => ({
+				url: "/google/register",
+				method: "POST",
+				body: request,
+			}),
+		}),
+		loginWithFacebook: build.mutation<ApiResponse<LoginResponse>, AccessTokenRequest>({
+			query: (request) => ({
+				url: "/facebook/login",
+				method: "POST",
+				body: request,
+				credentials: "include",
+			}),
+		}),
+		registerWithFacebook: build.mutation<ApiResponse<EmailResponse>, RegisterWithFacebookRequest>({
+			query: (request) => ({
+				url: "/facebook/register",
+				method: "POST",
+				body: request,
 			}),
 		}),
 	}),

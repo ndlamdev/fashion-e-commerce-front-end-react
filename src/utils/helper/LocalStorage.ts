@@ -6,7 +6,7 @@
  * User: lam-nguyen
  **/
 
-type KeyLocalStorage = "ACCESS_TOKEN" | "USER" | "REGISTER_TOKEN";
+type KeyLocalStorage = "ACCESS_TOKEN" | "USER" | "REGISTER_TOKEN_USING_GOOGLE";
 
 const setValue = (key: KeyLocalStorage, value: string) => {
 	localStorage.setItem(key, value);

@@ -7,17 +7,15 @@
  **/
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import UserDto from "@/domain/dto/user.dto.ts";
-import LocalStorage from "@/utils/LocalStorage.ts";
+import LocalStorage from "@/utils/helper/LocalStorage.ts";
 
 type AuthSliceState = {
 	access_token: string | null;
-	register_token: string | null;
 	user: UserDto | null;
 };
 
 const initialState: AuthSliceState = {
 	access_token: LocalStorage.getValue("ACCESS_TOKEN"),
-	register_token: LocalStorage.getValue("REGISTER_TOKEN"),
 	user: LocalStorage.getObjectValue<UserDto>("USER"),
 };
 
@@ -33,9 +31,6 @@ export const authSlice = createSlice({
 		logout: (state: AuthSliceState) => {
 			state.user = null;
 			state.access_token = null;
-		},
-		registerWithGoogle: (state: AuthSliceState, action: PayloadAction<string>) => {
-			state.access_token = action.payload;
 		},
 	},
 });
