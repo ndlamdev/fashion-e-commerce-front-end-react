@@ -17,16 +17,17 @@ import BoothPage from "@/pages/BoothPage.tsx";
 import SheetAccount from "@/components/header/SheetAccount.tsx";
 import { Sheet } from "@/components/ui/sheet.tsx";
 import ProfilePage from "@/pages/ProfilePage.tsx";
-import Info from "@/components/profile/InfoTab.tsx";
-import ReferFriend from "@/components/profile/ReferFriendTab.tsx";
-import HistoryOrderTab from "@/components/profile/ReviewTab.tsx";
-import ReviewTab from "@/components/profile/ReviewTab.tsx";
-import VoucherWalletTab from "@/components/profile/VoucherWalletTab.tsx";
-import HistoryPointTab from "@/components/profile/HistoryPointTab.tsx";
-import AddressTab from "@/components/profile/AddressTab.tsx";
-import FAQTab from "@/components/profile/FAQTab.tsx";
-import EditInfoProfileDialog from "@/components/profile/EditInfoProfileDialog.tsx";
-import ResetPasswordDialog from "@/components/profile/ResetPasswordDialog.tsx";
+import Info from "@/components/profile/tab/InfoTab.tsx";
+import ReferFriend from "@/components/profile/tab/ReferFriendTab.tsx";
+import Review from "@/components/profile/tab/ReviewTab.tsx";
+import VoucherWallet from "@/components/profile/tab/VoucherWalletTab.tsx";
+import FAQTab from "@/components/profile/tab/FAQTab.tsx";
+import EditInfoProfileDialog from "@/components/profile/dialog/EditInfoProfileDialog.tsx";
+import ResetPasswordDialog from "@/components/profile/dialog/ResetPasswordDialog.tsx";
+import HistoryOrder from "@/components/profile/tab/HistoryOrderTab.tsx";
+import HistoryPoint from "@/components/profile/tab/HistoryPointTab.tsx";
+import Address from "@/components/profile/tab/AddressTab.tsx";
+import SaveAddressDialog from "@/components/profile/dialog/SaveAddressDialog.tsx";
 
 function App() {
 	const [dialog, setDialog] = useState<DialogTypeEnum>("none");
@@ -55,11 +56,11 @@ function App() {
 							<Route path={"profile"} element={<ProfilePage />} >
 								<Route path={'info'} index element={<Info />} />
 								<Route path={'refer-friend'} element={<ReferFriend />} />
-								<Route path={'orders'} element={<HistoryOrderTab />} />
-								<Route path={'voucher-wallet'} element={<VoucherWalletTab />} />
-								<Route path={'points'} element={<HistoryPointTab />} />
-								<Route path={'addresses'} element={<AddressTab />} />
-								<Route path={'reviews'} element={<ReviewTab />} />
+								<Route path={'orders'} element={<HistoryOrder />} />
+								<Route path={'voucher-wallet'} element={<VoucherWallet />} />
+								<Route path={'points'} element={<HistoryPoint />} />
+								<Route path={'addresses'} element={<Address />} />
+								<Route path={'reviews'} element={<Review />} />
 								<Route path={'faq'} element={<FAQTab />} />
 							</Route>
 						</Route>
@@ -76,6 +77,7 @@ function App() {
 						<InputOTPDialog open={dialog === "input-otp"} sendOtp={callbackDialog?.sendOtp} resendOtp={callbackDialog?.resendOtp} />
 						<EditInfoProfileDialog open={dialog === "edit-info-profile"} />
 						<ResetPasswordDialog open={dialog === "reset-password"} />
+						<SaveAddressDialog open={dialog === "save-address"} />
 					</>
 					<>
 						<SheetAccount />

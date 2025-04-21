@@ -20,8 +20,8 @@ const tabNavValues: Record<number, TabNavProps> = {
 	0: { title: "Thông tin tài khoản", to: "info", iconLeft: <SquareUserRoundIcon className={'hover:text-white'}/> },
 	1: { title: "Giới thiệu bạn bè", to: "refer-friend", iconLeft: <UserRoundPlusIcon className={'hover:text-white'}/> },
 	2: { title: "Lịch sử đơn hàng", to: "orders", iconLeft: <BaggageClaimIcon className={'hover:text-white'}/> },
-	3: { title: "Lịch sử Point", to: "voucher-wallet", iconLeft: <ReceiptIcon className={'hover:text-white'}/> },
-	4: { title: "Ví voucher", to: "points", iconLeft: <TicketPercentIcon className={'hover:text-white'}/> },
+	3: { title: "Lịch sử Point", to: "points", iconLeft: <ReceiptIcon className={'hover:text-white'}/> },
+	4: { title: "Ví voucher", to: "voucher-wallet", iconLeft: <TicketPercentIcon className={'hover:text-white'}/>},
 	5: { title: "Sổ địa chỉ", to: "addresses", iconLeft: <MapPinHouseIcon className={'hover:text-white'}/> },
 	6: { title: "Đánh giá và phản hồi", to: "reviews", iconLeft: <StarIcon className={'hover:text-white'}/> },
 	7: { title: "Chính sách và câu hỏi thường gặp", to: "faq", iconLeft: <MessageCircleQuestionIcon className={'hover:text-white'}/> },
@@ -53,7 +53,7 @@ export default function ProfilePage() {
 							}
 						</div>
 					</nav>
-					<aside className={'w-3/4'}>
+					<aside className={'w-3/4 rounded-md bg-white p-10 shadow-lg'}>
 						<Outlet/>
 					</aside>
 				</section>

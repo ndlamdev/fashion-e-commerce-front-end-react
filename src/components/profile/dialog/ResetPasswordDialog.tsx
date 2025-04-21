@@ -3,7 +3,7 @@ import { GlobalContext } from "@/context/GlobalContext.tsx";
 import { useForm } from "react-hook-form";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { ResetPasswordProps } from "@/components/profile/props/resetPassword.props.ts";
 import { ResetPasswordRequest } from "@/domain/resquest/resetPassword.request.ts";
