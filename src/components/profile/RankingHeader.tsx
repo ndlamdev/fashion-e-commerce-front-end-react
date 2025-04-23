@@ -20,7 +20,7 @@ export default function RankingHeader(props: RankingHeaderProps) {
 							hạng</p>
 						{props.nextLevel && <LevelClub level={props.nextLevel} />}
 					</div>
-					<div className="relative ">
+					<div className="relative mx-3">
 						<Progress className={" my-1"} value={(props.levelClub + 2	) * (100/(levelClub.length - 1))} />
 						{levelClub.map((item: LevelType, index: number) => {
 							return (

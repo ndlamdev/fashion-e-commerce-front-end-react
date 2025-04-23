@@ -7,11 +7,11 @@ import { GlobalContext } from "@/context/GlobalContext.tsx";
 const InfoTab = memo((props: InfoTabProps) => {
 	const {showDialog} = useContext(GlobalContext)
 	return (
-		<div className={"space-y-10"}>
-			<h1 className={"text-4xl font-bold"}>Thông tin tài khoản</h1>
-			<div className="grid grid-cols-2 place-items-start gap-4 text-neutral-500 text-xl">
+		<div className={"space-y-10 max-md:space-y-5"}>
+			<h1 className={"text-4xl max-md:text-xl font-bold"}>Thông tin tài khoản</h1>
+			<div className="grid grid-cols-2 place-items-start gap-4 text-neutral-500 text-sm xl:text-xl md:text-lg">
 				<span>Họ và tên</span>{props.fullName ? <span className={'text-black'}>{props.fullName}</span> :
-				<span className={"text-neutral-500 italic text-sm"}>Chưa cập nhật</span>}
+				<span className={"text-neutral-500 italic text-sm "}>Chưa cập nhật</span>}
 				<span>Số điện thoại</span>{props.phone ? <span className={'text-black'}>{props.phone}</span> :
 				<span className={"text-neutral-500 italic text-sm"}>Chưa cập nhật</span>}
 				<span>Giới tính</span> {props.gender ? <span className={'text-black'}>{props.gender}</span> :
@@ -21,18 +21,18 @@ const InfoTab = memo((props: InfoTabProps) => {
 				<span>Chiều cao</span>{props.height ? <span className={'text-black'}>{props.height}</span> :
 				<span className={"text-neutral-500 italic text-sm"}>Chưa cập nhật</span>}
 				<span>Cân nặng</span>{props.weight ? <span className={'text-black'}>{props.weight}</span> :
-				<span className={"text-neutral-500 italic text-sm"}>Chưa cập nhật</span>}
+				<span className={"text-neutral-500 italic text-sm "}>Chưa cập nhật</span>}
 
-				<Button onClick={() => showDialog('edit-info-profile')} className={'text-xl bg-white text-black font-bold p-5 border border-black hover:border-neutral-500 hover:text-white hover:bg-black cursor-pointer rounded-full'}>Cập nhật</Button>
+				<Button onClick={() => showDialog('edit-info-profile')} className={'text-xl max-md:text-sm bg-white text-black font-bold p-5 border border-black hover:border-neutral-500 hover:text-white hover:bg-black cursor-pointer rounded-full'}>Cập nhật</Button>
 			</div>
 
-			<h1 className={"text-4xl font-bold"}>Thông tin đăng nhập</h1>
-			<div className="grid grid-cols-2 place-items-start gap-4 even:text-neutral-500 text-xl">
+			<h1 className={"text-4xl font-bold max-md:text-xl"}>Thông tin đăng nhập</h1>
+			<div className="grid grid-cols-2 place-items-start gap-4 even:text-neutral-500 text-sm xl:text-xl md:text-lg">
 				<span>Email</span>{props.email ? <span className={'text-black'}>{props.email}</span> :
 				<span className={"text-neutral-500 italic text-sm"}>Chưa cập nhật</span>}
 				<span>Mật khẩu</span> <span>******************</span>
 
-				<Button onClick={() => showDialog('reset-password')} className={'text-xl bg-white text-black font-bold p-5 border border-black hover:border-neutral-500 hover:text-white hover:bg-black cursor-pointer rounded-full'}>Cập nhật</Button>
+				<Button onClick={() => showDialog('reset-password')} className={'text-xl max-md:text-sm bg-white text-black font-bold p-5 border border-black hover:border-neutral-500 hover:text-white hover:bg-black cursor-pointer rounded-full'}>Cập nhật</Button>
 			</div>
 		</div>
 	);

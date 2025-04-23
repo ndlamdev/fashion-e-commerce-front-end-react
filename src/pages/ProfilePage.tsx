@@ -43,7 +43,7 @@ export default function ProfilePage() {
 					<RankingHeader fullName={'LamHongPhong'} levelClub={0} nextLevel={1} resetRankingDate={new Date()} nextResetRankingDate={new Date()}/>
 				</section>
 				<section className={'my-9 flex space-x-20'}>
-					<nav className={'w-1/4'}>
+					<nav className={'w-1/4 max-md:w-full'}>
 						<Sheet >
 							<div className="space-y-2" >
 								{
@@ -53,14 +53,14 @@ export default function ProfilePage() {
 												<TabNav onClick={() => handleTabClick(key)} style={{
 													backgroundColor: activeTab === key ? 'black' : '',
 													color: activeTab === key ? 'white' : '',
-												}} tailwindStyle={`hover:bg-black hover:text-white`} iconLeft={tabNavValues[key].iconLeft} title={tabNavValues[key].title} to={tabNavValues[key].to} iconRight={<ArrowRightIcon className={' hover:text-white'} />}/>
+												}} tailwindStyle={`hover:bg-black hover:text-white `} iconLeft={tabNavValues[key].iconLeft} title={tabNavValues[key].title} to={tabNavValues[key].to} iconRight={<ArrowRightIcon className={' hover:text-white'} />}/>
 											</SheetTrigger>
 										)
 									})
 								}
 							</div>
 							{!isDesktop &&
-								<SheetContent className={'!w-screen !max-w-none rounded-none bg-white p-10'} iconRight={<MoveLeftIcon className={'size-6 text-black'} />}>
+								<SheetContent className={'!w-screen !max-w-none rounded-none bg-white p-10'} classNameClose="left-4" iconRight={<MoveLeftIcon className={'size-8 text-black'} />}>
 									<ScrollArea className={'h-screen overflow-auto scrollbar-none'}>
 										<Outlet/>
 									</ScrollArea>

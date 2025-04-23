@@ -1,9 +1,9 @@
 import * as React from "react";
+import { ReactNode } from "react";
 import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { XIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { ReactNode } from "react";
 
 function Sheet({ ...props }: React.ComponentProps<typeof SheetPrimitive.Root>) {
 	return <SheetPrimitive.Root data-slot='sheet' {...props} />;
@@ -38,11 +38,13 @@ function SheetContent({
 	className,
 	children,
 	iconRight,
+	classNameClose,
 	side = "right",
 	...props
 }: React.ComponentProps<typeof SheetPrimitive.Content> & {
 	side?: "top" | "right" | "bottom" | "left";
-	iconRight?: ReactNode
+	iconRight?: ReactNode,
+	classNameClose?: string,
 }) {
 	return (
 		<SheetPortal>
@@ -60,7 +62,7 @@ function SheetContent({
 				)}
 				{...props}>
 				{children}
-				<SheetPrimitive.Close className='ring-offset-background focus:ring-ring data-[state=open]:bg-secondary absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none'>
+				<SheetPrimitive.Close className={cn('ring-offset-background focus:ring-ring data-[state=open]:bg-secondary absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none', classNameClose)}>
 					{iconRight ? iconRight : <XIcon className='size-4'/>}
 					<span className='sr-only'>Close</span>
 				</SheetPrimitive.Close>

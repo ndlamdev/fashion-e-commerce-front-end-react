@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { GlobalContext } from "@/context/GlobalContext.tsx";
 import { useForm } from "react-hook-form";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
@@ -19,10 +19,11 @@ const ResetPasswordDialog = ({ open }: ResetPasswordProps) => {
 	};
 	return (
 		<Dialog open={open} onOpenChange={(value) => !value && showDialog("none")}>
-			<DialogContent classIcon={'bg-black text-white p-5 cursor-pointer !rounded-full -translate-y-10 translate-x-10 opacity-100 '} className={"text-gray-500 sm:max-w-200 z-51"}>
-				<ScrollArea className={"h-80 p-5"}>
+			<DialogContent classIcon={'bg-black text-white p-5 max-md:p-3 cursor-pointer !rounded-full -translate-y-10 translate-x-10 opacity-100 '} className={"text-gray-500 max-w-2/3 max-md:p-0 sm:max-w-150 z-51"}>
+				<ScrollArea className={"h-80 p-5 max-md:p-2 overflow-auto overscroll-none"}>
 					<DialogHeader>
-						<DialogTitle className={'text-black text-4xl text-center'}>Thay đổi mật khẩu</DialogTitle>
+						<DialogTitle className={'max-md:text-2xl text-black text-4xl text-center'}>Thay đổi mật khẩu</DialogTitle>
+						<DialogDescription/>
 					</DialogHeader>
 					<form onSubmit={handleSubmit(onSubmit)} className={'space-y-3 p-2'}>
 						<div className="">
