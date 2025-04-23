@@ -6,7 +6,7 @@
  *  User: lam-nguyen
  **/
 
-import { formatDate } from "@/utils/format-data.ts";
+import { formatDate } from "@/utils/helper/format-data.ts";
 import { SheetTrigger } from "@/components/ui/sheet.tsx";
 import VoucherProps from "@/components/cart/props/voucher.prop.ts";
 

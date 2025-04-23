@@ -7,18 +7,16 @@
  **/
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
 import { KeyboardEvent, useCallback, useContext } from "react";
-import { GlobalContext } from "@/context/GlobalContext.tsx";
-import { LogosGoogleIcon } from "@/assets/images/icons/LogosGoogleIcon.tsx";
-import { GgFacebook } from "@/assets/images/icons/GgFacebook.tsx";
-import RegisterDialogProps from "@/components/authentication/props/registerDialog.props.ts";
-import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentication.tsx";
+import { DialogAuthContext } from "@/context/DialogAuthContext.tsx";
 import InputAuthentication from "@/components/authentication/ui/InputAuthentication.tsx";
 import { SubmitHandler, useForm } from "react-hook-form";
 import RegisterRequest from "@/domain/resquest/register.request.ts";
 import authenticationService from "@/services/authentication.service.ts";
+import OtherLogin from "@/components/authentication/ui/OtherLogin.tsx";
+import InputPassword from "@/components/authentication/ui/InputPassword.tsx";
 
-function RegisterDialog({ open }: RegisterDialogProps) {
-	const { showDialog } = useContext(GlobalContext);
+function RegisterDialog() {
+	const { showDialog, dialog } = useContext(DialogAuthContext);
 	const {
 		register,
 		handleSubmit,
@@ -65,7 +63,7 @@ function RegisterDialog({ open }: RegisterDialogProps) {
 	};
 
 	return (
-		<Dialog open={open} onOpenChange={(value) => !value && showDialog("none")}>
+		<Dialog open={dialog === "register"} onOpenChange={(value) => !value && showDialog("none")}>
 			<DialogContent className={"sm:max-w-[525px]"} classIcon={"bg-black p-4 border-2 border-gray-200 text-white !rounded-full top-[-20px] right-[-20px]"}>
 				<DialogHeader>
 					<DialogTitle className={"text-4xl"}>Đăng ký ngay</DialogTitle>
@@ -83,15 +81,7 @@ function RegisterDialog({ open }: RegisterDialogProps) {
 					</div>
 				</DialogHeader>
 				<div className={"scroll-show grid gap-4 overflow-y-scroll pt-4 sm:max-h-[350px]"}>
-					<div className={"flex items-center gap-2"}>
-						<p className={"font-bold text-gray-500"}>Đăng nhập bằng:</p>
-						<button className={"rounded-lg border-1 border-black p-2"}>
-							<LogosGoogleIcon width={35} height={35} />
-						</button>
-						<button className={"rounded-lg border-1 border-black p-1"}>
-							<GgFacebook width={43} height={43} color={"#2959A7"} />
-						</button>
-					</div>
+					<OtherLogin />
 					<form id='login-form'>
 						<div className='tw-my-4 mb-5'>
 							<span className='tw-text-base tw-text-cm-gray text-gray-500'>Hoặc đăng ký tài khoản:</span>
@@ -120,48 +110,7 @@ function RegisterDialog({ open }: RegisterDialogProps) {
 								})}
 							/>
 						</div>
-						<div className={"flex flex-col gap-3"}>
-							<InputAuthentication
-								type={"email"}
-								placeholder={"Email của bạn"}
-								onKeyDown={enterKeyHandler}
-								error={errors.email?.message}
-								{...register("email", {
-									required: "Vui lòng nhập email hợp lệ",
-									pattern: {
-										value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-										message: "Vui lòng nhập email hợp lệ",
-									},
-								})}
-							/>
-							<InputAuthentication
-								type='password'
-								placeholder='Mật khẩu'
-								onKeyDown={enterKeyHandler}
-								error={errors.password?.message}
-								{...register("password", {
-									required: "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số, ký tự đặc biệt",
-									pattern: {
-										value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-										message: "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số, ký tự đặc biệt",
-									},
-								})}
-							/>
-							<InputAuthentication
-								type='password'
-								placeholder='Nhập lại mật khẩu'
-								onKeyDown={enterKeyHandler}
-								error={errors["confirm-password"]?.message}
-								{...register("confirm-password", {
-									required: "Vui lòng nhập lại mật khẩu",
-									validate: (value, formValues) => {
-										if (value == formValues.password) return undefined;
-										return "Mật khẩu nhập lại không chính xác";
-									},
-								})}
-							/>
-							<ButtonAuthentication onClick={handleSubmit(registerHandler)}>Đăng ký</ButtonAuthentication>
-						</div>
+						<InputPassword errors={errors} register={register} enterKeyHandler={enterKeyHandler} onClick={handleSubmit(registerHandler)} />
 						<div className='auth-actions mt-2 flex w-full text-blue-800'>
 							<a href='#' className='!tw-text-base !tw-text-cm-blue' onClick={() => showDialog("login")}>
 								Đăng nhập

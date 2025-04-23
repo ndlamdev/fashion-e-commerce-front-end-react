@@ -13,14 +13,14 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Card, CardContent } from "@/components/ui/card.tsx";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion.tsx";
-import useScrolled from "@/utils/use-scrolled.ts";
+import useScrolled from "@/utils/helper/use-scrolled.ts";
 import VerticalMenuProps from "@/components/menu/props/vertical-menu.prop.ts";
-import { GlobalContext } from "@/context/GlobalContext.tsx";
+import { DialogAuthContext } from "@/context/DialogAuthContext.tsx";
 
 function VerticalMenu({ showMenu, onHidden, onAnimationComplete, onExitComplete }: VerticalMenuProps) {
 	const [hiddenMenu, setHiddenMenu] = useState<boolean>(true);
 	const [, scrollY] = useScrolled();
-	const { showDialog } = useContext(GlobalContext);
+	const { showDialog } = useContext(DialogAuthContext);
 
 	useEffect(() => {
 		setHiddenMenu(!showMenu);

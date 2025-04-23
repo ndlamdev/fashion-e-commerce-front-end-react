@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ProductCardProp from "@/components/card-product/props/productCard.prop.ts";
 import { Star } from "lucide-react";
 import { useNavigate } from "react-router";
-import { formatCurrency } from "@/utils/format-data.ts";
+import { formatCurrency } from "@/utils/helper/format-data.ts";
 import { cn } from "@/lib/utils.ts";
 
 export default function CardProduct(props: ProductCardProp) {

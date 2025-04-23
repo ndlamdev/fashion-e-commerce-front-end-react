@@ -51,7 +51,7 @@ import { SameRadioGroup, SameRadioGroupItem } from "@/components/radio-group/Sam
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { NavLink, useParams } from "react-router";
-import { formatCurrency } from "@/utils/format-data.ts";
+import { formatCurrency } from "@/utils/helper/format-data.ts";
 import { getMaxSize, getMinSize, getSizeSuggestion } from "@/utils/sizeModelManage.ts";
 import { ProductModelType, SizeName } from "@/types/product/productModels.type.ts";
 

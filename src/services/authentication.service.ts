@@ -13,15 +13,22 @@ import OtpRequest from "@/domain/resquest/otp.request.ts";
 import EmailRequest from "@/domain/resquest/email.request.ts";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
-import AxiosErrorCustom from "@/domain/ApiResponseError.ts";
-import SessionStorage from "@/utils/SessionStorage.ts";
+import AxiosErrorCustom, { ApiResponseError } from "@/domain/ApiResponseError.ts";
+import SessionStorage from "@/utils/helper/SessionStorage.ts";
 import TokenResponse from "@/domain/response/token.response.ts";
 import NewPasswordRequest from "@/domain/resquest/newPassword.request.ts";
 import LoginResponse from "@/domain/response/login.response.ts";
-import LocalStorage from "@/utils/LocalStorage.ts";
+import LocalStorage from "@/utils/helper/LocalStorage.ts";
 import LoginRequest from "@/domain/resquest/login.request.ts";
+import LoginWithGoogleRequest from "@/domain/resquest/loginWithGoogle.request.ts";
+import { authenticationApi } from "@/redux/query/authentication.query";
+import { appDispatch } from "@/configs/store.config.ts";
+import { loginSuccess } from "@/redux/slice/auth.slice.ts";
+import RegisterWithGoogleRequest from "@/domain/resquest/registerWithGoogle.request.ts";
+import RegisterWithFacebookRequest from "@/domain/resquest/registerWithFacebook.request";
+import AccesTokenRequest from "@/domain/resquest/accesToken.request.ts";
 
-const PATH_BASE_URL = "/v1/auth";
+const PATH_BASE_URL = "/auth/v1";
 
 async function register(request: RegisterRequest): Promise<EmailResponse> {
 	return api
@@ -32,13 +39,17 @@ async function register(request: RegisterRequest): Promise<EmailResponse> {
 		})
 		.catch((error) => {
 			if (error instanceof AxiosError) {
-				const err = error as AxiosErrorCustom<any>;
-				const code = err.response?.data.code;
-				if (code == 90003) {
-					SessionStorage.setValue("EMAIL_REGISTER", request.email);
-					return { email: request.email } as EmailResponse;
+				if (!error.response) {
+					toast.error(error.message);
 				} else {
-					toast.error(err.response?.data.detail);
+					const err = error as AxiosErrorCustom<any>;
+					const code = err.response?.data.code;
+					if (code == 90013) {
+						SessionStorage.setValue("EMAIL_REGISTER", request.email);
+						return { email: request.email } as EmailResponse;
+					} else {
+						toast.error(err.response?.data.detail || err.response?.data?.error);
+					}
 				}
 			}
 			return Promise.reject(error);
@@ -90,7 +101,11 @@ async function login(data: LoginRequest) {
 	return await api
 		.post<any, AxiosResponseCustom<LoginResponse>, LoginRequest>(PATH_BASE_URL + "/login", data, { withCredentials: true })
 		.then((result) => {
-			LocalStorage.setValue("ACCESS_TOKEN", result.data.data["access-token"]);
+			const token = result.data.data["access-token"];
+			const user = result.data.data.user;
+			appDispatch(loginSuccess({ access_token: token, user: user }));
+			LocalStorage.setValue("ACCESS_TOKEN", token);
+			LocalStorage.setObjectValue("USER", user);
 			toast.message(result.data.message);
 		})
 		.catch((error) => {
@@ -127,13 +142,13 @@ async function greeting() {
 }
 
 async function resetPassword(email: string) {
+	SessionStorage.setValue("EMAIL_FORGET_PASSWORD", email);
 	return await api
 		.post<any, AxiosResponseCustom<void>, EmailRequest>(PATH_BASE_URL + "/reset-password", {
 			email: email,
 		})
 		.then((result) => {
 			toast.message(result.data.message);
-			SessionStorage.setValue("EMAIL_FORGET_PASSWORD", email);
 		})
 		.catch(async (error) => {
 			return showError(error);
@@ -147,7 +162,8 @@ async function verifyResetPassword(otp: string) {
 			email: SessionStorage.getValue("EMAIL_FORGET_PASSWORD") || "",
 		})
 		.then((result) => {
-			SessionStorage.setValue("EMAIL_FORGET_PASSWORD", result.data.data.token);
+			SessionStorage.deleteValue("EMAIL_FORGET_PASSWORD");
+			SessionStorage.setValue("TOKEN_RESET_PASSWORD", result.data.data.token);
 			toast.message(result.data.message);
 		})
 		.catch((error) => {
@@ -156,17 +172,18 @@ async function verifyResetPassword(otp: string) {
 }
 
 async function setNewPassword(request: Omit<NewPasswordRequest, "token">) {
-	const email = SessionStorage.getValue("EMAIL_FORGET_PASSWORD");
-	if (!email) {
-		return Promise.reject("Email noi found!");
+	const token = SessionStorage.getValue("TOKEN_RESET_PASSWORD");
+	if (!token) {
+		toast.message("Token noi found!");
+		return Promise.reject();
 	}
 	return await api
 		.post<any, AxiosResponseCustom<void>, NewPasswordRequest>(PATH_BASE_URL + "/reset-password/set-new-password", {
 			...request,
-			token: email,
+			token: token,
 		})
 		.then(async (result) => {
-			SessionStorage.deleteValue("EMAIL_FORGET_PASSWORD");
+			SessionStorage.deleteValue("TOKEN_RESET_PASSWORD");
 			toast.message(result.data.message);
 		})
 		.catch(async (error) => {
@@ -174,10 +191,81 @@ async function setNewPassword(request: Omit<NewPasswordRequest, "token">) {
 		});
 }
 
+const loginWithGoogle = async (data: LoginWithGoogleRequest) => {
+	return await appDispatch(authenticationApi.endpoints.loginWithGoogle.initiate(data, { track: false })).then(({ data, error }) => {
+		if (error) {
+			return Promise.reject(error);
+		}
+
+		const token = data.data["access-token"];
+		appDispatch(loginSuccess({ access_token: token, user: data.data.user }));
+		LocalStorage.setValue("ACCESS_TOKEN", token);
+		LocalStorage.setObjectValue("USER", data.data.user);
+	});
+};
+
+const registerWithGoogle = async (data: RegisterWithGoogleRequest) => {
+	const token = SessionStorage.getValue("REGISTER_TOKEN_USING_GOOGLE");
+	if (!token) {
+		toast.message("Don't have any token");
+		return Promise.reject({
+			code: 90000012,
+			error: "Don't have any token",
+			detail: "Don't have any token",
+		} as ApiResponseError<string>);
+	}
+	data["register-token"] = token;
+	return await appDispatch(authenticationApi.endpoints.registerWithGoogle.initiate(data, { track: false })).then(({ error }) => {
+		if (error) {
+			const response = (error as any).data as ApiResponseError<string>;
+			toast.message(response.detail);
+			return Promise.reject(error);
+		}
+		SessionStorage.deleteValue("REGISTER_TOKEN_USING_GOOGLE");
+		toast.message("Register success!");
+	});
+};
+
+const registerWithFacebook = async (data: RegisterWithFacebookRequest) => {
+	const token = SessionStorage.getValue("REGISTER_TOKEN_USING_FACEBOOK");
+	if (!token) {
+		toast.message("Don't have any token");
+		return Promise.reject({
+			code: 90000013,
+			error: "Don't have any token",
+			detail: "Don't have any token",
+		} as ApiResponseError<string>);
+	}
+	data["register-token"] = token;
+	return await appDispatch(authenticationApi.endpoints.registerWithFacebook.initiate(data, { track: false })).then(({ error }) => {
+		if (error) {
+			SessionStorage.deleteValue("REGISTER_TOKEN_USING_FACEBOOK");
+			const response = (error as any).data as ApiResponseError<string>;
+			toast.message(response.detail || response.error);
+			return Promise.reject(error);
+		}
+		SessionStorage.deleteValue("REGISTER_TOKEN_USING_FACEBOOK");
+		toast.message("Register success!");
+	});
+};
+
+const loginWithFacebook = async (data: AccesTokenRequest) => {
+	return await appDispatch(authenticationApi.endpoints.loginWithFacebook.initiate(data, { track: false })).then(({ data, error }) => {
+		if (error) {
+			return Promise.reject(error);
+		}
+
+		const token = data.data["access-token"];
+		appDispatch(loginSuccess({ access_token: token, user: data.data.user }));
+		LocalStorage.setValue("ACCESS_TOKEN", token);
+		LocalStorage.setObjectValue("USER", data.data.user);
+	});
+};
+
 const showError = (error: any) => {
 	if (error instanceof AxiosError) {
 		const err = error as AxiosErrorCustom<any>;
-		toast.error(err.response?.data.detail);
+		toast.error(err.response?.data.detail || err.response?.data.error);
 	} else {
 		toast.error(error);
 	}
@@ -199,6 +287,10 @@ const authenticationService = {
 	verifyResetPassword,
 	resetPassword,
 	greeting,
+	loginWithGoogle,
+	registerWithGoogle,
+	loginWithFacebook,
+	registerWithFacebook,
 };
 
 export default authenticationService;

@@ -9,11 +9,11 @@ import { SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, S
 import { Button } from "@/components/ui/button.tsx";
 import { useNavigate } from "react-router";
 import { useContext } from "react";
-import { GlobalContext } from "@/context/GlobalContext.tsx";
+import { SheetAccountContext } from "@/context/SheetAccountContext.tsx";
 
 function SheetAccount() {
 	const navigate = useNavigate();
-	const { sheetAccount } = useContext(GlobalContext);
+	const { setSheetAccount } = useContext(SheetAccountContext);
 
 	return (
 		<SheetContent className={"px-5"}>
@@ -25,7 +25,7 @@ function SheetAccount() {
 				<button
 					className={"px-4 py-2"}
 					onClick={() => {
-						sheetAccount(false);
+						setSheetAccount(false);
 						navigate("/test");
 					}}>
 					Change page test
