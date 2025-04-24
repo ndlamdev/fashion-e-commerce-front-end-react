@@ -11,7 +11,7 @@ import momo from "@/assets/images/icons/momo.png";
 import zaloPay from "@/assets/images/icons/zalo-pay.png";
 import { LaShippingFast } from "@/assets/images/icons/LaShippingFast";
 import vnPay from "@/assets/images/icons/vn-pay.png";
-import { formatCurrency } from "@/utils/format-data.ts";
+import { formatCurrency } from "@/utils/helper/format-data.ts";
 import { ArrowRight } from "lucide-react";
 
 function CartLayoutFooter() {

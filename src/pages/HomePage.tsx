@@ -11,7 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.t
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
-import { useHorizontalScroll } from "@/utils/use-horizontal-scroll.ts";
+import { useHorizontalScroll } from "@/utils/helper/use-horizontal-scroll.ts";
 
 function HomePage() {
 	const [ref, setRef] = useState<HTMLDivElement | null>(null);

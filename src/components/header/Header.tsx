@@ -12,24 +12,30 @@ import { SolarHeartBold } from "@/assets/images/icons/SolarHeartBold.tsx";
 import ShoppingBag from "@/components/cart/ShoppingBag.tsx";
 import { motion } from "motion/react";
 import { SolarArrowRightLinear } from "@/assets/images/icons/SolarArrowRightLinear";
-import useScrolled from "@/utils/use-scrolled.ts";
-import { useContext, useState } from "react";
+import useScrolled from "@/utils/helper/use-scrolled.ts";
+import { useContext, useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator.tsx";
 import ShoppingBagItem from "@/components/cart/ShoppingBagItem.tsx";
 import dataShoppingBagItems from "@/assets/data/shopping-bag-items.ts";
 import { useNavigate } from "react-router";
 import HeaderProps from "@/components/header/props/header-prop.ts";
-import { GlobalContext } from "@/context/GlobalContext.tsx";
+import { DialogAuthContext } from "@/context/DialogAuthContext.tsx";
 import { FaSolidUserAlt } from "@/assets/images/icons/FaSolidUserAlt.tsx";
-import LocalStorage from "@/utils/LocalStorage.ts";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar.tsx";
 import { SheetTrigger } from "@/components/ui/sheet.tsx";
+import { RootState } from "@/configs/store.config.ts";
+import { useSelector } from "react-redux";
 
 function Header({ showMenu }: HeaderProps) {
 	const [, scrollY] = useScrolled();
 	const [scrollUp, setScrollUp] = useState(false);
 	const navigate = useNavigate();
-	const { showDialog } = useContext(GlobalContext);
+	const { showDialog } = useContext(DialogAuthContext);
+	const { access_token, user } = useSelector((state: RootState) => state.auth);
+
+	useEffect(() => {
+		console.log(user);
+	}, [user]);
 
 	return (
 		<motion.header className={"sticky top-0 z-2 bg-white"} initial={{ top: 0 }} animate={{ top: scrollY >= 100 ? -40 : 0 }} transition={{ duration: 0.75 }}>
@@ -80,11 +86,11 @@ function Header({ showMenu }: HeaderProps) {
 						rightIcon={<LucideSearch width={28} height={28} />}
 					/>
 					<a href={"#"} className={"z-4"}>
-						{LocalStorage.getValue("ACCESS_TOKEN") ? (
+						{access_token && user ? (
 							<SheetTrigger>
 								<Avatar>
-									<AvatarImage src='https://github.com/shadcn.png' alt='@shadcn' />
-									<AvatarFallback>CN</AvatarFallback>
+									<AvatarImage src={"https://github.com/shadcn.png"} alt='@shadcn' />
+									<AvatarFallback>{user.full_name}</AvatarFallback>
 								</Avatar>
 							</SheetTrigger>
 						) : (
