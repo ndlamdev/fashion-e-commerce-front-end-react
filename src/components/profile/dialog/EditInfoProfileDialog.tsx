@@ -41,9 +41,9 @@ const EditInfoProfileDialog = ({ open }: EditInfoProfileDialogProps) => {
 	return (
 		<Dialog open={open} onOpenChange={(value) => !value && showDialog("none")}>
 			<DialogContent
-				classIcon={"bg-black text-white p-5 max-md:p-3 cursor-pointer !rounded-full -translate-y-10 translate-x-10 opacity-100 "}
+				classIcon={"bg-black text-white p-2 sm:p-5 cursor-pointer !rounded-lg sm:!rounded-full -translate-y-3 sm:-translate-y-10 translate-x-3 sm:translate-x-10 opacity-100 "}
 				className={"max-md:p-2 text-gray-500 max-w-80 sm:max-w-200 z-51"}>
-				<DialogTitle className={"text-black text-4xl max-md:text-2xl text-center"}>Chỉnh sửa thông tin tài
+				<DialogTitle className={"text-black text-lg lg:text-4xl sm:text-2xl sm:text-center "}>Chỉnh sửa thông tin tài
 					khoản</DialogTitle>
 				<ScrollArea className={"h-100 max-md:h-90 p-5 max-md:p-2 overflow-auto overscroll-none"}>
 					<DialogDescription aria-description={'form'}>

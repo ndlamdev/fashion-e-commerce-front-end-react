@@ -10,18 +10,18 @@ const AddressTab = () => {
 	const data: AddressProps[] = addressExamples;
 	const { showDialog } = useContext(GlobalContext);
 	return (
-		<article>
-			<div className="pb-6 border-b flex justify-between items-center">
-				<h1 className={"text-4xl font-bold"}>Địa chỉ của tôi</h1>
+		<article className={"max-sm:mt-10"}>
+			<div className="pb-6 border-b flex flex-wrap justify-between items-center max-sm:space-y-2">
+				<h1 className={"text-lg lg:text-4xl sm:text-2xl font-bold"}>Địa chỉ của tôi</h1>
 				<Button
 					onClick={() => showDialog('save-address')}
 					className={
-					"p-6 text-center text-white bg-black rounded-full hover:bg-sky-600 text-lg cursor-pointer uppercase"
+					"p-2 sm:p-6 text-sm sm:text-lg  text-center text-white bg-black rounded-full hover:bg-sky-600 cursor-pointer uppercase"
 				}>
 					Thêm địa chỉ mới
 				</Button>
 			</div>
-			<h1 className={"text-xl mt-4 font-bold"}>Sổ địa chỉ</h1>
+			<h1 className={"text-base sm:text-xl mt-4 font-bold"}>Sổ địa chỉ</h1>
 				{data.length > 0 && data.map((address) => <AddressItem key={address.id} {...address} onEdit={() => showDialog('save-address')} onDelete={() => {
 					toast('xóa địa chỉ thành công')
 				}} />)}

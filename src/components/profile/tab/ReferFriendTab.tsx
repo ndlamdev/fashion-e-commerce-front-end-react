@@ -14,7 +14,7 @@ const ReferFriendTab = () => {
 		}
 	};
 	return (
-		<article className={"mt-8"}>
+		<article className={"mt-10"}>
 			<h1 className={"text-lg lg:text-4xl sm:text-2xl font-bold normal-case"}>Giới thiệu bạn bè</h1>
 			<section className={" max-sm:w-full box-border flex max-lg:flex-wrap justify-between items-center lg:space-x-5 max-lg:space-y-5"}>
 				<div className="rounded-lg bg-neutral-100 p-4 ">

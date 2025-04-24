@@ -60,8 +60,8 @@ export default function ProfilePage() {
 								}
 							</div>
 							{!isDesktop &&
-								<SheetContent className={'!w-screen !max-w-none rounded-none bg-white p-2 sm:p-10'} classNameClose="left-4" iconRight={<MoveLeftIcon className={'size-8 text-black'} />}>
-									<ScrollArea className={'h-screen scrollbar-none '}>
+								<SheetContent className={'!w-screen !max-w-none rounded-none bg-white p-2 sm:p-10'} classNameClose="left-4" iconRight={<MoveLeftIcon className={'size-8 !fill-black !bg-neutral-300 rounded-full p-1'} />}>
+									<ScrollArea className={'h-screen scrollbar-none overflow-auto'}>
 										<Outlet/>
 									</ScrollArea>
 								</SheetContent>

@@ -22,10 +22,10 @@ const SaveAddressDialog: FC<EditAddressDialogProps> = ({open}) => {
 	};
 	return (
 		<Dialog open={open} onOpenChange={(value) => !value && showDialog("none")}>
-			<DialogContent classIcon={' bg-black text-white p-5 cursor-pointer !rounded-full -translate-y-10 translate-x-10 opacity-100 '} className={"text-gray-500 sm:max-w-200 z-51"}>
-				<ScrollArea className={"h-80 p-5"}>
+			<DialogContent classIcon={' bg-black text-white p-2 sm:p-5 cursor-pointer !rounded-lg sm:!rounded-full -translate-y-3 sm:-translate-y-10 translate-x-3 sm:translate-x-10 opacity-100 '} className={"text-gray-500  z-51 max-sm:w-full "}>
+				<ScrollArea className={"h-60 sm:h-80 sm:p-5 mt-5"}>
 					<form onSubmit={handleSubmit(onSubmit)} >
-						<div className={'grid grid-cols-2 gap-4 p-2'}>
+						<div className={'grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 sm:p-2'}>
 							<div className="">
 								<Input placeholder={"Họ và tên"} className={"rounded-lg h-10"} {...register("fullName", {
 									required: 'vui lòng nhập họ và tên',
@@ -46,7 +46,7 @@ const SaveAddressDialog: FC<EditAddressDialogProps> = ({open}) => {
 							<Input placeholder={"Địa chỉ"} className={"rounded-lg h-10"} {...register("street",)}/>
 							<div className="">
 								<Select>
-									<SelectTrigger >
+									<SelectTrigger className={'max-sm:w-full'}>
 										<SelectValue placeholder="Thành phố/tỉnh" {...register("city", {
 											required: 'Không được bỏ trống'
 										})}/>
@@ -61,7 +61,7 @@ const SaveAddressDialog: FC<EditAddressDialogProps> = ({open}) => {
 							</div>
 							<div className="">
 								<Select>
-									<SelectTrigger >
+									<SelectTrigger className={'max-sm:w-full'}>
 										<SelectValue placeholder="Quận/huyện" {...register("district", {
 											required: 'Không được bỏ trống'
 										})}/>
@@ -76,7 +76,7 @@ const SaveAddressDialog: FC<EditAddressDialogProps> = ({open}) => {
 							</div>
 							<div className="">
 								<Select>
-									<SelectTrigger >
+									<SelectTrigger className={'max-sm:w-full'}>
 										<SelectValue placeholder="Phường/xã" {...register("ward", {
 											required: 'Không được bỏ trống'
 										})}/>
@@ -94,8 +94,8 @@ const SaveAddressDialog: FC<EditAddressDialogProps> = ({open}) => {
 							</div>
 						</div>
 						<div className="flex items-center place-content-end w-full space-x-4">
-							<DialogClose><Button className={'p-5 text-black bg-neutral-200 rounded-full hover:text-white hover:bg-neutral-500  uppercase cursor-pointer'}>Hủy</Button></DialogClose>
-							<Button type={'submit'} className={'p-5 text-white bg-black rounded-full  uppercase cursor-pointer active:bg-neutral-500'}>Lưu</Button>
+							<DialogClose><Button className={'sm:p-5 text-black bg-neutral-200 rounded-full hover:text-white hover:bg-neutral-500  uppercase cursor-pointer'}>Hủy</Button></DialogClose>
+							<Button type={'submit'} className={'sm:p-5 text-white bg-black rounded-full  uppercase cursor-pointer active:bg-neutral-500'}>Lưu</Button>
 						</div>
 					</form>
 				</ScrollArea>
