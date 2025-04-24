@@ -1,24 +1,18 @@
-import { useContext } from "react";
-import { GlobalContext } from "@/context/GlobalContext.tsx";
 import { useForm } from "react-hook-form";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
+import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { ResetPasswordProps } from "@/components/profile/props/resetPassword.props.ts";
 import { ResetPasswordRequest } from "@/domain/resquest/resetPassword.request.ts";
 
-const ResetPasswordDialog = ({ open }: ResetPasswordProps) => {
-	const { showDialog } = useContext(GlobalContext);
+const ResetPasswordDialog = () => {
 	const { register, handleSubmit, reset, formState: { errors } } = useForm<ResetPasswordRequest>();
-
 	const onSubmit = (data: ResetPasswordRequest) => {
 		console.log(data);
-		showDialog("none");
+		// setDialog("none");
 		reset();
 	};
 	return (
-		<Dialog open={open} onOpenChange={(value) => !value && showDialog("none")}>
 			<DialogContent classIcon={' bg-black text-white p-5 max-md:p-3 cursor-pointer !rounded-lg sm:!rounded-full -translate-y-3 sm:-translate-y-10 translate-x-3 sm:translate-x-10 opacity-100 '} className={"text-gray-500 max-w-80 sm:max-w-200 max-md:p-0  z-51"}>
 				<ScrollArea className={"max-sm:w-full h-80 p-5 max-md:p-2 overflow-auto overscroll-none"}>
 					<DialogHeader >
@@ -56,7 +50,6 @@ const ResetPasswordDialog = ({ open }: ResetPasswordProps) => {
 					</form>
 				</ScrollArea>
 			</DialogContent>
-		</Dialog>
 	);
 };
 

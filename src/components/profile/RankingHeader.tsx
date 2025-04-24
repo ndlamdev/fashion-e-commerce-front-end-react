@@ -1,6 +1,6 @@
 import { RankingHeaderProps } from "@/components/profile/props/rankingHeader.props.ts";
 import { LevelClub } from "@/components/profile/LevelClub.tsx";
-import { formatCurrency, formatDate } from "@/utils/format-data.ts";
+import { formatCurrency, formatDate } from "@/utils/helper/format-data.ts";
 import { Progress } from "@/components/ui/progress.tsx";
 import { cn } from "@/lib/utils.ts";
 import { LevelType } from "@/components/profile/props/level.props.ts";

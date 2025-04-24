@@ -4,7 +4,8 @@ import {
 	BaggageClaimIcon,
 	LogOutIcon,
 	MapPinHouseIcon,
-	MessageCircleQuestionIcon, MoveLeftIcon,
+	MessageCircleQuestionIcon,
+	MoveLeftIcon,
 	ReceiptIcon,
 	SquareUserRoundIcon,
 	StarIcon,
@@ -18,6 +19,7 @@ import { useCallback, useState } from "react";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
+import { DialogProfileProvider } from "@/context/provider/DialogProfileProvider.tsx";
 
 const tabNavValues: Record<number, TabNavProps> = {
 	0: { title: "Thông tin tài khoản", to: "info", iconLeft: <SquareUserRoundIcon className={'hover:text-white  flex-none'}/> },
@@ -38,6 +40,7 @@ export default function ProfilePage() {
 	}, []);
 	const isDesktop = useMediaQuery("(min-width: 769px)");
 	return (
+		<DialogProfileProvider>
 			<main className={'p-4 md:p-8 bg-neutral-300'}>
 				<section>
 					<RankingHeader fullName={'LamHongPhong'} levelClub={0} nextLevel={1} resetRankingDate={new Date()} nextResetRankingDate={new Date()}/>
@@ -75,5 +78,6 @@ export default function ProfilePage() {
 					}
 				</section>
 			</main>
+		</DialogProfileProvider>
 	);
 }

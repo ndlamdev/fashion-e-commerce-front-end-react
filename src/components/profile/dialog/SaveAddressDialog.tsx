@@ -1,8 +1,5 @@
-import { FC, useContext } from "react";
-import { EditAddressDialogProps } from "@/components/profile/props/editAddressDialog.props.ts";
-import { GlobalContext } from "@/context/GlobalContext.tsx";
 import { useForm } from "react-hook-form";
-import { Dialog, DialogClose, DialogContent } from "@/components/ui/dialog.tsx";
+import { DialogClose, DialogContent } from "@/components/ui/dialog.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
@@ -11,20 +8,18 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox.tsx";
 import { Label } from "@/components/ui/label.tsx";
 
-const SaveAddressDialog: FC<EditAddressDialogProps> = ({open}) => {
-	const { showDialog } = useContext(GlobalContext);
+const SaveAddressDialog= () => {
 	const { register, handleSubmit, reset, formState: { errors } } = useForm<SaveAddressRequest>();
 
 	const onSubmit = (data: SaveAddressRequest) => {
 		console.log(data);
-		showDialog("none");
+		// setDialog("none");
 		reset(data);
 	};
 	return (
-		<Dialog open={open} onOpenChange={(value) => !value && showDialog("none")}>
-			<DialogContent classIcon={' bg-black text-white p-2 sm:p-5 cursor-pointer !rounded-lg sm:!rounded-full -translate-y-3 sm:-translate-y-10 translate-x-3 sm:translate-x-10 opacity-100 '} className={"text-gray-500  z-51 max-sm:w-full "}>
-				<ScrollArea className={"h-60 sm:h-80 sm:p-5 mt-5"}>
-					<form onSubmit={handleSubmit(onSubmit)} >
+			<DialogContent classIcon={' bg-black text-white p-2 sm:p-5 cursor-pointer !rounded-lg sm:!rounded-full -translate-y-3 sm:-translate-y-10 translate-x-3 sm:translate-x-10 opacity-100 '} className={"max-w-full max-sm:h-3/4 max-sm:p-2 text-gray-500 sm:max-w-200 z-51 max-sm:-translate-y-1/4  max-sm:bottom-0 max-sm:rounded-b-none"}>
+				<ScrollArea className={"h-100 max-sm:w-full max-sm:h-full p-5 max-md:p-2 overflow-auto overscroll-none"}>
+					<form onSubmit={handleSubmit(onSubmit)} className={"w-full space-y-3 p-2 max-sm:my-5"}>
 						<div className={'grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 sm:p-2'}>
 							<div className="">
 								<Input placeholder={"Họ và tên"} className={"rounded-lg h-10"} {...register("fullName", {
@@ -100,7 +95,6 @@ const SaveAddressDialog: FC<EditAddressDialogProps> = ({open}) => {
 					</form>
 				</ScrollArea>
 			</DialogContent>
-		</Dialog>
 	)
 }
 

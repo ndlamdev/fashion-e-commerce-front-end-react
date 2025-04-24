@@ -1,8 +1,5 @@
 import { GenderType } from "@/types/profile/customer.type.ts";
 
-export type EditInfoProfileDialogProps = {
-	open: boolean;
-}
 
 interface GenderProps {
 	name: string,

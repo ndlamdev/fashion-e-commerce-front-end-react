@@ -1,11 +1,11 @@
 import { memo, useContext } from "react";
 import { InfoTabProps } from "@/components/profile/props/infoTab.props.ts";
-import { formatDate } from "@/utils/format-data.ts";
 import { Button } from "@/components/ui/button.tsx";
-import { GlobalContext } from "@/context/GlobalContext.tsx";
+import { formatDate } from "@/utils/helper/format-data.ts";
+import { DialogProfileContext } from "@/context/dialogProfileContext.props.ts";
 
 const InfoTab = memo((props: InfoTabProps) => {
-	const {showDialog} = useContext(GlobalContext)
+	const {showDialog} = useContext(DialogProfileContext)
 	return (
 		<article className={"space-y-10 max-md:space-y-5 max-sm:mt-10"}>
 			<h1 className={"text-4xl max-md:text-xl font-bold"}>Thông tin tài khoản</h1>
