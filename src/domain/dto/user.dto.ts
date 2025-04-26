@@ -12,7 +12,7 @@ type UserDto = {
 	avatar: string;
 	phone: string;
 	gender: string;
-	birthday: number[];
+	birthday: Date;
 	height: number;
 	weight: number;
 	country_code: string;

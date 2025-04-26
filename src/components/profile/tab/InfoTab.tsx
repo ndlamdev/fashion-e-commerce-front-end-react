@@ -3,14 +3,16 @@ import { InfoTabProps } from "@/components/profile/props/infoTab.props.ts";
 import { Button } from "@/components/ui/button.tsx";
 import { formatDate } from "@/utils/helper/format-data.ts";
 import { DialogProfileContext } from "@/context/dialogProfileContext.props.ts";
+import LocalStorage from "@/utils/helper/LocalStorage.ts";
+import UserDto from "@/domain/dto/user.dto.ts";
 
-const InfoTab = memo((props: InfoTabProps) => {
+const InfoTab = memo((props: Partial<InfoTabProps>) => {
 	const {showDialog} = useContext(DialogProfileContext)
 	return (
 		<article className={"space-y-10 max-md:space-y-5 max-sm:mt-10"}>
 			<h1 className={"text-4xl max-md:text-xl font-bold"}>Thông tin tài khoản</h1>
 			<div className="grid grid-cols-2 place-items-start gap-4 text-neutral-500 text-sm xl:text-xl md:text-lg">
-				<span>Họ và tên</span>{props.fullName ? <span className={'text-black'}>{props.fullName}</span> :
+				<span>Họ và tên</span>{props.full_name ? <span className={'text-black'}>{props.full_name}</span> :
 				<span className={"text-neutral-500 italic text-sm "}>Chưa cập nhật</span>}
 				<span>Số điện thoại</span>{props.phone ? <span className={'text-black'}>{props.phone}</span> :
 				<span className={"text-neutral-500 italic text-sm"}>Chưa cập nhật</span>}
@@ -39,11 +41,10 @@ const InfoTab = memo((props: InfoTabProps) => {
 });
 
 
-const data: InfoTabProps = {
-	fullName : "lamhongphong",
-	phone : "+84376236485",
-	email: "a@gmail.com"
-}
 export default function Info() {
-	return <InfoTab {...data}/>;
+	const userDto = LocalStorage.getObjectValue<UserDto>('USER')
+	// const {data, isLoading} = useGetProfileQuery(userId)
+	return (
+		<InfoTab {...userDto}/>
+	)
 }

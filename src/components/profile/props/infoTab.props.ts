@@ -1,4 +1,5 @@
-import { CustomerType } from "@/types/profile/customer.type.ts";
+import UserDto from "@/domain/dto/user.dto.ts";
 
-export type InfoTabProps = CustomerType & {
+export type InfoTabProps = UserDto & {
+	email?: string
 }
