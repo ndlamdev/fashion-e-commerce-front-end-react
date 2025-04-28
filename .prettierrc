@@ -6,7 +6,10 @@
   "endOfLine": "crlf",
   "useTabs": true,
   "singleQuote": false,
-  "printWidth": 80,
   "jsxSingleQuote": true,
-  "bracketSpacing": true
+  "bracketSpacing": true,
+  "jsxBracketSameLine": true,
+  "plugins": [
+    "prettier-plugin-tailwindcss"
+  ]
 }

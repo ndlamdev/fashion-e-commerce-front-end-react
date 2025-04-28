@@ -17,8 +17,7 @@ export function StreamlineShoppingBagHandBag2(props: SVGProps<SVGSVGElement>) {
 				strokeLinecap='round'
 				strokeLinejoin='round'
 				d='M12.88 12.39a1 1 0 0 1-1 1.11H2.12a1 1 0 0 1-1-1.11L2 4.5h10zM4.5 4.5V3a2.5 2.5 0 1 1 5 0v1.5'
-				strokeWidth={1}
-			></path>
+				strokeWidth={1}></path>
 		</svg>
 	);
 }

@@ -1,16 +1,17 @@
 :root {
   background: #faf9f8;
+  scroll-behavior: smooth;
 }
 
 a {
-  color: black;
-  display: block;
+  /*color: black;*/
+  /*display: block;*/
   text-decoration: none;
-  font-weight: 600;
+  /*font-weight: 600;*/
 }
 
 a:hover {
-  color: black;
+  /*color: black;*/
 }
 
 ul {
