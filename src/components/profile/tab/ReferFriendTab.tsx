@@ -2,8 +2,9 @@ import { toast } from "sonner";
 import { Copy } from "lucide-react";
 import { Input } from "@/components/ui/input.tsx";
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table.tsx";
+import { memo } from "react";
 
-const ReferFriendTab = () => {
+const ReferFriendTab = memo(() => {
 	// handle save text to clipboard
 	const copyToClipboard = async (text: string) => {
 		try {
@@ -14,9 +15,9 @@ const ReferFriendTab = () => {
 		}
 	};
 	return (
-		<article className={"mt-10"}>
-			<h1 className={"text-lg lg:text-4xl sm:text-2xl font-bold normal-case"}>Giới thiệu bạn bè</h1>
-			<section className={" max-sm:w-full box-border flex max-lg:flex-wrap justify-between items-center lg:space-x-5 max-lg:space-y-5"}>
+		<article className={"max-sm:mt-10"}>
+			<h1 className={" text-lg lg:text-4xl sm:text-2xl font-bold normal-case"}>Giới thiệu bạn bè</h1>
+			<section className={" max-sm:w-full box-border flex max-lg:flex-wrap justify-between items-center lg:space-x-5 max-lg:space-y-5 sm:mt-5"}>
 				<div className="rounded-lg bg-neutral-100 p-4 ">
 					<h2 className="font-bold text-sm sm:text-lg">Nhận 10% CoolCash</h2>
 					<p className="text-xs sm:text-sm">Giới thiệu Coolmate đến bạn bè và gia đình của bạn vô cùng đơn giản</p>
@@ -120,7 +121,7 @@ const ReferFriendTab = () => {
 			</section>
 		</article>
 	);
-};
+});
 
 export default function ReferFriend() {
 	return <ReferFriendTab />;

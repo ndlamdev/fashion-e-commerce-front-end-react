@@ -1,4 +1,4 @@
-import { CustomerType } from "@/types/profile/customer.type.ts";
+import UserDto from "@/domain/dto/user.dto.ts";
 
-export type CustomerResponse = Omit<CustomerType, 'discountCodeBirthday' | 'addresses' | 'isUpLevelRanking' | 'levelClub'> & {
+export type CustomerResponse = UserDto & {
 }

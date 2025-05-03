@@ -5,14 +5,15 @@
  * Create at: 3:25 PM - 18/04/2025
  * User: kimin
  **/
+import { GenderType } from "@/types/profile/customer.type.ts";
 
 type UserDto = {
 	id: number;
 	full_name: string;
 	avatar: string;
 	phone: string;
-	gender: string;
-	birthday: Date;
+	gender: GenderType;
+	birthday:number[];
 	height: number;
 	weight: number;
 	country_code: string;

@@ -7,9 +7,13 @@ interface GenderProps {
 }
 
 const gender: Record<number, GenderProps> = {
-	0 : { name: 'Nam', value: GenderType.Male},
-	1 : {name: 'Nữ', value: GenderType.Female},
-	2 : {name: 'Khác', value: GenderType.Other}
+	0 : { name: 'Nam', value: GenderType.MALE},
+	1 : {name: 'Nữ', value: GenderType.FEMALE},
+	2 : {name: 'Khác', value: GenderType.OTHER}
 }
 
-export { gender };
+const getGenderByValue = (value: GenderType): GenderProps | undefined => {
+	return Object.values(gender).find(g => g.value === value);
+};
+
+export { gender, getGenderByValue };

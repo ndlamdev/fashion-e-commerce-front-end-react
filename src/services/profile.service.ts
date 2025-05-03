@@ -2,28 +2,41 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { CustomerResponse } from "@/domain/response/profile/customer.response.ts";
 import { CustomerRequest } from "@/domain/resquest/profile/customer.request.ts";
 import { ApiResponse } from "@/domain/ApiResponse.ts";
+import LocalStorage from "@/utils/helper/LocalStorage.ts";
 
-const BASE_URL = 'http://localhost:8002/api/v1/profile/';
+export const BASE_PROFILE_URL = import.meta.env.VITE_BASE_PROFILE_URL + "/v1/profile";
+
+const baseQuery = fetchBaseQuery({
+	baseUrl: BASE_PROFILE_URL,
+	prepareHeaders: (headers) => {
+		const token = LocalStorage.getValue("ACCESS_TOKEN");
+		if (token) {
+			headers.set("Authorization", `Bearer ${token}`);
+		}
+		return headers;
+	},
+});
 
 export const profileApi = createApi({
-	reducerPath: 'profileApi',
-	baseQuery: fetchBaseQuery({baseUrl: BASE_URL}),
+	reducerPath: "profileApi",
+	baseQuery: baseQuery,
 	endpoints: (build) => ({
 		getProfile: build.query<ApiResponse<CustomerResponse>, number | undefined>({
 			query: (id) => ({
-				url: `customers/${id}`,
+				url: `/${id}`,
 				credentials: "include",
-			})
+			}),
 		}),
 		saveProfile: build.mutation<ApiResponse<CustomerResponse>, CustomerRequest>({
-			query: (request) => ({
-				url: `customers`,
-				method: 'PATCH',
+			query: (request: CustomerRequest) => ({
+				url: "",
+				method: "PUT",
 				body: request,
 				credentials: "include",
-			})
-		})
-	})
-})
+			}),
+			// async onQueryStarted()
+		}),
+	}),
+});
 
 export const { useGetProfileQuery, useSaveProfileMutation } = profileApi;

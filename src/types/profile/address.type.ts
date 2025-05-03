@@ -1,17 +1,20 @@
-export type AddressType = {
+export type AddressShippingType= AddressType & {
 	id: number
-	fullName: string
+	full_name: string
 	phone: string
 	// country: string
 	// countryCode: string
-	city: string
-	cityCode: string
-	district: string
-	districtCode: string
-	ward: string
-	wardCode: string
 	active: boolean
 	street?: string
+}
+
+export type AddressType = {
+	city: string
+	city_code: string
+	district: string
+	district_code: string
+	ward: string
+	ward_code: string
 }
 
 // api address

@@ -1,21 +1,21 @@
-import { AddressType } from "@/types/profile/address.type.ts";
+import { AddressShippingType } from "@/types/profile/address.type.ts";
 
 export type CustomerType = {
 	fullName: string
 	phone: string
 	email: string
 	gender?: GenderType
-	birthday?: Date
+	birthday?: number[]
 	levelClub?: string
 	height?: string
 	weight?: string
-	addresses?: AddressType[]
+	addresses?: AddressShippingType[]
 	discountCodeBirthday?: string
 	isUpLevelRanking?: boolean
 }
 
 export enum GenderType {
-	Male = "Male",
-	Female = "Female",
-	Other = "Other",
+	MALE = "MALE",
+	FEMALE = "FEMALE",
+	OTHER = "OTHER",
 }

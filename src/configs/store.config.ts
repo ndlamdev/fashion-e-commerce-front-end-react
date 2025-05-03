@@ -18,7 +18,7 @@ const store = configureStore({
 		auth: authSlice.reducer,
 		[profileApi.reducerPath]: profileApi.reducer,
 	},
-	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger).concat(authenticationApi.middleware),
+	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger).concat(authenticationApi.middleware).concat(profileApi.middleware),
 });
 
 // Get the type of our slice variable

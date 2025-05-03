@@ -57,7 +57,7 @@ function OtherLogin() {
 			</button>
 			<button className={"rounded-lg border-1 border-black p-1"}>
 				<FacebookLogin
-					appId={"1371816417281846"}
+					appId={import.meta.env.VITE_FACEBOOK_APP_ID}
 					onSuccess={async (response) => {
 						await facebookLogin(response.accessToken);
 					}}
