@@ -2,8 +2,7 @@ export type AddressShippingType= AddressType & {
 	id: number
 	full_name: string
 	phone: string
-	// country: string
-	// countryCode: string
+	country_code: string
 	active: boolean
 	street?: string
 }
@@ -12,9 +11,9 @@ export type AddressType = {
 	city: string
 	city_code: string
 	district: string
-	district_code: string
+	district_id: string
 	ward: string
-	ward_code: string
+	ward_id: string
 }
 
 // api address

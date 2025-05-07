@@ -1,5 +1,5 @@
-import { AddressType } from "@/types/profile/address.type.ts";
+import { AddressShippingType } from "../../types/profile/address.type";
 
-export type SaveAddressRequest = Omit<AddressType, 'id'> & {
+export type SaveAddressRequest = Omit<AddressShippingType, 'id'> & {
 	id?: number
 }

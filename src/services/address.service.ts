@@ -1,29 +1,16 @@
-import { BASE_PROFILE_URL } from "@/services/profile.service.ts";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ApiResponse } from "@/domain/ApiResponse.ts";
-import { CustomerResponse } from "@/domain/response/profile/customer.response.ts";
-import { CustomerRequest } from "@/domain/resquest/profile/customer.request.ts";
-import { AddressShippingType } from "@/types/profile/address.type.ts";
-
-const BASE_ADDRESS_URL = BASE_PROFILE_URL + "/addresses";
+import { AddressType } from "@/types/profile/address.type.ts";
 
 export const addressApi = createApi({
-	reducerPath: 'addressApi',
-	baseQuery: fetchBaseQuery({baseUrl: BASE_ADDRESS_URL}),
+	reducerPath: "addressApi",
+	baseQuery: fetchBaseQuery({ baseUrl: "/treeVN.json" }),
 	endpoints: (build) => ({
-		getProfile: build.query<ApiResponse<AddressShippingType>, number | undefined>({
-			query: (id) => ({
-				url: `/${id}`,
-				credentials: "include",
+		getInfoAddresses: build.query<AddressType[], void>({
+			query: () => ({
+				url: ''
 			})
 		}),
-		saveProfile: build.mutation<ApiResponse<CustomerResponse>, CustomerRequest>({
-			query: (request) => ({
-				url: `/${request.id}`,
-				method: 'PATCH',
-				body: request,
-				credentials: "include",
-			})
-		})
-	})
-})
+	}),
+});
+
+export const { useGetInfoAddressesQuery } = addressApi;

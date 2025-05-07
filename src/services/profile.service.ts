@@ -3,6 +3,9 @@ import { CustomerResponse } from "@/domain/response/profile/customer.response.ts
 import { CustomerRequest } from "@/domain/resquest/profile/customer.request.ts";
 import { ApiResponse } from "@/domain/ApiResponse.ts";
 import LocalStorage from "@/utils/helper/LocalStorage.ts";
+import { AddressShippingType } from "@/types/profile/address.type.ts";
+import { SaveAddressRequest } from "@/domain/resquest/profile/saveAddress.request.ts";
+import { AddAddressRequest } from "@/domain/resquest/profile/addAddress.request.ts";
 
 export const BASE_PROFILE_URL = import.meta.env.VITE_BASE_PROFILE_URL + "/v1/profile";
 
@@ -20,6 +23,7 @@ const baseQuery = fetchBaseQuery({
 export const profileApi = createApi({
 	reducerPath: "profileApi",
 	baseQuery: baseQuery,
+	tagTypes: ['AddressShippingType'],
 	endpoints: (build) => ({
 		getProfile: build.query<ApiResponse<CustomerResponse>, number | undefined>({
 			query: (id) => ({
@@ -34,9 +38,55 @@ export const profileApi = createApi({
 				body: request,
 				credentials: "include",
 			}),
-			// async onQueryStarted()
 		}),
+		getAddresses: build.query<ApiResponse<AddressShippingType[]>, void>({
+			query : () => ({
+				url: "/addresses",
+				credentials: "include",
+				providesTags: ['AddressShippingType'],
+			})
+		}),
+		getAddress: build.query<ApiResponse<AddressShippingType>, number | undefined>({
+			query: (id) => ({
+				url: `/addresses/${id}`,
+				credentials: "include",
+			})
+		}),
+		saveAddress: build.mutation<ApiResponse<AddressShippingType>, SaveAddressRequest>({
+			query: (request) => ({
+				url: `/addresses/${request.id}`,
+				method: 'PUT',
+				body: request,
+				credentials: 'include',
+				invalidatesTags: ['AddressShippingType'],
+			})
+		}),
+		addAddress: build.mutation<ApiResponse<AddressShippingType>, AddAddressRequest>({
+			query: (request) => ({
+				url: `/addresses`,
+				method: 'POST',
+				body: request,
+				credentials: 'include',
+				invalidatesTags: ['AddressShippingType'],
+			})
+		}),
+		deleteAddress: build.mutation<ApiResponse<void>, number | undefined>({
+			query: (id) => ({
+				url: `/addresses/${id}`,
+				method: 'DELETE',
+				credentials: 'include',
+				invalidatesTags: ['AddressShippingType'],
+			})
+		}),
+		setDefaultAddress:  build.mutation<ApiResponse<void>, {old_id: number | undefined, new_id: number | undefined}>({
+			query: ({old_id, new_id}) => ({
+				url: `/addresses?old=${old_id}&new=${new_id}`,
+				method: 'PATCH',
+				credentials: 'include',
+				invalidatesTags: ['AddressShippingType'],
+			})
+		})
 	}),
 });
 
-export const { useGetProfileQuery, useSaveProfileMutation } = profileApi;
+export const { useGetProfileQuery, useSaveProfileMutation, useGetAddressesQuery, useGetAddressQuery, useAddAddressMutation, useDeleteAddressMutation, useSaveAddressMutation, useSetDefaultAddressMutation } = profileApi;
