@@ -1,3 +1,5 @@
 import { AddressShippingType } from "../../../types/profile/address.type";
 
-export type SaveAddressRequest = AddressShippingType & {}
+export type SaveAddressRequest = Omit<AddressShippingType, 'id'> & {
+	id?: number
+}

@@ -41,7 +41,10 @@ const AddressTab = memo(() => {
 			<div className="pb-6 border-b flex flex-wrap justify-between items-center max-sm:space-y-2">
 				<h1 className={"text-lg lg:text-4xl sm:text-2xl font-bold"}>Địa chỉ của tôi</h1>
 				<Button
-					onClick={() => showDialog("save-address")}
+					onClick={() => {
+						dispatch(setActionId(undefined))
+						showDialog("save-address");
+					}}
 					className={
 						"p-2 sm:p-6 text-sm sm:text-lg  text-center text-white bg-black rounded-full hover:bg-sky-600 cursor-pointer uppercase"
 					}>

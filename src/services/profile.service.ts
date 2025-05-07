@@ -5,7 +5,6 @@ import { ApiResponse } from "@/domain/ApiResponse.ts";
 import LocalStorage from "@/utils/helper/LocalStorage.ts";
 import { AddressShippingType } from "@/types/profile/address.type.ts";
 import { SaveAddressRequest } from "@/domain/resquest/profile/saveAddress.request.ts";
-import { AddAddressRequest } from "@/domain/resquest/profile/addAddress.request.ts";
 
 export const BASE_PROFILE_URL = import.meta.env.VITE_BASE_PROFILE_URL + "/v1/profile";
 
@@ -54,17 +53,8 @@ export const profileApi = createApi({
 		}),
 		saveAddress: build.mutation<ApiResponse<AddressShippingType>, SaveAddressRequest>({
 			query: (request) => ({
-				url: `/addresses/${request.id}`,
-				method: 'PUT',
-				body: request,
-				credentials: 'include',
-			}),
-			invalidatesTags: ['Address'],
-		}),
-		addAddress: build.mutation<ApiResponse<AddressShippingType>, AddAddressRequest>({
-			query: (request) => ({
-				url: `/addresses`,
-				method: 'POST',
+				url: request.id ? `/addresses/${request.id}` : `/addresses`,
+				method: request.id ? 'PUT' : 'POST',
 				body: request,
 				credentials: 'include',
 			}),
@@ -89,4 +79,4 @@ export const profileApi = createApi({
 	}),
 });
 
-export const { useGetProfileQuery, useSaveProfileMutation, useGetAddressesQuery, useGetAddressQuery, useAddAddressMutation, useDeleteAddressMutation, useSaveAddressMutation, useSetDefaultAddressMutation } = profileApi;
+export const { useGetProfileQuery, useSaveProfileMutation, useGetAddressesQuery, useGetAddressQuery, useDeleteAddressMutation, useSaveAddressMutation, useSetDefaultAddressMutation } = profileApi;

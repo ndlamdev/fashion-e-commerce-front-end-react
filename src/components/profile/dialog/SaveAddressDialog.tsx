@@ -9,10 +9,10 @@ import { Checkbox } from "@/components/ui/checkbox.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import { useSelector } from "react-redux";
 import { RootState } from "@/configs/store.config.ts";
-import { useAddAddressMutation, useGetAddressQuery } from "@/services/profile.service.ts";
+import { useGetAddressQuery, useSaveAddressMutation } from "@/services/profile.service.ts";
 import { useGetInfoAddressesQuery } from "@/services/address.service.ts";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DialogProfileContext } from "@/context/dialogProfileContext.props.ts";
 import { toast } from "sonner";
 import { getCities, getDistricts, getWards } from "@/utils/helper/AddressFilter.ts";
@@ -20,30 +20,42 @@ import { getCities, getDistricts, getWards } from "@/utils/helper/AddressFilter.
 const SaveAddressDialog = () => {
 	const { showDialog } = useContext(DialogProfileContext);
 	const { user } = useSelector((state: RootState) => state.auth);
-	//validate
+	// fetch data
+	const { actionId } = useSelector((state: RootState) => state.address);
+	const { data: address } = useGetAddressQuery(actionId, { skip: !actionId });
+	const [cityCode, setCityCode] = useState<string | undefined | null>(address?.data.city_code);
+	const [districtCode, setDistrictCode] = useState<string | undefined | null>(address?.data.district_id);
+	const [wardCode, setWardCode] = useState<string | undefined | null>(address?.data.ward_id);
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 		watch,
+		reset,
 		control,
-	} = useForm<SaveAddressRequest>({ defaultValues: { city: "", district: "" } });
-
-	// fetch data
-	const { actionId } = useSelector((state: RootState) => state.address);
-	const { data: address } = useGetAddressQuery(actionId, { skip: !actionId });
+	} = useForm<SaveAddressRequest>();
+	useEffect(() => {
+		if (address?.data) {
+			reset({
+				...address.data,
+				city: JSON.stringify({ city: address.data.city, city_code: address.data.city_code }),
+				district: JSON.stringify({ district: address.data.district, district_id: address.data.district_id }),
+				ward: JSON.stringify({ ward: address.data.ward, ward_id: address.data.ward_id }),
+			});
+			setCityCode(address.data.city_code);
+			setDistrictCode(address.data.district_id);
+			setWardCode(address.data.ward_id);
+		}
+	}, [address?.data, reset]);
 	const {
 		data: infoAddresses,
 		isError: isErrorInfoAddresses,
 		isLoading: isLoadingInfoAddresses,
 	} = useGetInfoAddressesQuery();
-	const [cityCode, setCityCode] = useState<string | undefined | null>(address?.data.city_code);
-	const [districtCode, setDistrictCode] = useState<string | undefined | null>(address?.data.district_id);
-	const [wardCode, setWardCode] = useState<string | undefined | null>(address?.data.ward_id);
 
 	const [cityValue, districtValue] = watch(["city", "district"]);
 	// add address
-		const [request, { isLoading: isLoadingAddressShippingResponse }] = useAddAddressMutation();
+	const [request, { isLoading: isLoadingAddressShippingResponse }] = useSaveAddressMutation();
 	const onSubmit = async (formValues: SaveAddressRequest) => {
 		try {
 			const data = {
@@ -63,8 +75,8 @@ const SaveAddressDialog = () => {
 				toast("Cập nhật thất bại " + result?.message, {});
 				return;
 			}
-      showDialog("none");
-      toast("Cập nhật thành công ");
+			showDialog("none");
+			toast("Cập nhật thành công ");
 		} catch (error) {
 			console.log(error);
 			toast("Cập nhật thất bại " + error, {});
@@ -78,14 +90,14 @@ const SaveAddressDialog = () => {
 				<form onSubmit={handleSubmit(onSubmit)} className={"w-full space-y-3 p-2 max-sm:my-5"}>
 					<div className={"grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 sm:p-2"}>
 						<div className="">
-							<Input defaultValue={address ? address.data.full_name : ""} placeholder={"Họ và tên"}
+							<Input defaultValue={address?.data.full_name} placeholder={"Họ và tên"}
 										 className={"rounded-lg h-10"} {...register("full_name", {
 								required: "vui lòng nhập họ và tên",
 							})} />
 							{errors.full_name && <p className={"text-red-500 ml-2"}>{errors.full_name.message}</p>}
 						</div>
 						<div className="">
-							<Input defaultValue={address ? address.data.phone : undefined} placeholder={"Số điện thoại"}
+							<Input defaultValue={address?.data.phone} placeholder={"Số điện thoại"}
 										 className={"rounded-lg h-10"} {...register("phone", {
 								required: "vui lòng nhập số điện thoại",
 								pattern: {
@@ -95,13 +107,12 @@ const SaveAddressDialog = () => {
 							})} />
 							{errors.phone && <p className={"text-red-500 ml-2"}>{errors.phone.message}</p>}
 						</div>
-						<Input defaultValue={address ? address.data.street : ""} placeholder={"Địa chỉ"}
+						<Input defaultValue={address?.data.street} placeholder={"Địa chỉ"}
 									 className={"rounded-lg h-10"} {...register("street")} />
 						<div className="">
 							<Controller
 								render={({ field }) => (
 									<Select value={field.value}
-													defaultValue={address?.data.city}
 													onValueChange={(value) => {
 														field.onChange(value); // báo cho react-hook-form
 														const { city_code } = JSON.parse(value);
@@ -127,7 +138,6 @@ const SaveAddressDialog = () => {
 								name={"city"}
 								control={control}
 								rules={{ required: "Không được bỏ trống" }}
-
 							/>
 							{errors.city && <p className={"text-red-500 ml-2"}>{errors.city.message}</p>}
 						</div>
@@ -137,10 +147,17 @@ const SaveAddressDialog = () => {
 								render={({ field }) => (
 									<Select value={field.value} onValueChange={(value) => {
 										field.onChange(value); // báo cho react-hook-form
-										const { district_id } = JSON.parse(value);
-										setDistrictCode(district_id);
-									}} defaultValue={address?.data.district}
-													data-district-code={districtCode}>
+										if (!value) return;
+
+										try {
+											const parsed = JSON.parse(value);
+											setDistrictCode(parsed?.district_id);
+										} catch (err) {
+											console.error("Không parse được JSON:", value, err);
+										}
+										// const { district_id } = JSON.parse(value);
+										// setDistrictCode(district_id);
+									}}>
 										<SelectTrigger disabled={!cityValue} className={"max-sm:w-full"}>
 											<SelectValue placeholder="Quận/huyện" />
 										</SelectTrigger>
@@ -164,16 +181,22 @@ const SaveAddressDialog = () => {
 								render={({ field }) => (
 									<Select value={field.value} onValueChange={(value) => {
 										field.onChange(value); // báo cho react-hook-form
-										const { ward_id } = JSON.parse(value);
-										setWardCode(ward_id);
-									}} defaultValue={address?.data.ward}
-													data-ward-code={wardCode}>
+										if (!value) return;
+
+										try {
+											const { ward_id } = JSON.parse(value);
+											setWardCode(ward_id);
+										} catch (err) {
+											console.error("Không parse được JSON:", value, err);
+										}
+
+									}}>
 										<SelectTrigger disabled={!districtValue} className={"max-sm:w-full"}>
 											<SelectValue placeholder="Phường/xã" />
 										</SelectTrigger>
 										<SelectContent className={"z-52"}>
 											{infoAddresses && getWards(infoAddresses, cityCode, districtCode).map((item, index) => (
-												<SelectItem key={index + "-" + item.ward_id} data-ward-code={item.ward_id}
+												<SelectItem key={index + "-" + item.ward_id}
 																		value={JSON.stringify({ ward: item.ward, ward_id: item.ward_id })}
 												>{item.ward}</SelectItem>
 											))}
@@ -187,15 +210,16 @@ const SaveAddressDialog = () => {
 							{errors.ward && <p className={"text-red-500 ml-2"}>{errors.ward.message}</p>}
 						</div>
 						<Controller
-                        name={'active'}
-                        control={control}
-                        render={({ field }) => (
-                          <div className="flex items-center content-start space-x-3">
-                            <Checkbox defaultChecked={address?.data.active} id={"is-default"} checked={field.value} onCheckedChange={field.onChange}/>
-                            <Label htmlFor={"is-default"}>Đặt làm mặc định</Label>
-                          </div>
-                        )}
-            >
+							name={"active"}
+							control={control}
+							render={({ field }) => (
+								<div className="flex items-center content-start space-x-3">
+									<Checkbox defaultChecked={address?.data.active} id={"is-default"} checked={field.value}
+														onCheckedChange={field.onChange} />
+									<Label htmlFor={"is-default"}>Đặt làm mặc định</Label>
+								</div>
+							)}
+						>
 						</Controller>
 					</div>
 					<div className="flex items-center place-content-end w-full space-x-4">
