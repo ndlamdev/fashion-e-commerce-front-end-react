@@ -30,8 +30,8 @@ const SaveAddressDialog = () => {
 	} = useForm<SaveAddressRequest>({ defaultValues: { city: "", district: "" } });
 
 	// fetch data
-	const { id } = useSelector((state: RootState) => state.address);
-	const { data: address } = useGetAddressQuery(id, { skip: !id });
+	const { actionId } = useSelector((state: RootState) => state.address);
+	const { data: address } = useGetAddressQuery(actionId, { skip: !actionId });
 	const {
 		data: infoAddresses,
 		isError: isErrorInfoAddresses,
@@ -55,6 +55,7 @@ const SaveAddressDialog = () => {
 				city_code: cityCode,
 				district_id: districtCode,
 				ward_id: wardCode,
+				active: formValues.active ?? false,
 			} as SaveAddressRequest;
 			console.log(data);
 			const result = await request(data).unwrap();

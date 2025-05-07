@@ -23,7 +23,7 @@ const baseQuery = fetchBaseQuery({
 export const profileApi = createApi({
 	reducerPath: "profileApi",
 	baseQuery: baseQuery,
-	tagTypes: ['AddressShippingType'],
+	tagTypes: ['Address'],
 	endpoints: (build) => ({
 		getProfile: build.query<ApiResponse<CustomerResponse>, number | undefined>({
 			query: (id) => ({
@@ -43,8 +43,8 @@ export const profileApi = createApi({
 			query : () => ({
 				url: "/addresses",
 				credentials: "include",
-				providesTags: ['AddressShippingType'],
-			})
+			}),
+			providesTags: ['Address'],
 		}),
 		getAddress: build.query<ApiResponse<AddressShippingType>, number | undefined>({
 			query: (id) => ({
@@ -58,8 +58,8 @@ export const profileApi = createApi({
 				method: 'PUT',
 				body: request,
 				credentials: 'include',
-				invalidatesTags: ['AddressShippingType'],
-			})
+			}),
+			invalidatesTags: ['Address'],
 		}),
 		addAddress: build.mutation<ApiResponse<AddressShippingType>, AddAddressRequest>({
 			query: (request) => ({
@@ -67,24 +67,24 @@ export const profileApi = createApi({
 				method: 'POST',
 				body: request,
 				credentials: 'include',
-				invalidatesTags: ['AddressShippingType'],
-			})
+			}),
+			invalidatesTags: ['Address'],
 		}),
 		deleteAddress: build.mutation<ApiResponse<void>, number | undefined>({
 			query: (id) => ({
 				url: `/addresses/${id}`,
 				method: 'DELETE',
 				credentials: 'include',
-				invalidatesTags: ['AddressShippingType'],
-			})
+			}),
+			invalidatesTags: ['Address'],
 		}),
 		setDefaultAddress:  build.mutation<ApiResponse<void>, {old_id: number | undefined, new_id: number | undefined}>({
 			query: ({old_id, new_id}) => ({
 				url: `/addresses?old=${old_id}&new=${new_id}`,
 				method: 'PATCH',
 				credentials: 'include',
-				invalidatesTags: ['AddressShippingType'],
-			})
+			}),
+			invalidatesTags: ['Address'],
 		})
 	}),
 });

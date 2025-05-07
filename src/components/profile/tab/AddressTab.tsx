@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button.tsx";
 import { AddressItem } from "@/components/profile/AddressItem.tsx";
 import { toast } from "sonner";
-import { memo, useCallback, useContext } from "react";
+import { memo, useCallback, useContext, useEffect } from "react";
 import { DialogProfileContext } from "@/context/dialogProfileContext.props.ts";
 import { useDeleteAddressMutation, useGetAddressesQuery } from "@/services/profile.service.ts";
 import { SkeletonTab } from "@/components/profile/tab/SkeletonTab.tsx";
@@ -13,11 +13,14 @@ const AddressTab = memo(() => {
 	const dispatch = useDispatch();
 	const { data: addresses, isLoading: isLoadingAddresses, isError: isErrorAddresses } = useGetAddressesQuery();
 	const defaultId = addresses?.data.find((addr) => addr.active)?.id
-	dispatch(setDefaultId(defaultId))
+	useEffect(()=> {
+		dispatch(setDefaultId(defaultId));
+	}, [addresses, defaultId, dispatch])
 	const { actionId } = useSelector((state: RootState) => state.address);
-	const [ delAddress ,{ isLoading: isLoadingDel, isError: isErrorDel }] = useDeleteAddressMutation();
+	const [ delAddress ,] = useDeleteAddressMutation();
 	const { showDialog } = useContext(DialogProfileContext);
-	const handleDelAddress = useCallback( () => {
+	const handleDelAddress = useCallback( (id: number | undefined) => {
+		dispatch(setActionId(id))
 		delAddress(actionId)
 			.unwrap()
 			.then((result) => {
@@ -31,7 +34,7 @@ const AddressTab = memo(() => {
 				console.log(error);
 				toast("xóa địa chỉ thất bại");
 			});
-	}, [delAddress, actionId])
+	}, [dispatch, delAddress, actionId])
 	if (isLoadingAddresses) return <SkeletonTab />;
 	return (
 		<article className={"max-sm:mt-10"}>
@@ -50,10 +53,7 @@ const AddressTab = memo(() => {
 			{addresses && addresses.data.map((address) => <AddressItem key={address.id} {...address} onEdit={() => {
 				dispatch(setActionId(address.id));
 				showDialog("save-address");
-			}} onDelete={() => {
-				dispatch(setActionId(address.id))
-				handleDelAddress()
-			}} />)}
+			}} onDelete={() => handleDelAddress(address.id)} />)}
 		</article>
 	);
 });
