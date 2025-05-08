@@ -28,4 +28,4 @@ dist-ssr
 /docker-compose.yml
 /Dockerfile
 /nginx.conf
-.env
+/.env

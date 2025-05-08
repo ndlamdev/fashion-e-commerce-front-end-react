@@ -19,19 +19,6 @@ function InputPassword({
 	return (
 		<div className={"flex flex-col gap-3"}>
 			<InputAuthentication
-				type={"email"}
-				placeholder={"Email của bạn"}
-				onKeyDown={enterKeyHandler}
-				error={errors.email?.message}
-				{...register("email", {
-					required: "Vui lòng nhập email hợp lệ",
-					pattern: {
-						value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-						message: "Vui lòng nhập email hợp lệ",
-					},
-				})}
-			/>
-			<InputAuthentication
 				type='password'
 				placeholder='Mật khẩu'
 				onKeyDown={enterKeyHandler}
