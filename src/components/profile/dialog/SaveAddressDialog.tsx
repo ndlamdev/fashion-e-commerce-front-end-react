@@ -1,5 +1,5 @@
 import { Controller, useForm } from "react-hook-form";
-import { DialogClose, DialogContent } from "@/components/ui/dialog.tsx";
+import { DialogClose, DialogContent, DialogTitle } from "@/components/ui/dialog.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
@@ -12,7 +12,7 @@ import { RootState } from "@/configs/store.config.ts";
 import { useGetAddressQuery, useSaveAddressMutation } from "@/services/profile.service.ts";
 import { useGetInfoAddressesQuery } from "@/services/address.service.ts";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { DialogProfileContext } from "@/context/dialogProfileContext.props.ts";
 import { toast } from "sonner";
 import { getCities, getDistricts, getWards } from "@/utils/helper/AddressFilter.ts";
@@ -23,53 +23,37 @@ const SaveAddressDialog = () => {
 	// fetch data
 	const { actionId } = useSelector((state: RootState) => state.address);
 	const { data: address } = useGetAddressQuery(actionId, { skip: !actionId });
-	const [cityCode, setCityCode] = useState<string | undefined | null>(address?.data.city_code);
-	const [districtCode, setDistrictCode] = useState<string | undefined | null>(address?.data.district_id);
-	const [wardCode, setWardCode] = useState<string | undefined | null>(address?.data.ward_id);
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-		watch,
 		reset,
+		watch,
 		control,
 	} = useForm<SaveAddressRequest>();
 	useEffect(() => {
 		if (address?.data) {
-			reset({
-				...address.data,
-				city: JSON.stringify({ city: address.data.city, city_code: address.data.city_code }),
-				district: JSON.stringify({ district: address.data.district, district_id: address.data.district_id }),
-				ward: JSON.stringify({ ward: address.data.ward, ward_id: address.data.ward_id }),
-			});
-			setCityCode(address.data.city_code);
-			setDistrictCode(address.data.district_id);
-			setWardCode(address.data.ward_id);
+			reset(address.data,);
 		}
-	}, [address?.data, reset]);
+	}, [address, reset]);
 	const {
 		data: infoAddresses,
 		isError: isErrorInfoAddresses,
 		isLoading: isLoadingInfoAddresses,
 	} = useGetInfoAddressesQuery();
-
-	const [cityValue, districtValue] = watch(["city", "district"]);
-	// add address
+	const [cityValue, districtValue] = watch(["city_code", "district_id"]);
+	console.log();
 	const [request, { isLoading: isLoadingAddressShippingResponse }] = useSaveAddressMutation();
 	const onSubmit = async (formValues: SaveAddressRequest) => {
 		try {
 			const data = {
 				...formValues,
-				city: JSON.parse(formValues.city).city,
-				district: JSON.parse(formValues.district).district,
-				ward: JSON.parse(formValues.ward).ward,
 				country_code: user?.country_code,
-				city_code: cityCode,
-				district_id: districtCode,
-				ward_id: wardCode,
+				city: getCities(infoAddresses).find((item) => item.city_code === formValues.city_code)?.city ?? "",
+				district: getDistricts(infoAddresses, formValues.city_code).find((item) => item.district_id === formValues.district_id)?.district ?? "",
+				ward: getWards(infoAddresses, formValues.city_code, formValues.district_id).find((item) => item.ward_id === formValues.ward_id)?.ward ?? "",
 				active: formValues.active ?? false,
 			} as SaveAddressRequest;
-			console.log(data);
 			const result = await request(data).unwrap();
 			if (result?.code >= 400) {
 				toast("Cập nhật thất bại " + result?.message, {});
@@ -86,18 +70,20 @@ const SaveAddressDialog = () => {
 		<DialogContent
 			classIcon={" bg-black text-white p-2 sm:p-5 cursor-pointer !rounded-lg sm:!rounded-full -translate-y-3 sm:-translate-y-10 translate-x-3 sm:translate-x-10 opacity-100 "}
 			className={"max-w-full max-sm:h-3/4 max-sm:p-2 text-gray-500 sm:max-w-200 z-51 max-sm:-translate-y-1/4  max-sm:bottom-0 max-sm:rounded-b-none"}>
+			<DialogTitle></DialogTitle>
 			<ScrollArea className={"h-80 max-sm:w-full max-sm:h-full p-5 max-md:p-2 overflow-auto overscroll-none"}>
+				<h1></h1>
 				<form onSubmit={handleSubmit(onSubmit)} className={"w-full space-y-3 p-2 max-sm:my-5"}>
 					<div className={"grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 sm:p-2"}>
 						<div className="">
-							<Input defaultValue={address?.data.full_name} placeholder={"Họ và tên"}
+							<Input placeholder={"Họ và tên"}
 										 className={"rounded-lg h-10"} {...register("full_name", {
 								required: "vui lòng nhập họ và tên",
 							})} />
 							{errors.full_name && <p className={"text-red-500 ml-2"}>{errors.full_name.message}</p>}
 						</div>
 						<div className="">
-							<Input defaultValue={address?.data.phone} placeholder={"Số điện thoại"}
+							<Input placeholder={"Số điện thoại"}
 										 className={"rounded-lg h-10"} {...register("phone", {
 								required: "vui lòng nhập số điện thoại",
 								pattern: {
@@ -107,16 +93,14 @@ const SaveAddressDialog = () => {
 							})} />
 							{errors.phone && <p className={"text-red-500 ml-2"}>{errors.phone.message}</p>}
 						</div>
-						<Input defaultValue={address?.data.street} placeholder={"Địa chỉ"}
+						<Input placeholder={"Địa chỉ"}
 									 className={"rounded-lg h-10"} {...register("street")} />
 						<div className="">
 							<Controller
 								render={({ field }) => (
 									<Select value={field.value}
 													onValueChange={(value) => {
-														field.onChange(value); // báo cho react-hook-form
-														const { city_code } = JSON.parse(value);
-														setCityCode(city_code);
+														field.onChange(value);
 													}}
 									>
 										<SelectTrigger className={"max-sm:w-full"}>
@@ -126,87 +110,67 @@ const SaveAddressDialog = () => {
 										<SelectContent className={"z-52"}>
 											{isLoadingInfoAddresses && <Skeleton className={"w-full"} />}
 											{isErrorInfoAddresses && <p className="text-sm text-red-500">không tìm thấy dữ liệu</p>}
-											{infoAddresses && getCities(infoAddresses).map((item, index) => (
+											{infoAddresses && infoAddresses.length > 0 && getCities(infoAddresses).map((item, index) => (
 												<SelectItem key={index + "-" + item.city_code}
-																		value={JSON.stringify({ city: item.city, city_code: item.city_code })}
-												>{item.city}</SelectItem>
+																		value={item.city_code}
+												>{item.city} </SelectItem>
 											))}
 										</SelectContent>
 									</Select>
 
 								)}
-								name={"city"}
+								name={"city_code"}
 								control={control}
 								rules={{ required: "Không được bỏ trống" }}
 							/>
 							{errors.city && <p className={"text-red-500 ml-2"}>{errors.city.message}</p>}
 						</div>
-
-						<div className="">
-							<Controller
-								render={({ field }) => (
-									<Select value={field.value} onValueChange={(value) => {
-										field.onChange(value); // báo cho react-hook-form
-										if (!value) return;
-
-										try {
-											const parsed = JSON.parse(value);
-											setDistrictCode(parsed?.district_id);
-										} catch (err) {
-											console.error("Không parse được JSON:", value, err);
-										}
-										// const { district_id } = JSON.parse(value);
-										// setDistrictCode(district_id);
-									}}>
-										<SelectTrigger disabled={!cityValue} className={"max-sm:w-full"}>
-											<SelectValue placeholder="Quận/huyện" />
-										</SelectTrigger>
-										<SelectContent className={"z-52"}>
-											{infoAddresses && getDistricts(infoAddresses, cityCode).map((item, index) => (
-												<SelectItem key={index + "-" + item.district_id} data-district-code={item.district_id}
-																		value={JSON.stringify({ district: item.district, district_id: item.district_id })}
-												>{item.district}</SelectItem>
-											))}
-										</SelectContent>
-									</Select>
-								)}
-								name={"district"}
-								control={control}
-								rules={{ required: "Không được bỏ trống" }}
-							/>
+						<div>
+							{cityValue &&
+								<Controller
+									render={({ field }) => (
+										<Select value={field.value} onValueChange={field.onChange}>
+											<SelectTrigger disabled={!cityValue} className={"max-sm:w-full"}>
+												<SelectValue placeholder="Quận/huyện" />
+											</SelectTrigger>
+											<SelectContent className={"z-52"}>
+												{infoAddresses && getDistricts(infoAddresses, cityValue).map((item, index) => (
+													<SelectItem key={index + "-" + item.district_id} data-district-code={item.district_id}
+																			value={item.district_id}
+													>{item.district}</SelectItem>
+												))}
+											</SelectContent>
+										</Select>
+									)}
+									name={"district_id"}
+									control={control}
+									rules={{ required: "Không được bỏ trống" }}
+								/>
+							}
 							{errors.district && <p className={"text-red-500 ml-2"}>{errors.district.message}</p>}
 						</div>
-						<div className="">
-							<Controller
-								render={({ field }) => (
-									<Select value={field.value} onValueChange={(value) => {
-										field.onChange(value); // báo cho react-hook-form
-										if (!value) return;
-
-										try {
-											const { ward_id } = JSON.parse(value);
-											setWardCode(ward_id);
-										} catch (err) {
-											console.error("Không parse được JSON:", value, err);
-										}
-
-									}}>
-										<SelectTrigger disabled={!districtValue} className={"max-sm:w-full"}>
-											<SelectValue placeholder="Phường/xã" />
-										</SelectTrigger>
-										<SelectContent className={"z-52"}>
-											{infoAddresses && getWards(infoAddresses, cityCode, districtCode).map((item, index) => (
-												<SelectItem key={index + "-" + item.ward_id}
-																		value={JSON.stringify({ ward: item.ward, ward_id: item.ward_id })}
-												>{item.ward}</SelectItem>
-											))}
-										</SelectContent>
-									</Select>
-								)}
-								name={"ward"}
-								control={control}
-								rules={{ required: "Không được bỏ trống" }}
-							/>
+						<div>
+							{districtValue &&
+								<Controller
+									render={({ field }) => (
+										<Select value={field.value} onValueChange={field.onChange}>
+											<SelectTrigger disabled={!districtValue} className={"max-sm:w-full"}>
+												<SelectValue placeholder="Phường/xã" />
+											</SelectTrigger>
+											<SelectContent className={"z-52"}>
+												{infoAddresses && getWards(infoAddresses, cityValue, districtValue).map((item, index) => (
+													<SelectItem key={index + "-" + item.ward_id}
+																			value={item.ward_id}
+													>{item.ward}</SelectItem>
+												))}
+											</SelectContent>
+										</Select>
+									)}
+									name={"ward_id"}
+									control={control}
+									rules={{ required: "Không được bỏ trống" }}
+								/>
+							}
 							{errors.ward && <p className={"text-red-500 ml-2"}>{errors.ward.message}</p>}
 						</div>
 						<Controller

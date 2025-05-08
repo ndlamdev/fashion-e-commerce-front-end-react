@@ -12,14 +12,20 @@ import {
 	TicketPercentIcon,
 	UserRoundPlusIcon,
 } from "lucide-react";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import { TabNavProps } from "@/components/profile/props/tabNav.props.ts";
 import { TabNav } from "@/components/profile/TabNav.tsx";
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { DialogProfileProvider } from "@/context/provider/DialogProfileProvider.tsx";
+import { useDispatch } from "react-redux";
+import authenticationService from "@/services/authentication.service.ts";
+import { logout } from "@/redux/slice/auth.slice.ts";
+import { toast } from "sonner";
+import ConfirmDialog from "@/components/authentication/ConfirmDialog.tsx";
+import { DialogProfileContext } from "@/context/dialogProfileContext.props.ts";
 
 const tabNavValues: Record<number, TabNavProps> = {
 	0: { title: "Thông tin tài khoản", to: "info", iconLeft: <SquareUserRoundIcon className={'hover:text-white  flex-none'}/> },
@@ -30,7 +36,6 @@ const tabNavValues: Record<number, TabNavProps> = {
 	5: { title: "Sổ địa chỉ", to: "addresses", iconLeft: <MapPinHouseIcon className={'hover:text-white flex-none'}/> },
 	6: { title: "Đánh giá và phản hồi", to: "reviews", iconLeft: <StarIcon className={'hover:text-white flex-none'}/> },
 	7: { title: "Chính sách và câu hỏi thường gặp", to: "faq", iconLeft: <MessageCircleQuestionIcon className={'hover:text-white flex-none'}/> },
-	8: { title: "Đăng xuất", to: "logout", iconLeft: <LogOutIcon className={'hover:text-white flex-none'}/> },
 }
 
 export default function ProfilePage() {
@@ -38,6 +43,19 @@ export default function ProfilePage() {
 	const handleTabClick = useCallback((index: number) => {
 		setActiveTab(index);
 	}, []);
+	const [openDialog, setOpenDialog] = useState<"none" | "show-confirm" | "show-dialog">("none");
+	const {showDialog} = useContext(DialogProfileContext)
+	const navigate = useNavigate()
+	const dispatch = useDispatch()
+	const handleLogout = () => {
+		authenticationService.logout().then(() => {
+			dispatch(logout())
+			navigate("/");
+		}).catch((error) => {
+			console.log(error);
+			toast("Logout failed")
+		})
+	}
 	const isDesktop = useMediaQuery("(min-width: 769px)");
 	return (
 		<DialogProfileProvider>
@@ -61,6 +79,19 @@ export default function ProfilePage() {
 										)
 									})
 								}
+								<TabNav onClick={()=>setOpenDialog('show-confirm')} tailwindStyle={`hover:bg-black hover:text-white `} iconLeft={<LogOutIcon className={'hover:text-white flex-none'}/>} title={"Đăng xuất"} iconRight={<ArrowRightIcon className={' hover:text-white'} />}/>
+								<ConfirmDialog
+									open={openDialog === "show-confirm"}
+									onOpenChange={(value) => !value && showDialog("none")}
+									onClickCancel={() => {
+										setOpenDialog("none");
+									}}
+									onClickSubmit={() => {
+										handleLogout();
+										setOpenDialog("none");
+										showDialog("none");
+									}}
+								/>
 							</div>
 							{!isDesktop &&
 								<SheetContent className={'!w-screen !max-w-none rounded-none bg-white p-2 sm:p-10'} classNameClose="left-4" iconRight={<MoveLeftIcon className={'size-8 !fill-black !bg-neutral-300 rounded-full p-1'} />}>

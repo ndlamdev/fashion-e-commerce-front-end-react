@@ -4,7 +4,8 @@ type CityInfo = { city: string; city_code: string };
 type DistrictInfo = { district: string; district_id: string };
 type WardInfo= { ward: string; ward_id: string };
 
-const getCities = (addresses: AddressType[]): CityInfo[] => {
+const getCities = (addresses: AddressType[] | undefined): CityInfo[] => {
+	if (!addresses) return [];
 	const map = new Map<string, CityInfo>();
 
 	for (const { city, city_code } of addresses) {
@@ -17,10 +18,10 @@ const getCities = (addresses: AddressType[]): CityInfo[] => {
 };
 
 const getDistricts = (
-	addresses: AddressType[],
+	addresses: AddressType[] | undefined,
 	cityCode?: string | null
 ): DistrictInfo[] => {
-	if (!cityCode) return [];
+	if (!cityCode || !addresses) return [];
 
 	const districtMap = new Map<string, DistrictInfo>();
 
@@ -34,11 +35,11 @@ const getDistricts = (
 };
 
 const getWards = (
-	addresses: AddressType[],
+	addresses: AddressType[] | undefined,
 	cityCode?: string | null,
 	districtCode?: string | null
 ): WardInfo[] => {
-	if (!cityCode || !districtCode) return [];
+	if (!cityCode || !districtCode || !addresses) return [];
 
 	const wardMap = new Map<string, WardInfo>();
 

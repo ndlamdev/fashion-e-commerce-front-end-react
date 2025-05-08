@@ -1,4 +1,4 @@
-export type AddressShippingType= AddressType & {
+export type AddressShippingType = AddressType & {
 	id: number
 	full_name: string
 	phone: string
