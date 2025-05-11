@@ -6,10 +6,11 @@
  * User: lam-nguyen
  **/
 import { CSSProperties, ReactNode } from "react";
+import * as React from "react";
 
 export type InputState = "HOLDER" | "FOCUS" | "BLUR" | "LEAVE";
 
-type InputProps = {
+type InputProps = React.ComponentProps<"input"> & {
 	leftIcon?: ReactNode;
 	rightIcon?: ReactNode;
 	getState?: (state: InputState) => void;
@@ -20,6 +21,7 @@ type InputProps = {
 	onChange?: (input: string) => void;
 	placeholder?: string;
 	disabled?: boolean;
+	children?: ReactNode;
 };
 
 export default InputProps;

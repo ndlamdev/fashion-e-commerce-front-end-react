@@ -10,13 +10,19 @@ import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import { authenticationApi } from "@/redux/query/authentication.query.ts";
 import { authSlice } from "@/redux/slice/auth.slice.ts";
+import { profileApi } from "@/services/profile.service.ts";
+import addressSlice from "@/redux/slice/address.slice.ts";
+import { addressApi } from "@/services/address.service.ts";
 
 const store = configureStore({
 	reducer: {
 		[authenticationApi.reducerPath]: authenticationApi.reducer,
 		auth: authSlice.reducer,
+		[profileApi.reducerPath]: profileApi.reducer,
+		address: addressSlice,
+		[addressApi.reducerPath]: addressApi.reducer,
 	},
-	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger).concat(authenticationApi.middleware),
+	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger).concat(authenticationApi.middleware).concat(profileApi.middleware).concat(addressApi.middleware),
 });
 
 // Get the type of our slice variable
