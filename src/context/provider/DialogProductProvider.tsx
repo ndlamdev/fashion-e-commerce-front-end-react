@@ -1,10 +1,9 @@
 import { ReactNode, useState } from "react";
-import { DialogProfileContext } from "@/context/dialogProfileContext.props.ts";
 import DialogTypeEnum from "@/utils/enums/dialog.type.enum.ts";
-import SaveAddressDialog from "@/components/profile/dialog/SaveAddressDialog.tsx";
-import EditInfoProfileDialog from "@/components/profile/dialog/EditInfoProfileDialog.tsx";
 import { Dialog } from "@/components/ui/dialog.tsx";
-import ResetPasswordDialog from "@/components/profile/dialog/ResetPasswordDialog.tsx";
+import ReferFriendDialog from "@/components/product-detail/dialog/ReferFriendDialog.tsx";
+import { DialogProductContext } from "@/context/dialogProductContext.props.ts";
+import GuideChooseSizeDialog from "@/components/product-detail/dialog/GuideChooseSizeDialog.tsx";
 
 export const DialogProductProvider = ({ children }: { children: ReactNode }) => {
 	const [dialog, setDialog] = useState<DialogTypeEnum>("none");
@@ -12,16 +11,14 @@ export const DialogProductProvider = ({ children }: { children: ReactNode }) => 
 		switch (dialog) {
 			case "none":
 				return <></>;
-			case "reset-password":
-				return <ResetPasswordDialog/>;
-			case "save-address":
-				return <SaveAddressDialog/>;
-			case "edit-info-profile":
-				return <EditInfoProfileDialog />;
+			case "refer-friend":
+				return <ReferFriendDialog/>;
+			case "guide-choose-size":
+				return <GuideChooseSizeDialog />;
 		}
 	}
 	return (
-		<DialogProfileContext.Provider
+		<DialogProductContext.Provider
 			value={{
 				showDialog: (type) => setDialog(type),
 				dialog: dialog,
@@ -31,6 +28,6 @@ export const DialogProductProvider = ({ children }: { children: ReactNode }) => 
 				{children}
 				{renderContent(dialog)}
 			</Dialog>
-		</DialogProfileContext.Provider>
+		</DialogProductContext.Provider>
 	);
 }

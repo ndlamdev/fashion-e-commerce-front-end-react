@@ -2,7 +2,6 @@ import { CollectionFilterProps } from "@/components/collection/props/collectionF
 import { mockCollectionFilters } from "@/assets/data/collection/collectionFileterProp.data.ts";
 import CollectionFilter from "@/components/collection/CollectionFilter.tsx";
 import ZoneOfProducts from "@/components/collection/ZoneOfProducts.tsx";
-import sampleProducts from "@/assets/data/product.data.ts";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
@@ -11,7 +10,7 @@ import { categoryDescriptionSamples } from "@/assets/data/collection/categoryDes
 
 export default function BoothPage() {
 	const filters: CollectionFilterProps = mockCollectionFilters;
-	const products = sampleProducts;
+	const products = {};
 	const sportDescriptions = categoryDescriptionSamples;
 	return (
 		<>

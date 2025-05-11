@@ -11,8 +11,8 @@ export default function CardProduct(props: ProductCardProp) {
 	const navigate = useNavigate();
 	const [selected, setSelected] = useState<number>(0);
 	const [numPageModel, setNumPageModel] = useState<number>(6);
-	const [bgImage, setBgImage] = useState<string>(props.models[selected].imageUrls[0]);
-	useEffect(() => setBgImage(props.models[selected].imageUrls[0]), [selected]);
+	const [bgImage, setBgImage] = useState<string>(props.images[0].src);
+	useEffect(() => setBgImage(props.images[selected].src), [props.images, selected]);
 	return (
 		<Card className={cn(`rounded-none border-0 p-2 shadow-none`, props.className)}>
 			<CardContent
@@ -20,28 +20,28 @@ export default function CardProduct(props: ProductCardProp) {
 				className={`group relative h-[50vw] cursor-pointer rounded-lg bg-cover bg-center bg-no-repeat p-0 text-base md:h-62 xl:h-84`}
 				style={{ backgroundImage: `url(${bgImage})` }}
 				onMouseEnter={() =>
-					setBgImage(props.models[selected].imageUrls.length > 1 ? props.models[selected].imageUrls?.[1] : props.models[selected].imageUrls?.[0])
+					setBgImage(props.images.length > 1 ? props.images[1].src : props.images[0].src)
 				}
-				onMouseLeave={() => setBgImage(props.models[selected].imageUrls[0])}>
+				onMouseLeave={() => setBgImage(props.images[0].src)}>
 				<div className='absolute top-2 right-2 grid grid-cols-2 grid-rows-2'>
-					{props.label && <Badge className={"lg:text-sx col-span-2 mb-2 rounded-xl border-0 bg-black text-white"}>{props.label}</Badge>}
+					{props.tags && props.tags.map((tag) => (<Badge className={"lg:text-sx col-span-2 mb-2 rounded-xl border-0 bg-black text-white"}>{tag}</Badge>))}
 					<div className=''></div>
-					{/*<img*/}
-					{/*	className={"object-fill size-7 "}*/}
-					{/*	src={"src/assets/images/product/coolcash.webp"}*/}
-					{/*	alt={"cash's name"}*/}
-					{/*/>*/}
+					<img
+						className={"object-fill size-7 "}
+						src={props.icon_thumbnail}
+						alt={props.title}
+					/>
 				</div>
 
 				<span className={"absolute top-2 left-2 flex items-center font-bold"}>
-					<span>{props.numStars}</span>
+					<span>{props.review?.ratingValue}</span>
 					<Star className='size-2 fill-black md:size-3' />
-					<span className={"text-[8px] text-blue-600 md:text-xs"}>({props.numComments})</span>
+					<span className={"text-[8px] text-blue-600 md:text-xs"}>({props.review?.reviewCount})</span>
 				</span>
 
-				{props.attachGiftThumbnail && (
+				{props.icon_thumbnail && (
 					<div className='absolute bottom-0'>
-						<img className={"rounded-b-lg"} src={props.attachGiftThumbnail} alt={props.models[selected].name} />
+						<img className={"rounded-b-lg"} src={props.icon_thumbnail} alt={props.title} />
 					</div>
 				)}
 
@@ -52,9 +52,9 @@ export default function CardProduct(props: ProductCardProp) {
 					}>
 					<p className={"m-0 mb-1 p-0 text-sm font-bold"}>Thêm nhanh vào giỏ hàng +</p>
 					<div className={"flex cursor-pointer flex-wrap gap-2"}>
-						{props.models[selected].sizes.map((size: string, index: number) => (
-							<Badge key={index} className={"size-10 border-0 bg-white text-black hover:bg-black! hover:text-white"}>
-								{size}
+						{props.variants.map((variant) => (
+							<Badge key={variant.id} className={"size-10 border-0 bg-white text-black hover:bg-black! hover:text-white"}>
+								{variant.options.SIZE}
 							</Badge>
 						))}
 					</div>
@@ -63,28 +63,26 @@ export default function CardProduct(props: ProductCardProp) {
 
 			<CardFooter className={"block p-0 text-xs font-bold sm:text-sm"}>
 				<div className='flex flex-wrap items-center gap-2'>
-					{props.models.slice(0, numPageModel).map((item, index) => (
+					{props.variants.slice(0, numPageModel).map((_, index) => (
 						<div
 							key={index}
 							onClick={() => setSelected(index)}
-							style={{ backgroundColor: item.codeColor }}
 							className={`h-4 w-8 cursor-pointer rounded-2xl ${selected === index ? "outline-2 outline-offset-2 outline-neutral-700" : "outline-none"}`}></div>
 					))}
 
-					{props.models.length > 6 && numPageModel === 6 && (
-						<span onClick={() => setNumPageModel(props.models.length)} className={"font-bold"}>
-							{props.models.length > 6 ? ` +${props.models.length - 6}` : ""}
+					{props.variants.length > 6 && numPageModel === 6 && (
+						<span onClick={() => setNumPageModel(props.variants.length)} className={"font-bold"}>
+							{props.variants.length > 6 ? ` +${props.variants.length - 6}` : ""}
 						</span>
 					)}
 				</div>
-				<p className={"my-1"}>{props.name}</p>
+				<p className={"my-1"}>{props.title}</p>
 				<p className={"mb-1 flex flex-wrap gap-2"}>
-					{/*discount handle*/}
-					<span>{formatCurrency(props.discount ? props.price * (1 - props.discount * 0.01) : props.price)}</span>
-					{props.discount && <Badge className={"rounded-2 bg-blue-700 text-xs font-bold text-white"}>-{props.discount}%</Badge>}
-					{props.discount && <span className={"text-neutral-400 line-through"}>{formatCurrency(props.price)}</span>}
+					<span>{formatCurrency(props.discount ? props.variants[selected].regular_price * (1 - props.discount.percent) : props.variants[selected].regular_price)}</span>
+					{props.discount && <Badge className={"rounded-2 bg-blue-700 text-xs font-bold text-white"}>-{props.discount.percent}%</Badge>}
+					{props.discount && <span className={"text-neutral-400 line-through"}>{formatCurrency(props.variants[selected].regular_price)}</span>}
 				</p>
-				{props.description && <span className={"line-clamp-1 text-xs text-blue-700"}>{props.description}</span>}
+				{<span className={"line-clamp-1 text-xs text-blue-700"}>{props.display_name_open}</span>}
 			</CardFooter>
 		</Card>
 	);

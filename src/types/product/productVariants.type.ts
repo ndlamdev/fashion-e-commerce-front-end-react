@@ -2,7 +2,7 @@ export type ProductVariantsType = {
 	id: string;
 	title: string;
 	quantity: number;
-	options: {COLOR: string, SIZE: number};
+	options: {COLOR: string, SIZE: string};
 	pending: number;
 	delete: boolean;
 	product_id: string;
