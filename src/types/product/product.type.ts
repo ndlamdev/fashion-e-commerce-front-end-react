@@ -1,4 +1,4 @@
-import { OptionType, ProductOptionType } from "@/types/product/productOption.type.ts";
+import { OptionType, ProductOptionType, ProductOptionValueType } from "@/types/product/productOption.type.ts";
 import { ProductImageType } from "@/types/product/productImage.type.ts";
 import { ProductTagType } from "@/types/product/productTag.type.ts";
 import { ProductVariantsType } from "@/types/product/productVariants.type.ts";
@@ -12,24 +12,24 @@ type ProductType = {
 	title: string
 	vendor: string
 	tags: ProductTagType[]
-	options: ProductOptionType[]
+	options: OptionType[]
 	images: ProductImageType[]
 	available: boolean
 	variants: ProductVariantsType[]
-	discount?: DiscountType
-	review?: ProductReviewType
-	is_lock?: boolean
-	create_by?: string
-	create_at?: number[]
-	update_by?: string
-	update_at?: number[]
-	seo_alias?: string
-	options_value?: OptionValueType[]
-	youtube_video?: string
-	coming_soon?: boolean
-	display_name_open?: string
+	options_value: OptionValueType[]
+	discount: DiscountType
+	review: ProductReviewType
+	is_lock: boolean
+	create_by: string
+	create_at: number[]
+	update_by: string
+	update_at: number[]
+	seo_alias: string
+	youtube_video: string
+	coming_soon: boolean
+	display_name_open: string
+	icon_thumbnail: string
 	gender_type?: GenderType
-	icon_thumbnail?: string
 };
 
 type DiscountType = {
@@ -39,7 +39,7 @@ type DiscountType = {
 }
 type OptionValueType = {
 	title: string;
-	option?: OptionType
-	options?: ProductImageType[]
+	type: OptionType
+	values: string[]
 }
 export default ProductType;
