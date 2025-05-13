@@ -7,30 +7,30 @@
  **/
 import { SolarHamburgerMenuLinear } from "@/assets/images/icons/SolarHamburgerMenuLinear.tsx";
 import { LucideSearch } from "@/assets/images/icons/LucideSearch.tsx";
-import Input from "@/components/form/Input.tsx";
 import { SolarHeartBold } from "@/assets/images/icons/SolarHeartBold.tsx";
 import ShoppingBag from "@/components/cart/ShoppingBag.tsx";
 import { motion } from "motion/react";
 import { SolarArrowRightLinear } from "@/assets/images/icons/SolarArrowRightLinear";
 import useScrolled from "@/utils/helper/use-scrolled.ts";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator.tsx";
 import ShoppingBagItem from "@/components/cart/ShoppingBagItem.tsx";
 import dataShoppingBagItems from "@/assets/data/shopping-bag-items.ts";
 import { useNavigate } from "react-router";
 import HeaderProps from "@/components/header/props/header-prop.ts";
-import { DialogAuthContext } from "@/context/DialogAuthContext.tsx";
 import { FaSolidUserAlt } from "@/assets/images/icons/FaSolidUserAlt.tsx";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar.tsx";
 import { SheetTrigger } from "@/components/ui/sheet.tsx";
 import { RootState } from "@/configs/store.config.ts";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Searcher from "@/components/header/Searcher.tsx";
+import { showDialog } from "@/redux/slice/dialog.slice.ts";
 
 function Header({ showMenu }: HeaderProps) {
 	const [, scrollY] = useScrolled();
 	const [scrollUp, setScrollUp] = useState(false);
 	const navigate = useNavigate();
-	const { showDialog } = useContext(DialogAuthContext);
+	const dispatch = useDispatch();
 	const { access_token, user } = useSelector((state: RootState) => state.auth);
 
 	useEffect(() => {
@@ -47,7 +47,7 @@ function Header({ showMenu }: HeaderProps) {
 					<span className={"text-gray-400"}>|</span>
 					<div className={"px-3 py-2 text-sm hover:bg-gray-800"}>Trung tâm CSKH</div>
 					<span className={"text-gray-400"}>|</span>
-					<div className={"px-3 py-2 text-sm hover:bg-gray-800"} onClick={() => showDialog("login")}>
+					<div className={"px-3 py-2 text-sm hover:bg-gray-800"} onClick={() => dispatch(showDialog("login"))}>
 						Đăng nhập
 					</div>
 				</div>
@@ -79,12 +79,7 @@ function Header({ showMenu }: HeaderProps) {
 					</ul>
 				</div>
 				<div className={"lg: relative flex items-center justify-end gap-3"}>
-					<Input
-						className={"rounded] z-4 hidden w-[50%] items-center rounded-4xl border-1 border-gray-500 p-2 hover:border-black lg:flex"}
-						placeholder={"Tìm kiếm sản phẩm..."}
-						inputClassName={"p-1 text-sm"}
-						rightIcon={<LucideSearch width={28} height={28} />}
-					/>
+					<Searcher />
 					<a href={"#"} className={"z-4"}>
 						{access_token && user ? (
 							<SheetTrigger>
@@ -94,7 +89,7 @@ function Header({ showMenu }: HeaderProps) {
 								</Avatar>
 							</SheetTrigger>
 						) : (
-							<FaSolidUserAlt width={24} height={24} onClick={() => showDialog("login")} />
+							<FaSolidUserAlt width={24} height={24} onClick={() => dispatch(showDialog("login"))} />
 						)}
 					</a>
 					<a href={"#"} className={"z-4"}>

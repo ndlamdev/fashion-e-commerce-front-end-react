@@ -5,9 +5,7 @@
  * Create at: 12:39 PM - 18/04/2025
  *  User: kimin
  **/
-import { CallbackDialogProps, DialogAuthContext } from "@/context/DialogAuthContext.tsx";
-import DialogTypeEnum from "@/utils/enums/dialog.type.enum.ts";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Dialog } from "@/components/ui/dialog.tsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import LoginDialog from "@/components/authentication/LoginDialog.tsx";
@@ -17,47 +15,46 @@ import ForgotPasswordDialog from "@/components/authentication/ForgotPasswordDial
 import NewPasswordDialog from "@/components/authentication/NewPasswordDialog.tsx";
 import InputOTPDialog from "@/components/authentication/InputOTPDialog.tsx";
 import RegisterWithFacebookDialog from "@/components/authentication/RegisterWithFacebookDialog";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/configs/store.config.ts";
+import { showDialogWithCallback } from "@/redux/slice/dialog.slice.ts";
 
 function DialogAuthProvider({ children }: { children: ReactNode }) {
-	const [dialog, setDialog] = useState<DialogTypeEnum>("none");
-	const [callbackDialog, setCallbackDialog] = useState<CallbackDialogProps | undefined>({});
+	const { dialog } = useSelector((state: RootState) => state.dialog);
+	const dispatch = useDispatch();
+	const [dialogReactNode, setDialogReactNode] = useState<ReactNode>();
 
-	const renderContent = (dialog: DialogTypeEnum): ReactNode => {
+	useEffect(() => {
 		switch (dialog) {
-			case "none":
-				return <></>;
 			case "forgot-password":
-				return <ForgotPasswordDialog />;
+				setDialogReactNode(<ForgotPasswordDialog />);
+				break;
 			case "login":
-				return <LoginDialog />;
+				setDialogReactNode(<LoginDialog />);
+				break;
 			case "register":
-				return <RegisterDialog />;
+				setDialogReactNode(<RegisterDialog />);
+				break;
 			case "register-with-google":
-				return <RegisterWithGoogleDialog />;
+				setDialogReactNode(<RegisterWithGoogleDialog />);
+				break;
 			case "input-otp":
-				return <InputOTPDialog />;
+				setDialogReactNode(<InputOTPDialog />);
+				break;
 			case "new-password":
-				return <NewPasswordDialog />;
+				setDialogReactNode(<NewPasswordDialog />);
+				break;
 			case "register-with-facebook":
-				return <RegisterWithFacebookDialog />;
+				setDialogReactNode(<RegisterWithFacebookDialog />);
+				break;
 		}
-	};
+	}, [dialog]);
 
 	return (
-		<DialogAuthContext.Provider
-			value={{
-				showDialog: (type, callback) => {
-					setDialog(type);
-					setCallbackDialog(callback);
-				},
-				dialog: dialog,
-				callBacksDialog: callbackDialog,
-			}}>
-			<Dialog open={dialog !== "none"} onOpenChange={(value) => !value && setDialog("none")}>
-				{children}
-				<GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_KEY || ""}>{renderContent(dialog)}</GoogleOAuthProvider>
-			</Dialog>
-		</DialogAuthContext.Provider>
+		<Dialog open={dialog !== "none"} onOpenChange={(value) => !value && dispatch(showDialogWithCallback({ type: "none" }))}>
+			{children}
+			<GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_KEY || ""}>{dialogReactNode}</GoogleOAuthProvider>
+		</Dialog>
 	);
 }
 

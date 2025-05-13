@@ -6,8 +6,7 @@
  *  User: lam-nguyen
  **/
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
-import { KeyboardEvent, useContext, useEffect, useState } from "react";
-import { DialogAuthContext } from "@/context/DialogAuthContext.tsx";
+import { KeyboardEvent, useEffect, useState } from "react";
 import InputAuthentication from "@/components/authentication/ui/InputAuthentication.tsx";
 import { SubmitHandler, useForm } from "react-hook-form";
 import RegisterWithGoogleRequest from "@/domain/resquest/registerWithGoogle.request.ts";
@@ -17,9 +16,13 @@ import { ApiResponseError } from "@/domain/ApiResponseError.ts";
 import ConfirmDialog from "@/components/authentication/ConfirmDialog.tsx";
 import OtherLogin from "@/components/authentication/ui/OtherLogin.tsx";
 import InputPassword from "@/components/authentication/ui/InputPassword.tsx";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/configs/store.config.ts";
+import { hiddenDialog, showDialog } from "@/redux/slice/dialog.slice.ts";
 
 function RegisterWithGoogleDialog() {
-	const { showDialog, dialog } = useContext(DialogAuthContext);
+	const dispatch = useDispatch();
+	const { dialog } = useSelector((state: RootState) => state.dialog);
 	const [localDialog, setLocalDialog] = useState<"dialog" | "none" | "confirm">("none");
 	const {
 		register,
@@ -42,12 +45,12 @@ function RegisterWithGoogleDialog() {
 			.registerWithGoogle(data)
 			.then(() => {
 				setLocalDialog("dialog");
-				showDialog("none");
+				dispatch(hiddenDialog());
 			})
 			.catch((error: ApiResponseError<string>) => {
 				if (error.code == 90000012) {
 					setLocalDialog("dialog");
-					showDialog("none");
+					dispatch(hiddenDialog());
 				}
 			});
 	};
@@ -107,7 +110,7 @@ function RegisterWithGoogleDialog() {
 							</div>
 							<InputPassword errors={errors} register={register} enterKeyHandler={enterKeyHandler} onClick={handleSubmit(registerHandler)} />
 							<div className='auth-actions mt-2 flex w-full text-blue-800'>
-								<a href='#' className='!tw-text-base !tw-text-cm-blue' onClick={() => showDialog("login")}>
+								<a href='#' className='!tw-text-base !tw-text-cm-blue' onClick={() => dispatch(showDialog("login"))}>
 									Đăng nhập
 								</a>
 							</div>
@@ -117,14 +120,14 @@ function RegisterWithGoogleDialog() {
 			</Dialog>
 			<ConfirmDialog
 				open={localDialog === "confirm"}
-				onOpenChange={(value) => !value && showDialog("none")}
+				onOpenChange={(value) => !value && dispatch(hiddenDialog())}
 				onClickCancel={() => {
 					setLocalDialog("dialog");
 				}}
 				onClickSubmit={() => {
 					SessionStorage.deleteValue("REGISTER_TOKEN_USING_GOOGLE");
 					setLocalDialog("none");
-					showDialog("none");
+					dispatch(hiddenDialog());
 				}}
 			/>
 		</>

@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { LogosGoogleIcon } from "@/assets/images/icons/LogosGoogleIcon.tsx";
 import FacebookLogin from "@greatsumini/react-facebook-login";
 import { GgFacebook } from "@/assets/images/icons/GgFacebook.tsx";
@@ -6,24 +5,25 @@ import { useGoogleLogin } from "@react-oauth/google";
 import authenticationService from "@/services/authentication.service.ts";
 import { ApiResponseError } from "@/domain/ApiResponseError.ts";
 import SessionStorage from "@/utils/helper/SessionStorage.ts";
-import { DialogAuthContext } from "@/context/DialogAuthContext";
+import { useDispatch } from "react-redux";
+import { hiddenDialog, showDialog } from "@/redux/slice/dialog.slice.ts";
 
 function OtherLogin() {
-	const { showDialog } = useContext(DialogAuthContext);
+	const dispatch = useDispatch();
 
 	const googleLogin = useGoogleLogin({
 		onSuccess: async (tokenResponse) => {
 			await authenticationService
 				.loginWithGoogle({ "auth-code": tokenResponse.code })
 				.then(() => {
-					showDialog("none");
+					dispatch(hiddenDialog());
 				})
 				.catch((error) => {
 					const response = error.data as ApiResponseError<{ "register-token": string }>;
 					switch (response.code) {
 						case 90014:
 							SessionStorage.setValue("REGISTER_TOKEN_USING_GOOGLE", response.detail["register-token"]);
-							showDialog("register-with-google");
+							dispatch(showDialog("register-with-google"));
 							break;
 					}
 				});
@@ -36,14 +36,14 @@ function OtherLogin() {
 		await authenticationService
 			.loginWithFacebook({ access_token: accessToken })
 			.then(() => {
-				showDialog("none");
+				dispatch(hiddenDialog());
 			})
 			.catch((error) => {
 				const response = error.data as ApiResponseError<any>;
 				switch (response.code) {
 					case 90014:
 						SessionStorage.setValue("REGISTER_TOKEN_USING_FACEBOOK", response?.detail?.["register-token"] || "");
-						showDialog("register-with-facebook");
+						dispatch(showDialog("register-with-facebook"));
 						break;
 				}
 			});

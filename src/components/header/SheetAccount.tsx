@@ -5,15 +5,22 @@
  * Create at: 12:34PM - 30/03/2025
  *  User: lam-nguyen
  **/
-import { SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "@/components/ui/sheet.tsx";
+import {
+	SheetClose,
+	SheetContent,
+	SheetDescription,
+	SheetFooter,
+	SheetHeader,
+	SheetTitle,
+} from "@/components/ui/sheet.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { useNavigate } from "react-router";
-import { useContext } from "react";
-import { SheetAccountContext } from "@/context/SheetAccountContext.tsx";
+import { useDispatch } from "react-redux";
+import { hiddenSheet } from "@/redux/slice/sheet.slice.ts";
 
 function SheetAccount() {
 	const navigate = useNavigate();
-	const { setSheetAccount } = useContext(SheetAccountContext);
+	const dispatch = useDispatch();
 
 	return (
 		<SheetContent className={"px-5"}>
@@ -25,7 +32,7 @@ function SheetAccount() {
 				<button
 					className={"px-4 py-2"}
 					onClick={() => {
-						setSheetAccount(false);
+						dispatch(hiddenSheet());
 						navigate("/test");
 					}}>
 					Change page test
