@@ -3,7 +3,7 @@
 */
 
 import { motion, useMotionValue, useTransform } from "framer-motion";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { cn } from "@/lib/utils.ts";
 
 interface CardRotateProps {
@@ -51,7 +51,7 @@ interface StackProps {
 	className: string;
 }
 
-export default function Stack({
+function Stack({
 	randomRotation = false,
 	sensitivity = 200,
 	// cardDimensions = { width: 208, height: 208 },
@@ -103,7 +103,7 @@ export default function Stack({
 			}}>
 			{cards.map((card, index) => {
 				const randomRotate = randomRotation
-					? Math.random() * 10 - 5 // Random degree between -5 and 5
+					? Math.random() * 5 - 10 // Random degree between -5 and 5
 					: 0;
 
 				return (
@@ -112,8 +112,8 @@ export default function Stack({
 							className={cn("overflow-hidden rounded-2xl border-4 border-neutral-400", className)}
 							onClick={() => sendToBackOnClick && sendToBack(card.id)}
 							animate={{
-								rotateZ: (cards.length - index - 1) * 4 + randomRotate,
-								scale: 1 + index * 0.06 - cards.length * 0.06,
+								rotateZ: (cards.length - index - 1) + randomRotate,
+								scale:  0.8 ,
 								transformOrigin: "50% 50%",
 							}}
 							initial={false}
@@ -136,3 +136,5 @@ export default function Stack({
 		</div>
 	);
 }
+
+export default memo(Stack);

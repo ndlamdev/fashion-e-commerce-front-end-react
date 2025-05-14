@@ -27,8 +27,7 @@ import { Accordion, AccordionContent, AccordionTrigger } from "@/components/ui/a
 import { AccordionItem } from "@radix-ui/react-accordion";
 import ZaloIcon from "@/assets/images/icons/ZaloIcon.tsx";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible.tsx";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel.tsx";
-import CardProduct from "@/components/card-product/CardProduct.tsx";
+import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from "@/components/ui/carousel.tsx";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select.tsx";
@@ -43,44 +42,55 @@ import {
 	PaginationPrevious,
 } from "@/components/ui/pagination.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import Gift from "@/components/product-detail/Gift.tsx";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import Rate from "@/components/product-detail/Rate.tsx";
 import { SameRadioGroup, SameRadioGroupItem } from "@/components/radio-group/SameRadioGroup.tsx";
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useParams } from "react-router";
 import { formatCurrency } from "@/utils/helper/format-data.ts";
 import { getSizeSuggestion } from "@/utils/sizeModelManage.ts";
 import { useGetProductQuery } from "@/services/product.service.ts";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import { ProductVariantsType } from "@/types/product/productVariants.type.ts";
-import { getColors, getSizes } from "@/utils/helper/ProductFilter.ts";
-import { OptionType, ProductOptionType, ProductOptionValueType } from "@/types/product/productOption.type.ts";
+import { OptionType } from "@/types/product/productOption.type.ts";
+import { ProductImageType } from "@/types/product/productImage.type.ts";
 
 export default function ProductDetailPage() {
 	const { id } = useParams();
 	const { data, isLoading } = useGetProductQuery(id);
 	const RESOURCE_IMAGE = import.meta.env.VITE_BASE_MEDIA_URL;
-	const [variants, setVariants] = useState<ProductVariantsType | undefined>();
 	const [colorSelected, setColorSelected] = useState<string | undefined>();
 	const [sizeSelected, setSizeSelected] = useState<string | undefined>();
-	const [cardData, setCardData] = useState<{id: number, img: string}[] | undefined>()
+	const [imagesColor, setImagesColor] = useState<(ProductImageType | undefined) []>();
+
 	useEffect(() => {
-		if(data){
-			setVariants(data.data.variants[0]);
+		if (data) {
 			setColorSelected(data.data.variants[0].options.COLOR);
-			setCardData(data.data.options_value.find(item => item.title === colorSelected)?.images.map((item, index) => ({
-				id: index,
-				img: item.src,
-			})));
+			setSizeSelected(data.data.variants[0].options.SIZE);
+			const colorOptions = data?.data.options_value.find(opt => opt.type === OptionType.COLOR);
+			const colorValues = data.data.options.find(opt => opt.type === OptionType.COLOR)?.values
+			setImagesColor(colorValues
+				?.map((color: string) => {
+					return colorOptions?.options?.find((item) => item.title === color)?.images[0];
+				}))
 		}
-	}, [colorSelected, data]);
-	// const cardData = data?.data.options_value.find((item) => item.title === colorSelected)?.images.map((item, index) => ({
-	// 	id: index,
-	// 	img: RESOURCE_IMAGE + item.src
-	// }))
+	}, [data]);
+	const variants = useMemo(() => {
+		return data?.data.variants.find(v => v.options.COLOR === colorSelected && v.options.SIZE === sizeSelected);
+	}, [data, colorSelected, sizeSelected]);
+
+	const cardData = useMemo(() => {
+
+		const images = data?.data.options_value.find(opt => opt.type === OptionType.COLOR)
+			?.options?.find(item => item.title === colorSelected)?.images;
+
+		return images?.map((item, index) => ({
+			id: index,
+			img: RESOURCE_IMAGE + item.src,
+		}));
+	}, [data, colorSelected, RESOURCE_IMAGE]);
+
 	// handle decrement/increment quanlity buy
 	const [boughtQuantity, setBoughtQuantity] = useState<number>(1);
 	const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -94,19 +104,17 @@ export default function ProductDetailPage() {
 	useEffect(() => {
 		const handleScroll = () => {
 			if (!triggerRef.current) return;
-
 			const triggerTop = triggerRef.current.getBoundingClientRect().top;
 			setIsVisible(triggerTop < 0); // Khi trigger vào giữa màn hình thì hiện
 		};
-
 		window.addEventListener("scroll", handleScroll);
 		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
 
-	if (isLoading) return <Skeleton className={"w-full h-full"} />;
+	if (isLoading) return <Skeleton className={"w-screen h-screen"} />;
 	return (
-		<div className={"pb-10"}>
-			<div className={"my-6 p-2 sm:p-4 lg:mx-10 xl:mx-20"}>
+		<main className={"pb-10"}>
+			<section className={"my-6 p-2 sm:p-4 lg:mx-10 xl:mx-20"}>
 				<Breadcrumb className={"px-15"}>
 					<BreadcrumbList>
 						<BreadcrumbItem>
@@ -127,29 +135,29 @@ export default function ProductDetailPage() {
 					</BreadcrumbList>
 				</Breadcrumb>
 				<div className={"mt-2 grid grid-cols-1 md:grid-cols-2 md:grid-rows-1 md:gap-4"}>
-					<Stack
+					{cardData? <Stack
 						randomRotation={true}
-						sensitivity={90}
+						sensitivity={200}
 						sendToBackOnClick={true}
 						cardsData={cardData}
-						className={"grid h-dvw w-full place-items-center md:h-150 lg:h-200 xl:h-200"}
-					/>
+						className={"grid h-dvw w-full place-items-center md:h-150 lg:h-200 xl:h-200 object-cover"}
+					/>: <Skeleton className={'w-full'}/>}
 
 					<div className={"w-full"}>
 						<p className={"mb-0 text-base font-bold md:text-lg lg:text-2xl"}>{data?.data.title}</p>
 						<p className={"mb-4 text-base text-neutral-400"}>{data?.data.display_name_open}</p>
-						<p className={"mb-5 flex space-x-10"}>
-							<p className={"flex items-center space-x-25"}>
+						<span className={"mb-5 flex space-x-10"}>
+							<span className={"flex items-center space-x-25"}>
 								<Rate disabled={true} allowHalf={true} defaultValue={data?.data.review?.ratingValue}
 											className={"size-4 flex-none! fill-black md:size-5! xl:size-6"} />
 								<span
 									className={"text-end sm:text-center lg:pe-4 lg:text-start"}>({data?.data.review?.reviewCount})</span>
-							</p>
+							</span>
 
 							<span className={"flex cursor-pointer items-center text-sm font-bold text-blue-600"}>
 										<Share2 className={"me-1 size-3 fill-blue-800"} /> <span> chia sẻ</span>
 									</span>
-						</p>
+						</span>
 						{data?.data.discount && <p
 							className={"text-sm text-neutral-400 line-through md:text-base"}>{formatCurrency(variants?.regular_price as number)}</p>}
 						<p className={"flex font-bold"}>
@@ -195,14 +203,25 @@ export default function ProductDetailPage() {
 						</p>
 						<SameRadioGroup onValueChange={setColorSelected} defaultValue={colorSelected}
 														className={"flex flex-wrap gap-4"}>
-							{data && data?.data.options.find((option) => option. === OptionType.COLOR)?.values.map((color, index) => (
+							{data && data?.data.options.find((option) => option.type === OptionType.COLOR)?.values?.map((color, index) => (
 								<SameRadioGroupItem
 									key={index}
-									className={"cursor-pointer rounded-sm px-4 py-2 lg:rounded-full lg:px-6 lg:py-4"}
+									className={"cursor-pointer rounded-sm px-4 py-2 lg:rounded-full lg:px-6 lg:py-4 "}
 									value={color}
+									checked={color == colorSelected}
+									id={color}
+									style={{
+										backgroundImage: imagesColor ? `url("${RESOURCE_IMAGE + imagesColor[index]?.src}")` : ``,
+										objectFit: "fill",
+										backgroundSize: "auto",
+										backgroundPosition: "center",
+									}}
 								>
-									<span
-										className="rounded-sm px-4 py-2 outline-2 outline-offset-2 outline-blue-700 lg:rounded-full lg:px-6 lg:py-4"></span>
+									<Label
+										htmlFor={color}
+										className="  box-content 	rounded-sm outline-2 outline-offset-2 outline-blue-700 lg:rounded-full lg:px-6 lg:py-4 object-center
+										">
+									</Label>
 								</SameRadioGroupItem>
 							))}
 						</SameRadioGroup>
@@ -224,7 +243,7 @@ export default function ProductDetailPage() {
 							</p>
 							<div className="mb-3 flex flex-wrap gap-3">
 								<SameRadioGroup className="flex flex-wrap gap-4" onValueChange={setSizeSelected}>
-									{getSizes(data?.data.variants, colorSelected).map((size, index) => {
+									{data && data?.data.options.find((option) => option.type === OptionType.SIZE)?.values?.map((size, index) => {
 										return (
 											<HoverCard key={index}>
 												<HoverCardTrigger className={"relative"}>
@@ -235,6 +254,7 @@ export default function ProductDetailPage() {
 													<SameRadioGroupItem
 														className={"l:h-8 absolute top-0 h-8 w-12 cursor-pointer rounded-sm lg:w-20 lg:rounded-full"}
 														value={size}
+														checked={size === sizeSelected}
 													>
 														<span
 															className="h-8 w-12 place-content-center rounded-sm bg-black text-center text-white uppercase lg:h-8 lg:w-20 lg:rounded-full">
@@ -261,9 +281,10 @@ export default function ProductDetailPage() {
 
 						<div className="mb-3 flex">
 							<Input onChange={handleQuantityChange} value={boughtQuantity}
-										 className={"me-3! w-1/4 rounded-2xl! text-center"} type={"number"} />
+										 className={"me-3! w-1/4 rounded-2xl! text-center"} type={"number"} min={1}/>
 							<Button
 								className={"flex w-3/4 cursor-pointer items-center rounded-2xl text-center text-xs hover:bg-neutral-300 hover:text-black sm:text-sm"}
+								disabled={!sizeSelected}
 								variant="default">
 								<ShoppingBag className={""} />
 								<span>{sizeSelected ? "Thêm vào giỏ hàng" : "Chọn kích thước"}</span>
@@ -316,7 +337,7 @@ export default function ProductDetailPage() {
 						</div>
 					</div>
 				</div>
-			</div>
+			</section>
 
 			<Collapsible className={"group relative bg-neutral-200 py-5 text-sm lg:px-10 xl:px-20"}>
 				<p className={"text-center font-bold uppercase sm:text-xl md:text-4xl"}>Mô tả sản phẩm</p>
@@ -356,21 +377,21 @@ export default function ProductDetailPage() {
 				<CarouselNext className={"right-2 rounded-2xl! outline-0"} />
 			</Carousel>
 
-			<div className="mt-10 bg-neutral-100 px-4 sm:flex-none sm:ps-5 md:flex md:p-5">
+			<section className="mt-10 bg-neutral-100 px-4 sm:flex-none sm:ps-5 md:flex md:p-5">
 				<p className="pr-10 text-xl font-bold uppercase md:w-1/4 md:content-center md:text-4xl lg:px-12">Đánh giá sản
 					phẩm</p>
 				<div className="content-center md:w-3/4">
-					<p className="mb-0 flex items-center text-3xl font-bold md:text-8xl">
-						<span className={"mr-2"}>4.8</span>
-						<Rate className={"fill-orange-400 stroke-orange-400 md:size-8! lg:size-12!"} defaultValue={4.8}
+					<span className="mb-0 flex items-center text-3xl font-bold md:text-8xl">
+						<span className={"mr-2"}>{data?.data.review.ratingValue}</span>
+						<Rate className={"fill-orange-400 stroke-orange-400 md:size-8! lg:size-12!"} defaultValue={data?.data.review.ratingValue}
 									disabled={true} allowHalf={true} />
-					</p>
+					</span>
 					<p className="fw-bold text-sm text-gray-500 md:mb-10">
-						Dựa trên <span className="text-gray-800">X</span> đánh giá đến từ khách hàng
+						Dựa trên <span className="text-gray-800">{data?.data.review.reviewCount}</span> đánh giá đến từ khách hàng
 					</p>
 				</div>
-			</div>
-			<div className="relative flex flex-wrap bg-neutral-100 p-5 pt-0">
+			</section>
+			<section className="relative flex flex-wrap bg-neutral-100 p-5 pt-0">
 				<div className="w-full max-md:hidden md:flex-none lg:w-1/4 lg:px-5 xl:px-12">
 					<Input className={"my-4 rounded-2xl bg-white max-md:visible"} placeholder="Tìm kiếm đánh giá" />
 
@@ -533,7 +554,7 @@ export default function ProductDetailPage() {
 						</PaginationContent>
 					</Pagination>
 				</div>
-			</div>
+			</section>
 
 			<p className={"mt-10 py-3 text-center font-bold uppercase sm:text-xl md:text-4xl"}>Sản phẩm bạn đã xem</p>
 			<Carousel className="w-full px-0 lg:px-5 xl:px-10">
@@ -548,50 +569,58 @@ export default function ProductDetailPage() {
 				<CarouselNext className={"right-2 rounded-2xl! outline-0"} />
 			</Carousel>
 
-			<div
+			<article
 				className={`fixed top-0 z-50 w-full -translate-y-full overflow-hidden border-gray-200 bg-white opacity-1 transition-all duration-900 ease-in-out ${isVisible ? "lg:h-auto lg:translate-y-0 lg:opacity-100" : "-translate-y-full overflow-hidden opacity-0"}`}>
 				<div className="flex">
-					<div className="flex border-r-1">
-						<img src={data?.data.images[0].src} alt={`${variants?.title}`} className="w-16 object-cover" />
+					<section className="flex border-r-1">
+						<img src={RESOURCE_IMAGE + data?.data.images[0].src} alt={`${variants?.title}`} className="w-16 object-cover" />
 						<div className="p-4">
-							<p className="flex flex-wrap gap-1">
+							<span className="flex flex-wrap gap-1">
 								<Rate className={"fill-black stroke-black"} defaultValue={3.5} allowHalf disabled />
 								<p className="col-span-2 text-xs xl:text-sm">
 									<span className="pe-2 before:content-['|']"> {data?.data.review?.reviewCount}</span>
 									<span className="before:content-['|']"> Đã bán (web): {data?.data.display_order}</span>
 								</p>
-							</p>
-							<p className="flex flex-wrap items-center gap-4 font-bold">
+							</span>
+							<span className="flex flex-wrap items-center gap-4 font-bold">
 								<p
 									className={"text-lg xl:text-xl"}>{formatCurrency((data?.data.discount && variants) ? variants.regular_price * (1 - data?.data.discount.percent / 100) : variants?.regular_price as number)}</p>
 								{data?.data.discount &&
 									<Badge className="rounded-lg bg-blue-700 text-sm text-white">-{data?.data.discount.percent}%</Badge>}
-								<span className="text-sm text-gray-400 line-through">{variants?.regular_price}</span>
-							</p>
+								{data?.data.discount && <span className="text-sm text-gray-400 line-through">{variants?.regular_price}</span>}
+							</span>
 						</div>
-					</div>
+					</section>
 
-					<div className="border-r-1 border-gray-200">
+					<section className="border-r-1 border-gray-200">
 						<div className="p-2">
 							<p className="mb-3 text-sm">
 								<span>Màu sắc:</span>
 								<span className={"font-bold"}> {colorSelected}</span>
 							</p>
-							<SameRadioGroup onValueChange={setSizeSelected} value={colorSelected}
+							<SameRadioGroup onValueChange={setColorSelected}
 															className="flex flex-wrap gap-4">
-								{getColors(data?.data.variants).map((color, index) => (
+								{data && data?.data.options.find((option) => option.type === OptionType.COLOR)?.values?.map((color, index) => (
 									<SameRadioGroupItem
 										className={"rounded-sm bg-black px-6 py-4"}
 										value={color}
-										key={index}>
+										key={index}
+										style={{
+											backgroundImage: imagesColor ? `url("${RESOURCE_IMAGE + imagesColor[index]?.src}")` : ``,
+											objectFit: "fill",
+											backgroundSize: "auto",
+											backgroundPosition: "center",
+										}}
+										checked={color === colorSelected}
+									>
 										<span className="rounded-xs px-6 py-4 outline-2 outline-offset-2 outline-blue-700"></span>
 									</SameRadioGroupItem>
 								))}
 							</SameRadioGroup>
 						</div>
-					</div>
+					</section>
 
-					<div className="flex-none border-r-1 border-gray-200">
+					<section className="flex-none border-r-1 border-gray-200">
 						<div className="p-2">
 							<p className="mb-3 text-sm">
 								<span>Kích thước:</span>
@@ -603,8 +632,8 @@ export default function ProductDetailPage() {
 									</span>
 								)}
 							</p>
-							<SameRadioGroup onValueChange={setSizeSelected} value={sizeSelected} className="flex flex-wrap gap-4">
-								{getSizes(data?.data.variants, colorSelected).map((size, index) => {
+							<SameRadioGroup onValueChange={setSizeSelected} className="flex flex-wrap gap-4">
+								{data && data?.data.options.find((option) => option.type === OptionType.SIZE)?.values?.map((size, index) => {
 									return (
 										<HoverCard key={index}>
 											<HoverCardTrigger className={"relative"}>
@@ -612,7 +641,7 @@ export default function ProductDetailPage() {
 													<span>{size}</span>
 												</div>
 												<SameRadioGroupItem className={"absolute top-0 h-10 w-12 cursor-pointer rounded-sm"}
-																						value={size}>
+																						value={size} checked={sizeSelected === size}>
 													<span
 														className="h-10 w-12 place-content-center rounded-sm bg-black text-center text-white uppercase">{size}</span>
 												</SameRadioGroupItem>
@@ -634,20 +663,20 @@ export default function ProductDetailPage() {
 								})}
 							</SameRadioGroup>
 						</div>
-					</div>
+					</section>
 
-					<div className="flex grow items-center px-2">
+					<section className="flex grow items-center px-2">
 						<Input onChange={handleQuantityChange} value={boughtQuantity}
-									 className={"me-3! w-1/4 rounded-2xl! text-center"} type={"number"} />
+									 className={"me-3! w-1/4 rounded-2xl! text-center"} type={"number"} min={1}/>
 						<Button
 							className={"flex w-3/4 cursor-pointer items-center rounded-2xl text-center hover:bg-neutral-300 hover:text-black"}
 							variant="default">
 							<ShoppingBag className={"mx-2 inline-block size-6"} />
 							<span>{sizeSelected ? "Thêm vào giỏ hàng" : "Chọn kích thước"}</span>
 						</Button>
-					</div>
+					</section>
 				</div>
-			</div>
-		</div>
+			</article>
+		</main>
 	);
 }

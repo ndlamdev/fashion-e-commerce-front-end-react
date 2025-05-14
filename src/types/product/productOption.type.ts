@@ -3,7 +3,8 @@ import { ProductImageType } from "@/types/product/productImage.type.ts";
 export type ProductOptionType = {
 	type: OptionType,
 	title: string;
-	values: string[];
+	values?: string[];
+	options?: ProductOptionValueType[]
 }
 
 export type ProductOptionValueType = {
