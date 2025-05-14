@@ -65,7 +65,7 @@ function Header({ showMenu }: HeaderProps) {
 						</div>
 					</div>
 					<div className={"search-component relative block lg:hidden"}>
-						<AnimatePresence initial={false} onExitComplete={() => setSearchAction("HIDDEN")}>
+						<AnimatePresence initial={true} onExitComplete={() => setSearchAction("HIDDEN")}>
 							{searchAction === "SEARCH" && (
 								<motion.div
 									animate={{ width: "100vw", opacity: 1, left: -54 }}

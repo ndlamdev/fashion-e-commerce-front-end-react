@@ -48,7 +48,7 @@ const FileDropZone: React.FC = () => {
 				},
 			});
 		},
-		[navigate],
+		[dispatch, navigate],
 	);
 
 	const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
