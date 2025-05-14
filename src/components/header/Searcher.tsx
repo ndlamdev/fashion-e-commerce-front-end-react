@@ -22,9 +22,9 @@ function Searcher(props?: InputProps) {
 			inputClassName={"p-1 text-sm"}
 			rightIcon={
 				<div className={"flex gap-1"}>
-					<LucideSearch width={25} height={25} />
-					<CilMicrophone width={25} height={25} />
-					<SystemUiconsPicture width={25} height={25} onClick={() => dispatch(setSheetType("FILE_SEARCH"))} />
+					<LucideSearch width={25} height={25} className={"cursor-pointer"} />
+					<CilMicrophone width={25} height={25} className={"cursor-pointer"} />
+					<SystemUiconsPicture width={25} height={25} className={"cursor-pointer"} onClick={() => dispatch(setSheetType("FILE_SEARCH"))} />
 				</div>
 			}
 			{...props}
