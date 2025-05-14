@@ -1,4 +1,4 @@
-import { ProductImageType } from "@/types/product/productImage.type.ts";
+import ProductImageType from "@/types/product/productImage.type.ts";
 
 export type ProductOptionType = {
 	type: OptionType,

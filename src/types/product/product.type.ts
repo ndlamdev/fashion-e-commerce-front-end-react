@@ -1,9 +1,9 @@
 import { ProductOptionType } from "@/types/product/productOption.type.ts";
-import { ProductImageType } from "@/types/product/productImage.type.ts";
 import { ProductTagType } from "@/types/product/productTag.type.ts";
 import { ProductVariantsType } from "@/types/product/productVariants.type.ts";
 import { ProductReviewType } from "@/types/product/productReview.type.ts";
 import { GenderType } from "@/types/profile/customer.type.ts";
+import ProductImageType from "@/types/product/productImage.type.ts";
 
 type ProductType = {
 	id: string;

@@ -1,4 +1,4 @@
-import { OptionType, ProductOptionType } from "@/types/product/productOption.type.ts";
+import { ProductOptionType } from "@/types/product/productOption.type.ts";
 import ProductImageType from "@/types/product/productImage.type.ts";
 import { ProductTagType } from "@/types/product/productTag.type.ts";
 import { ProductVariantsType } from "@/types/product/productVariants.type.ts";
@@ -16,7 +16,7 @@ type ProductResponseType = {
 	images: ProductImageType[];
 	available: boolean;
 	variants: ProductVariantsType[];
-	options_value: OptionValueType[];
+	options_value: ProductOptionType[];
 	discount: DiscountType;
 	review: ProductReviewType;
 	is_lock: boolean;
@@ -37,17 +37,4 @@ type DiscountType = {
 	start: Date;
 	end: Date;
 };
-type OptionValueType = {
-	title: string;
-	type: OptionType;
-	values: OptionValueItemType[];
-};
-
-type OptionValueItemType = {
-	title: string;
-	label: string;
-	slug: string;
-	images: ProductImageType[];
-};
-
 export default ProductResponseType;
