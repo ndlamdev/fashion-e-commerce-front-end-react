@@ -7,6 +7,8 @@ export type DialogProfileContextProps = {
 };
 
 export const DialogProfileContext = createContext<DialogProfileContextProps>({
-	showDialog: () => {},
+	showDialog: (type: DialogTypeEnum) => {
+		console.log("DialogProfileContext", type);
+	},
 	dialog: "none",
 })

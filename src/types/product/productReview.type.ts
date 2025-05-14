@@ -6,4 +6,4 @@ export type ProductReviewType = {
 	reviewCount: number;
 	bestRating: number;
 	worstRating: number;
-}
+};

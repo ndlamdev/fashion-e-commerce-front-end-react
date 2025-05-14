@@ -1,5 +1,4 @@
 import { ReactNode, useState } from "react";
-import { DialogProfileContext } from "@/context/dialogProfileContext.props.ts";
 import DialogTypeEnum from "@/utils/enums/dialog.type.enum.ts";
 import SaveAddressDialog from "@/components/profile/dialog/SaveAddressDialog.tsx";
 import EditInfoProfileDialog from "@/components/profile/dialog/EditInfoProfileDialog.tsx";
@@ -13,13 +12,13 @@ export const DialogProfileProvider = ({ children }: { children: ReactNode }) => 
 			case "none":
 				return <></>;
 			case "reset-password":
-				return <ResetPasswordDialog/>;
+				return <ResetPasswordDialog />;
 			case "save-address":
-				return <SaveAddressDialog/>;
+				return <SaveAddressDialog />;
 			case "edit-info-profile":
 				return <EditInfoProfileDialog />;
 		}
-	}
+	};
 	return (
 		<DialogProfileContext.Provider
 			value={{
@@ -33,4 +32,4 @@ export const DialogProfileProvider = ({ children }: { children: ReactNode }) => 
 			</Dialog>
 		</DialogProfileContext.Provider>
 	);
-}
+};

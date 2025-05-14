@@ -5,24 +5,38 @@
  * Create at: 12:43 PM - 18/04/2025
  *  User: kimin
  **/
-import { SheetAccountContext } from "@/context/SheetAccountContext.tsx";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import SheetAccount from "@/components/header/SheetAccount.tsx";
+import SheetFileSearch from "@/components/header/SheetFileSearch.tsx";
 import { Sheet } from "@/components/ui/sheet.tsx";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/configs/store.config.ts";
+import { hiddenSheet } from "@/redux/slice/sheet.slice.ts";
+
+export type SheetType = "ACCOUNT" | "FILE_SEARCH" | "NONE";
 
 function SheetAccountProvider({ children }: { children: ReactNode }) {
-	const [sheetAccount, setSheetAccount] = useState(false);
+	const { sheetType } = useSelector((state: RootState) => state.sheet);
+	const dispatch = useDispatch();
+	const [listElements, setListElements] = useState<ReactNode>();
+
+	useEffect(() => {
+		switch (sheetType) {
+			case "ACCOUNT":
+				setListElements(<SheetAccount />);
+				break;
+			case "FILE_SEARCH":
+				setListElements(<SheetFileSearch />);
+				break;
+			case "NONE":
+		}
+	}, [sheetType]);
+
 	return (
-		<SheetAccountContext.Provider
-			value={{
-				sheetAccount: sheetAccount,
-				setSheetAccount: setSheetAccount,
-			}}>
-			<Sheet open={sheetAccount} onOpenChange={(value) => setSheetAccount(value)}>
-				{children}
-				<SheetAccount />
-			</Sheet>
-		</SheetAccountContext.Provider>
+		<Sheet open={sheetType !== "NONE"} onOpenChange={(value) => !value && dispatch(hiddenSheet())}>
+			{children}
+			{listElements}
+		</Sheet>
 	);
 }
 

@@ -6,16 +6,19 @@
  *  User: lam-nguyen
  **/
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
-import { useContext, useEffect, useState } from "react";
-import { DialogAuthContext } from "@/context/DialogAuthContext.tsx";
+import { useEffect, useState } from "react";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp.tsx";
 import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentication.tsx";
 import { useForm } from "react-hook-form";
 import OTPRequest from "@/domain/resquest/otp.request.ts";
 import ConfirmDialog from "@/components/authentication/ConfirmDialog.tsx";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/configs/store.config.ts";
+import { hiddenDialog } from "@/redux/slice/dialog.slice";
 
 function InputOTPDialog() {
-	const { showDialog, dialog, callBacksDialog } = useContext(DialogAuthContext);
+	const dispatch = useDispatch();
+	const { dialog, callBacksDialog } = useSelector((state: RootState) => state.dialog);
 	const [openDialog, setOpenDialog] = useState<"none" | "show-confirm" | "show-dialog">("none");
 	const {
 		setValue,
@@ -86,13 +89,13 @@ function InputOTPDialog() {
 			</Dialog>
 			<ConfirmDialog
 				open={openDialog === "show-confirm"}
-				onOpenChange={(value) => !value && showDialog("none")}
+				onOpenChange={(value) => !value && dispatch(hiddenDialog())}
 				onClickCancel={() => {
 					setOpenDialog("show-dialog");
 				}}
 				onClickSubmit={() => {
 					setOpenDialog("none");
-					showDialog("none");
+					dispatch(hiddenDialog());
 				}}
 			/>
 		</>

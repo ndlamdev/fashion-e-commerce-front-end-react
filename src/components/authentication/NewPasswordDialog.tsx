@@ -6,17 +6,20 @@
  *  User: lam-nguyen
  **/
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
-import { KeyboardEvent, useContext, useEffect, useState } from "react";
-import { DialogAuthContext } from "@/context/DialogAuthContext.tsx";
+import { KeyboardEvent, useEffect, useState } from "react";
 import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentication.tsx";
 import InputAuthentication from "@/components/authentication/ui/InputAuthentication.tsx";
 import { SubmitHandler, useForm } from "react-hook-form";
 import NewPasswordRequest from "@/domain/resquest/newPassword.request.ts";
 import authenticationService from "@/services/authentication.service.ts";
 import ConfirmDialog from "@/components/authentication/ConfirmDialog.tsx";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/configs/store.config.ts";
+import { hiddenDialog, showDialog } from "@/redux/slice/dialog.slice.ts";
 
 function ForgotPasswordDialog() {
-	const { showDialog, dialog } = useContext(DialogAuthContext);
+	const { dialog } = useSelector((state: RootState) => state.dialog);
+	const dispatch = useDispatch();
 	const [openDialog, setOpenDialog] = useState<"none" | "show-confirm" | "show-dialog">("none");
 	const {
 		register,
@@ -28,7 +31,7 @@ function ForgotPasswordDialog() {
 
 	const onSubmit: SubmitHandler<Omit<NewPasswordRequest, "token">> = (data) => {
 		authenticationService.setNewPassword(data).then(() => {
-			showDialog("login");
+			dispatch(showDialog("login"));
 		});
 	};
 
@@ -47,7 +50,7 @@ function ForgotPasswordDialog() {
 
 	return (
 		<>
-			<Dialog open={openDialog === "show-dialog"} onOpenChange={(value) => !value && showDialog("none")}>
+			<Dialog open={openDialog === "show-dialog"} onOpenChange={(value) => !value && dispatch(hiddenDialog())}>
 				<DialogContent
 					aria-describedby={""}
 					className={"sm:max-w-[525px]"}
@@ -90,13 +93,13 @@ function ForgotPasswordDialog() {
 			</Dialog>
 			<ConfirmDialog
 				open={openDialog === "show-confirm"}
-				onOpenChange={(value) => !value && showDialog("none")}
+				onOpenChange={(value) => !value && dispatch(hiddenDialog())}
 				onClickCancel={() => {
 					setOpenDialog("show-dialog");
 				}}
 				onClickSubmit={() => {
 					setOpenDialog("none");
-					showDialog("none");
+					dispatch(hiddenDialog());
 				}}
 			/>
 		</>

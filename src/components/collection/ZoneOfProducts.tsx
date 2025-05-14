@@ -1,7 +1,7 @@
 import { ZoneOfProductsProps } from "@/components/collection/props/zoneOfProducts.props.ts";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb.tsx";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select.tsx";
-import ProductType from "@/types/product/product.type.ts";
+import ProductResponseType from "@/types/product/productResponse.type.ts";
 import CardProduct from "@/components/card-product/CardProduct.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { useReducer } from "react";
@@ -84,7 +84,7 @@ export default function ZoneOfProducts(props: ZoneOfProductsProps) {
 
 			<div className='my-4 flex flex-wrap border-b-1 border-gray-300'>
 				{props.showProducts &&
-					props.showProducts.map((item: ProductType) => (
+					props.showProducts.map((item: ProductResponseType) => (
 						<CardProduct className={"h-auto w-[30vw] basis-1/2 sm:w-full lg:h-100 lg:basis-1/3 xl:basis-1/4"} {...item} key={item.id} />
 					))}
 			</div>

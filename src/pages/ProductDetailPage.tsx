@@ -1,26 +1,5 @@
-import {
-	Breadcrumb,
-	BreadcrumbItem,
-	BreadcrumbLink,
-	BreadcrumbList,
-	BreadcrumbPage,
-	BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb.tsx";
-import {
-	ArrowRight,
-	CalendarSync,
-	Check,
-	Crown,
-	MapPinHouse,
-	PhoneCall,
-	RefreshCcw,
-	Share2,
-	ShoppingBag,
-	Slash,
-	Square,
-	Ticket,
-	Truck,
-} from "lucide-react";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb.tsx";
+import { ArrowRight, CalendarSync, Check, Crown, MapPinHouse, PhoneCall, RefreshCcw, Share2, ShoppingBag, Slash, Square, Ticket, Truck } from "lucide-react";
 import Stack from "@/components/Stack/Stack.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Accordion, AccordionContent, AccordionTrigger } from "@/components/ui/accordion.tsx";
@@ -46,7 +25,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
 import { Input } from "@/components/ui/input.tsx";
 import Rate from "@/components/product-detail/Rate.tsx";
 import { SameRadioGroup, SameRadioGroupItem } from "@/components/radio-group/SameRadioGroup.tsx";
-import { ChangeEvent, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState,  useMemo, useContext,} from "react";
 import { toast } from "sonner";
 import { useParams } from "react-router";
 import { formatCurrency } from "@/utils/helper/format-data.ts";
@@ -67,7 +46,7 @@ export default function ProductDetailPage() {
 	const [imagesColor, setImagesColor] = useState<(ProductImageType | undefined) []>();
 
 	useEffect(() => {
-		if (data) {
+		if (!data) return
 			setColorSelected(data.data.variants[0].options.COLOR);
 			setSizeSelected(data.data.variants[0].options.SIZE);
 			const colorOptions = data?.data.options_value.find(opt => opt.type === OptionType.COLOR);
@@ -76,7 +55,7 @@ export default function ProductDetailPage() {
 				?.map((color: string) => {
 					return colorOptions?.options?.find((item) => item.title === color)?.images[0];
 				}));
-		}
+
 	}, [data]);
 	const variants = useMemo(() => {
 		return data?.data.variants.find(v => v.options.COLOR === colorSelected && v.options.SIZE === sizeSelected);
@@ -106,16 +85,17 @@ export default function ProductDetailPage() {
 	useEffect(() => {
 		const handleScroll = () => {
 			if (!triggerRef.current) return;
+
 			const triggerTop = triggerRef.current.getBoundingClientRect().top;
 			setIsVisible(triggerTop < 0); // Khi trigger vào giữa màn hình thì hiện
 		};
+
 		window.addEventListener("scroll", handleScroll);
 		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
 
 	if (isLoading) return <Skeleton className={"w-screen h-screen"} />;
 	return (
-		<>
 			<main className={"pb-10"}>
 				<section className={"my-6 p-2 sm:p-4 lg:mx-10 xl:mx-20"}>
 					<Breadcrumb className={"px-15"}>
@@ -690,6 +670,5 @@ export default function ProductDetailPage() {
 					</div>
 				</article>
 			</main>
-		</>
 	);
 }
