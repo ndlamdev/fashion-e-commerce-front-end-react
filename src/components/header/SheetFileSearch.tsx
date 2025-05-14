@@ -6,18 +6,86 @@
  *  User: lam-nguyen
  **/
 import { SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet.tsx";
+import { SolarCloudDownloadLinear } from "@/assets/images/icons/SolarCloudDownloadLinear.tsx";
+import React, { useCallback, useRef, useState } from "react";
+import { useNavigate } from "react-router";
+import { hiddenSheet } from "@/redux/slice/sheet.slice.ts";
+import { useDispatch } from "react-redux";
 
 function SheetFileSearch() {
 	return (
-		<SheetContent className={"px-5"} side={"top"}>
+		<SheetContent className={"p-5"} side={"top"}>
 			<SheetHeader>
 				<SheetTitle>Tìm kiếm bằng hình ảnh</SheetTitle>
 			</SheetHeader>
-			<div className={"flex items-center justify-between"}>
-				<div className={"h-[20%] w-[70%] rounded-lg border border-gray-200"}>hello</div>
+			<div className={"flex justify-center"}>
+				<FileDropZone />
 			</div>
 		</SheetContent>
 	);
 }
+
+const FileDropZone: React.FC = () => {
+	const fileInputRef = useRef<HTMLInputElement>(null);
+	const [isDragging, setIsDragging] = useState(false);
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
+	const handleSetFile = useCallback(
+		(files: FileList | null | undefined) => {
+			if (!files) return;
+			const file = files.item(0);
+			if (!file) return;
+			dispatch(hiddenSheet());
+			navigate("/collection", {
+				state: {
+					file: file,
+				},
+			});
+		},
+		[navigate],
+	);
+
+	const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+		e.preventDefault();
+		setIsDragging(true);
+	}, []);
+
+	const handleDragLeave = useCallback(() => {
+		setIsDragging(false);
+	}, []);
+
+	const handleFileChange = useCallback(
+		(event: React.ChangeEvent<HTMLInputElement>) => {
+			handleSetFile(event.target.files);
+		},
+		[handleSetFile],
+	);
+
+	const handleDrop = useCallback(
+		(e: React.DragEvent<HTMLDivElement>) => {
+			e.preventDefault();
+			setIsDragging(false);
+			handleSetFile(e.dataTransfer.files);
+		},
+		[handleSetFile],
+	);
+
+	return (
+		<div
+			onDragOver={handleDragOver}
+			onDragLeave={handleDragLeave}
+			onDrop={handleDrop}
+			onClick={() => fileInputRef.current?.click()}
+			className={`relative h-[250px] w-[65%] rounded-lg border border-dashed ${isDragging ? "border-blue-400 bg-blue-200" : "border-gray-500 bg-white"}`}>
+			<div className={"relative z-2 size-full"} />
+			<div className={"absolute top-[50%] left-[50%] z-1 flex -translate-[50%] flex-col items-center justify-center"}>
+				<SolarCloudDownloadLinear width={100} height={100} />
+				<p className={"text-center"}>{isDragging ? "Thả file vào đây" : "Kéo và thả file vào đây"}</p>
+			</div>
+			<input ref={fileInputRef} type='file' style={{ display: "none" }} onChange={handleFileChange} />
+		</div>
+	);
+};
 
 export default SheetFileSearch;

@@ -9,7 +9,7 @@ import { SolarHamburgerMenuLinear } from "@/assets/images/icons/SolarHamburgerMe
 import { LucideSearch } from "@/assets/images/icons/LucideSearch.tsx";
 import { SolarHeartBold } from "@/assets/images/icons/SolarHeartBold.tsx";
 import ShoppingBag from "@/components/cart/ShoppingBag.tsx";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { SolarArrowRightLinear } from "@/assets/images/icons/SolarArrowRightLinear";
 import useScrolled from "@/utils/helper/use-scrolled.ts";
 import { useEffect, useState } from "react";
@@ -32,6 +32,7 @@ function Header({ showMenu }: HeaderProps) {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { access_token, user } = useSelector((state: RootState) => state.auth);
+	const [searchAction, setSearchAction] = useState<"SEARCH" | "EXIT" | "HIDDEN">("HIDDEN");
 
 	useEffect(() => {
 		console.log(user);
@@ -52,8 +53,8 @@ function Header({ showMenu }: HeaderProps) {
 					</div>
 				</div>
 			</div>
-			<div className={"align-items-center grid grid-cols-3 grid-rows-1 px-4 py-1 lg:mx-16"}>
-				<div className={"flex items-center gap-3"}>
+			<div className={"align-items-center grid grid-cols-7 grid-rows-1 px-4 py-1 lg:mx-8"}>
+				<div className={"col-span-2 flex items-center gap-2"}>
 					<div onClick={showMenu} className={"lg:hidden"}>
 						<SolarHamburgerMenuLinear width={30} height={30} />
 					</div>
@@ -63,22 +64,45 @@ function Header({ showMenu }: HeaderProps) {
 							Logo
 						</div>
 					</div>
-					<LucideSearch className={"block lg:hidden"} width={30} height={30} />
+					<div className={"search-component relative block lg:hidden"}>
+						<div className={`absolute -top-[20px] -left-[54px] z-5 h-[69px] w-[100vw] bg-white px-5 py-4 ${searchAction != "HIDDEN" ? "block" : "hidden"}`}>
+							<AnimatePresence initial={false} onExitComplete={() => setSearchAction("HIDDEN")}>
+								{searchAction === "SEARCH" && (
+									<motion.div
+										className={"flex h-full gap-2"}
+										animate={{ width: 500 }}
+										initial={{ width: 0 }}
+										exit={{ width: 0 }}
+										transition={{ duration: 0.2 }}>
+										<Searcher className={"border-center flex h-full w-full items-center rounded-full border px-2 py-1"} />
+										<div className={"w-[25px] text-right"}>
+											<p
+												className={`flex size-[25px] items-center justify-center rounded-md border-1 border-red-500 ${searchAction === "SEARCH" ? "flex" : "hidden"}`}
+												onClick={() => setSearchAction("EXIT")}>
+												X
+											</p>
+										</div>
+									</motion.div>
+								)}
+							</AnimatePresence>
+						</div>
+						<LucideSearch width={30} height={30} onClick={() => setSearchAction("SEARCH")} />
+					</div>
 				</div>
-				<div className='flex justify-center'>
+				<div className={"col-span-3 flex justify-center"}>
 					<div className={"block lg:hidden"}>
 						<div className={"flex size-[60px] cursor-pointer items-center justify-center bg-blue-400"} onClick={() => navigate("/")}>
 							Logo
 						</div>
 					</div>
 					<ul className={"mb-0 hidden items-center justify-center gap-4 lg:flex"}>
-						<li className={"text-lg font-medium"}>Menu 1</li>
-						<li className={"text-lg font-medium"}>Menu 2</li>
-						<li className={"text-lg font-medium"}>Menu 3</li>
-						<li className={"text-lg font-medium"}>Menu 4</li>
+						<li className={"text-lg font-bold uppercase"}>Name</li>
+						<li className={"text-lg font-bold uppercase"}>Nữ</li>
+						<li className={"text-lg font-bold uppercase"}>Thể thao</li>
+						<li className={"text-lg font-bold uppercase"}>care&share</li>
 					</ul>
 				</div>
-				<div className={"lg: relative flex items-center justify-end gap-3"}>
+				<div className={"lg: relative col-span-2 flex items-center justify-end gap-2"}>
 					<Searcher />
 					<a href={"#"} className={"z-4"}>
 						{access_token && user ? (

@@ -11,8 +11,9 @@ import { CilMicrophone } from "@/assets/images/icons/CilMicrophone.tsx";
 import { SystemUiconsPicture } from "@/assets/images/icons/SystemUiconsPicture.tsx";
 import { useDispatch } from "react-redux";
 import { setSheetType } from "@/redux/slice/sheet.slice.ts";
+import InputProps from "@/components/form/props/input.prop.ts";
 
-function Searcher() {
+function Searcher(props?: InputProps) {
 	const dispatch = useDispatch();
 	return (
 		<Input
@@ -26,6 +27,7 @@ function Searcher() {
 					<SystemUiconsPicture width={25} height={25} onClick={() => dispatch(setSheetType("FILE_SEARCH"))} />
 				</div>
 			}
+			{...props}
 		/>
 	);
 }

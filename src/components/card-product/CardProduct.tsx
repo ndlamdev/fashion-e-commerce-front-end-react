@@ -19,18 +19,12 @@ export default function CardProduct(props: ProductCardProp) {
 				onClick={() => navigate(`/product-detail/${props.id}`, { replace: true })}
 				className={`group relative h-[50vw] cursor-pointer rounded-lg bg-cover bg-center bg-no-repeat p-0 text-base md:h-62 xl:h-84`}
 				style={{ backgroundImage: `url(${bgImage})` }}
-				onMouseEnter={() =>
-					setBgImage(props.images.length > 1 ? props.images[1].src : props.images[0].src)
-				}
+				onMouseEnter={() => setBgImage(props.images.length > 1 ? props.images[1].src : props.images[0].src)}
 				onMouseLeave={() => setBgImage(props.images[0].src)}>
 				<div className='absolute top-2 right-2 grid grid-cols-2 grid-rows-2'>
-					{props.tags && props.tags.map((tag) => (<Badge className={"lg:text-sx col-span-2 mb-2 rounded-xl border-0 bg-black text-white"}>{tag}</Badge>))}
+					{props.tags && props.tags.map((tag) => <Badge className={"lg:text-sx col-span-2 mb-2 rounded-xl border-0 bg-black text-white"}>{tag}</Badge>)}
 					<div className=''></div>
-					<img
-						className={"object-fill size-7 "}
-						src={props.icon_thumbnail}
-						alt={props.title}
-					/>
+					<img className={"size-7 object-fill"} src={props.icon_thumbnail.src} alt={props.title} />
 				</div>
 
 				<span className={"absolute top-2 left-2 flex items-center font-bold"}>
@@ -41,7 +35,7 @@ export default function CardProduct(props: ProductCardProp) {
 
 				{props.icon_thumbnail && (
 					<div className='absolute bottom-0'>
-						<img className={"rounded-b-lg"} src={props.icon_thumbnail} alt={props.title} />
+						<img className={"rounded-b-lg"} src={props.icon_thumbnail.src} alt={props.title} />
 					</div>
 				)}
 
@@ -78,7 +72,9 @@ export default function CardProduct(props: ProductCardProp) {
 				</div>
 				<p className={"my-1"}>{props.title}</p>
 				<p className={"mb-1 flex flex-wrap gap-2"}>
-					<span>{formatCurrency(props.discount ? props.variants[selected].regular_price * (1 - props.discount.percent) : props.variants[selected].regular_price)}</span>
+					<span>
+						{formatCurrency(props.discount ? props.variants[selected].regular_price * (1 - props.discount.percent) : props.variants[selected].regular_price)}
+					</span>
 					{props.discount && <Badge className={"rounded-2 bg-blue-700 text-xs font-bold text-white"}>-{props.discount.percent}%</Badge>}
 					{props.discount && <span className={"text-neutral-400 line-through"}>{formatCurrency(props.variants[selected].regular_price)}</span>}
 				</p>
