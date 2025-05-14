@@ -7,14 +7,27 @@
  **/
 import InputProps from "@/components/form/props/input.prop.ts";
 
-function Input({ leftIcon, rightIcon, getState, className, inputClassName, inputStyle, style, onChange, placeholder, disabled = false, children, ...props }: InputProps) {
+function Input({
+	leftIcon,
+	rightIcon,
+	getState,
+	className,
+	inputClassName,
+	inputStyle,
+	style,
+	onTextChange,
+	placeholder,
+	disabled = false,
+	children,
+	...props
+}: InputProps) {
 	return (
 		<div className={`${className && className}`} style={style} onMouseLeave={() => getState?.("LEAVE")} onMouseEnter={() => getState?.("HOLDER")}>
 			{leftIcon && leftIcon}
 			<input
 				style={inputStyle}
 				onChange={(e) => {
-					onChange?.(e.target.value);
+					onTextChange?.(e.target.value);
 				}}
 				placeholder={placeholder}
 				onFocus={() => getState?.("FOCUS")}

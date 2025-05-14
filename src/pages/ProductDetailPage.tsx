@@ -221,7 +221,7 @@ export default function ProductDetailPage() {
 						</div>
 
 						<div className='mb-3 flex'>
-							<Input onChange={handleQuantityChange} value={boughtQuantity} className={"me-3! w-1/4 rounded-2xl! text-center"} type={"number"} />
+							<Input onTextChange={handleQuantityChange} value={boughtQuantity} className={"me-3! w-1/4 rounded-2xl! text-center"} type={"number"} />
 							<Button
 								className={"flex w-3/4 cursor-pointer items-center rounded-2xl text-center text-xs hover:bg-neutral-300 hover:text-black sm:text-sm"}
 								variant='default'>
@@ -577,7 +577,7 @@ export default function ProductDetailPage() {
 					</div>
 
 					<div className='flex grow items-center px-2'>
-						<Input onChange={handleQuantityChange} value={boughtQuantity} className={"me-3! w-1/4 rounded-2xl! text-center"} type={"number"} />
+						<Input onTextChange={handleQuantityChange} value={boughtQuantity} className={"me-3! w-1/4 rounded-2xl! text-center"} type={"number"} />
 						<Button className={"flex w-3/4 cursor-pointer items-center rounded-2xl text-center hover:bg-neutral-300 hover:text-black"} variant='default'>
 							<ShoppingBag className={"mx-2 inline-block size-6"} />
 							<span>{sizeSelected ? "Thêm vào giỏ hàng" : "Chọn kích thước"}</span>

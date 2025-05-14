@@ -5,8 +5,8 @@
  * Create at: 11:07 AM - 19/03/2025
  * User: lam-nguyen
  **/
-import { CSSProperties, ReactNode } from "react";
 import * as React from "react";
+import { CSSProperties, ReactNode } from "react";
 
 export type InputState = "HOLDER" | "FOCUS" | "BLUR" | "LEAVE";
 
@@ -18,7 +18,7 @@ type InputProps = React.ComponentProps<"input"> & {
 	inputClassName?: string;
 	inputStyle?: CSSProperties;
 	style?: CSSProperties;
-	onChange?: (input: string) => void;
+	onTextChange?: (input: string) => void;
 	placeholder?: string;
 	disabled?: boolean;
 	children?: ReactNode;
