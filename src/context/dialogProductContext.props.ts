@@ -1,12 +1,10 @@
-import DialogTypeEnum from "@/utils/enums/dialog.type.enum.ts";
 import { createContext } from "react";
+import { DialogProfileContextProps } from "@/context/dialogProfileContext.props.ts";
 
-type DialogProfileContextProps = {
-	showDialog: (type: DialogTypeEnum) => void;
-	dialog: DialogTypeEnum;
+type DialogProductContextProps = DialogProfileContextProps & {
 };
 
-export const DialogProductContext = createContext<DialogProfileContextProps>({
+export const DialogProductContext = createContext<DialogProductContextProps>({
 	showDialog: () => {},
 	dialog: "none",
 })

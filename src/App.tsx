@@ -20,6 +20,7 @@ import store from "./configs/store.config";
 import { Provider } from "react-redux";
 import DialogAuthProvider from "@/context/provider/DialogAuthProvider.tsx";
 import SheetAccountProvider from "@/context/provider/SheetAccountProvider.tsx";
+import { DialogProductProvider } from "@/context/provider/DialogProductProvider.tsx";
 
 function App() {
 	return (
@@ -27,29 +28,31 @@ function App() {
 			<BrowserRouter>
 				<DialogAuthProvider>
 					<SheetAccountProvider>
-						<Routes>
-							<Route path={"/"} element={<RootLayout />}>
-								<Route index element={<HomePage />} />
-								<Route path={"/test"} element={<TestPage />} />
-								<Route path={"product-detail"}>
-									<Route path={":id"} element={<ProductDetailPage />} />
+						<DialogProductProvider>
+							<Routes>
+								<Route path={"/"} element={<RootLayout />}>
+									<Route index element={<HomePage />} />
+									<Route path={"/test"} element={<TestPage />} />
+									<Route path={"product-detail"}>
+										<Route path={":id"} element={<ProductDetailPage />} />
+									</Route>
+									<Route path={"collection"} element={<BoothPage />} />
+									<Route path={"profile"} element={<ProfilePage />}>
+										<Route path={"info"} index element={<Info />} />
+										<Route path={"refer-friend"} element={<ReferFriend />} />
+										<Route path={"orders"} element={<HistoryOrder />} />
+										<Route path={"voucher-wallet"} element={<VoucherWallet />} />
+										<Route path={"points"} element={<HistoryPoint />} />
+										<Route path={"addresses"} element={<Address />} />
+										<Route path={"reviews"} element={<Review />} />
+										<Route path={"faq"} element={<FAQTab />} />
+									</Route>
 								</Route>
-								<Route path={"collection"} element={<BoothPage />} />
-								<Route path={"profile"} element={<ProfilePage />}>
-									<Route path={"info"} index element={<Info />} />
-									<Route path={"refer-friend"} element={<ReferFriend />} />
-									<Route path={"orders"} element={<HistoryOrder />} />
-									<Route path={"voucher-wallet"} element={<VoucherWallet />} />
-									<Route path={"points"} element={<HistoryPoint />} />
-									<Route path={"addresses"} element={<Address />} />
-									<Route path={"reviews"} element={<Review />} />
-									<Route path={"faq"} element={<FAQTab />} />
+								<Route path="/cart" element={<CartLayout />}>
+									<Route index element={<CartPage />} />
 								</Route>
-							</Route>
-							<Route path="/cart" element={<CartLayout />}>
-								<Route index element={<CartPage />} />
-							</Route>
-						</Routes>
+							</Routes>
+						</DialogProductProvider>
 						<Toaster />
 					</SheetAccountProvider>
 				</DialogAuthProvider>
