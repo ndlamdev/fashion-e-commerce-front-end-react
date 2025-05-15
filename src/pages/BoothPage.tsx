@@ -11,7 +11,7 @@ import RecentActivity from "@/components/collection/RecentActivity.tsx";
 
 export default function BoothPage() {
 	const location = useLocation();
-	const { file } = location.state || { file: undefined };
+	const { file, prompt } = location.state || { file: undefined, prompt: undefined };
 	const filters: CollectionFilterProps = mockCollectionFilters;
 	const sportDescriptions = categoryDescriptionSamples;
 
@@ -20,6 +20,12 @@ export default function BoothPage() {
 		// TODO: Hiện thực chức năng tìm kiếm bằng hình ảnh tại đây.
 		console.log(file);
 	}, [file]);
+
+	useEffect(() => {
+		if (!prompt) return;
+		// TODO: Hiện thực chức năng tìm kiếm vằn bảng hoặc tìm kiếm bằng giọng nói tại đây. Chỉ cần gửi prompt lên server
+		console.log(prompt);
+	}, [prompt]);
 
 	return (
 		<>

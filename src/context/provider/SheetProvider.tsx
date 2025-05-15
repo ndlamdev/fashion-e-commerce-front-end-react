@@ -6,8 +6,8 @@
  *  User: kimin
  **/
 import { ReactNode, useEffect, useState } from "react";
-import SheetAccount from "@/components/header/SheetAccount.tsx";
-import SheetFileSearch from "@/components/header/SheetFileSearch.tsx";
+import SheetAccount from "@/components/header/sheet/SheetAccount.tsx";
+import SheetFileSearch from "@/components/header/sheet/SheetFileSearch.tsx";
 import { Sheet } from "@/components/ui/sheet.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/configs/store.config.ts";
@@ -15,7 +15,7 @@ import { hiddenSheet } from "@/redux/slice/sheet.slice.ts";
 
 export type SheetType = "ACCOUNT" | "FILE_SEARCH" | "NONE";
 
-function SheetAccountProvider({ children }: { children: ReactNode }) {
+function SheetProvider({ children }: { children: ReactNode }) {
 	const { sheetType } = useSelector((state: RootState) => state.sheet);
 	const dispatch = useDispatch();
 	const [listElements, setListElements] = useState<ReactNode>();
@@ -40,4 +40,4 @@ function SheetAccountProvider({ children }: { children: ReactNode }) {
 	);
 }
 
-export default SheetAccountProvider;
+export default SheetProvider;

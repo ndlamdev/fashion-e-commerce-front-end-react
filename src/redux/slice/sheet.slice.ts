@@ -6,7 +6,7 @@
  * User: Administrator
  **/
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { SheetType } from "@/context/provider/SheetAccountProvider.tsx";
+import { SheetType } from "@/context/provider/SheetProvider.tsx";
 
 type SheetSliceState = {
 	sheetType: SheetType;

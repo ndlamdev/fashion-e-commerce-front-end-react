@@ -11,6 +11,7 @@ import React, { useCallback, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { hiddenSheet } from "@/redux/slice/sheet.slice.ts";
 import { useDispatch } from "react-redux";
+import { toast } from "sonner";
 
 function SheetFileSearch() {
 	return (
@@ -36,6 +37,10 @@ const FileDropZone: React.FC = () => {
 			if (!files) return;
 			const file = files.item(0);
 			if (!file) return;
+			if (!file.type.startsWith("image")) {
+				toast.error("Vui lòng chỉ chọn file hình ảnh!");
+				return;
+			}
 			dispatch(hiddenSheet());
 			navigate("/collection", {
 				state: {
@@ -43,7 +48,7 @@ const FileDropZone: React.FC = () => {
 				},
 			});
 		},
-		[navigate],
+		[dispatch, navigate],
 	);
 
 	const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
@@ -80,10 +85,10 @@ const FileDropZone: React.FC = () => {
 			className={`relative h-[250px] w-[65%] rounded-lg border border-dashed ${isDragging ? "border-blue-400 bg-blue-200" : "border-gray-500 bg-white"}`}>
 			<div className={"relative z-2 size-full"} />
 			<div className={"absolute top-[50%] left-[50%] z-1 flex -translate-[50%] flex-col items-center justify-center"}>
-				<SolarCloudDownloadLinear width={100} height={100} />
+				<SolarCloudDownloadLinear className={"h-[75px] w-[75px] lg:h-[100px] lg:w-[100px]"} />
 				<p className={"text-center"}>{isDragging ? "Thả file vào đây" : "Kéo và thả file vào đây"}</p>
 			</div>
-			<input ref={fileInputRef} type='file' style={{ display: "none" }} onChange={handleFileChange} />
+			<input ref={fileInputRef} type='file' style={{ display: "none" }} accept={"image/*"} onTextChange={handleFileChange} />
 		</div>
 	);
 };

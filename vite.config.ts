@@ -15,7 +15,7 @@ export default defineConfig({
 	},
 	server: {
 		host: "0.0.0.0",
-		allowedHosts: ["c49a-14-186-92-147.ngrok-free.app", "fashion_fe.ndlamdev.website", "fashion.ndlamdev.website"],
+		allowedHosts: ["localhost_5173.ndlamdev.website", "fashion_fe.ndlamdev.website", "fashion.ndlamdev.website"],
 		proxy: {
 			// Khi bạn fetch('/treeVN.json') từ React, Vite sẽ forward đến target
 			"/treeVN.json": {

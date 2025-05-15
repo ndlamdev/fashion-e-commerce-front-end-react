@@ -41,14 +41,14 @@ function Header({ showMenu }: HeaderProps) {
 	return (
 		<motion.header className={"sticky top-0 z-2 bg-white"} initial={{ top: 0 }} animate={{ top: scrollY >= 100 ? -40 : 0 }} transition={{ duration: 0.75 }}>
 			<div className={`relative flex w-full items-center justify-center gap-3 bg-gray-500 text-gray-100`}>
-				<div className={"px-3 py-2 text-sm hover:bg-gray-800"}>Về KimiFashion</div>
+				<div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>Về KimiFashion</div>
 				<div className={"hidden items-center justify-center lg:flex"}>
 					<span className={"text-gray-400"}>|</span>
-					<div className={"px-3 py-2 text-sm hover:bg-gray-800"}>Blog</div>
+					<div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>Blog</div>
 					<span className={"text-gray-400"}>|</span>
-					<div className={"px-3 py-2 text-sm hover:bg-gray-800"}>Trung tâm CSKH</div>
+					<div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>Trung tâm CSKH</div>
 					<span className={"text-gray-400"}>|</span>
-					<div className={"px-3 py-2 text-sm hover:bg-gray-800"} onClick={() => dispatch(showDialog("login"))}>
+					<div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"} onClick={() => dispatch(showDialog("login"))}>
 						Đăng nhập
 					</div>
 				</div>
@@ -65,27 +65,25 @@ function Header({ showMenu }: HeaderProps) {
 						</div>
 					</div>
 					<div className={"search-component relative block lg:hidden"}>
-						<div className={`absolute -top-[20px] -left-[54px] z-5 h-[69px] w-[100vw] bg-white px-5 py-4 ${searchAction != "HIDDEN" ? "block" : "hidden"}`}>
-							<AnimatePresence initial={false} onExitComplete={() => setSearchAction("HIDDEN")}>
-								{searchAction === "SEARCH" && (
-									<motion.div
-										className={"flex h-full gap-2"}
-										animate={{ width: 500 }}
-										initial={{ width: 0 }}
-										exit={{ width: 0 }}
-										transition={{ duration: 0.2 }}>
+						<AnimatePresence initial={true} onExitComplete={() => setSearchAction("HIDDEN")}>
+							{searchAction === "SEARCH" && (
+								<motion.div
+									animate={{ width: "100vw", opacity: 1, left: -54 }}
+									initial={{ width: 0, opacity: 0, left: 0 }}
+									exit={{ width: 0, opacity: 0, left: 0 }}
+									transition={{ duration: 0.4 }}
+									className={`absolute -top-[19px] z-5 block h-[68px] bg-white px-5 py-4`}>
+									<div className={"flex h-full gap-2"}>
 										<Searcher className={"border-center flex h-full w-full items-center rounded-full border px-2 py-1"} />
-										<div className={"w-[25px] text-right"}>
-											<p
-												className={`flex size-[25px] items-center justify-center rounded-md border-1 border-red-500 ${searchAction === "SEARCH" ? "flex" : "hidden"}`}
-												onClick={() => setSearchAction("EXIT")}>
-												X
-											</p>
-										</div>
-									</motion.div>
-								)}
-							</AnimatePresence>
-						</div>
+										<p
+											className={`flex aspect-square h-full items-center justify-center rounded-md border-1 border-red-500 ${searchAction === "SEARCH" ? "flex" : "hidden"}`}
+											onClick={() => setSearchAction("EXIT")}>
+											X
+										</p>
+									</div>
+								</motion.div>
+							)}
+						</AnimatePresence>
 						<LucideSearch width={30} height={30} onClick={() => setSearchAction("SEARCH")} />
 					</div>
 				</div>
@@ -96,10 +94,10 @@ function Header({ showMenu }: HeaderProps) {
 						</div>
 					</div>
 					<ul className={"mb-0 hidden items-center justify-center gap-4 lg:flex"}>
-						<li className={"text-lg font-bold uppercase"}>Name</li>
-						<li className={"text-lg font-bold uppercase"}>Nữ</li>
-						<li className={"text-lg font-bold uppercase"}>Thể thao</li>
-						<li className={"text-lg font-bold uppercase"}>care&share</li>
+						<li className={"cursor-pointer text-lg font-bold uppercase"}>Name</li>
+						<li className={"cursor-pointer text-lg font-bold uppercase"}>Nữ</li>
+						<li className={"cursor-pointer text-lg font-bold uppercase"}>Thể thao</li>
+						<li className={"cursor-pointer text-lg font-bold uppercase"}>care&share</li>
 					</ul>
 				</div>
 				<div className={"lg: relative col-span-2 flex items-center justify-end gap-2"}>

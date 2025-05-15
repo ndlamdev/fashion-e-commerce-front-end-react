@@ -12,19 +12,38 @@ import { SystemUiconsPicture } from "@/assets/images/icons/SystemUiconsPicture.t
 import { useDispatch } from "react-redux";
 import { setSheetType } from "@/redux/slice/sheet.slice.ts";
 import InputProps from "@/components/form/props/input.prop.ts";
+import { showDialog } from "@/redux/slice/dialog.slice.ts";
+import { useState } from "react";
+import { useNavigate } from "react-router";
 
 function Searcher(props?: InputProps) {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const [promptSearch, setPromptSearch] = useState<string>("");
+
 	return (
 		<Input
 			className={"rounded] z-4 hidden w-[50%] items-center rounded-4xl border-1 border-gray-500 p-2 hover:border-black lg:flex"}
 			placeholder={"Tìm kiếm sản phẩm..."}
 			inputClassName={"p-1 text-sm"}
+			onTextChange={setPromptSearch}
 			rightIcon={
 				<div className={"flex gap-1"}>
-					<LucideSearch width={25} height={25} />
-					<CilMicrophone width={25} height={25} />
-					<SystemUiconsPicture width={25} height={25} onClick={() => dispatch(setSheetType("FILE_SEARCH"))} />
+					<LucideSearch
+						width={25}
+						height={25}
+						className={"cursor-pointer"}
+						onClick={() => {
+							if (!promptSearch) return;
+							navigate("/collection", {
+								state: {
+									prompt: promptSearch,
+								},
+							});
+						}}
+					/>
+					<CilMicrophone width={25} height={25} className={"cursor-pointer"} onClick={() => dispatch(showDialog("voice-search"))} />
+					<SystemUiconsPicture width={25} height={25} className={"cursor-pointer"} onClick={() => dispatch(setSheetType("FILE_SEARCH"))} />
 				</div>
 			}
 			{...props}
