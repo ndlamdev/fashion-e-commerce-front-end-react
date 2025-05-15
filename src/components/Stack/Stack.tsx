@@ -113,7 +113,7 @@ function Stack({
 							onClick={() => sendToBackOnClick && sendToBack(card.id)}
 							animate={{
 								rotateZ: (cards.length - index - 1) + randomRotate,
-								scale:  0.8 ,
+								scale:  0.7 ,
 								transformOrigin: "50% 50%",
 							}}
 							initial={false}

@@ -8,18 +8,21 @@ import { categoryDescriptionSamples } from "@/assets/data/collection/categoryDes
 import { useLocation } from "react-router";
 import { useEffect } from "react";
 import RecentActivity from "@/components/collection/RecentActivity.tsx";
+import { useSearchByImageMutation } from "@/services/product.service.ts";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
 
 export default function BoothPage() {
 	const location = useLocation();
 	const { file, prompt } = location.state || { file: undefined, prompt: undefined };
 	const filters: CollectionFilterProps = mockCollectionFilters;
 	const sportDescriptions = categoryDescriptionSamples;
-
+	const [request, {data: dataImageSearch, isLoading: isLoadingImageSearch}] = useSearchByImageMutation()
 	useEffect(() => {
 		if (!file) return;
-		// TODO: Hiện thực chức năng tìm kiếm bằng hình ảnh tại đây.
-		console.log(file);
-	}, [file]);
+		const formData = new FormData();
+		formData.append('file', file)
+			request(formData);
+	}, [file, request]);
 
 	useEffect(() => {
 		if (!prompt) return;
@@ -28,14 +31,16 @@ export default function BoothPage() {
 	}, [prompt]);
 
 	return (
-		<>
+		<main>
 			<div className='p-3 sm:flex'>
 				<div className='hidden sm:block sm:w-1/4'>
 					<CollectionFilter {...filters} />
 				</div>
 				<div className='sm:w-3/4'>
 					<ScrollArea className={"h-dvh"}>
-						<ZoneOfProducts currentCategory={"lorem"} showProducts={[]} TotalProducts={12} />
+						{isLoadingImageSearch ? <Skeleton className={'w-full'} /> :
+							<ZoneOfProducts currentCategory={"lorem"} showProducts={dataImageSearch?.data.content} TotalProducts={dataImageSearch?.data.numberOfElements} />
+						}
 					</ScrollArea>
 				</div>
 			</div>
@@ -43,6 +48,6 @@ export default function BoothPage() {
 			<section className={"px-5 md:px-10 md:py-10 lg:px-15 lg:py-14"}>
 				<RecentActivity />
 			</section>
-		</>
+		</main>
 	);
 }

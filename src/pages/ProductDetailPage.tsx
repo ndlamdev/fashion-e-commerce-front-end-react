@@ -170,7 +170,7 @@ export default function ProductDetailPage() {
 							className={"text-sm text-neutral-400 line-through md:text-base"}>{formatCurrency(variants?.regular_price as number)}</p>}
 						<p className={"flex font-bold"}>
 							<span className={"me-3 text-sm md:text-base lg:text-2xl"}>
-								{formatCurrency((data?.data.discount && variants) ? variants.regular_price * (1 - data?.data.discount.percent / 100) : (variants?.regular_price ?? 0))}
+								{formatCurrency((data?.data.discount && variants) ? variants.regular_price * (1 - data?.data.discount.percent / 100) : (variants?.regular_price as number))}
 							</span>
 							{data?.data.discount && <Badge
 								className={"bg-blue-700 text-xs font-bold text-white md:text-xl"}>-{data?.data.discount.percent}%</Badge>}

@@ -88,7 +88,8 @@ const FileDropZone: React.FC = () => {
 				<SolarCloudDownloadLinear className={"h-[75px] w-[75px] lg:h-[100px] lg:w-[100px]"} />
 				<p className={"text-center"}>{isDragging ? "Thả file vào đây" : "Kéo và thả file vào đây"}</p>
 			</div>
-			<input ref={fileInputRef} type='file' style={{ display: "none" }} accept={"image/*"} onTextChange={handleFileChange} />
+			<input ref={fileInputRef} type="file" style={{ display: "none" }} accept={"image/*"}
+						 onChange={handleFileChange} />
 		</div>
 	);
 };

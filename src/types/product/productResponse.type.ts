@@ -28,7 +28,7 @@ type ProductResponseType = {
 	youtube_video: string;
 	coming_soon: boolean;
 	display_name_open: string;
-	icon_thumbnail: ProductImageType;
+	icon_thumbnail?: ProductImageType;
 	gender_type?: GenderType;
 };
 

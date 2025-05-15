@@ -4,19 +4,19 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import ProductResponseType from "@/types/product/productResponse.type.ts";
 import CardProduct from "@/components/card-product/CardProduct.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { useReducer } from "react";
+import { memo, useReducer } from "react";
 import FilterItem, { FilterReducer } from "@/components/collection/FilterItem.tsx";
 import { filterItemInitial } from "@/assets/data/collection/filterItem.data.ts";
 import { CollectionFilterProps } from "@/components/collection/props/collectionFilter.props.ts";
 import { mockCollectionFilters } from "@/assets/data/collection/collectionFileterProp.data.ts";
 import CollectionFilter from "@/components/collection/CollectionFilter.tsx";
 
-export default function ZoneOfProducts(props: ZoneOfProductsProps) {
+function ZoneOfProducts(props: ZoneOfProductsProps) {
 	const filters: CollectionFilterProps = mockCollectionFilters;
 	const [filterItems, dispatch] = useReducer(FilterReducer, filterItemInitial);
 
 	return (
-		<div className={"w-full px-2"}>
+		<article className={"w-full px-2"}>
 			<Breadcrumb className={"text-xs lg:text-sm"}>
 				<BreadcrumbList>
 					<BreadcrumbItem>
@@ -35,7 +35,7 @@ export default function ZoneOfProducts(props: ZoneOfProductsProps) {
 			<p className='my-3 font-bold uppercase lg:text-2xl'>{props.currentCategory}</p>
 			<div className='my-4 border-1 border-gray-300' />
 
-			<div className='flex items-center justify-between text-xs lg:text-sm'>
+			<section className='flex items-center justify-between text-xs lg:text-sm'>
 				<div className='flex items-center space-x-2'>
 					<p className='font-bold'>
 						<span className='mx-1'>{props.TotalProducts ?? "0"}</span> kết quả
@@ -80,20 +80,23 @@ export default function ZoneOfProducts(props: ZoneOfProductsProps) {
 				<div className='hidden max-sm:block'>
 					<CollectionFilter {...filters} />
 				</div>
-			</div>
+			</section>
 
-			<div className='my-4 flex flex-wrap border-b-1 border-gray-300'>
+			<section className='my-4 flex flex-wrap border-b-1 border-gray-300'>
 				{props.showProducts &&
 					props.showProducts.map((item: ProductResponseType) => (
 						<CardProduct className={"h-auto w-[30vw] basis-1/2 sm:w-full lg:h-100 lg:basis-1/3 xl:basis-1/4"} {...item} key={item.id} />
 					))}
-			</div>
-			<div className='my-5 place-content-center text-center'>
-				<Button className={"cursor-pointer rounded-full bg-black p-6 font-bold text-white uppercase hover:bg-gray-300 hover:text-black"}>Xem Thêm</Button>
+			</section>
+			<section className='my-5 place-content-center text-center'>
+				{(props?.TotalProducts && props?.TotalProducts> 8) && <Button className={"cursor-pointer rounded-full bg-black p-6 font-bold text-white uppercase hover:bg-gray-300 hover:text-black"}>Xem Thêm</Button>
+				}
 				<p className='my-4 text-sm text-neutral-500'>
 					Hiện thị 1 - {props.showProducts?.length} trên tổng số {props.TotalProducts} sản phẩm
 				</p>
-			</div>
-		</div>
+			</section>
+		</article>
 	);
 }
+
+export default memo(ZoneOfProducts);
