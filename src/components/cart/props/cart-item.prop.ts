@@ -8,8 +8,6 @@
 import ShoppingBagItemType from "@/types/ShoppingBagItemType.ts";
 
 type CartItemProps = ShoppingBagItemType & {
-	sizes: string[];
-	colors: string[];
 	onDelete?: () => void;
 	onPlus?: () => void;
 	onMinute?: () => void;
