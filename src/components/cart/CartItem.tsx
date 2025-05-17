@@ -11,10 +11,17 @@ import { formatCurrency } from "@/utils/helper/format-data.ts";
 import { Fa6RegularTrashCan } from "@/assets/images/icons/Fa6RegularTrashCan.tsx";
 import CartItemProps from "@/components/cart/props/cart-item.prop.ts";
 
-function CartItem({ product, variant, quantity, onDelete, onPlus, onMinute }: CartItemProps) {
+function CartItem({ id, product, variant, quantity, onDelete, onPlus, onMinute, onSelect, selected }: CartItemProps) {
 	return (
 		<div className={"flex h-55 items-center gap-3 border-b-1 border-gray-300 pt-4 pb-10"}>
-			<input type={"checkbox"} className={"h-5 w-5 flex-none"} />
+			<input
+				type={"checkbox"}
+				className={"h-5 w-5 flex-none"}
+				checked={selected}
+				onChange={(e) => {
+					onSelect?.(e.currentTarget.checked, id);
+				}}
+			/>
 			<img src={"http://localhost:8004/api/resource/images/" + product.image.src} alt='image.png' className={"h-full w-33 rounded-xl"} />
 			<div className={"flex h-full w-full flex-col justify-around"}>
 				<div>
@@ -24,9 +31,9 @@ function CartItem({ product, variant, quantity, onDelete, onPlus, onMinute }: Ca
 				<div className={"grid grid-cols-1 grid-rows-subgrid gap-x-5 sm:grid-cols-2 sm:grid-rows-1"}>
 					<div className={"flex flex-row flex-wrap items-end justify-end gap-x-5 gap-y-1 sm:flex-col sm:items-start"}>
 						<div className={"flex w-full flex-none items-center justify-between gap-2 overflow-hidden rounded-full border-1 border-gray-300 p-2"}>
-							<TablerMinus width={15} height={15} className={"cursor-pointer"} onClick={onMinute} />
+							<TablerMinus width={15} height={15} className={"cursor-pointer"} onClick={() => onMinute?.(id)} />
 							<p className={"text-center text-sm"}>{quantity}</p>
-							<TablerPlus width={15} height={15} className={"cursor-pointer"} onClick={onPlus} />
+							<TablerPlus width={15} height={15} className={"cursor-pointer"} onClick={() => onPlus?.(id)} />
 						</div>
 					</div>
 					<div className={"mt-2 flex flex-wrap items-end justify-between gap-x-2 sm:flex-col sm:items-center md:mt-0"}>
@@ -36,7 +43,9 @@ function CartItem({ product, variant, quantity, onDelete, onPlus, onMinute }: Ca
 						)}
 					</div>
 				</div>
-				<button className={"mt-2 flex cursor-pointer items-center justify-end gap-2 text-sm hover:text-red-600 sm:justify-start"} onClick={onDelete}>
+				<button
+					className={"mt-2 flex cursor-pointer items-center justify-end gap-2 text-sm hover:text-red-600 sm:justify-start"}
+					onClick={() => onDelete?.(id)}>
 					<Fa6RegularTrashCan width={13} height={13} />
 					Xóa
 				</button>

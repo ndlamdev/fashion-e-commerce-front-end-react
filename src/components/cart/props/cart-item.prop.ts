@@ -8,9 +8,11 @@
 import CartItemType from "@/types/CartItemType.ts";
 
 type CartItemProps = CartItemType & {
-	onDelete?: () => void;
-	onPlus?: () => void;
-	onMinute?: () => void;
+	onDelete?: (id: number) => void;
+	onPlus?: (id: number) => void;
+	onMinute?: (id: number) => void;
+	onSelect?: (value: boolean, id: number) => void;
+	selected?: boolean;
 };
 
 export default CartItemProps;

@@ -5,7 +5,7 @@
  * Create at: 9:41AM - 13/03/2025
  *  User: lam-nguyen
  **/
-import { useCallback, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useContext, useEffect, useState } from "react";
 import { useHorizontalScroll } from "@/utils/helper/use-horizontal-scroll.ts";
 import InformationCustomer from "@/components/cart/InformationCustomer.tsx";
 import { CartContext } from "@/context/CartContext";
@@ -19,6 +19,10 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { useGetCartQuery } from "@/redux/query/cart.query";
 import cartService from "@/services/cart.service.ts";
 import ToastErrorApi from "@/utils/helper/toastErrorApi.ts";
+import { totalComparePrice, totalRegularPrice } from "@/components/footer/CartLayoutFooter.tsx";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/configs/store.config.ts";
+import { selectItems, unselectItems } from "@/redux/slice/cart.slice.ts";
 
 function CartPage() {
 	const [voucherRef, setVoucherRef] = useState<HTMLElement | null>(null);
@@ -27,6 +31,8 @@ function CartPage() {
 	const [deleted, setDeleted] = useState(false);
 	const [confirmDeleted, setConfirmDeleted] = useState(false);
 	const { data, error } = useGetCartQuery();
+	const cartItemsSelected = useSelector((state: RootState) => state.cartSlice.items);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		ToastErrorApi.toastErrorApiRTK(error);
@@ -39,6 +45,19 @@ function CartPage() {
 	const deleteCartItem = useCallback((id: number) => {
 		cartService.deleteCartItem(id).then();
 	}, []);
+
+	const checkboxAllHandler = (e: ChangeEvent<HTMLInputElement>) => {
+		const check = e.currentTarget.checked;
+		if (check) {
+			data?.data.cartItems.forEach((it) => {
+				dispatch(selectItems(it));
+			});
+		} else {
+			data?.data.cartItems.forEach((it) => {
+				dispatch(unselectItems(it));
+			});
+		}
+	};
 
 	return (
 		<Dialog open={confirmDeleted} onOpenChange={() => setConfirmDeleted(true)}>
@@ -63,7 +82,12 @@ function CartPage() {
 								<div className={"flex border-b-1 border-gray-300 pb-5 text-[0.8rem] text-gray-400 uppercase"}>
 									<div className={"flex basis-full gap-2 sm:basis-8/12"}>
 										<div className={"flex items-center gap-3"}>
-											<input type='checkbox' className={"h-5 w-5"} />
+											<input
+												type='checkbox'
+												className={"h-5 w-5"}
+												onChange={checkboxAllHandler}
+												checked={cartItemsSelected.length === data?.data.cartItems.length}
+											/>
 											<p>tất cả sản phẩm</p>
 										</div>
 										<p>|</p>
@@ -76,9 +100,14 @@ function CartPage() {
 									{data?.data.cartItems.map((it) => (
 										<li key={`cart_item_${it.id}`}>
 											<CartItem
-												onDelete={() => deleteCartItem(it.id)}
-												onPlus={() => modifyQuantityCartItem(it.id, 1)}
-												onMinute={() => modifyQuantityCartItem(it.id, -1)}
+												selected={!!cartItemsSelected.find((item) => item.id === it.id)}
+												onDelete={(id) => deleteCartItem(id)}
+												onPlus={(id) => modifyQuantityCartItem(id, 1)}
+												onMinute={(id) => modifyQuantityCartItem(id, -1)}
+												onSelect={(value) => {
+													if (value) dispatch(selectItems(it));
+													else dispatch(unselectItems(it));
+												}}
 												{...it}
 											/>
 										</li>
@@ -119,11 +148,11 @@ function CartPage() {
 					<div className={"flex flex-col gap-4 text-[0.9rem]"}>
 						<div className={"flex w-full justify-between"}>
 							<p>Tạm tính</p>
-							<p>{formatCurrency(0)}</p>
+							<p>{formatCurrency(totalComparePrice(cartItemsSelected))}</p>
 						</div>
 						<div className={"flex w-full justify-between"}>
 							<p>Giảm giá</p>
-							<p>{formatCurrency(0)}</p>
+							<p>{formatCurrency(totalComparePrice(cartItemsSelected) - totalRegularPrice(cartItemsSelected))}</p>
 						</div>
 						<div className={"flex w-full justify-between"}>
 							<p>Phí giao hàng</p>
@@ -133,11 +162,11 @@ function CartPage() {
 					<Separator className={"my-5"} />
 					<div className={"flex w-full justify-between text-[1.1rem]"}>
 						<p>Tổng</p>
-						<strong>{formatCurrency(0)}</strong>
+						<strong>{formatCurrency(totalRegularPrice(cartItemsSelected))}</strong>
 					</div>
 				</div>
 			</div>
-			<DialogContent>
+			<DialogContent classIcon={"hidden"}>
 				<DialogHeader>
 					<DialogTitle className={"text-center text-xl"}>Bạn muốn xóa toàn bộ sản phẩm trong giỏ hàng không?</DialogTitle>
 					<DialogDescription className={"mt-5 flex w-full gap-5 px-10"}>

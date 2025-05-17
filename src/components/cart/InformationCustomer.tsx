@@ -20,8 +20,11 @@ import ProvinceType from "@/types/address/province.type.ts";
 import ToastErrorApi from "@/utils/helper/toastErrorApi.ts";
 import DistrictType from "@/types/address/districtType.ts";
 import WardType from "@/types/address/ward.type.ts";
+import { useSelector } from "react-redux";
+import { RootState } from "@/configs/store.config.ts";
 
 function InformationCustomer() {
+	const user = useSelector((state: RootState) => state.auth.user);
 	const [sex, setSex] = useState("Anh/Chị");
 	const [otherReceiver, setOtherReceiver] = useState(false);
 	const { payment, setPayment, showConfirm } = useContext(CartContext);
@@ -29,6 +32,7 @@ function InformationCustomer() {
 	const [province, setProvince] = useState<ProvinceType>();
 	const [district, setDistrict] = useState<DistrictType>();
 	const [ward, setWard] = useState<WardType>();
+	const [fullAddress, setFullAddress] = useState<string>("");
 	const { data: dataProvinces, error: errorProvinces } = useGetProvincesOpenApiQuery();
 	const { data: dataDistrict, error: errorDistrict } = useGetDistrictsOpenApiQuery(province?.code ?? 0, {
 		skip: !province,
@@ -72,8 +76,10 @@ function InformationCustomer() {
 	);
 
 	useEffect(() => {
-		console.log(ward);
-	}, [ward]);
+		if (!province || !district || !ward) {
+			setFullAddress("");
+		} else setFullAddress(` , ${ward?.name ?? ""}, ${district?.name ?? ""}, ${province?.name ?? ""}.`);
+	}, [ward, district, province]);
 
 	return (
 		<div className={`px-5 md:pb-0 lg:px-0 ${showConfirm ? "pb-30" : "pb-0"}`}>
@@ -97,7 +103,7 @@ function InformationCustomer() {
 									<SelectItem value='Anh/Chị'>Không tiết lộ</SelectItem>
 								</SelectContent>
 							</Select>
-							<input id={"name"} className={"w-full outline-none"} placeholder={"Nhập họ và tên của bạn"} />
+							<input id={"name"} className={"w-full outline-none"} defaultValue={user?.full_name} placeholder={"Nhập họ và tên của bạn"} />
 						</div>
 					</div>
 					<div className={"flex flex-col md:w-4/12"}>
@@ -107,7 +113,8 @@ function InformationCustomer() {
 						<input
 							id={"phone-number"}
 							placeholder={"Nhập số điện thoại của bạn"}
-							type='text'
+							defaultValue={user?.phone}
+							type={"text"}
 							className={"rounded-full border-1 border-gray-400 px-5 py-2 outline-none"}
 						/>
 					</div>
@@ -116,7 +123,11 @@ function InformationCustomer() {
 					<label htmlFor={"email"} className={"text-[0.9rem] text-gray-700"}>
 						Email
 					</label>
-					<input className={"w-full rounded-full border-1 border-gray-400 px-5 py-2 outline-none"} placeholder={"Theo dõi đơn hàng sẽ được gửi email về ZNS"} />
+					<input
+						className={"w-full rounded-full border-1 border-gray-400 px-5 py-2 outline-none"}
+						defaultValue={user?.email}
+						placeholder={"Theo dõi đơn hàng sẽ được gửi email về ZNS"}
+					/>
 				</div>
 				<div className={"address"}>
 					<label htmlFor={"email"} className={"text-[0.9rem] text-gray-700"}>
@@ -125,6 +136,10 @@ function InformationCustomer() {
 					<input
 						className={"w-full rounded-full border-1 border-gray-400 px-5 py-2 outline-none"}
 						placeholder={"Địa chỉ (ví dụ: 123 Vạn Phúc, phường Vạn Phúc)"}
+						value={fullAddress}
+						onChange={(event) => {
+							setFullAddress(event.currentTarget.value);
+						}}
 					/>
 					<div className={"mt-2 flex w-full flex-col flex-wrap gap-2 lg:flex-row"}>
 						<Select onValueChange={handleChangeProvince}>
