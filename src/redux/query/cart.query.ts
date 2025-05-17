@@ -5,10 +5,11 @@
  * Create at: 1:15 AM - 18/05/2025
  * User: Administrator
  **/
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
 import LocalStorage from "@/utils/helper/LocalStorage.ts";
 import { ApiResponse } from "@/domain/ApiResponse.ts";
 import CartType from "@/types/CartType.ts";
+import { closeDialog, openDialog } from "@/redux/slice/dialog.slice.ts";
 
 export const BASE_URL = "http://localhost:8006/api/cart/v1";
 
@@ -23,14 +24,39 @@ const baseQuery = fetchBaseQuery({
 	},
 });
 
+const baseQueryWithDispatch: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (args, api, extraOptions) => {
+	api.dispatch(openDialog());
+	const result = await baseQuery(args, api, extraOptions);
+	api.dispatch(closeDialog());
+	return result;
+};
+
 export const cartApi = createApi({
 	reducerPath: "cartApi",
-	baseQuery,
+	baseQuery: baseQueryWithDispatch,
+	tagTypes: ["Cart"],
 	endpoints: (build) => ({
 		getCart: build.query<ApiResponse<CartType>, void>({
 			query: () => ({
 				url: "/me",
 			}),
+			providesTags: ["Cart"],
+		}),
+		modifyQuantityCartItem: build.mutation<
+			ApiResponse<{
+				cartItemId: number;
+				quantity: number;
+			}>,
+			{ cartItemId: number; quantity: number }
+		>({
+			query: (arg) => ({
+				url: `/update/${arg.cartItemId}`,
+				method: "PUT",
+				body: {
+					quantity: arg.quantity,
+				},
+			}),
+			invalidatesTags: ["Cart"],
 		}),
 	}),
 });

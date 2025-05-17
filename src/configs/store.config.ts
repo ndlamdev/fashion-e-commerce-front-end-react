@@ -14,6 +14,7 @@ import { profileApi } from "@/services/profile.service.ts";
 import addressSlice from "@/redux/slice/address.slice.ts";
 import { addressApi } from "@/services/address.service.ts";
 import { cartApi } from "@/redux/query/cart.query.ts";
+import { dialogSlice } from "@/redux/slice/dialog.slice.ts";
 
 const store = configureStore({
 	reducer: {
@@ -23,6 +24,7 @@ const store = configureStore({
 		address: addressSlice,
 		[addressApi.reducerPath]: addressApi.reducer,
 		[cartApi.reducerPath]: cartApi.reducer,
+		dialogSlice: dialogSlice.reducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware()

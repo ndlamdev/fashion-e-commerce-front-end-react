@@ -20,6 +20,7 @@ import store from "./configs/store.config";
 import { Provider } from "react-redux";
 import DialogAuthProvider from "@/context/provider/DialogAuthProvider.tsx";
 import SheetAccountProvider from "@/context/provider/SheetAccountProvider.tsx";
+import DialogLoading from "@/components/DialogLoading.tsx";
 
 function App() {
 	return (
@@ -46,11 +47,12 @@ function App() {
 									<Route path={"faq"} element={<FAQTab />} />
 								</Route>
 							</Route>
-							<Route path="/cart" element={<CartLayout />}>
+							<Route path='/cart' element={<CartLayout />}>
 								<Route index element={<CartPage />} />
 							</Route>
 						</Routes>
 						<Toaster />
+						<DialogLoading />
 					</SheetAccountProvider>
 				</DialogAuthProvider>
 			</BrowserRouter>

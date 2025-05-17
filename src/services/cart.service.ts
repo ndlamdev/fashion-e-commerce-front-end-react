@@ -10,8 +10,13 @@ import { cartApi } from "@/redux/query/cart.query.ts";
 import { ApiResponseError } from "@/domain/ApiResponseError.ts";
 import { toast } from "sonner";
 
-const getCart = async () => {
-	return await appDispatch(cartApi.endpoints.getCart.initiate()).then(({ data, error }) => {
+const modifyQuantityCartItem = async (cartItemId: number, quantity: number) => {
+	return await appDispatch(
+		cartApi.endpoints.modifyQuantityCartItem.initiate({
+			cartItemId: cartItemId,
+			quantity: quantity,
+		}),
+	).then(({ data, error }) => {
 		if (error) {
 			const response = (error as any).data as ApiResponseError<string>;
 			toast.message(response.detail || response.error);
@@ -23,7 +28,7 @@ const getCart = async () => {
 };
 
 const cartService = {
-	getCart,
+	modifyQuantityCartItem,
 };
 
 export default cartService;

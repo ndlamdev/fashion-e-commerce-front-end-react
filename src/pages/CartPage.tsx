@@ -15,10 +15,18 @@ import { Separator } from "@/components/ui/separator.tsx";
 import { formatCurrency } from "@/utils/helper/format-data.ts";
 import CartItem from "@/components/cart/CartItem.tsx";
 import { ArrowLeft } from "lucide-react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "@/components/ui/dialog";
 import { useGetCartQuery } from "@/redux/query/cart.query";
 import { ApiResponseError } from "@/domain/ApiResponseError.ts";
 import { toast } from "sonner";
+import cartService from "@/services/cart.service.ts";
 
 function CartPage() {
 	const [voucherRef, setVoucherRef] = useState<HTMLElement | null>(null);
@@ -34,6 +42,10 @@ function CartPage() {
 		const response = (error as any).data as ApiResponseError<string>;
 		toast.message(response.detail || response.error);
 	}, [error]);
+
+	const modifyQuantityCartItem = (id: number, quantity: number) => {
+		cartService.modifyQuantityCartItem(id, quantity).then();
+	};
 
 	return (
 		<Dialog open={confirmDeleted} onOpenChange={() => setConfirmDeleted(true)}>
@@ -70,7 +82,7 @@ function CartPage() {
 								<ul>
 									{data?.data.cartItems.map((it) => (
 										<li key={`cart_item_${it.id}`}>
-											<CartItem {...it} />
+											<CartItem onPlus={() => modifyQuantityCartItem(it.id, 1)} onMinute={() => modifyQuantityCartItem(it.id, -1)} {...it} />
 										</li>
 									))}
 								</ul>
