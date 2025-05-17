@@ -3,7 +3,6 @@ import {
 	BreadcrumbItem,
 	BreadcrumbLink,
 	BreadcrumbList,
-	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb.tsx";
 import {
@@ -16,7 +15,6 @@ import {
 	RefreshCcw,
 	Share2,
 	ShoppingBag,
-	Slash,
 	Square,
 	Ticket,
 	Truck,
@@ -46,9 +44,9 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
 import { Input } from "@/components/ui/input.tsx";
 import Rate from "@/components/product-detail/Rate.tsx";
 import { SameRadioGroup, SameRadioGroupItem } from "@/components/radio-group/SameRadioGroup.tsx";
-import { ChangeEvent, useEffect, useRef, useState, useMemo, useContext } from "react";
+import { ChangeEvent, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { formatCurrency } from "@/utils/helper/format-data.ts";
 import { getSizeSuggestion } from "@/utils/sizeModelManage.ts";
 import { useGetProductQuery } from "@/services/product.service.ts";
@@ -56,8 +54,10 @@ import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { OptionType } from "@/types/product/productOption.type.ts";
 import { DialogProductContext } from "@/context/dialogProductContext.props.ts";
 import ProductImageType from "@/types/product/productImage.type.ts";
+import { CollectionValue } from "@/utils/enums/collection.enum.ts";
 
 export default function ProductDetailPage() {
+	const navigate = useNavigate();
 	const { id } = useParams();
 	const { showDialog } = useContext(DialogProductContext);
 	const { data, isLoading } = useGetProductQuery(id);
@@ -68,12 +68,10 @@ export default function ProductDetailPage() {
 
 	useEffect(() => {
 		if (!data) return;
-		setColorSelected(data.data.variants[0].options.COLOR);
-		setSizeSelected(data.data.variants[0].options.SIZE);
+		setColorSelected(data.data.variants[0].options[OptionType.COLOR]);
+		setSizeSelected(data.data.variants[0].options[OptionType.SIZE]);
 		const colorOptions = data?.data.options_value.find((opt) => opt.type === OptionType.COLOR);
 		const colorValues = data.data.options.find(opt => opt.type === OptionType.COLOR)?.values;
-		console.log(colorOptions);
-		console.log(colorValues);
 		setImagesColor(colorValues
 			?.map((color: string) => {
 				return colorOptions?.options?.find((item) => item.title === color)?.images[0];
@@ -85,7 +83,6 @@ export default function ProductDetailPage() {
 	}, [data, colorSelected, sizeSelected]);
 
 	const cardData = useMemo(() => {
-
 		const images = data?.data.options_value.find(opt => opt.type === OptionType.COLOR)
 			?.options?.find(item => item.title === colorSelected)?.images;
 
@@ -94,6 +91,7 @@ export default function ProductDetailPage() {
 			img: RESOURCE_IMAGE + item.src,
 		}));
 	}, [data, colorSelected, RESOURCE_IMAGE]);
+	console.log(cardData, 'product detail page');
 
 	// handle decrement/increment quanlity buy
 	const [boughtQuantity, setBoughtQuantity] = useState<number>(1);
@@ -126,17 +124,16 @@ export default function ProductDetailPage() {
 						<BreadcrumbItem>
 							<BreadcrumbLink href={"/"}>Home</BreadcrumbLink>
 						</BreadcrumbItem>
-						<BreadcrumbSeparator>
-							<Slash />
-						</BreadcrumbSeparator>
+						<BreadcrumbSeparator />
+
 						<BreadcrumbItem>
-							<BreadcrumbLink href={"/components"}>Components</BreadcrumbLink>
+							<BreadcrumbLink
+								className={'cursor-pointer'}
+								onClick={() => navigate("/collection", { state: { type: data?.data.gender_type, title: data?.data.gender_type ? CollectionValue[data?.data.gender_type] : ''} })}>{data?.data.gender_type && CollectionValue[data?.data.gender_type]}</BreadcrumbLink>
 						</BreadcrumbItem>
-						<BreadcrumbSeparator>
-							<Slash />
-						</BreadcrumbSeparator>
+						<BreadcrumbSeparator />
 						<BreadcrumbItem>
-							<BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+							<BreadcrumbLink>{data?.data.title}</BreadcrumbLink>
 						</BreadcrumbItem>
 					</BreadcrumbList>
 				</Breadcrumb>
@@ -181,7 +178,7 @@ export default function ProductDetailPage() {
 
 						<p className={"my-5 flex items-center"}>
 							<span className={"me-3 text-sm font-bold text-neutral-400 lg:text-lg"}>Mã giảm giá</span>
-							<HoverCard>
+							<HoverCard openDelay={50} closeDelay={100}>
 								<HoverCardTrigger>
 									<Badge
 										onClick={() => {
@@ -227,7 +224,7 @@ export default function ProductDetailPage() {
 								>
 									<Label
 										htmlFor={color}
-										className="  box-content 	rounded-sm outline-2 outline-offset-2 outline-blue-700 lg:rounded-full lg:px-6 lg:py-4 object-center
+										className="px-4 py-2  box-content 	rounded-sm outline-2 outline-offset-2 outline-blue-700 lg:rounded-full lg:px-6 lg:py-4 object-center
 										">
 									</Label>
 								</SameRadioGroupItem>
@@ -255,7 +252,7 @@ export default function ProductDetailPage() {
 								<SameRadioGroup className="flex flex-wrap gap-4" onValueChange={setSizeSelected}>
 									{data && data?.data.options.find((option) => option.type === OptionType.SIZE)?.values?.map((size, index) => {
 										return (
-											<HoverCard key={index}>
+											<HoverCard key={index} openDelay={50} closeDelay={100}>
 												<HoverCardTrigger className={"relative"}>
 													<div
 														className={"h-8 w-12 place-content-center rounded-sm bg-gray-200 text-center uppercase lg:h-8 lg:w-20 lg:rounded-full"}>
@@ -651,7 +648,7 @@ export default function ProductDetailPage() {
 							<SameRadioGroup onValueChange={setSizeSelected} className="flex flex-wrap gap-4">
 								{data && data?.data.options.find((option) => option.type === OptionType.SIZE)?.values?.map((size, index) => {
 									return (
-										<HoverCard key={index}>
+										<HoverCard key={index} openDelay={50} closeDelay={100}>
 											<HoverCardTrigger className={"relative"}>
 												<div
 													className={"h-10 w-12 place-content-center rounded-sm bg-gray-200 text-center uppercase"}>

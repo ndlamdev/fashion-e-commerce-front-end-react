@@ -16,6 +16,7 @@ import { addressApi } from "@/services/address.service.ts";
 import { productApi } from "@/services/product.service.ts";
 import { dialogSlice } from "@/redux/slice/dialog.slice.ts";
 import { sheetSlice } from "@/redux/slice/sheet.slice.ts";
+import { collectionApi } from "@/services/collection.service.ts";
 
 const store = configureStore({
 	reducer: {
@@ -27,6 +28,8 @@ const store = configureStore({
 		[productApi.reducerPath]: productApi.reducer,
 		dialog: dialogSlice.reducer,
 		sheet: sheetSlice.reducer,
+		[collectionApi.reducerPath]: collectionApi.reducer,
+
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware()
@@ -34,7 +37,9 @@ const store = configureStore({
 			.concat(authenticationApi.middleware)
 			.concat(profileApi.middleware)
 			.concat(addressApi.middleware)
-			.concat(productApi.middleware),
+			.concat(productApi.middleware)
+			.concat(collectionApi.middleware)
+	,
 });
 
 // Get the type of our slice variable

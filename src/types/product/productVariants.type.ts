@@ -1,8 +1,10 @@
+import { OptionType } from "@/types/product/productOption.type.ts";
+
 export type ProductVariantsType = {
 	id: string;
 	title: string;
 	quantity: number;
-	options: {COLOR: string, SIZE: string};
+	options: {[OptionType.COLOR]: string, [OptionType.SIZE]: string};
 	pending: number;
 	delete: boolean;
 	product_id: string;

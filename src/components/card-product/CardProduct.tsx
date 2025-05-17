@@ -20,8 +20,8 @@ export default function CardProduct(props: ProductCardProp) {
 
 	useEffect(() => {
 		if (!props) return;
-		setColorSelected(props.variants[0].options.COLOR);
-		setSizeSelected(props.variants[0].options.SIZE);
+		setColorSelected(props.variants[0].options[OptionType.COLOR]);
+		setSizeSelected(props.variants[0].options[OptionType.SIZE]);
 		const colorValues = props.options.find(opt => opt.type === OptionType.COLOR)?.values;
 		const colorOptions = props.options_value.find((opt) => opt.type === OptionType.COLOR)
 		setImagesColor(colorValues

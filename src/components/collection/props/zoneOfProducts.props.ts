@@ -1,8 +1,9 @@
-import ProductDetailProp from "@/components/product-detail/props/productDetail.prop.ts";
+import { CollectionType } from "@/types/collection/category.type.ts";
+import { ApiPageResponse } from "@/domain/ApiPageResponse.ts";
+import ProductResponseType from "@/types/product/productResponse.type.ts";
 
 export type ZoneOfProductsProps = {
-	currentCategory: string;
-	showProducts: ProductDetailProp[] | undefined;
-	parentCategory?: string;
-	TotalProducts: number | undefined;
+	collection: CollectionType;
+	page: ApiPageResponse<ProductResponseType[]> | undefined;
+	onMorePage?: () => void;
 };

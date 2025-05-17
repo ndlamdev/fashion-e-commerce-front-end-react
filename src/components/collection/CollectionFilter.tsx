@@ -19,9 +19,9 @@ export default function CollectionFilter(props: CollectionFilterProps) {
 	const [filterItems, dispatch] = useReducer(FilterReducer, filterItemInitial);
 	const [checkedItems, setCheckedItems] = useState<string[]>([]);
 
-	useEffect(() => {
-		console.log(checkedItems);
-	}, [checkedItems]);
+	// useEffect(() => {
+	// 	console.log(checkedItems);
+	// }, [checkedItems]);
 
 	// Xử lý khi checkbox thay đổi
 	const handleToggle = (item: string) => {

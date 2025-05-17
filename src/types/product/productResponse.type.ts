@@ -3,7 +3,7 @@ import ProductImageType from "@/types/product/productImage.type.ts";
 import { ProductTagType } from "@/types/product/productTag.type.ts";
 import { ProductVariantsType } from "@/types/product/productVariants.type.ts";
 import { ProductReviewType } from "@/types/product/productReview.type.ts";
-import { GenderType } from "@/types/profile/customer.type.ts";
+import { CollectionEnum } from "@/utils/enums/collection.enum.ts";
 
 type ProductResponseType = {
 	id: string;
@@ -29,7 +29,7 @@ type ProductResponseType = {
 	coming_soon: boolean;
 	display_name_open: string;
 	icon_thumbnail?: ProductImageType;
-	gender_type?: GenderType;
+	gender_type?: CollectionEnum;
 };
 
 type DiscountType = {

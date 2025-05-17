@@ -5,24 +5,45 @@ import ZoneOfProducts from "@/components/collection/ZoneOfProducts.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import CategoryDescription from "@/components/collection/CategoryDescription.tsx";
 import { categoryDescriptionSamples } from "@/assets/data/collection/categoryDescription.data.ts";
-import { useLocation } from "react-router";
-import { useEffect } from "react";
+import { useLocation, useSearchParams } from "react-router";
+import { useEffect, useState } from "react";
 import RecentActivity from "@/components/collection/RecentActivity.tsx";
 import { useSearchByImageMutation } from "@/services/product.service.ts";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
+import { useGetProductByCollectionIdQuery, useGetProductByCollectionTypeQuery } from "@/services/collection.service.ts";
+import ProductResponseType from "@/types/product/productResponse.type.ts";
+import { ApiPageResponse } from "@/domain/ApiPageResponse.ts";
+import { CollectionType } from "@/types/collection/category.type.ts";
 
 export default function BoothPage() {
 	const location = useLocation();
 	const { file, prompt } = location.state || { file: undefined, prompt: undefined };
+	const [data, setData] = useState<ApiPageResponse<ProductResponseType[]> | undefined
+	>();
 	const filters: CollectionFilterProps = mockCollectionFilters;
 	const sportDescriptions = categoryDescriptionSamples;
-	const [request, {data: dataImageSearch, isLoading: isLoadingImageSearch}] = useSearchByImageMutation()
+	const [requestImageSearch, { isLoading: isLoadingImageSearch }] = useSearchByImageMutation();
+	const collection: CollectionType = location.state;
+	const [searchParams] = useSearchParams();
+	const {
+		data: productsOfId,
+		isLoading: isLoadingPOI,
+	} = useGetProductByCollectionIdQuery({id: collection?.id, page: parseInt(searchParams.get('page') ?? '0')}, { skip: !collection?.id});
+
+	const {
+		data: productsOfType,
+		isLoading: isLoadingPOT,
+	} = useGetProductByCollectionTypeQuery({type: collection?.type, page: parseInt(searchParams.get('page') ?? '0')} , { skip: !collection?.type});
+	console.log(searchParams.get('page'), productsOfType);
+
 	useEffect(() => {
 		if (!file) return;
 		const formData = new FormData();
-		formData.append('file', file)
-			request(formData);
-	}, [file, request]);
+		formData.append("file", file);
+		requestImageSearch(formData).unwrap().then((res) => {
+			setData(res.data);
+		});
+	}, [file, requestImageSearch]);
 
 	useEffect(() => {
 		if (!prompt) return;
@@ -30,16 +51,22 @@ export default function BoothPage() {
 		console.log(prompt);
 	}, [prompt]);
 
+	useEffect(() => {
+		setData(productsOfId?.data);
+	}, [productsOfId]);
+  useEffect(() => {
+    setData(productsOfType?.data);
+  }, [productsOfType]);
 	return (
 		<main>
-			<div className='p-3 sm:flex'>
-				<div className='hidden sm:block sm:w-1/4'>
+			<div className="p-3 sm:flex">
+				<div className="hidden sm:block sm:w-1/4">
 					<CollectionFilter {...filters} />
 				</div>
-				<div className='sm:w-3/4'>
+				<div className="sm:w-3/4">
 					<ScrollArea className={"h-dvh"}>
-						{isLoadingImageSearch ? <Skeleton className={'w-full'} /> :
-							<ZoneOfProducts currentCategory={"lorem"} showProducts={dataImageSearch?.data.content} TotalProducts={dataImageSearch?.data.numberOfElements} />
+						{(isLoadingPOI || isLoadingPOT || isLoadingImageSearch) ? <Skeleton className={"w-full h-full"} /> :
+							<ZoneOfProducts collection={collection} page={data} />
 						}
 					</ScrollArea>
 				</div>

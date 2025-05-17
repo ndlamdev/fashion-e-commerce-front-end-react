@@ -79,7 +79,7 @@ export default function ProfilePage() {
 										)
 									})
 								}
-								<TabNav onClick={()=>setOpenDialog('show-confirm')} tailwindStyle={`hover:bg-black hover:text-white `} iconLeft={<LogOutIcon className={'hover:text-white flex-none'}/>} title={"Đăng xuất"} iconRight={<ArrowRightIcon className={' hover:text-white'} />}/>
+								<TabNav to={''} onClick={()=>setOpenDialog('show-confirm')} tailwindStyle={`hover:bg-black hover:text-white `} iconLeft={<LogOutIcon className={'hover:text-white flex-none'}/>} title={"Đăng xuất"} iconRight={<ArrowRightIcon className={' hover:text-white'} />}/>
 								<ConfirmDialog
 									open={openDialog === "show-confirm"}
 									onOpenChange={(value) => !value && showDialog("none")}
