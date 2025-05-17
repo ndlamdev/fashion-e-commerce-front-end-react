@@ -7,8 +7,7 @@
  **/
 import { appDispatch } from "@/configs/store.config.ts";
 import { cartApi } from "@/redux/query/cart.query.ts";
-import { ApiResponseError } from "@/domain/ApiResponseError.ts";
-import { toast } from "sonner";
+import ToastErrorApi from "@/utils/helper/toastErrorApi.ts";
 
 const modifyQuantityCartItem = async (cartItemId: number, quantity: number) => {
 	return await appDispatch(
@@ -18,8 +17,22 @@ const modifyQuantityCartItem = async (cartItemId: number, quantity: number) => {
 		}),
 	).then(({ data, error }) => {
 		if (error) {
-			const response = (error as any).data as ApiResponseError<string>;
-			toast.message(response.detail || response.error);
+			ToastErrorApi.toastErrorApiRTK(error);
+			return Promise.reject(error);
+		}
+
+		return data;
+	});
+};
+
+const deleteCartItem = async (id: any) => {
+	return await appDispatch(
+		cartApi.endpoints.deleteCartItem.initiate({
+			cartItemId: id,
+		}),
+	).then(({ data, error }) => {
+		if (error) {
+			ToastErrorApi.toastErrorApiRTK(error);
 			return Promise.reject(error);
 		}
 
@@ -29,6 +42,7 @@ const modifyQuantityCartItem = async (cartItemId: number, quantity: number) => {
 
 const cartService = {
 	modifyQuantityCartItem,
+	deleteCartItem,
 };
 
 export default cartService;

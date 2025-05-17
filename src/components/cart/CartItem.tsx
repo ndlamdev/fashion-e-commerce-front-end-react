@@ -10,13 +10,8 @@ import { TablerMinus } from "@/assets/images/icons/TablerMinus.tsx";
 import { formatCurrency } from "@/utils/helper/format-data.ts";
 import { Fa6RegularTrashCan } from "@/assets/images/icons/Fa6RegularTrashCan.tsx";
 import CartItemProps from "@/components/cart/props/cart-item.prop.ts";
-import { useEffect } from "react";
 
-function CartItem({ id, product, variant, quantity, onDelete, onPlus, onMinute }: CartItemProps) {
-	useEffect(() => {
-		console.log(id);
-	}, [id]);
-
+function CartItem({ product, variant, quantity, onDelete, onPlus, onMinute }: CartItemProps) {
 	return (
 		<div className={"flex h-55 items-center gap-3 border-b-1 border-gray-300 pt-4 pb-10"}>
 			<input type={"checkbox"} className={"h-5 w-5 flex-none"} />

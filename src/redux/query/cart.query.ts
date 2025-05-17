@@ -58,6 +58,13 @@ export const cartApi = createApi({
 			}),
 			invalidatesTags: ["Cart"],
 		}),
+		deleteCartItem: build.mutation<ApiResponse<void>, { cartItemId: number }>({
+			query: (arg) => ({
+				url: `/remove/${arg.cartItemId}`,
+				method: "DELETE",
+			}),
+			invalidatesTags: ["Cart"],
+		}),
 	}),
 });
 
