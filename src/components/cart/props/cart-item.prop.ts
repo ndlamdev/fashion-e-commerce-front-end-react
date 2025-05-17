@@ -5,9 +5,9 @@
  * Create at: 11:01AM - 19/03/2025
  * User: lam-nguyen
  **/
-import ShoppingBagItemType from "@/types/ShoppingBagItemType.ts";
+import CartItemType from "@/types/CartItemType.ts";
 
-type CartItemProps = ShoppingBagItemType & {
+type CartItemProps = CartItemType & {
 	onDelete?: () => void;
 	onPlus?: () => void;
 	onMinute?: () => void;

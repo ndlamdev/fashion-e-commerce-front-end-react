@@ -13,9 +13,26 @@ import { LaShippingFast } from "@/assets/images/icons/LaShippingFast";
 import vnPay from "@/assets/images/icons/vn-pay.png";
 import { formatCurrency } from "@/utils/helper/format-data.ts";
 import { ArrowRight } from "lucide-react";
+import { useGetCartQuery } from "@/redux/query/cart.query.ts";
+import CartType from "@/types/CartType.ts";
 
 function CartLayoutFooter() {
 	const { payment, setShowConfirm, showConfirm } = useContext(CartContext);
+	const { data } = useGetCartQuery();
+
+	const total = (cart: CartType) => {
+		return cart.cartItems.reduce((sum, item) => {
+			return sum + item.variant.regular_price * item.quantity;
+		}, 0);
+	};
+
+	const totalDiscountItems = (cart: CartType) => {
+		return cart.cartItems
+			.filter((item) => item.variant.regular_price !== item.variant.compare_price)
+			.reduce((sum, item) => {
+				return sum + item.variant.regular_price * item.quantity;
+			}, 0);
+	};
 
 	return (
 		<div
@@ -52,9 +69,9 @@ function CartLayoutFooter() {
 			<div className={"flex size-full h-25 items-center justify-between gap-2 bg-white px-5 sm:col-span-2 sm:justify-end"}>
 				<div className={"text-start sm:text-end"}>
 					<p className={"text-[0.9rem]"}>
-						Thành tiền <span className={"text-[1.3rem] font-bold text-blue-700"}>{formatCurrency(0)}</span>
+						Thành tiền <span className={"text-[1.3rem] font-bold text-blue-700"}>{formatCurrency(!data ? 0 : total(data.data))}</span>
 					</p>
-					<p className={"text-[0.9rem] text-gray-600"}>Tiết kiệm {formatCurrency(0)}</p>
+					<p className={"text-[0.9rem] text-gray-600"}>Tiết kiệm {formatCurrency(!data ? 0 : total(data.data) - totalDiscountItems(data.data))}</p>
 				</div>
 				<button
 					className={`${showConfirm ? "hidden" : "flex"} items-center rounded-full bg-gray-300 px-4 py-2 text-white md:hidden md:px-10 md:py-4`}

@@ -21,7 +21,7 @@ function ShoppingBagItem({ product, variant, quantity }: ShoppingBagProps) {
 				<p className={"text-[0.8rem]"}>{Array.from(Object.values(variant.options)).join(" / ")}</p>
 				<div className={"mt-2 flex items-end gap-2"}>
 					<p className={"text-[1.25rem]"}>{formatCurrency(variant.regular_price)}</p>
-					{variant.compare_price && <p className={"text-[0.9rem] text-gray-400 line-through"}>{formatCurrency(variant.compare_price)}</p>}
+					{variant.compare_price !== variant.regular_price && <p className={"text-[0.9rem] text-gray-400 line-through"}>{formatCurrency(variant.compare_price)}</p>}
 				</div>
 				<p className={"mt-[-5px] text-[0.8rem]"}>x{quantity}</p>
 			</div>

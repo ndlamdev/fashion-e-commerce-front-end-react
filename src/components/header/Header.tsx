@@ -25,6 +25,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar.tsx"
 import { SheetTrigger } from "@/components/ui/sheet.tsx";
 import { RootState } from "@/configs/store.config.ts";
 import { useSelector } from "react-redux";
+import { useGetCartQuery } from "@/redux/query/cart.query.ts";
 
 function Header({ showMenu }: HeaderProps) {
 	const [, scrollY] = useScrolled();
@@ -32,6 +33,7 @@ function Header({ showMenu }: HeaderProps) {
 	const navigate = useNavigate();
 	const { showDialog } = useContext(DialogAuthContext);
 	const { access_token, user } = useSelector((state: RootState) => state.auth);
+	const { data } = useGetCartQuery();
 
 	useEffect(() => {
 		console.log(user);
@@ -116,9 +118,7 @@ function Header({ showMenu }: HeaderProps) {
 										</div>
 										<Separator className={"my-2"} />
 										<ul className={"flex h-full flex-col justify-between"}>
-											{dataShoppingBagItems.map((value, index) => (
-												<ShoppingBagItem {...value} key={`asdfafdas${index}`} />
-											))}
+											{data?.data.cartItems.map((value, index) => <ShoppingBagItem {...value} key={`shopping_bag_item_${index}`} />)}
 										</ul>
 									</div>
 								) : (

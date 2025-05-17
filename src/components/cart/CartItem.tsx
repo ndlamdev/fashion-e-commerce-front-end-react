@@ -36,7 +36,9 @@ function CartItem({ id, product, variant, quantity, onDelete, onPlus, onMinute }
 					</div>
 					<div className={"mt-2 flex flex-wrap items-end justify-between gap-x-2 sm:flex-col sm:items-center md:mt-0"}>
 						<p className={"mb-0 pb-0 text-end"}>{formatCurrency(variant.regular_price)}</p>
-						{variant.compare_price && <p className={"text-end text-sm text-gray-400 line-through"}>{formatCurrency(variant.regular_price)}</p>}
+						{variant.compare_price !== variant.regular_price && (
+							<p className={"text-end text-sm text-gray-400 line-through"}>{formatCurrency(variant.compare_price)}</p>
+						)}
 					</div>
 				</div>
 				<button className={"mt-2 flex cursor-pointer items-center justify-end gap-2 text-sm hover:text-red-600 sm:justify-start"} onClick={onDelete}>

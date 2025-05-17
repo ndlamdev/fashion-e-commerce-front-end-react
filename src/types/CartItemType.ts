@@ -6,7 +6,7 @@
  * User: lam-nguyen
  **/
 
-type ShoppingBagItemType = {
+type CartItemType = {
 	id: number;
 	variant: {
 		id: string;
@@ -41,4 +41,4 @@ type ShoppingBagItemType = {
 	create_at?: string[] | null;
 	update_at?: string[] | null;
 };
-export default ShoppingBagItemType;
+export default CartItemType;

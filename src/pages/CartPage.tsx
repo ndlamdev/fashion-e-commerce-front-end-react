@@ -5,7 +5,7 @@
  * Create at: 9:41AM - 13/03/2025
  *  User: lam-nguyen
  **/
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useHorizontalScroll } from "@/utils/helper/use-horizontal-scroll.ts";
 import InformationCustomer from "@/components/cart/InformationCustomer.tsx";
 import { CartContext } from "@/context/CartContext";
@@ -14,16 +14,11 @@ import Voucher from "@/components/cart/Voucher";
 import { Separator } from "@/components/ui/separator.tsx";
 import { formatCurrency } from "@/utils/helper/format-data.ts";
 import CartItem from "@/components/cart/CartItem.tsx";
-import dataCartItems from "@/assets/data/cart-items.ts";
 import { ArrowLeft } from "lucide-react";
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { useGetCartQuery } from "@/redux/query/cart.query";
+import { ApiResponseError } from "@/domain/ApiResponseError.ts";
+import { toast } from "sonner";
 
 function CartPage() {
 	const [voucherRef, setVoucherRef] = useState<HTMLElement | null>(null);
@@ -31,6 +26,14 @@ function CartPage() {
 	useHorizontalScroll(voucherRef);
 	const [deleted, setDeleted] = useState(false);
 	const [confirmDeleted, setConfirmDeleted] = useState(false);
+
+	const { data, error } = useGetCartQuery();
+
+	useEffect(() => {
+		if (!error) return;
+		const response = (error as any).data as ApiResponseError<string>;
+		toast.message(response.detail || response.error);
+	}, [error]);
 
 	return (
 		<Dialog open={confirmDeleted} onOpenChange={() => setConfirmDeleted(true)}>
@@ -65,8 +68,8 @@ function CartPage() {
 									<div className={"hidden basis-1/12 sm:block"}>giá</div>
 								</div>
 								<ul>
-									{dataCartItems.map((it) => (
-										<li key={`adfafdasdf_${it.id}`}>
+									{data?.data.cartItems.map((it) => (
+										<li key={`cart_item_${it.id}`}>
 											<CartItem {...it} />
 										</li>
 									))}

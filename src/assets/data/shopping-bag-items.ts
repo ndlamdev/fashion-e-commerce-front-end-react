@@ -5,9 +5,9 @@
  * Create at: 9:08AM - 13/03/2025
  * User: lam-nguyen
  **/
-import ShoppingBagItemType from "@/types/ShoppingBagItemType.ts";
+import CartItemType from "@/types/CartItemType.ts";
 
-const dataShoppingBagItems: ShoppingBagItemType[] = [
+const dataShoppingBagItems: CartItemType[] = [
 	{
 		id: 1,
 		variant: {
