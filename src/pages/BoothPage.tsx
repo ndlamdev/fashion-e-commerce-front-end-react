@@ -22,29 +22,25 @@ export default function BoothPage() {
 	const [data, setData] = useState<ApiPageResponse<ProductResponseType[]> | undefined>();
 	const filters: CollectionFilterProps = mockCollectionFilters;
 	const sportDescriptions = categoryDescriptionSamples;
-	const [requestImageSearch, {
-		isLoading: isLoadingImageSearch,
-		isError: isErrorImageSearch,
-		data: dataImageSearch,
-	}] = useSearchByImageMutation();
+	const [requestImageSearch, { isLoading: isLoadingImageSearch, isError: isErrorImageSearch, data: dataImageSearch }] = useSearchByImageMutation();
 	const [searchParams] = useSearchParams();
 	const queryObj = Object.fromEntries(searchParams.entries()); // get all key-value
 
-	const {
-		data: productsOfId,
-		isLoading: isLoadingPOI,
-	} = useGetProductByCollectionIdQuery({
-		cid: queryObj["cid"],
-		page: queryObj["page"],
-	}, { skip: !queryObj["cid"] });
+	const { data: productsOfId, isLoading: isLoadingPOI } = useGetProductByCollectionIdQuery(
+		{
+			cid: queryObj["cid"],
+			page: queryObj["page"],
+		},
+		{ skip: !queryObj["cid"] },
+	);
 
-	const {
-		data: productsOfType,
-		isLoading: isLoadingPOT,
-	} = useGetProductByCollectionTypeQuery({
-		type: queryObj["type"],
-		page: queryObj["page"],
-	}, { skip: !!queryObj["cid"] });
+	const { data: productsOfType, isLoading: isLoadingPOT } = useGetProductByCollectionTypeQuery(
+		{
+			type: queryObj["type"],
+			page: queryObj["page"],
+		},
+		{ skip: !!queryObj["cid"] },
+	);
 
 	// const {
 	// 	data: dataVoiceSearch,
@@ -55,7 +51,7 @@ export default function BoothPage() {
 		data: dataSearchByText,
 		isLoading: isLoadingSearchByText,
 		isError: isErrorSearchByText,
-	} = useSearchByTextQuery({ query: prompt, page: queryObj['page'] }, { skip: !prompt });
+	} = useSearchByTextQuery({ query: prompt, page: queryObj["page"] }, { skip: !prompt });
 
 	const {
 		data: dataQuickSearch,
@@ -63,18 +59,20 @@ export default function BoothPage() {
 		isError: isErrorQuickSearch,
 	} = useQuickSearchQuery(queryObj["query"], { skip: !queryObj["query"] });
 
-
 	useEffect(() => {
 		if (!file) return;
 		const formData = new FormData();
 		formData.append("file", file);
-		requestImageSearch(formData).unwrap().then((res) => {
-			if(res.code >= 400) return;
-			setData(res.data);
-		}).catch((err) => {
-			console.log(err);
-			setData(undefined);
-		});
+		requestImageSearch(formData)
+			.unwrap()
+			.then((res) => {
+				if (res.code >= 400) return;
+				setData(res.data);
+			})
+			.catch((err) => {
+				console.log(err);
+				setData(undefined);
+			});
 	}, [dataImageSearch, file, requestImageSearch]);
 
 	useEffect(() => {
@@ -85,29 +83,36 @@ export default function BoothPage() {
 
 	useEffect(() => {
 		setData(productsOfId?.data);
-		if(queryObj['cid']) return
+		if (queryObj["cid"]) return;
 		setData(productsOfType?.data);
-	}, [productsOfId, productsOfType]);
+	}, [productsOfId, productsOfType, queryObj]);
 
 	return (
 		<main>
-			<div className="p-3 sm:flex">
-				<div className="hidden sm:block sm:w-1/4">
+			<div className='p-3 sm:flex'>
+				<div className='hidden sm:block sm:w-1/4'>
 					<CollectionFilter {...filters} />
 				</div>
-				<div className="sm:w-3/4">
+				<div className='sm:w-3/4'>
 					<ScrollArea className={"h-dvh"}>
-						{(isErrorImageSearch || isErrorQuickSearch || isErrorSearchByText) ?
-							<p className={"text-red-500 text-center"}>Lỗi tìm kiếm bằng {file} {prompt} {queryObj["query"]}</p> :
-							((isLoadingPOI || isLoadingPOT || isLoadingImageSearch || isLoadingQuickSearch || isLoadingSearchByText) ?
-								<Skeleton className={"w-full h-screen place-content-center place-items-center items-center"}>
-									<LoaderIcon className={"text-gray-600 size-10"} /></Skeleton> :
-								<ZoneOfProducts collection={{
+						{isErrorImageSearch || isErrorQuickSearch || isErrorSearchByText ? (
+							<p className={"text-center text-red-500"}>
+								Lỗi tìm kiếm bằng {file} {prompt} {queryObj["query"]}
+							</p>
+						) : isLoadingPOI || isLoadingPOT || isLoadingImageSearch || isLoadingQuickSearch || isLoadingSearchByText ? (
+							<Skeleton className={"h-screen w-full place-content-center place-items-center items-center"}>
+								<LoaderIcon className={"size-10 text-gray-600"} />
+							</Skeleton>
+						) : (
+							<ZoneOfProducts
+								collection={{
 									type: queryObj["type"] ?? CollectionEnum.MALE,
 									id: queryObj["cid"],
 									title: title,
-								}} page={data} />)
-						}
+								}}
+								page={data}
+							/>
+						)}
 					</ScrollArea>
 				</div>
 			</div>
