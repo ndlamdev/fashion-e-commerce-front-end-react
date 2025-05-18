@@ -25,9 +25,7 @@ export const collectionApi = createApi({
 			}),
 		}),
 		getCollections: build.query<ApiResponse<Record<CollectionEnum, CollectionType[]>>, void>({
-			query: () => ({
-				url: ``,
-			}),
+			query: () => ``
 		}),
 	}),
 });

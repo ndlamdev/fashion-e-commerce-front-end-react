@@ -28,6 +28,12 @@ function VoiceSearchDialog() {
 		setLocalDialog("dialog");
 	}, [dialog]);
 
+	useEffect(() => {
+		if(!transcript) return
+		navigation('/collection', {state: {prompt: transcript}})
+	}, [navigation, transcript]);
+
+
 	if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
 		return <p>Sorry, your browser does not support speech recognition.</p>;
 	}
@@ -61,7 +67,7 @@ function VoiceSearchDialog() {
 												prompt: transcript,
 											},
 										});
-									});
+									})
 								}}
 							/>
 							<div className={"w-full text-left"}>Tìm kiếm: {transcript}</div>

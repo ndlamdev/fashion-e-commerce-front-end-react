@@ -133,8 +133,8 @@ function Header({ showMenu }: HeaderProps) {
 							<HoverCardContent className={"grid grid-cols-3 gap-2 min-h-25 w-[80vw]"}>
 								{isLoading && <Skeleton className={"w-[75vw]"} />}
 								{data && data.code >= 400 && <span className={"text-red-500"}>{data.message}</span>}
-								{data && data.data.MALE.map((item, index) => (
-									<span key={index} onClick={() => navigate(`collection?cid=${item.id}&type=${CollectionEnum.MALE}`,)} className={"hover:text-sky-600 cursor-pointer"}>{item.title}</span>
+								{data?.data.MALE && data.data.MALE.map((item, index) => (
+									<span key={index} onClick={() => navigate(`collection?cid=${item.id}&type=${CollectionEnum.MALE}`, {state: {title: item.title}})} className={"hover:text-sky-600 cursor-pointer"}>{item.title}</span>
 								))}
 							</HoverCardContent>
 						</HoverCard>
@@ -144,8 +144,8 @@ function Header({ showMenu }: HeaderProps) {
 							<HoverCardContent className={"grid grid-cols-3 gap-2 min-h-25 w-[80vw]"}>
 								{isLoading && <Skeleton className={"w-[75vw]"} />}
 								{data && data.code >= 400 && <span className={"text-red-500"}>{data.message}</span>}
-								{data && data.data.FEMALE.map((item, index) => (
-									<span key={index} onClick={() => navigate(`collection?cid=${item.id}&type=${CollectionEnum.FEMALE}`)} className={"hover:text-sky-600 cursor-pointer"}>{item.title}</span>
+								{data?.data.FEMALE && data.data.FEMALE.map((item, index) => (
+									<span key={index} onClick={() => navigate(`collection?cid=${item.id}&type=${CollectionEnum.FEMALE}`, {state: {title: item.title}})} className={"hover:text-sky-600 cursor-pointer"}>{item.title}</span>
 								))}
 							</HoverCardContent>
 						</HoverCard>
@@ -155,8 +155,8 @@ function Header({ showMenu }: HeaderProps) {
 							<HoverCardContent className={"grid grid-cols-3 gap-2 min-h-25 w-[80vw]"}>
 								{isLoading && <Skeleton className={"w-[75vw]"} />}
 								{data && data.code >= 400 && <span className={"text-red-500"}>{data.message}</span>}
-								{data && data.data.SPORT.map((item, index) => (
-									<span key={index} onClick={() => navigate(`collection?cid=${item.id}&type=${CollectionEnum.SPORT}`)} className={"hover:text-sky-600 cursor-pointer"}>{item.title}</span>
+								{data?.data.SPORT && data.data.SPORT.map((item, index) => (
+									<span key={index} onClick={() => navigate(`collection?cid=${item.id}&type=${CollectionEnum.SPORT}`, {state: {title: item.title}})} className={"hover:text-sky-600 cursor-pointer"}>{item.title}</span>
 								))}
 							</HoverCardContent>
 						</HoverCard>

@@ -91,7 +91,6 @@ export default function ProductDetailPage() {
 			img: RESOURCE_IMAGE + item.src,
 		}));
 	}, [data, colorSelected, RESOURCE_IMAGE]);
-	console.log(cardData, 'product detail page');
 
 	// handle decrement/increment quanlity buy
 	const [boughtQuantity, setBoughtQuantity] = useState<number>(1);
@@ -125,11 +124,10 @@ export default function ProductDetailPage() {
 							<BreadcrumbLink href={"/"}>Home</BreadcrumbLink>
 						</BreadcrumbItem>
 						<BreadcrumbSeparator />
-
 						<BreadcrumbItem>
 							<BreadcrumbLink
 								className={'cursor-pointer'}
-								onClick={() => navigate("/collection", { state: { type: data?.data.gender_type, title: data?.data.gender_type ? CollectionValue[data?.data.gender_type] : ''} })}>{data?.data.gender_type && CollectionValue[data?.data.gender_type]}</BreadcrumbLink>
+								onClick={() => navigate(`/collection?type=${data?.data.gender_type}`, )}>{data?.data.gender_type && CollectionValue[data?.data.gender_type]}</BreadcrumbLink>
 						</BreadcrumbItem>
 						<BreadcrumbSeparator />
 						<BreadcrumbItem>

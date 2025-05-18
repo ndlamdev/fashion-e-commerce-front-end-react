@@ -24,8 +24,18 @@ export const productApi = createApi({
 				method: 'POST',
 				body: file
 			})
-		})
-	})
+		}),
+		voiceSearch: build.query<ApiResponse<ApiPageResponse<ProductResponseType[]>>, string | null>({
+			query: (prompt ) => `/voice-search?query=${prompt}`
+			}),
+		searchByText: build.query<ApiResponse<ApiPageResponse<ProductResponseType[]>>, {query: string | null, page?: string | null, size?: string | null}>({
+			query: ({ query, size = '12', page = '0' } ) => `/search?query=${query}&query=${size}&query=${page}`
+		}),
+		quickSearch: build.query<ApiResponse<ApiPageResponse<ProductResponseType[]>>, string | null>({
+			query: (query ) => `/quick-search?query=${query}`
+		}),
+	}),
+
 });
 
-export const { useGetProductQuery, useSearchByImageMutation } = productApi;
+export const { useGetProductQuery, useSearchByImageMutation, useVoiceSearchQuery, useSearchByTextQuery, useQuickSearchQuery } = productApi;

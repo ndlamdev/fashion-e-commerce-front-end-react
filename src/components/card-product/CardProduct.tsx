@@ -45,16 +45,19 @@ export default function CardProduct(props: ProductCardProp) {
 
 	const [bgImage, setBgImage] = useState<string | undefined>();
 	useEffect(() => {
-		setBgImage((cardData && cardData.length > 1) ? cardData[0].img : props.images[0].src)
-	}, [cardData, props.images]);
+		setBgImage((cardData && cardData.length > 1) ? cardData[0].img : (RESOURCE_IMAGE + props.images[0].src))
+	}, [RESOURCE_IMAGE, cardData, props.images]);
 	return (
 		<Card className={cn(`rounded-none border-0 p-2 shadow-none`, props.className)}>
 			<CardContent
-				onClick={() => navigate(`/product-detail/${props.id}`, { replace: true })}
-				className={`group relative h-[50vw] cursor-pointer rounded-lg bg-cover bg-center bg-no-repeat p-0 text-base md:h-62 xl:h-84`}
+				onClick={() => {
+					if(!variants?.regular_price) return
+					navigate(`/product-detail/${props.id}`, { replace: true });
+				}}
+				className={`group relative h-[50vw] cursor-pointer rounded-lg bg-cover bg-center bg-no-repeat p-0 text-base md:h-62 xl:min-h-72`}
 				style={{ backgroundImage: `url("${bgImage}")` }}
-				onMouseEnter={() => setBgImage((cardData && cardData.length > 1) ? cardData[1].img : props.images[1].src)}
-				onMouseLeave={() => setBgImage((cardData && cardData.length > 1) ? cardData[0].img : props.images[0].src)}
+				onMouseEnter={() => setBgImage((cardData && cardData.length > 1) ? cardData[1].img : RESOURCE_IMAGE + props.images[1].src)}
+				onMouseLeave={() => setBgImage((cardData && cardData.length > 1) ? cardData[0].img : RESOURCE_IMAGE + props.images[0].src)}
 			>
 				<div className="absolute top-2 right-2 grid grid-cols-2 grid-rows-2">
 					{props.tags && props.tags.map((tag, index) => <Badge key={index}

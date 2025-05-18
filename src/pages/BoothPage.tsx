@@ -8,54 +8,87 @@ import { categoryDescriptionSamples } from "@/assets/data/collection/categoryDes
 import { useLocation, useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
 import RecentActivity from "@/components/collection/RecentActivity.tsx";
-import { useSearchByImageMutation } from "@/services/product.service.ts";
+import { useQuickSearchQuery, useSearchByImageMutation, useSearchByTextQuery } from "@/services/product.service.ts";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { useGetProductByCollectionIdQuery, useGetProductByCollectionTypeQuery } from "@/services/collection.service.ts";
 import ProductResponseType from "@/types/product/productResponse.type.ts";
 import { ApiPageResponse } from "@/domain/ApiPageResponse.ts";
+import { LoaderIcon } from "lucide-react";
 import { CollectionEnum } from "@/utils/enums/collection.enum.ts";
 
 export default function BoothPage() {
 	const location = useLocation();
-	const { file, prompt } = location.state || { file: undefined, prompt: undefined };
-	const [data, setData] = useState<ApiPageResponse<ProductResponseType[]> | undefined
-	>();
+	const { file, prompt, title } = location.state || { file: undefined, prompt: undefined, title: undefined };
+	const [data, setData] = useState<ApiPageResponse<ProductResponseType[]> | undefined>();
 	const filters: CollectionFilterProps = mockCollectionFilters;
 	const sportDescriptions = categoryDescriptionSamples;
-	const [requestImageSearch, { isLoading: isLoadingImageSearch }] = useSearchByImageMutation();
+	const [requestImageSearch, {
+		isLoading: isLoadingImageSearch,
+		isError: isErrorImageSearch,
+		data: dataImageSearch,
+	}] = useSearchByImageMutation();
 	const [searchParams] = useSearchParams();
+	const queryObj = Object.fromEntries(searchParams.entries()); // get all key-value
+
 	const {
 		data: productsOfId,
 		isLoading: isLoadingPOI,
-	} = useGetProductByCollectionIdQuery({cid: searchParams.get('cid'), page: searchParams.get('page')}, { skip: !searchParams.get('cid')});
+	} = useGetProductByCollectionIdQuery({
+		cid: queryObj["cid"],
+		page: queryObj["page"],
+	}, { skip: !queryObj["cid"] });
 
 	const {
 		data: productsOfType,
 		isLoading: isLoadingPOT,
-	} = useGetProductByCollectionTypeQuery({type: searchParams.get('type') ?? CollectionEnum.MALE, page: searchParams.get('page')} , {skip: searchParams.get('cid') !== null});
-	console.log(searchParams.get('page'), productsOfType);
+	} = useGetProductByCollectionTypeQuery({
+		type: queryObj["type"],
+		page: queryObj["page"],
+	}, { skip: !!queryObj["cid"] });
+
+	// const {
+	// 	data: dataVoiceSearch,
+	// 	isLoading: isLoadingVoiceSearch,
+	// 	isError: isErrorVoiceSearch,
+	// } = useVoiceSearchQuery(prompt, { skip: !prompt });
+	const {
+		data: dataSearchByText,
+		isLoading: isLoadingSearchByText,
+		isError: isErrorSearchByText,
+	} = useSearchByTextQuery({ query: prompt, page: queryObj['page'] }, { skip: !prompt });
+
+	const {
+		data: dataQuickSearch,
+		isLoading: isLoadingQuickSearch,
+		isError: isErrorQuickSearch,
+	} = useQuickSearchQuery(queryObj["query"], { skip: !queryObj["query"] });
+
 
 	useEffect(() => {
 		if (!file) return;
 		const formData = new FormData();
 		formData.append("file", file);
 		requestImageSearch(formData).unwrap().then((res) => {
+			if(res.code >= 400) return;
 			setData(res.data);
+		}).catch((err) => {
+			console.log(err);
+			setData(undefined);
 		});
-	}, [file, requestImageSearch]);
+	}, [dataImageSearch, file, requestImageSearch]);
 
 	useEffect(() => {
 		if (!prompt) return;
-		// TODO: Hiện thực chức năng tìm kiếm vằn bảng hoặc tìm kiếm bằng giọng nói tại đây. Chỉ cần gửi prompt lên server
 		console.log(prompt);
-	}, [prompt]);
+		setData(dataSearchByText?.data);
+	}, [prompt, dataSearchByText]);
 
 	useEffect(() => {
 		setData(productsOfId?.data);
-	}, [productsOfId]);
-  useEffect(() => {
-    setData(productsOfType?.data);
-  }, [productsOfType]);
+		if(queryObj['cid']) return
+		setData(productsOfType?.data);
+	}, [productsOfId, productsOfType]);
+
 	return (
 		<main>
 			<div className="p-3 sm:flex">
@@ -64,8 +97,16 @@ export default function BoothPage() {
 				</div>
 				<div className="sm:w-3/4">
 					<ScrollArea className={"h-dvh"}>
-						{(isLoadingPOI || isLoadingPOT || isLoadingImageSearch) ? <Skeleton className={"w-full h-full"} /> :
-							<ZoneOfProducts collection={{type: searchParams.get('type') ?? '', id: searchParams.get('cid') ?? '', title: searchParams.get('type')?.toUpperCase() ?? '' }} page={data} />
+						{(isErrorImageSearch || isErrorQuickSearch || isErrorSearchByText) ?
+							<p className={"text-red-500 text-center"}>Lỗi tìm kiếm bằng {file} {prompt} {queryObj["query"]}</p> :
+							((isLoadingPOI || isLoadingPOT || isLoadingImageSearch || isLoadingQuickSearch || isLoadingSearchByText) ?
+								<Skeleton className={"w-full h-screen place-content-center place-items-center items-center"}>
+									<LoaderIcon className={"text-gray-600 size-10"} /></Skeleton> :
+								<ZoneOfProducts collection={{
+									type: queryObj["type"] ?? CollectionEnum.MALE,
+									id: queryObj["cid"],
+									title: title,
+								}} page={data} />)
 						}
 					</ScrollArea>
 				</div>

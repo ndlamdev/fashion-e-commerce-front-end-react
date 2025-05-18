@@ -25,13 +25,15 @@ import {
 	PaginationNext,
 	PaginationPrevious,
 } from "@/components/ui/pagination.tsx";
+import { CollectionValue } from "@/utils/enums/collection.enum.ts";
 
 function ZoneOfProducts(props: ZoneOfProductsProps) {
 	const filters: CollectionFilterProps = mockCollectionFilters;
 	const [filterItems, dispatch] = useReducer(FilterReducer, filterItemInitial);
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams()
-	const [numPage, setNumPage] = useState<number>(parseInt(searchParams.get('page') ?? '0'));
+	const page = parseInt(searchParams.get('page') ?? '0')
+	const [numPage, setNumPage] = useState<number>( page );
 	return (
 		<article className={"w-full px-2"}>
 			<Breadcrumb className={"text-xs lg:text-sm"}>
@@ -43,19 +45,19 @@ function ZoneOfProducts(props: ZoneOfProductsProps) {
 					<BreadcrumbItem>
 						<BreadcrumbLink
 							className={"cursor-pointer"}
-							onClick={() => navigate(`/collection?type=${props.collection?.type}`, {})}>{props.collection?.type}</BreadcrumbLink>
+							onClick={() => navigate(`/collection?type=${props.collection?.type}`, {})}>{CollectionValue[props.collection?.type]}</BreadcrumbLink>
 					</BreadcrumbItem>
-					{props.collection?.id && <BreadcrumbSeparator />}
-					{props.collection?.id && (
+					{props.collection?.title && <BreadcrumbSeparator />}
+					{props.collection?.title && (
 						<BreadcrumbItem>
 							<BreadcrumbLink>{props.collection?.title}</BreadcrumbLink>
 						</BreadcrumbItem>)}
 				</BreadcrumbList>
 			</Breadcrumb>
-			<p className="my-3 font-bold uppercase lg:text-2xl">{props.collection?.title}</p>
+			<p className="my-3 font-bold uppercase lg:text-2xl">{props.collection?.title ?? CollectionValue[props.collection?.type]}</p>
 			<div className="my-4 border-1 border-gray-300" />
 
-			<section className="flex items-center justify-between text-xs lg:text-sm">
+			<section className=" flex items-center justify-between text-xs lg:text-sm">
 				<div className="flex items-center space-x-2">
 					<p className="font-bold">
 						<span className="mx-1">{props.page?.numberOfElements ?? 0}</span> kết quả
@@ -102,7 +104,7 @@ function ZoneOfProducts(props: ZoneOfProductsProps) {
 				</div>
 			</section>
 
-			<section className="my-4 flex flex-wrap border-b-1 border-gray-300">
+			<section className="py-15 flex flex-wrap border-b-1  border-gray-300">
 				{props.page?.content ?
 					props.page?.content.map((item: ProductResponseType) => (
 						<CardProduct className={"h-auto w-[30vw] basis-1/2 sm:w-full lg:h-100 lg:basis-1/3 xl:basis-1/4"} {...item}
@@ -111,32 +113,32 @@ function ZoneOfProducts(props: ZoneOfProductsProps) {
 					<span className={"italic"}>Không có kết quả cho sản phẩm bạn tìm kiếm</span>
 				}
 			</section>
-			{props.page && <section className="my-5 place-content-center text-center">
-				{(props?.page.totalElements > 8) &&
-					<Pagination>
-						<PaginationContent>
+			{props.page && props.page?.totalElements > 12 && <section className="my-5 placoe-content-center text-center">
+				<Pagination>
+					<PaginationContent>
+						<PaginationItem>
+							<PaginationPrevious onClick={() => setNumPage(numPage <= 0 ? 0 : numPage - 1)}
+																	href={props.collection.id ? `/collection?cid=${props.collection.id}&type=${props.collection.type}&page=${numPage <= 0 ? 0 : numPage}` : `/collection?type=${props.collection.type}&page=${numPage <= 0 ? 0 : numPage}`} />
+						</PaginationItem>
+						<PaginationItem>
+							<PaginationLink
+								href={props.collection.id ? `/collection?cid=${props.collection.id}&type=${props.collection.type}&page=${numPage > 1 ? numPage: 1}` : `/collection?type=${props.collection.type}&page=${numPage}`}
+							>{numPage}</PaginationLink>
+						</PaginationItem>
+						{numPage < props.page.totalPages - 1 &&
 							<PaginationItem>
-								<PaginationPrevious onClick={() => setNumPage(numPage <= 0 ? 0 : numPage - 1)}
-																		href={props.collection.id ? `/collection?cid=${props.collection.id}&type=${props.collection.type}&page=${numPage <= 0 ? 0 : numPage}` : `/collection?type=${props.collection.type}&page=${numPage <= 0 ? 0 : numPage}`} />
-							</PaginationItem>
-							<PaginationItem>
-								<PaginationLink
-									href={props.collection.id ? `/collection?cid=${props.collection.id}&type=${props.collection.type}&page=${numPage > 1 ? numPage: 1}` : `/collection?type=${props.collection.type}&page=${numPage}`}
-								>{numPage}</PaginationLink>
-							</PaginationItem>
-							{numPage < props.page.totalPages &&
-								<PaginationItem>
-									<PaginationEllipsis />
-								</PaginationItem>}
+								<PaginationEllipsis />
+							</PaginationItem>}
+						{(numPage < props.page.totalPages - 1) &&
 							<PaginationItem>
 								<PaginationNext onClick={() => props.page?.totalPages && setNumPage(numPage < props.page?.totalPages ? numPage + 1 : props.page?.totalPages)}
 																href={props.collection.id ? `/collection?cid=${props.collection.id}&type=${props.collection.type}&page=${numPage < props.page?.totalPages ? numPage : props.page?.totalPages}` : `/collection?type=${props.collection.type}&page=${numPage < props.page?.totalPages ? numPage : props.page?.totalPages}`} />
 							</PaginationItem>
-						</PaginationContent>
-					</Pagination>
-				}
+						}
+					</PaginationContent>
+				</Pagination>
 				<p className="my-4 text-sm text-neutral-500">
-					Hiện {(props.page?.numberOfElements * props.page.pageable.pageNumber) + 1} -  {props.page?.numberOfElements * (props.page.pageable.pageNumber + 1)} trên tổng số {props.page.totalElements} sản phẩm
+					Hiện {(props.page.pageable.offset + 1)} -  {props.page.pageable.offset + props.page.numberOfElements} trên tổng số {props.page.totalElements} sản phẩm
 				</p>
 			</section>}
 		</article>
