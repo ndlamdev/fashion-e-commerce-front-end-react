@@ -54,7 +54,7 @@ export default function CardProduct(props: ProductCardProp) {
 					if(!variants?.regular_price) return
 					navigate(`/product-detail/${props.id}`, { replace: true });
 				}}
-				className={`group relative h-[50vw] cursor-pointer rounded-lg bg-cover bg-center bg-no-repeat p-0 text-base md:h-62 xl:min-h-72`}
+				className={`group relative h-[50vw] cursor-pointer rounded-lg bg-cover bg-center bg-no-repeat p-0 text-base md:h-62 xl:min-h-56`}
 				style={{ backgroundImage: `url("${bgImage}")` }}
 				onMouseEnter={() => setBgImage((cardData && cardData.length > 1) ? cardData[1].img : RESOURCE_IMAGE + props.images[1].src)}
 				onMouseLeave={() => setBgImage((cardData && cardData.length > 1) ? cardData[0].img : RESOURCE_IMAGE + props.images[0].src)}
