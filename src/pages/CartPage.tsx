@@ -15,14 +15,21 @@ import { Separator } from "@/components/ui/separator.tsx";
 import { formatCurrency } from "@/utils/helper/format-data.ts";
 import CartItem from "@/components/cart/CartItem.tsx";
 import { ArrowLeft } from "lucide-react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "@/components/ui/dialog";
 import { useGetCartQuery } from "@/redux/query/cart.query";
 import cartService from "@/services/cart.service.ts";
 import ToastErrorApi from "@/utils/helper/toastErrorApi.ts";
-import { totalComparePrice, totalRegularPrice } from "@/components/footer/CartLayoutFooter.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/configs/store.config.ts";
 import { selectItems, unselectItems } from "@/redux/slice/cart.slice.ts";
+import CartHelper from "@/utils/helper/CartHelper.ts";
 
 function CartPage() {
 	const [voucherRef, setVoucherRef] = useState<HTMLElement | null>(null);
@@ -148,11 +155,11 @@ function CartPage() {
 					<div className={"flex flex-col gap-4 text-[0.9rem]"}>
 						<div className={"flex w-full justify-between"}>
 							<p>Tạm tính</p>
-							<p>{formatCurrency(totalComparePrice(cartItemsSelected))}</p>
+							<p>{formatCurrency(CartHelper.totalComparePrice(cartItemsSelected))}</p>
 						</div>
 						<div className={"flex w-full justify-between"}>
 							<p>Giảm giá</p>
-							<p>{formatCurrency(totalComparePrice(cartItemsSelected) - totalRegularPrice(cartItemsSelected))}</p>
+							<p>{formatCurrency(CartHelper.totalComparePrice(cartItemsSelected) - CartHelper.totalRegularPrice(cartItemsSelected))}</p>
 						</div>
 						<div className={"flex w-full justify-between"}>
 							<p>Phí giao hàng</p>
@@ -162,7 +169,7 @@ function CartPage() {
 					<Separator className={"my-5"} />
 					<div className={"flex w-full justify-between text-[1.1rem]"}>
 						<p>Tổng</p>
-						<strong>{formatCurrency(totalRegularPrice(cartItemsSelected))}</strong>
+						<strong>{formatCurrency(CartHelper.totalRegularPrice(cartItemsSelected))}</strong>
 					</div>
 				</div>
 			</div>

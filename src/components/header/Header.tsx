@@ -104,11 +104,11 @@ function Header({ showMenu }: HeaderProps) {
 					</a>
 					<div className={"group relative"}>
 						<a href={"/cart"} className={"relative z-3"}>
-							<ShoppingBag countItem={dataShoppingBagItems.length} />
+							<ShoppingBag countItem={data?.data.cartItems.length ?? 0} />
 						</a>
 						<div className={"absolute top-0 right-0 z-2 hidden w-[25rem] group-hover:lg:block"}>
 							<div className={"relative top-16 right-0 max-h-[27rem] overflow-y-scroll rounded-2xl bg-white p-4"}>
-								{dataShoppingBagItems.length ? (
+								{data?.data.cartItems.length ? (
 									<div className={"h-full overflow-auto"}>
 										<div className={"flex justify-between"}>
 											<p>{dataShoppingBagItems.length} sản phẩm</p>
@@ -118,7 +118,9 @@ function Header({ showMenu }: HeaderProps) {
 										</div>
 										<Separator className={"my-2"} />
 										<ul className={"flex h-full flex-col justify-between"}>
-											{data?.data.cartItems.map((value, index) => <ShoppingBagItem {...value} key={`shopping_bag_item_${index}`} />)}
+											{data.data.cartItems.map((value, index) => (
+												<ShoppingBagItem {...value} key={`shopping_bag_item_${index}`} />
+											))}
 										</ul>
 									</div>
 								) : (

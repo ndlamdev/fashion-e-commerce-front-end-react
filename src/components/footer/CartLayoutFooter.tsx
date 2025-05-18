@@ -10,12 +10,12 @@ import { CartContext } from "@/context/CartContext.tsx";
 import momo from "@/assets/images/icons/momo.png";
 import zaloPay from "@/assets/images/icons/zalo-pay.png";
 import { LaShippingFast } from "@/assets/images/icons/LaShippingFast";
-import vnPay from "@/assets/images/icons/vn-pay.png";
 import { formatCurrency } from "@/utils/helper/format-data.ts";
 import { ArrowRight } from "lucide-react";
-import CartItemType from "@/types/CartItemType.ts";
 import { useSelector } from "react-redux";
 import { RootState } from "@/configs/store.config.ts";
+import { PayOs } from "@/assets/images/icons/PayOs.tsx";
+import CartHelper from "@/utils/helper/CartHelper.ts";
 
 function CartLayoutFooter() {
 	const { payment, setShowConfirm, showConfirm } = useContext(CartContext);
@@ -48,18 +48,18 @@ function CartLayoutFooter() {
 				</li>
 				<li className={`${payment === "vn-pay" ? "block" : "hidden"}`}>
 					<div className='flex flex-col items-center gap-4 px-3 lg:flex-row'>
-						<img src={vnPay} alt={"vn-pay.png"} className={"h-13 w-13 rounded-[0.5rem]"} />
-						<p className={"text-center text-gray-700"}>Thanh toán qua VnPay</p>
+						<PayOs className={"h-13 w-13 rounded-[0.5rem]"} />
+						<p className={"text-center text-gray-700"}>Thanh toán qua PayOs</p>
 					</div>
 				</li>
 			</ul>
 			<div className={"flex size-full h-25 items-center justify-between gap-2 bg-white px-5 sm:col-span-2 sm:justify-end"}>
 				<div className={"text-start sm:text-end"}>
 					<p className={"text-[0.9rem]"}>
-						Thành tiền <span className={"text-[1.3rem] font-bold text-blue-700"}>{formatCurrency(totalRegularPrice(cartItemsSelected))}</span>
+						Thành tiền <span className={"text-[1.3rem] font-bold text-blue-700"}>{formatCurrency(CartHelper.totalRegularPrice(cartItemsSelected))}</span>
 					</p>
 					<p className={"text-[0.9rem] text-gray-600"}>
-						Tiết kiệm {formatCurrency(totalComparePrice(cartItemsSelected) - totalRegularPrice(cartItemsSelected))}
+						Tiết kiệm {formatCurrency(CartHelper.totalComparePrice(cartItemsSelected) - CartHelper.totalRegularPrice(cartItemsSelected))}
 					</p>
 				</div>
 				<button
@@ -68,24 +68,14 @@ function CartLayoutFooter() {
 					Thanh toán
 					<ArrowRight color={"white"} />
 				</button>
-				<button className={`${showConfirm ? "block" : "hidden"} rounded-full bg-gray-300 px-4 py-2 text-white md:block md:px-10 md:py-4`}>Thanh toán</button>
+				<button
+					className={`${showConfirm ? "block" : "hidden"} rounded-full bg-gray-300 px-4 py-2 text-white md:block md:px-10 md:py-4`}
+					onClick={() => setShowConfirm(true)}>
+					Thanh toán
+				</button>
 			</div>
 		</div>
 	);
 }
-
-export const totalRegularPrice = (cartItems: CartItemType[] | undefined) => {
-	if (!cartItems) return 0;
-	return cartItems.reduce((sum, item) => {
-		return sum + item.variant.regular_price * item.quantity;
-	}, 0);
-};
-
-export const totalComparePrice = (cartItems: CartItemType[] | undefined) => {
-	if (!cartItems) return 0;
-	return cartItems.reduce((sum, item) => {
-		return sum + item.variant.compare_price * item.quantity;
-	}, 0);
-};
 
 export default CartLayoutFooter;

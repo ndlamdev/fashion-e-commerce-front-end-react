@@ -11,17 +11,21 @@ import { LaShippingFast } from "@/assets/images/icons/LaShippingFast.tsx";
 import momo from "@/assets/images/icons/momo.png";
 import zaloPay from "@/assets/images/icons/zalo-pay.png";
 import cardSupport from "@/assets/images/icons/card-support.png";
-import vnPay from "@/assets/images/icons/vn-pay.png";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { CartContext } from "@/context/CartContext.tsx";
 import { Payment } from "@/layouts/CartLayout.tsx";
-import { useGetDistrictsOpenApiQuery, useGetProvincesOpenApiQuery, useGetWardsOpenApiQuery } from "@/redux/query/addressOpenApi.query.ts";
+import {
+	useGetDistrictsOpenApiQuery,
+	useGetProvincesOpenApiQuery,
+	useGetWardsOpenApiQuery,
+} from "@/redux/query/addressOpenApi.query.ts";
 import ProvinceType from "@/types/address/province.type.ts";
 import ToastErrorApi from "@/utils/helper/toastErrorApi.ts";
 import DistrictType from "@/types/address/districtType.ts";
 import WardType from "@/types/address/ward.type.ts";
 import { useSelector } from "react-redux";
 import { RootState } from "@/configs/store.config.ts";
+import { PayOs } from "@/assets/images/icons/PayOs.tsx";
 
 function InformationCustomer() {
 	const user = useSelector((state: RootState) => state.auth.user);
@@ -279,9 +283,9 @@ function InformationCustomer() {
 						onMouseLeave={() => setPaymentHover(null)}
 						onClick={() => setPayment("vn-pay")}>
 						<input type={"radio"} className={"h-5 w-5"} checked={payment === "vn-pay" || paymentHover === "vn-pay"} onChange={() => {}} />
-						<img src={vnPay} alt={"vn-pay.png"} className={"h-13 w-13 rounded-[0.5rem]"} />
+						<PayOs className={"h-13 w-13 rounded-[0.5rem]"} />
 						<div>
-							<p className={"text-[0.9rem] font-bold"}>Ví điện tử VNPAY</p>
+							<p className={"text-[0.9rem] font-bold"}>Ví điện tử PayOs</p>
 							<p className={"flex gap-2 text-[0.8rem] text-gray-400"}>Quét QR để thanh toán</p>
 						</div>
 					</div>
