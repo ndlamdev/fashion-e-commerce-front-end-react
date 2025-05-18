@@ -5,5 +5,4 @@ import ProductResponseType from "@/types/product/productResponse.type.ts";
 export type ZoneOfProductsProps = {
 	collection: CollectionType;
 	page: ApiPageResponse<ProductResponseType[]> | undefined;
-	onMorePage?: () => void;
 };

@@ -15,8 +15,7 @@ import { filterItemInitial } from "@/assets/data/collection/filterItem.data.ts";
 import { CollectionFilterProps } from "@/components/collection/props/collectionFilter.props.ts";
 import { mockCollectionFilters } from "@/assets/data/collection/collectionFileterProp.data.ts";
 import CollectionFilter from "@/components/collection/CollectionFilter.tsx";
-import { useNavigate } from "react-router";
-import { CollectionValue } from "@/utils/enums/collection.enum.ts";
+import { useNavigate, useSearchParams } from "react-router";
 import {
 	Pagination,
 	PaginationContent,
@@ -31,7 +30,8 @@ function ZoneOfProducts(props: ZoneOfProductsProps) {
 	const filters: CollectionFilterProps = mockCollectionFilters;
 	const [filterItems, dispatch] = useReducer(FilterReducer, filterItemInitial);
 	const navigate = useNavigate();
-	const [numPage, setNumPage] = useState<number>(0);
+	const [searchParams] = useSearchParams()
+	const [numPage, setNumPage] = useState<number>(parseInt(searchParams.get('page') ?? '0'));
 	return (
 		<article className={"w-full px-2"}>
 			<Breadcrumb className={"text-xs lg:text-sm"}>
@@ -43,12 +43,7 @@ function ZoneOfProducts(props: ZoneOfProductsProps) {
 					<BreadcrumbItem>
 						<BreadcrumbLink
 							className={"cursor-pointer"}
-							onClick={() => navigate("/collection", {
-								state: {
-									type: props.collection.type,
-									title: props.collection.title,
-								},
-							})}>{CollectionValue[props.collection?.type]}</BreadcrumbLink>
+							onClick={() => navigate(`/collection?type=${props.collection?.type}`, {})}>{props.collection?.type}</BreadcrumbLink>
 					</BreadcrumbItem>
 					{props.collection?.id && <BreadcrumbSeparator />}
 					{props.collection?.id && (
@@ -118,33 +113,30 @@ function ZoneOfProducts(props: ZoneOfProductsProps) {
 			</section>
 			{props.page && <section className="my-5 place-content-center text-center">
 				{(props?.page.totalElements > 8) &&
-					// <Button
-					// onClick={props.onMorePage}
-					// className={"cursor-pointer rounded-full bg-black p-6 font-bold text-white uppercase hover:bg-gray-300 hover:text-black"}>Xem
-					// Thêm</Button>
-
 					<Pagination>
 						<PaginationContent>
 							<PaginationItem>
-								<PaginationPrevious onClick={() => setNumPage(numPage - 1)}
-																		href={`/collection?page=${numPage}`} />
+								<PaginationPrevious onClick={() => setNumPage(numPage <= 0 ? 0 : numPage - 1)}
+																		href={props.collection.id ? `/collection?cid=${props.collection.id}&type=${props.collection.type}&page=${numPage <= 0 ? 0 : numPage}` : `/collection?type=${props.collection.type}&page=${numPage <= 0 ? 0 : numPage}`} />
 							</PaginationItem>
 							<PaginationItem>
 								<PaginationLink
-									href={`/collection?page=${numPage > 0 ? numPage - 1 : 0}`}>{numPage > 1 ? numPage + 1 : 1}</PaginationLink>
+									href={props.collection.id ? `/collection?cid=${props.collection.id}&type=${props.collection.type}&page=${numPage > 1 ? numPage: 1}` : `/collection?type=${props.collection.type}&page=${numPage}`}
+								>{numPage}</PaginationLink>
 							</PaginationItem>
 							{numPage < props.page.totalPages &&
 								<PaginationItem>
 									<PaginationEllipsis />
 								</PaginationItem>}
 							<PaginationItem>
-								<PaginationNext onClick={() => setNumPage(numPage + 1)} 	href={`/collection?page=${numPage}`} />
+								<PaginationNext onClick={() => props.page?.totalPages && setNumPage(numPage < props.page?.totalPages ? numPage + 1 : props.page?.totalPages)}
+																href={props.collection.id ? `/collection?cid=${props.collection.id}&type=${props.collection.type}&page=${numPage < props.page?.totalPages ? numPage : props.page?.totalPages}` : `/collection?type=${props.collection.type}&page=${numPage < props.page?.totalPages ? numPage : props.page?.totalPages}`} />
 							</PaginationItem>
 						</PaginationContent>
 					</Pagination>
 				}
 				<p className="my-4 text-sm text-neutral-500">
-					Hiện thị 1 - {props.page?.numberOfElements} trên tổng số {props.page.totalElements} sản phẩm
+					Hiện {(props.page?.numberOfElements * props.page.pageable.pageNumber) + 1} -  {props.page?.numberOfElements * (props.page.pageable.pageNumber + 1)} trên tổng số {props.page.totalElements} sản phẩm
 				</p>
 			</section>}
 		</article>

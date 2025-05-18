@@ -14,13 +14,13 @@ export const collectionApi = createApi({
 	reducerPath: "collectionApi",
 	baseQuery: baseQuery,
 	endpoints: (build) => ({
-		getProductByCollectionId: build.query<ApiResponse<ApiPageResponse<ProductResponseType[]>>, {id: string | undefined, page?: number | undefined, size?: number | undefined}>({
-			query: ({id, size = 8, page = 0}) => ({
-				url: `/${id}/products?size=${size}&page=${page}`,
+		getProductByCollectionId: build.query<ApiResponse<ApiPageResponse<ProductResponseType[]>>, {cid: string | null, page?: string | null, size?: string | null}>({
+			query: ({cid, size = '12', page = '0'}) => ({
+				url: `/${cid}/products?size=${size}&page=${page}`,
 			}),
 		}),
-		getProductByCollectionType: build.query<ApiResponse<ApiPageResponse<ProductResponseType[]>>, {type: CollectionEnum | undefined, page?: number | undefined, size?: number | undefined}>({
-			query: ({type = CollectionEnum.MALE, page = 0, size = 8} ) => ({
+		getProductByCollectionType: build.query<ApiResponse<ApiPageResponse<ProductResponseType[]>>, {type: string | null, page?: string | null, size?: string | null}>({
+			query: ({type = CollectionEnum.MALE, page = '0', size = '12'} ) => ({
 				url: `/type/${type}/products?size=${size}&page=${page}`,
 			}),
 		}),

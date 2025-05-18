@@ -26,7 +26,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Searcher from "@/components/header/Searcher.tsx";
 import { showDialog } from "@/redux/slice/dialog.slice.ts";
 import { useGetCollectionsQuery } from "@/services/collection.service.ts";
-import { CollectionEnum, CollectionValue } from "@/utils/enums/collection.enum.ts";
+import { CollectionEnum } from "@/utils/enums/collection.enum.ts";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 
@@ -128,35 +128,35 @@ function Header({ showMenu }: HeaderProps) {
 					</div>
 					<div className={"mb-0 hidden items-center justify-center gap-4 lg:flex"}>
 						<HoverCard openDelay={50} closeDelay={100}>
-							<HoverCardTrigger onClick={() => navigate("collection", { state: { type: CollectionEnum.MALE, title: CollectionValue[CollectionEnum.MALE]} })}
+							<HoverCardTrigger onClick={() => navigate(`/collection?type=${CollectionEnum.MALE}`,)}
 																className={"cursor-pointer text-lg font-bold uppercase hover:border-b-2"}>Nam</HoverCardTrigger>
 							<HoverCardContent className={"grid grid-cols-3 gap-2 min-h-25 w-[80vw]"}>
 								{isLoading && <Skeleton className={"w-[75vw]"} />}
 								{data && data.code >= 400 && <span className={"text-red-500"}>{data.message}</span>}
 								{data && data.data.MALE.map((item, index) => (
-									<span key={index} onClick={() => navigate("collection", { state: { ...item} })} className={"hover:text-sky-600 cursor-pointer"}>{item.title}</span>
+									<span key={index} onClick={() => navigate(`collection?cid=${item.id}&type=${CollectionEnum.MALE}`,)} className={"hover:text-sky-600 cursor-pointer"}>{item.title}</span>
 								))}
 							</HoverCardContent>
 						</HoverCard>
 						<HoverCard openDelay={50} closeDelay={100}>
-							<HoverCardTrigger onClick={() => navigate("collection", { state: { type: CollectionEnum.FEMALE, title: CollectionValue[CollectionEnum.FEMALE]} })}
+							<HoverCardTrigger onClick={() => navigate(`/collection?type=${CollectionEnum.FEMALE}`)}
 																className={"cursor-pointer text-lg font-bold uppercase hover:border-b-2"}>Nữ</HoverCardTrigger>
 							<HoverCardContent className={"grid grid-cols-3 gap-2 min-h-25 w-[80vw]"}>
 								{isLoading && <Skeleton className={"w-[75vw]"} />}
 								{data && data.code >= 400 && <span className={"text-red-500"}>{data.message}</span>}
 								{data && data.data.FEMALE.map((item, index) => (
-									<span key={index} onClick={() => navigate("collection", { state: { ...item} })} className={"hover:text-sky-600 cursor-pointer"}>{item.title}</span>
+									<span key={index} onClick={() => navigate(`collection?cid=${item.id}&type=${CollectionEnum.FEMALE}`)} className={"hover:text-sky-600 cursor-pointer"}>{item.title}</span>
 								))}
 							</HoverCardContent>
 						</HoverCard>
 						<HoverCard openDelay={50} closeDelay={100}>
-							<HoverCardTrigger onClick={() => navigate("collection", { state: { type: CollectionEnum.SPORT, title: CollectionValue[CollectionEnum.SPORT]} })}
+							<HoverCardTrigger onClick={() => navigate(`/collection?type=${CollectionEnum.SPORT}`)}
 																className={"cursor-pointer text-lg font-bold uppercase hover:border-b-2"}>Thể thao</HoverCardTrigger>
 							<HoverCardContent className={"grid grid-cols-3 gap-2 min-h-25 w-[80vw]"}>
 								{isLoading && <Skeleton className={"w-[75vw]"} />}
 								{data && data.code >= 400 && <span className={"text-red-500"}>{data.message}</span>}
 								{data && data.data.SPORT.map((item, index) => (
-									<span key={index} onClick={() => navigate("collection", { state: { ...item} })} className={"hover:text-sky-600 cursor-pointer"}>{item.title}</span>
+									<span key={index} onClick={() => navigate(`collection?cid=${item.id}&type=${CollectionEnum.SPORT}`)} className={"hover:text-sky-600 cursor-pointer"}>{item.title}</span>
 								))}
 							</HoverCardContent>
 						</HoverCard>

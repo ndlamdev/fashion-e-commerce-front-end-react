@@ -13,7 +13,7 @@ import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { useGetProductByCollectionIdQuery, useGetProductByCollectionTypeQuery } from "@/services/collection.service.ts";
 import ProductResponseType from "@/types/product/productResponse.type.ts";
 import { ApiPageResponse } from "@/domain/ApiPageResponse.ts";
-import { CollectionType } from "@/types/collection/category.type.ts";
+import { CollectionEnum } from "@/utils/enums/collection.enum.ts";
 
 export default function BoothPage() {
 	const location = useLocation();
@@ -23,17 +23,16 @@ export default function BoothPage() {
 	const filters: CollectionFilterProps = mockCollectionFilters;
 	const sportDescriptions = categoryDescriptionSamples;
 	const [requestImageSearch, { isLoading: isLoadingImageSearch }] = useSearchByImageMutation();
-	const collection: CollectionType = location.state;
 	const [searchParams] = useSearchParams();
 	const {
 		data: productsOfId,
 		isLoading: isLoadingPOI,
-	} = useGetProductByCollectionIdQuery({id: collection?.id, page: parseInt(searchParams.get('page') ?? '0')}, { skip: !collection?.id});
+	} = useGetProductByCollectionIdQuery({cid: searchParams.get('cid'), page: searchParams.get('page')}, { skip: !searchParams.get('cid')});
 
 	const {
 		data: productsOfType,
 		isLoading: isLoadingPOT,
-	} = useGetProductByCollectionTypeQuery({type: collection?.type, page: parseInt(searchParams.get('page') ?? '0')} , { skip: !collection?.type});
+	} = useGetProductByCollectionTypeQuery({type: searchParams.get('type') ?? CollectionEnum.MALE, page: searchParams.get('page')} , {skip: searchParams.get('cid') !== null});
 	console.log(searchParams.get('page'), productsOfType);
 
 	useEffect(() => {
@@ -66,7 +65,7 @@ export default function BoothPage() {
 				<div className="sm:w-3/4">
 					<ScrollArea className={"h-dvh"}>
 						{(isLoadingPOI || isLoadingPOT || isLoadingImageSearch) ? <Skeleton className={"w-full h-full"} /> :
-							<ZoneOfProducts collection={collection} page={data} />
+							<ZoneOfProducts collection={{type: searchParams.get('type') ?? '', id: searchParams.get('cid') ?? '', title: searchParams.get('type')?.toUpperCase() ?? '' }} page={data} />
 						}
 					</ScrollArea>
 				</div>
