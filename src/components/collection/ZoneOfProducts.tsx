@@ -30,30 +30,30 @@ function ZoneOfProducts(props: ZoneOfProductsProps) {
 	const sortSelected = (value: string) => {
 		const newParams = new URLSearchParams(searchParams); // Clone lại params hiện tại
 		switch (value) {
-			case 'a2z': {
-				newParams.set('sort', 'regular_price,'+ DirectionSort.ASC)
+			case 'regular_price,'+ DirectionSort.ASC: {
+				newParams.set('sort', value)
 				setSearchParams(newParams);
-				break;
+				break
 			}
-			case 'z2a': {
-				newParams.set('sort', 'regular_price,'+ DirectionSort.DESC)
+			case 'regular_price,'+ DirectionSort.DESC: {
+				newParams.set('sort', value)
 				setSearchParams(newParams);
-				break;
+				break
 			}
-			case 'best-sale': {
-				newParams.set('sort', ProductTag.BEST_SELLER + ',' + DirectionSort.ASC )
+			case ProductTag.BEST_SELLER + ',' + DirectionSort.ASC: {
+				newParams.set('sort', value )
 				setSearchParams(newParams);
-				break;
+				break
 			}
-			case 'new': {
-				newParams.set('sort', ProductTag.NEW)
+			case ProductTag.NEW + ',' + DirectionSort.ASC: {
+				newParams.set('sort', value)
 				setSearchParams(newParams);
-				break;
+				break
 			}
-			case 'high-sale': {
-				newParams.set('sort', ProductTag.CLEARANCE_SALE)
+			case ProductTag.CLEARANCE_SALE + ',' + DirectionSort.ASC: {
+				newParams.set('sort', value)
 				setSearchParams(newParams);
-				break;
+				break
 			}
 		}
 	}
@@ -88,16 +88,16 @@ function ZoneOfProducts(props: ZoneOfProductsProps) {
 				</div>
 				<div className="flex items-center space-x-2 text-gray-500 max-sm:hidden">
 					<span className="uppercase">Sắp xếp theo</span>
-					<Select onValueChange={sortSelected}>
+					<Select defaultValue={searchParams.get('sort') ?? undefined} onValueChange={sortSelected}>
 						<SelectTrigger className="w-50 rounded-full bg-neutral-100">
 							<SelectValue placeholder="Mặc định" />
 						</SelectTrigger>
 						<SelectContent className={"text-gray-500"}>
-							<SelectItem value={'new'}>Mới nhất</SelectItem>
-							<SelectItem value={'best-sale'}>Bán chạy</SelectItem>
-							<SelectItem value={'a2z'}>Giá thấp đến cao</SelectItem>
-							<SelectItem value={'z2a'}>Giá cao đến thấp</SelectItem>
-							<SelectItem value={'high-sale'}>%Giảm giá nhiều</SelectItem>
+							<SelectItem value={ProductTag.NEW + ',' + DirectionSort.ASC}>Mới nhất</SelectItem>
+							<SelectItem value={ProductTag.BEST_SELLER + ',' + DirectionSort.ASC}>Bán chạy</SelectItem>
+							<SelectItem value={'regular_price,'+ DirectionSort.ASC}>Giá thấp đến cao</SelectItem>
+							<SelectItem value={'regular_price,'+ DirectionSort.DESC}>Giá cao đến thấp</SelectItem>
+							<SelectItem value={ProductTag.CLEARANCE_SALE + ',' + DirectionSort.ASC}>%Giảm giá nhiều</SelectItem>
 						</SelectContent>
 					</Select>
 				</div>

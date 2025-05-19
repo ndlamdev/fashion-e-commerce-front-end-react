@@ -16,30 +16,38 @@ import {
 } from "@/components/ui/drawer.tsx";
 import Input from "@/components/form/Input.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
-import { memo, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { cn } from "@/lib/utils.ts";
 import { useSearchParams } from "react-router";
 
 function CollectionFilter(props: CollectionFilterProps) {
-	const [searchParams, setSearchParams] = useSearchParams();
-
 	const isDesktop = useMediaQuery("(min-width: 640px)");
+	const [searchParams, setSearchParams] = useSearchParams();
 	const [sizeValues, setSizeValues] = useState<string[]>(searchParams.getAll('sizes'));
-	const [colorValue, setColorValue] = useState<string | null>(searchParams.get("color"));
-
+	const [colorValue, setColorValue] = useState<string | null>(searchParams.get("colors"));
 	// Xử lý khi checkbox thay đổi
-	const handleToggle = (item: string) => {
+	const handleToggle = useCallback((item: string) => {
 		setSizeValues((prev) => (prev
 			.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]));
-	};
+
+		console.log(sizeValues);
+	}, [sizeValues]);
+	console.log(sizeValues);
 
 	useEffect(() => {
 		const newParams = new URLSearchParams(searchParams); // Clone lại params hiện tại
-		if(sizeValues.length > 0) newParams.set('sizes', sizeValues.join(','))
-		if(colorValue) newParams.set('colors', colorValue);
+		newParams.delete("sizes");
+		newParams.delete("colors");
+
+		sizeValues.forEach(size => {
+			newParams.append("sizes", size);
+		});
+
+		if (colorValue) {
+			newParams.set("colors", colorValue);
+		}
 		setSearchParams(newParams);
 	}, [sizeValues, colorValue, searchParams, setSearchParams]);
-
 	if (isDesktop) {
 		return (
 			<ScrollArea className='h-dvh overscroll-auto'>
@@ -56,10 +64,11 @@ function CollectionFilter(props: CollectionFilterProps) {
 											onCheckedChange={() => {
 												handleToggle(item);
 											}}
-											className={"absolute top-0 left-0 size-full cursor-pointer rounded-sm border-4 border-none"}>
+											defaultChecked={sizeValues?.includes(item)}
+											className={cn("absolute top-0 left-0 size-full cursor-pointer rounded-sm border-4 border-none ", )}>
 											<div
-												style={{backgroundColor: sizeValues.includes(item) ? `#4E71FF` : ''}}
-												className={cn("size-full cursor-pointer rounded-sm  px-6 py-2 text-center uppercase", )}>
+												// style={{backgroundColor: sizeValues?.includes(item) ? `#4E71FF` : ''}}
+												className={cn("size-full cursor-pointer rounded-sm  px-6 py-2 text-center uppercase bg-sky-600", )}>
 												{item}
 											</div>
 										</CheckboxCustom>

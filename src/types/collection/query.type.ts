@@ -9,5 +9,5 @@ export type QueryType = {
 	size?: string | null,
 	sort?: string | null,
 	colors?: string | null,
-	sizes?: string| null,
+	sizes?: string []| null,
 }

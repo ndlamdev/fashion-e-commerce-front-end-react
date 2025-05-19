@@ -69,7 +69,7 @@ export default function BoothPage() {
 		isError: isErrorPOOT,
 		isFetching: isFetchingPOT,
 	} = useGetProductByCollectionTypeQuery({
-		...queryObj,
+		...queryObj, sizes: searchParams.getAll('sizes')
 	}, { skip: !!queryObj["cid"] });
 
 
