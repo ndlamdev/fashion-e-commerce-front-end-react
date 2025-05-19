@@ -9,9 +9,7 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select.tsx";
 import ProductResponseType from "@/types/product/productResponse.type.ts";
 import CardProduct from "@/components/card-product/CardProduct.tsx";
-import { memo, useReducer, useState } from "react";
-import FilterItem, { FilterReducer } from "@/components/collection/FilterItem.tsx";
-import { filterItemInitial } from "@/assets/data/collection/filterItem.data.ts";
+import { memo, useState } from "react";
 import { CollectionFilterProps } from "@/components/collection/props/collectionFilter.props.ts";
 import { mockCollectionFilters } from "@/assets/data/collection/collectionFileterProp.data.ts";
 import CollectionFilter from "@/components/collection/CollectionFilter.tsx";
@@ -26,14 +24,45 @@ import {
 	PaginationPrevious,
 } from "@/components/ui/pagination.tsx";
 import { CollectionValue } from "@/utils/enums/collection.enum.ts";
+import { DirectionSort, ProductTag } from "@/utils/enums/productTag.enum.ts";
 
 function ZoneOfProducts(props: ZoneOfProductsProps) {
 	const filters: CollectionFilterProps = mockCollectionFilters;
-	const [filterItems, dispatch] = useReducer(FilterReducer, filterItemInitial);
 	const navigate = useNavigate();
-	const [searchParams] = useSearchParams()
+	const [searchParams, setSearchParams] = useSearchParams()
 	const page = parseInt(searchParams.get('page') ?? '0')
 	const [numPage, setNumPage] = useState<number>( page );
+	const sortSelected = (value: string) => {
+		const newParams = new URLSearchParams(searchParams); // Clone lại params hiện tại
+		switch (value) {
+			case 'a2z': {
+				newParams.set('sort', 'regular_price,'+ DirectionSort.ASC)
+				setSearchParams(newParams);
+				break;
+			}
+			case 'z2a': {
+				newParams.set('sort', 'regular_price,'+ DirectionSort.DESC)
+				setSearchParams(newParams);
+				break;
+			}
+			case 'best-sale': {
+				newParams.set('sort', ProductTag.BEST_SELLER )
+				setSearchParams(newParams);
+				break;
+			}
+			case 'new': {
+				newParams.set('sort', ProductTag.NEW)
+				setSearchParams(newParams);
+				break;
+			}
+			case 'high-sale': {
+				newParams.set('sort', ProductTag.CLEARANCE_SALE)
+				setSearchParams(newParams);
+				break;
+			}
+		}
+	}
+	console.log('zone render', props.collection.title);
 	return (
 		<article className={"w-full px-2"}>
 			<Breadcrumb className={"text-xs lg:text-sm"}>
@@ -63,39 +92,39 @@ function ZoneOfProducts(props: ZoneOfProductsProps) {
 						<span className="mx-1">{props.page?.numberOfElements ?? 0}</span> kết quả
 					</p>
 					<div className="flex items-center space-x-2 max-sm:hidden">
-						{filterItems.map((item) => (
-							<FilterItem
-								onDelete={() =>
-									dispatch({
-										type: "deleted",
-										payload: { id: item.id, name: "" },
-									})
-								}
-								{...item}
-								key={item.id}
-							/>
-						))}
-						{filterItems.length > 0 && (
-							<span
-								onClick={() => dispatch({ type: "clear", payload: { id: 0, name: "" } })}
-								className={"cursor-pointer text-sm text-blue-700 hover:underline"}>
-								Xóa lọc
-							</span>
-						)}
+						{/*{filterItems.map((item) => (*/}
+						{/*	<FilterItem*/}
+						{/*		onDelete={() =>*/}
+						{/*			dispatch({*/}
+						{/*				type: "deleted",*/}
+						{/*				payload: { id: item.id, name: "" },*/}
+						{/*			})*/}
+						{/*		}*/}
+						{/*		{...item}*/}
+						{/*		key={item.id}*/}
+						{/*	/>*/}
+						{/*))}*/}
+						{/*{filterItems.length > 0 && (*/}
+						{/*	<span*/}
+						{/*		onClick={() => dispatch({ type: "clear", payload: { id: 0, name: "" } })}*/}
+						{/*		className={"cursor-pointer text-sm text-blue-700 hover:underline"}>*/}
+						{/*		Xóa lọc*/}
+						{/*	</span>*/}
+						{/*)}*/}
 					</div>
 				</div>
 				<div className="flex items-center space-x-2 text-gray-500 max-sm:hidden">
 					<span className="uppercase">Sắp xếp theo</span>
-					<Select>
+					<Select onValueChange={sortSelected}>
 						<SelectTrigger className="w-50 rounded-full bg-neutral-100">
 							<SelectValue placeholder="Mặc định" />
 						</SelectTrigger>
 						<SelectContent className={"text-gray-500"}>
-							<SelectItem value="new">Mới nhất</SelectItem>
-							<SelectItem value="hot">Bán chạy</SelectItem>
-							<SelectItem value="z2a">Giá thấp đến cao</SelectItem>
-							<SelectItem value="a2z">Giá cao đến thấp</SelectItem>
-							<SelectItem value="height-discount">%Giảm giá nhiều</SelectItem>
+							<SelectItem value={'new'}>Mới nhất</SelectItem>
+							<SelectItem value={'best-sale'}>Bán chạy</SelectItem>
+							<SelectItem value={'a2z'}>Giá thấp đến cao</SelectItem>
+							<SelectItem value={'z2a'}>Giá cao đến thấp</SelectItem>
+							<SelectItem value={'high-sale'}>%Giảm giá nhiều</SelectItem>
 						</SelectContent>
 					</Select>
 				</div>

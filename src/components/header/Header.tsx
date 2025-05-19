@@ -12,7 +12,7 @@ import ShoppingBag from "@/components/cart/ShoppingBag.tsx";
 import { AnimatePresence, motion } from "motion/react";
 import { SolarArrowRightLinear } from "@/assets/images/icons/SolarArrowRightLinear";
 import useScrolled from "@/utils/helper/use-scrolled.ts";
-import { useCallback, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { Separator } from "@/components/ui/separator.tsx";
 import ShoppingBagItem from "@/components/cart/ShoppingBagItem.tsx";
 import dataShoppingBagItems from "@/assets/data/shopping-bag-items.ts";
@@ -32,6 +32,8 @@ import { Skeleton } from "@/components/ui/skeleton.tsx";
 import quickSearchData from "@/assets/data/quickSearch.data.ts";
 import QuickSearchProduct from "@/components/product/QuickSearchProduct.tsx";
 import { debounce } from "lodash";
+import { useQuickSearchQuery } from "@/services/product.service.ts";
+import { cn } from "@/lib/utils.ts";
 
 function Header({ showMenu }: HeaderProps) {
 	const [, scrollY] = useScrolled();
@@ -68,6 +70,12 @@ function Header({ showMenu }: HeaderProps) {
 	// 	});
 	// 	return Array.from(map.values());
 	// }, [ACCESSORY, SHIRT, SHORT, UNDERWEAR, data]);
+	const [title, setTitle] = useState<string>()
+	const {
+		data: dataQuickSearch,
+		isLoading: isLoadingQuickSearch,
+		isError: isErrorQuickSearch,
+	} = useQuickSearchQuery(title, { skip: !title});
 
 	const debounceSearch = debounce((title: string) => {
 		onSearchHandle(title);
@@ -76,6 +84,7 @@ function Header({ showMenu }: HeaderProps) {
 	const onSearchHandle = useCallback((title: string) => {
 		console.log(title);
 		// TODO: hiện thực chức năng quick search ngay tại đây
+			setTitle(title);
 	}, []);
 
 	const onSearchHandler = useCallback(
@@ -167,7 +176,7 @@ function Header({ showMenu }: HeaderProps) {
 										data.data.MALE.map((item, index) => (
 											<span
 												key={index}
-												onClick={() => navigate(`collection?cid=${item.id}&type=${CollectionEnum.MALE}`, { state: { title: item.title } })}
+												onClick={() => navigate(`collection?cid=${item.id}&type=${CollectionEnum.MALE}`, { state: { name: item.title } })}
 												className={"cursor-pointer hover:text-sky-600"}>
 												{item.title}
 											</span>
@@ -187,7 +196,7 @@ function Header({ showMenu }: HeaderProps) {
 										data.data.FEMALE.map((item, index) => (
 											<span
 												key={index}
-												onClick={() => navigate(`collection?cid=${item.id}&type=${CollectionEnum.FEMALE}`, { state: { title: item.title } })}
+												onClick={() => navigate(`collection?cid=${item.id}&type=${CollectionEnum.FEMALE}`, { state: { name: item.title } })}
 												className={"cursor-pointer hover:text-sky-600"}>
 												{item.title}
 											</span>
@@ -207,7 +216,7 @@ function Header({ showMenu }: HeaderProps) {
 										data.data.SPORT.map((item, index) => (
 											<span
 												key={index}
-												onClick={() => navigate(`collection?cid=${item.id}&type=${CollectionEnum.SPORT}`, { state: { title: item.title } })}
+												onClick={() => navigate(`collection?cid=${item.id}&type=${CollectionEnum.SPORT}`, { state: { name: item.title } })}
 												className={"cursor-pointer hover:text-sky-600"}>
 												{item.title}
 											</span>
@@ -311,23 +320,28 @@ function Header({ showMenu }: HeaderProps) {
 			</motion.header>
 			{searchAction === "SEARCH" && (
 				<div
-					className={
-						"border-gray absolute top-[115px] left-0 z-3 flex h-[500px] w-full flex-col gap-y-5 overflow-x-hidden overflow-y-auto border-t-5 bg-white p-5"
+					className={cn(
+						"border-gray absolute top-[115px] left-0 z-3 flex  w-full flex-col gap-y-5 overflow-x-hidden overflow-y-auto border-t-5 bg-white p-5", dataQuickSearch ? 'h-screen sm:h-100' : 'h-[50vw] sm:h-25')
 					}>
-					{quickSearchData.map((it) => (
+					{isLoadingQuickSearch && <Skeleton className={'w-full min-h-5'} />}
+					{isErrorQuickSearch && <p className={'text-red-500 normal-case'} >lỗi tìm thấy sản phẩm</p>}
+					{dataQuickSearch && dataQuickSearch.data.map((it) => (
 						<QuickSearchProduct
-							className={"flex w-full flex-row items-center gap-2"}
+							className={"flex w-full flex-row items-center gap-2 cursor-pointer"}
 							key={`quick_search_product_${it.id}`}
 							{...it}
+							image={it.image}
 							onClick={() => {
-								console.log(it);
+								navigate(`/product-detail/${it.id}`)
+								setSearchAction('EXIT')
 							}}
 						/>
 					))}
+					{!dataQuickSearch && <div className={'text-center font-bold w-full min-h-5'}>Nhập sản phẩm bạn muốn tìm.</div>}
 				</div>
 			)}
 		</div>
 	);
 }
 
-export default Header;
+export default memo(Header);

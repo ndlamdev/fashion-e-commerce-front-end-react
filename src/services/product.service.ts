@@ -2,6 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ApiResponse } from "@/domain/ApiResponse.ts";
 import ProductResponseType from "@/types/product/productResponse.type.ts";
 import { ApiPageResponse } from "@/domain/ApiPageResponse.ts";
+import { QueryType } from "@/types/collection/query.type.ts";
+import QuickSearchProductType from "@/types/product/quickSearchProduct.type.ts";
 
 export const BASE_PRODUCT_URL = import.meta.env.VITE_BASE_PRODUCT_URL + "/product/v1";
 
@@ -25,14 +27,14 @@ export const productApi = createApi({
 				body: file
 			})
 		}),
-		voiceSearch: build.query<ApiResponse<ApiPageResponse<ProductResponseType[]>>, string | null>({
-			query: (prompt ) => `/voice-search?query=${prompt}`
+		voiceSearch: build.query<ApiResponse<ApiPageResponse<ProductResponseType[]>>, QueryType>({
+			query: ({ prompt } ) => `/voice-search?query=${prompt}`
 			}),
-		searchByText: build.query<ApiResponse<ApiPageResponse<ProductResponseType[]>>, {query: string | null, page?: string | null, size?: string | null}>({
-			query: ({ query, size = '12', page = '0' } ) => `/search?query=${query}&query=${size}&query=${page}`
+		searchByText: build.query<ApiResponse<ApiPageResponse<ProductResponseType[]>>, QueryType>({
+			query: ({ prompt, size = '12', page = '0', sort = '', colors = '', sizes = '' } ) => `/search?query=${prompt}&size=${size}&page=${page}` + (colors && `&colors=${colors}`) + (sizes && `&sizes=${sizes}`) + (sort && `&sort=${sort}`),
 		}),
-		quickSearch: build.query<ApiResponse<ApiPageResponse<ProductResponseType[]>>, string | null>({
-			query: (query ) => `/quick-search?query=${query}`
+		quickSearch: build.query<ApiResponse<QuickSearchProductType[]>, string | undefined>({
+			query: (title ) => `/quick-search?query=${title}`
 		}),
 	}),
 
