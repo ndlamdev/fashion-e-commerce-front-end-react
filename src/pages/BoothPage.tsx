@@ -60,7 +60,7 @@ export default function BoothPage() {
 		isError: isErrorPOI,
 		isFetching: isFetchingPOI,
 	} = useGetProductByCollectionIdQuery({
-		...queryObj,
+		...queryObj, sizes: searchParams.getAll('sizes')
 	}, { skip: !queryObj["cid"] });
 
 	const {
@@ -83,7 +83,7 @@ export default function BoothPage() {
 		isLoading: isLoadingSearchByText,
 		isError: isErrorSearchByText,
 		isFetching: isFetchingSearchByText,
-	} = useSearchByTextQuery({ ...queryObj, title: prompt }, { skip: !prompt });
+	} = useSearchByTextQuery({ ...queryObj, title: prompt, sizes: searchParams.getAll('sizes') }, { skip: !prompt });
 
 	useEffect(() => {
 		if (!file) return;

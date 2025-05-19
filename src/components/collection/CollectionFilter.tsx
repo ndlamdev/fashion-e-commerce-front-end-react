@@ -29,17 +29,14 @@ function CollectionFilter(props: CollectionFilterProps) {
 	const handleToggle = useCallback((item: string) => {
 		setSizeValues((prev) => (prev
 			.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]));
-
-		console.log(sizeValues);
 	}, [sizeValues]);
-	console.log(sizeValues);
 
 	useEffect(() => {
 		const newParams = new URLSearchParams(searchParams); // Clone lại params hiện tại
 		newParams.delete("sizes");
 		newParams.delete("colors");
 
-		sizeValues.forEach(size => {
+		if(sizeValues.length) sizeValues.forEach(size => {
 			newParams.append("sizes", size);
 		});
 
