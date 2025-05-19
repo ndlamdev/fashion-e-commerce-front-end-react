@@ -31,7 +31,7 @@ export const productApi = createApi({
 			query: ({ prompt } ) => `/voice-search?query=${prompt}`
 			}),
 		searchByText: build.query<ApiResponse<ApiPageResponse<ProductResponseType[]>>, QueryType>({
-			query: ({ prompt, size = '12', page = '0', sort = '', colors = '', sizes = '' } ) => `/search?query=${prompt}&size=${size}&page=${page}` + (colors && `&colors=${colors}`) + (sizes && `&sizes=${sizes}`) + (sort && `&sort=${sort}`),
+			query: ({ title, size = '12', page = '0', sort = '', colors = '', sizes = '' } ) => `/search?title=${title}&size=${size}&page=${page}` + (colors && `&colors=${colors}`) + (sizes && `&sizes=${sizes}`) + (sort && `&sort=${sort}`),
 		}),
 		quickSearch: build.query<ApiResponse<QuickSearchProductType[]>, string | undefined>({
 			query: (title ) => `/quick-search?query=${title}`

@@ -4,6 +4,7 @@ export type QueryType = {
 	cid?: string | null,
 	type?: CollectionEnum | string | null,
 	prompt?: string | null
+	title?: string | null
 	page?: string | null,
 	size?: string | null,
 	sort?: string | null,

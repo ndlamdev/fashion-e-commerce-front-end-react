@@ -1,19 +1,12 @@
 import { ZoneOfProductsProps } from "@/components/collection/props/zoneOfProducts.props.ts";
-import {
-	Breadcrumb,
-	BreadcrumbItem,
-	BreadcrumbLink,
-	BreadcrumbList,
-	BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb.tsx";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select.tsx";
 import ProductResponseType from "@/types/product/productResponse.type.ts";
 import CardProduct from "@/components/card-product/CardProduct.tsx";
-import { memo, useState } from "react";
+import { memo } from "react";
 import { CollectionFilterProps } from "@/components/collection/props/collectionFilter.props.ts";
 import { mockCollectionFilters } from "@/assets/data/collection/collectionFileterProp.data.ts";
 import CollectionFilter from "@/components/collection/CollectionFilter.tsx";
-import { useNavigate, useSearchParams } from "react-router";
+import { useSearchParams } from "react-router";
 import {
 	Pagination,
 	PaginationContent,
@@ -23,15 +16,17 @@ import {
 	PaginationNext,
 	PaginationPrevious,
 } from "@/components/ui/pagination.tsx";
-import { CollectionValue } from "@/utils/enums/collection.enum.ts";
 import { DirectionSort, ProductTag } from "@/utils/enums/productTag.enum.ts";
 
 function ZoneOfProducts(props: ZoneOfProductsProps) {
 	const filters: CollectionFilterProps = mockCollectionFilters;
-	const navigate = useNavigate();
 	const [searchParams, setSearchParams] = useSearchParams()
+
 	const page = parseInt(searchParams.get('page') ?? '0')
-	const [numPage, setNumPage] = useState<number>( page );
+	const goToPage = (page: number) => {
+		searchParams.set('page', page+'')
+		setSearchParams(searchParams);
+	}
 	const sortSelected = (value: string) => {
 		const newParams = new URLSearchParams(searchParams); // Clone lại params hiện tại
 		switch (value) {
@@ -46,7 +41,7 @@ function ZoneOfProducts(props: ZoneOfProductsProps) {
 				break;
 			}
 			case 'best-sale': {
-				newParams.set('sort', ProductTag.BEST_SELLER )
+				newParams.set('sort', ProductTag.BEST_SELLER + ',' + DirectionSort.ASC )
 				setSearchParams(newParams);
 				break;
 			}
@@ -62,30 +57,8 @@ function ZoneOfProducts(props: ZoneOfProductsProps) {
 			}
 		}
 	}
-	console.log('zone render', props.collection.title);
 	return (
 		<article className={"w-full px-2"}>
-			<Breadcrumb className={"text-xs lg:text-sm"}>
-				<BreadcrumbList>
-					<BreadcrumbItem>
-						<BreadcrumbLink href="/">Trang chủ</BreadcrumbLink>
-					</BreadcrumbItem>
-					<BreadcrumbSeparator />
-					<BreadcrumbItem>
-						<BreadcrumbLink
-							className={"cursor-pointer"}
-							onClick={() => navigate(`/collection?type=${props.collection?.type}`, {})}>{CollectionValue[props.collection?.type]}</BreadcrumbLink>
-					</BreadcrumbItem>
-					{props.collection?.title && <BreadcrumbSeparator />}
-					{props.collection?.title && (
-						<BreadcrumbItem>
-							<BreadcrumbLink>{props.collection?.title}</BreadcrumbLink>
-						</BreadcrumbItem>)}
-				</BreadcrumbList>
-			</Breadcrumb>
-			<p className="my-3 font-bold uppercase lg:text-2xl">{props.collection?.title ?? CollectionValue[props.collection?.type]}</p>
-			<div className="my-4 border-1 border-gray-300" />
-
 			<section className=" flex items-center justify-between text-xs lg:text-sm">
 				<div className="flex items-center space-x-2">
 					<p className="font-bold">
@@ -145,23 +118,21 @@ function ZoneOfProducts(props: ZoneOfProductsProps) {
 			{props.page && props.page?.totalElements > 12 && <section className="my-5 placoe-content-center text-center">
 				<Pagination>
 					<PaginationContent>
-						<PaginationItem>
-							<PaginationPrevious onClick={() => setNumPage(numPage <= 0 ? 0 : numPage - 1)}
-																	href={props.collection.id ? `/collection?cid=${props.collection.id}&type=${props.collection.type}&page=${numPage <= 0 ? 0 : numPage}` : `/collection?type=${props.collection.type}&page=${numPage <= 0 ? 0 : numPage}`} />
+						<PaginationItem className={'cursor-pointer'}>
+							<PaginationPrevious onClick={() => goToPage(page <= 0 ? 0 : page - 1)} />
 						</PaginationItem>
-						<PaginationItem>
+						<PaginationItem className={'cursor-pointer'}>
 							<PaginationLink
-								href={props.collection.id ? `/collection?cid=${props.collection.id}&type=${props.collection.type}&page=${numPage > 1 ? numPage: 1}` : `/collection?type=${props.collection.type}&page=${numPage}`}
-							>{numPage}</PaginationLink>
+								onClick={() => goToPage(page <= 0 ? 0 : page)}
+							>{page}</PaginationLink>
 						</PaginationItem>
-						{numPage < props.page.totalPages - 1 &&
+						{page < props.page.totalPages - 1 &&
 							<PaginationItem>
 								<PaginationEllipsis />
 							</PaginationItem>}
-						{(numPage < props.page.totalPages - 1) &&
-							<PaginationItem>
-								<PaginationNext onClick={() => props.page?.totalPages && setNumPage(numPage < props.page?.totalPages ? numPage + 1 : props.page?.totalPages)}
-																href={props.collection.id ? `/collection?cid=${props.collection.id}&type=${props.collection.type}&page=${numPage < props.page?.totalPages ? numPage : props.page?.totalPages}` : `/collection?type=${props.collection.type}&page=${numPage < props.page?.totalPages ? numPage : props.page?.totalPages}`} />
+						{(page < props.page.totalPages - 1) &&
+							<PaginationItem className={'cursor-pointer'}>
+								<PaginationNext onClick={() => goToPage(page + 1)}/>
 							</PaginationItem>
 						}
 					</PaginationContent>

@@ -26,10 +26,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Searcher from "@/components/header/Searcher.tsx";
 import { showDialog } from "@/redux/slice/dialog.slice.ts";
 import { useGetCollectionsQuery } from "@/services/collection.service.ts";
-import { CollectionEnum } from "@/utils/enums/collection.enum.ts";
+import { CollectionEnum, CollectionValue } from "@/utils/enums/collection.enum.ts";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import quickSearchData from "@/assets/data/quickSearch.data.ts";
 import QuickSearchProduct from "@/components/product/QuickSearchProduct.tsx";
 import { debounce } from "lodash";
 import { useQuickSearchQuery } from "@/services/product.service.ts";
@@ -165,7 +164,7 @@ function Header({ showMenu }: HeaderProps) {
 						<div className={"mb-0 hidden items-center justify-center gap-4 lg:flex"}>
 							<HoverCard openDelay={50} closeDelay={100}>
 								<HoverCardTrigger
-									onClick={() => navigate(`/collection?type=${CollectionEnum.MALE}`)}
+									onClick={() => navigate(`/collection?type=${CollectionEnum.MALE}`, { state: { type: CollectionValue[CollectionEnum.MALE] } })}
 									className={"cursor-pointer text-lg font-bold uppercase hover:border-b-2"}>
 									Nam
 								</HoverCardTrigger>
@@ -185,7 +184,7 @@ function Header({ showMenu }: HeaderProps) {
 							</HoverCard>
 							<HoverCard openDelay={50} closeDelay={100}>
 								<HoverCardTrigger
-									onClick={() => navigate(`/collection?type=${CollectionEnum.FEMALE}`)}
+									onClick={() => navigate(`/collection?type=${CollectionEnum.FEMALE}`,{ state: { type: CollectionValue[CollectionEnum.FEMALE] } })}
 									className={"cursor-pointer text-lg font-bold uppercase hover:border-b-2"}>
 									Nữ
 								</HoverCardTrigger>
@@ -205,7 +204,7 @@ function Header({ showMenu }: HeaderProps) {
 							</HoverCard>
 							<HoverCard openDelay={50} closeDelay={100}>
 								<HoverCardTrigger
-									onClick={() => navigate(`/collection?type=${CollectionEnum.SPORT}`)}
+									onClick={() => navigate(`/collection?type=${CollectionEnum.SPORT}`, { state: { type: CollectionValue[CollectionEnum.SPORT] } })}
 									className={"cursor-pointer text-lg font-bold uppercase hover:border-b-2"}>
 									Thể thao
 								</HoverCardTrigger>
