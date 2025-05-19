@@ -29,7 +29,7 @@ function CollectionFilter(props: CollectionFilterProps) {
 	const handleToggle = useCallback((item: string) => {
 		setSizeValues((prev) => (prev
 			.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]));
-	}, [sizeValues]);
+	}, []);
 
 	useEffect(() => {
 		const newParams = new URLSearchParams(searchParams); // Clone lại params hiện tại

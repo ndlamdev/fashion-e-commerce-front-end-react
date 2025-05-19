@@ -42,33 +42,9 @@ function Header({ showMenu }: HeaderProps) {
 	const { access_token, user } = useSelector((state: RootState) => state.auth);
 	const [searchAction, setSearchAction] = useState<"SEARCH" | "EXIT" | "HIDDEN">("HIDDEN");
 	const { data, isLoading } = useGetCollectionsQuery();
-	// const [SHIRT, SHORT, UNDERWEAR, ACCESSORY] = ["áo", "quần", "quần lót", "phụ kiện"];
-	// const maleCollections = useMemo(() => {
-	// 	if (!data) return {};
-	// 	const map = new Map<string, CollectionType>();
-	// 	data.data.MALE.map((collection) => {
-	// 		switch (collection.title.toLowerCase()) {
-	// 			case SHIRT: {
-	// 				map.set(SHIRT, collection);
-	// 				break;
-	// 			}
-	// 			case SHORT && !UNDERWEAR: {
-	// 				map.set(SHORT, collection);
-	// 				break;
-	// 			}
-	// 			case ACCESSORY: {
-	// 				map.set(ACCESSORY, collection);
-	// 				break;
-	// 			}
-	// 			case UNDERWEAR: {
-	// 				map.set(UNDERWEAR, collection);
-	// 				break;
-	// 			}
-	// 			default: {map.set(SHIRT, collection);}
-	// 		}
-	// 	});
-	// 	return Array.from(map.values());
-	// }, [ACCESSORY, SHIRT, SHORT, UNDERWEAR, data]);
+	const [type, setType] = useState<CollectionEnum>(CollectionEnum.MALE)
+
+
 	const [title, setTitle] = useState<string>()
 	const {
 		data: dataQuickSearch,
@@ -82,7 +58,6 @@ function Header({ showMenu }: HeaderProps) {
 
 	const onSearchHandle = useCallback((title: string) => {
 		console.log(title);
-		// TODO: hiện thực chức năng quick search ngay tại đây
 			setTitle(title);
 	}, []);
 
@@ -98,7 +73,6 @@ function Header({ showMenu }: HeaderProps) {
 		},
 		[navigate],
 	);
-
 	return (
 		<div>
 			<motion.header className={"sticky top-0 z-2 bg-white"} initial={{ top: 0 }} animate={{ top: scrollY >= 100 ? -40 : 0 }} transition={{ duration: 0.75 }}>
@@ -162,66 +136,31 @@ function Header({ showMenu }: HeaderProps) {
 							</div>
 						</div>
 						<div className={"mb-0 hidden items-center justify-center gap-4 lg:flex"}>
-							<HoverCard openDelay={50} closeDelay={100}>
-								<HoverCardTrigger
-									onClick={() => navigate(`/collection?type=${CollectionEnum.MALE}`, { state: { type: CollectionValue[CollectionEnum.MALE] } })}
-									className={"cursor-pointer text-lg font-bold uppercase hover:border-b-2"}>
-									Nam
-								</HoverCardTrigger>
-								<HoverCardContent className={"grid min-h-25 w-[80vw] grid-cols-3 gap-2"}>
-									{isLoading && <Skeleton className={"w-[75vw]"} />}
-									{data && data.code >= 400 && <span className={"text-red-500"}>{data.message}</span>}
-									{data?.data.MALE &&
-										data.data.MALE.map((item, index) => (
-											<span
-												key={index}
-												onClick={() => navigate(`collection?cid=${item.id}&type=${CollectionEnum.MALE}`, { state: { name: item.title } })}
-												className={"cursor-pointer hover:text-sky-600"}>
+								<HoverCard openDelay={50} closeDelay={100}>
+									{
+										Object.values(CollectionEnum).map((collection: CollectionEnum) => (
+											<HoverCardTrigger
+												key={collection}
+												onMouseEnter={() => setType(collection)}
+												onClick={() => navigate(`/collection?type=${collection}`, { state: { type: CollectionValue[collection] } })}
+												className={"cursor-pointer text-lg font-bold uppercase hover:border-b-2"}>
+												{CollectionValue[collection]}
+											</HoverCardTrigger>
+										))
+									}
+									<HoverCardContent className={"translate-y-6 -translate-x-12	grid min-h-25 w-[80vw] grid-cols-3 gap-2 place-content-around bg-linear-to-t from-sky-500 to-indigo-500"}>
+										{isLoading && <Skeleton className={"w-[75vw]"} />}
+										{data?.data &&
+											data.data[type].map((item, index) => (
+												<span
+													key={index}
+													onClick={() => navigate(`collection?cid=${item.id}&type=${type}`, { state: { name: item.title } })}
+													className={"cursor-pointer hover:text-neutral-600 font-bold italic text-white"}>
 												{item.title}
 											</span>
-										))}
-								</HoverCardContent>
-							</HoverCard>
-							<HoverCard openDelay={50} closeDelay={100}>
-								<HoverCardTrigger
-									onClick={() => navigate(`/collection?type=${CollectionEnum.FEMALE}`,{ state: { type: CollectionValue[CollectionEnum.FEMALE] } })}
-									className={"cursor-pointer text-lg font-bold uppercase hover:border-b-2"}>
-									Nữ
-								</HoverCardTrigger>
-								<HoverCardContent className={"grid min-h-25 w-[80vw] grid-cols-3 gap-2"}>
-									{isLoading && <Skeleton className={"w-[75vw]"} />}
-									{data && data.code >= 400 && <span className={"text-red-500"}>{data.message}</span>}
-									{data?.data.FEMALE &&
-										data.data.FEMALE.map((item, index) => (
-											<span
-												key={index}
-												onClick={() => navigate(`collection?cid=${item.id}&type=${CollectionEnum.FEMALE}`, { state: { name: item.title } })}
-												className={"cursor-pointer hover:text-sky-600"}>
-												{item.title}
-											</span>
-										))}
-								</HoverCardContent>
-							</HoverCard>
-							<HoverCard openDelay={50} closeDelay={100}>
-								<HoverCardTrigger
-									onClick={() => navigate(`/collection?type=${CollectionEnum.SPORT}`, { state: { type: CollectionValue[CollectionEnum.SPORT] } })}
-									className={"cursor-pointer text-lg font-bold uppercase hover:border-b-2"}>
-									Thể thao
-								</HoverCardTrigger>
-								<HoverCardContent className={"grid min-h-25 w-[80vw] grid-cols-3 gap-2"}>
-									{isLoading && <Skeleton className={"w-[75vw]"} />}
-									{data && data.code >= 400 && <span className={"text-red-500"}>{data.message}</span>}
-									{data?.data.SPORT &&
-										data.data.SPORT.map((item, index) => (
-											<span
-												key={index}
-												onClick={() => navigate(`collection?cid=${item.id}&type=${CollectionEnum.SPORT}`, { state: { name: item.title } })}
-												className={"cursor-pointer hover:text-sky-600"}>
-												{item.title}
-											</span>
-										))}
-								</HoverCardContent>
-							</HoverCard>
+											))}
+									</HoverCardContent>
+								</HoverCard>
 						</div>
 					</div>
 					<div className={"relative col-span-2 flex items-center justify-end gap-2"}>

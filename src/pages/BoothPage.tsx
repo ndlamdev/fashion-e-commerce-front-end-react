@@ -14,7 +14,7 @@ import { useGetProductByCollectionIdQuery, useGetProductByCollectionTypeQuery } 
 import ProductResponseType from "@/types/product/productResponse.type.ts";
 import { ApiPageResponse } from "@/domain/ApiPageResponse.ts";
 import { LoaderIcon } from "lucide-react";
-import { CollectionEnum, CollectionValue } from "@/utils/enums/collection.enum.ts";
+import { CollectionValue } from "@/utils/enums/collection.enum.ts";
 import {
 	Breadcrumb,
 	BreadcrumbItem,
@@ -147,9 +147,7 @@ export default function BoothPage() {
 						{(isLoadingPOI || isLoadingPOT || isLoadingImageSearch || isLoadingSearchByText || isErrorSearchByText || isErrorImageSearch || isErrorPOI || isErrorPOOT || isFetchingPOT || isFetchingSearchByText || isFetchingPOT || isFetchingPOI) ?
 							<Skeleton className={"w-full h-screen place-content-center place-items-center items-center"}>
 								<LoaderIcon className={"text-gray-600 size-10"} /></Skeleton> :
-							(data && <ZoneOfProducts collection={{
-								type: queryObj["type"] ?? CollectionEnum.MALE,
-							}} page={data} />)
+							(data && <ZoneOfProducts page={data} />)
 						}
 					</ScrollArea>
 				</div>
