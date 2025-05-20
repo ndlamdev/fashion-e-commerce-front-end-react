@@ -57,6 +57,7 @@ import ProductImageType from "@/types/product/productImage.type.ts";
 import { CollectionValue } from "@/utils/enums/collection.enum.ts";
 
 export default function ProductDetailPage() {
+	const [MIN_BOUGHT, MAX_BOUGHT] = [1, 100]
 	const navigate = useNavigate();
 	const { id } = useParams();
 	const { showDialog } = useContext(DialogProductContext);
@@ -93,9 +94,9 @@ export default function ProductDetailPage() {
 	}, [data, colorSelected, RESOURCE_IMAGE]);
 
 	// handle decrement/increment quanlity buy
-	const [boughtQuantity, setBoughtQuantity] = useState<number>(1);
+	const [boughtQuantity, setBoughtQuantity] = useState<number>(MIN_BOUGHT);
 	const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>) => {
-		setBoughtQuantity(Number(event.target.value));
+		setBoughtQuantity((Number(event.target.value) <= MIN_BOUGHT )? MIN_BOUGHT : Number(event.target.value));
 	};
 
 	// handle fixed
@@ -288,16 +289,16 @@ export default function ProductDetailPage() {
 
 						<div className="mb-3 flex">
 							<Input onChange={handleQuantityChange} value={boughtQuantity}
-										 className={"me-3! w-1/4 rounded-2xl! text-center"} type={"number"} min={1} />
+										 className={"me-3! w-1/4 rounded-2xl! text-center"} type={"number"} min={MIN_BOUGHT} max={MAX_BOUGHT}/>
 							<Button
 								className={"flex w-3/4 cursor-pointer items-center rounded-2xl text-center text-xs hover:bg-neutral-300 hover:text-black sm:text-sm"}
-								disabled={!sizeSelected}
+								disabled={!sizeSelected || Number(boughtQuantity) > MAX_BOUGHT}
 								variant="default">
 								<ShoppingBag className={""} />
 								<span>{sizeSelected ? "Thêm vào giỏ hàng" : "Chọn kích thước"}</span>
 							</Button>
 						</div>
-
+						{boughtQuantity > MAX_BOUGHT && <p className="text-red-500">Số lượng mua vượt mức cho phép (từ 100 sản phẩm trở lại)</p>}
 						<Accordion className={"rounded-lg bg-blue-50 p-3"} type="single" collapsible>
 							<AccordionItem value="item-1">
 								<AccordionTrigger className={"p-0"}>
