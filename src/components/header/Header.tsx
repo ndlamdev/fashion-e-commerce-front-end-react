@@ -42,15 +42,10 @@ function Header({ showMenu }: HeaderProps) {
 	const { access_token, user } = useSelector((state: RootState) => state.auth);
 	const [searchAction, setSearchAction] = useState<"SEARCH" | "EXIT" | "HIDDEN">("HIDDEN");
 	const { data, isLoading } = useGetCollectionsQuery();
-	const [type, setType] = useState<CollectionEnum>(CollectionEnum.MALE)
+	const [type, setType] = useState<CollectionEnum>(CollectionEnum.MALE);
 
-
-	const [title, setTitle] = useState<string>()
-	const {
-		data: dataQuickSearch,
-		isLoading: isLoadingQuickSearch,
-		isError: isErrorQuickSearch,
-	} = useQuickSearchQuery(title, { skip: !title});
+	const [title, setTitle] = useState<string>();
+	const { data: dataQuickSearch, isLoading: isLoadingQuickSearch, isError: isErrorQuickSearch } = useQuickSearchQuery(title, { skip: !title });
 
 	const debounceSearch = debounce((title: string) => {
 		onSearchHandle(title);
@@ -58,7 +53,7 @@ function Header({ showMenu }: HeaderProps) {
 
 	const onSearchHandle = useCallback((title: string) => {
 		console.log(title);
-			setTitle(title);
+		setTitle(title);
 	}, []);
 
 	const onSearchHandler = useCallback(
@@ -83,10 +78,14 @@ function Header({ showMenu }: HeaderProps) {
 						<div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>Blog</div>
 						<span className={"text-gray-400"}>|</span>
 						<div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>Trung tâm CSKH</div>
-						<span className={"text-gray-400"}>|</span>
-						<div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"} onClick={() => dispatch(showDialog("login"))}>
-							Đăng nhập
-						</div>
+						{(!access_token || !user) && (
+							<>
+								<span className={"text-gray-400"}>|</span>
+								<div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"} onClick={() => dispatch(showDialog("login"))}>
+									Đăng nhập
+								</div>
+							</>
+						)}
 					</div>
 				</div>
 				<div className={"align-items-center grid grid-cols-7 grid-rows-1 px-4 py-1 lg:mx-8"}>
@@ -136,31 +135,32 @@ function Header({ showMenu }: HeaderProps) {
 							</div>
 						</div>
 						<div className={"mb-0 hidden items-center justify-center gap-4 lg:flex"}>
-								<HoverCard openDelay={50} closeDelay={100}>
-									{
-										Object.values(CollectionEnum).map((collection: CollectionEnum) => (
-											<HoverCardTrigger
-												key={collection}
-												onMouseEnter={() => setType(collection)}
-												onClick={() => navigate(`/collection?type=${collection}`, { state: { type: CollectionValue[collection] } })}
-												className={"cursor-pointer text-lg font-bold uppercase hover:border-b-2"}>
-												{CollectionValue[collection]}
-											</HoverCardTrigger>
-										))
-									}
-									<HoverCardContent className={"translate-y-6 -translate-x-12	grid min-h-25 w-[80vw] grid-cols-3 gap-2 place-content-around bg-linear-to-t from-sky-500 to-indigo-500"}>
-										{isLoading && <Skeleton className={"w-[75vw]"} />}
-										{data?.data &&
-											data.data[type].map((item, index) => (
-												<span
-													key={index}
-													onClick={() => navigate(`collection?cid=${item.id}&type=${type}`, { state: { name: item.title } })}
-													className={"cursor-pointer hover:text-neutral-600 font-bold italic text-white"}>
+							<HoverCard openDelay={50} closeDelay={100}>
+								{Object.values(CollectionEnum).map((collection: CollectionEnum) => (
+									<HoverCardTrigger
+										key={collection}
+										onMouseEnter={() => setType(collection)}
+										onClick={() => navigate(`/collection?type=${collection}`, { state: { type: CollectionValue[collection] } })}
+										className={"cursor-pointer text-lg font-bold uppercase hover:border-b-2"}>
+										{CollectionValue[collection]}
+									</HoverCardTrigger>
+								))}
+								<HoverCardContent
+									className={
+										"grid min-h-25 w-[80vw] -translate-x-12 translate-y-6 grid-cols-3 place-content-around gap-2 bg-linear-to-t from-sky-500 to-indigo-500"
+									}>
+									{isLoading && <Skeleton className={"w-[75vw]"} />}
+									{data?.data &&
+										data.data[type].map((item, index) => (
+											<span
+												key={index}
+												onClick={() => navigate(`collection?cid=${item.id}&type=${type}`, { state: { name: item.title } })}
+												className={"cursor-pointer font-bold text-white italic hover:text-neutral-600"}>
 												{item.title}
 											</span>
-											))}
-									</HoverCardContent>
-								</HoverCard>
+										))}
+								</HoverCardContent>
+							</HoverCard>
 						</div>
 					</div>
 					<div className={"relative col-span-2 flex items-center justify-end gap-2"}>
@@ -259,23 +259,25 @@ function Header({ showMenu }: HeaderProps) {
 			{searchAction === "SEARCH" && (
 				<div
 					className={cn(
-						"border-gray absolute top-[115px] left-0 z-3 flex  w-full flex-col gap-y-5 overflow-x-hidden overflow-y-auto border-t-5 bg-white p-5", dataQuickSearch ? 'h-screen sm:h-100' : 'h-[50vw] sm:h-25')
-					}>
-					{isLoadingQuickSearch && <Skeleton className={'w-full min-h-5'} />}
-					{isErrorQuickSearch && <p className={'text-red-500 normal-case'} >lỗi tìm thấy sản phẩm</p>}
-					{dataQuickSearch && dataQuickSearch.data.map((it) => (
-						<QuickSearchProduct
-							className={"flex w-full flex-row items-center gap-2 cursor-pointer"}
-							key={`quick_search_product_${it.id}`}
-							{...it}
-							image={it.image}
-							onClick={() => {
-								navigate(`/product-detail/${it.id}`)
-								setSearchAction('EXIT')
-							}}
-						/>
-					))}
-					{!dataQuickSearch && <div className={'text-center font-bold w-full min-h-5'}>Nhập sản phẩm bạn muốn tìm.</div>}
+						"border-gray absolute top-[115px] left-0 z-3 flex w-full flex-col gap-y-5 overflow-x-hidden overflow-y-auto border-t-5 bg-white p-5",
+						dataQuickSearch ? "h-screen sm:h-100" : "h-[50vw] sm:h-25",
+					)}>
+					{isLoadingQuickSearch && <Skeleton className={"min-h-5 w-full"} />}
+					{isErrorQuickSearch && <p className={"text-red-500 normal-case"}>lỗi tìm thấy sản phẩm</p>}
+					{dataQuickSearch &&
+						dataQuickSearch.data.map((it) => (
+							<QuickSearchProduct
+								className={"flex w-full cursor-pointer flex-row items-center gap-2"}
+								key={`quick_search_product_${it.id}`}
+								{...it}
+								image={it.image}
+								onClick={() => {
+									navigate(`/product-detail/${it.id}`);
+									setSearchAction("EXIT");
+								}}
+							/>
+						))}
+					{!dataQuickSearch && <div className={"min-h-5 w-full text-center font-bold"}>Nhập sản phẩm bạn muốn tìm.</div>}
 				</div>
 			)}
 		</div>

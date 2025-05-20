@@ -5,15 +5,7 @@ import { SameRadioGroup, SameRadioGroupItem } from "@/components/radio-group/Sam
 import { ListFilterPlus } from "lucide-react";
 import AccordionCustom from "@/components/accordion/AccordionCustom.tsx";
 import { useMediaQuery } from "@uidotdev/usehooks";
-import {
-	Drawer,
-	DrawerContent,
-	DrawerDescription,
-	DrawerFooter,
-	DrawerHeader,
-	DrawerTitle,
-	DrawerTrigger,
-} from "@/components/ui/drawer.tsx";
+import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer.tsx";
 import Input from "@/components/form/Input.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { memo, useCallback, useEffect, useState } from "react";
@@ -23,12 +15,11 @@ import { useSearchParams } from "react-router";
 function CollectionFilter(props: CollectionFilterProps) {
 	const isDesktop = useMediaQuery("(min-width: 640px)");
 	const [searchParams, setSearchParams] = useSearchParams();
-	const [sizeValues, setSizeValues] = useState<string[]>(searchParams.getAll('sizes'));
+	const [sizeValues, setSizeValues] = useState<string[]>(searchParams.getAll("sizes"));
 	const [colorValue, setColorValue] = useState<string | null>(searchParams.get("colors"));
 	// Xử lý khi checkbox thay đổi
 	const handleToggle = useCallback((item: string) => {
-		setSizeValues((prev) => (prev
-			.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]));
+		setSizeValues((prev) => (prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]));
 	}, []);
 
 	useEffect(() => {
@@ -36,9 +27,10 @@ function CollectionFilter(props: CollectionFilterProps) {
 		newParams.delete("sizes");
 		newParams.delete("colors");
 
-		if(sizeValues.length) sizeValues.forEach(size => {
-			newParams.append("sizes", size);
-		});
+		if (sizeValues.length)
+			sizeValues.forEach((size) => {
+				newParams.append("sizes", size);
+			});
 
 		if (colorValue) {
 			newParams.set("colors", colorValue);
@@ -48,7 +40,7 @@ function CollectionFilter(props: CollectionFilterProps) {
 	if (isDesktop) {
 		return (
 			<ScrollArea className='h-dvh overscroll-auto'>
-				<div className={"text-sm font-bold text-gray-500"}>
+				<div className={"pr-10 text-sm font-bold text-gray-500"}>
 					<AccordionCustom
 						isDown={true}
 						className={"w-full"}
@@ -62,10 +54,10 @@ function CollectionFilter(props: CollectionFilterProps) {
 												handleToggle(item);
 											}}
 											defaultChecked={sizeValues?.includes(item)}
-											className={cn("absolute top-0 left-0 size-full cursor-pointer rounded-sm border-4 border-none ", )}>
+											className={cn("absolute top-0 left-0 size-full cursor-pointer rounded-sm border-4 border-none")}>
 											<div
 												// style={{backgroundColor: sizeValues?.includes(item) ? `#4E71FF` : ''}}
-												className={cn("size-full cursor-pointer rounded-sm  px-6 py-2 text-center uppercase bg-sky-600", )}>
+												className={cn("size-full cursor-pointer rounded-sm bg-sky-600 px-6 py-2 text-center uppercase")}>
 												{item}
 											</div>
 										</CheckboxCustom>
@@ -80,11 +72,16 @@ function CollectionFilter(props: CollectionFilterProps) {
 						className={"w-full"}
 						trigger={<span className={"cursor-pointer"}>Màu sắc</span>}
 						content={
-							<SameRadioGroup className={"flex flex-wrap items-center space-x-5 space-y-2"} onValueChange={setColorValue}>
+							<SameRadioGroup className={"flex flex-wrap items-center space-y-2 space-x-5"} onValueChange={setColorValue}>
 								{props.color.map((item, index) => (
 									<div key={index} className={"py-3"}>
-										<div className={cn('relative size-6 cursor-pointer rounded-full', item.style)}>
-											<SameRadioGroupItem checked={item.slug === colorValue} defaultChecked={item.slug === colorValue} className={"size-6 cursor-pointer rounded-full border-none"} value={item.slug} id={item.slug}>
+										<div className={cn("relative size-6 cursor-pointer rounded-full", item.style)}>
+											<SameRadioGroupItem
+												checked={item.slug === colorValue}
+												defaultChecked={item.slug === colorValue}
+												className={"size-6 cursor-pointer rounded-full border-none"}
+												value={item.slug}
+												id={item.slug}>
 												<span className={"absolute size-6 rounded-full outline-2 outline-offset-2 outline-blue-700"}></span>
 											</SameRadioGroupItem>
 											<Label className={"cursor-pointer"} htmlFor={item.slug}>
@@ -108,9 +105,7 @@ function CollectionFilter(props: CollectionFilterProps) {
 			<DrawerContent>
 				<DrawerHeader>
 					<DrawerTitle>Tìm kiếm sản phẩm?</DrawerTitle>
-					<DrawerDescription>
-
-					</DrawerDescription>
+					<DrawerDescription></DrawerDescription>
 				</DrawerHeader>
 				<DrawerFooter className={"p-0"}>
 					<ScrollArea className={"h-100 w-full overflow-y-auto scroll-smooth"}>
@@ -143,7 +138,11 @@ function CollectionFilter(props: CollectionFilterProps) {
 										{props.color.map((item, index) => (
 											<div key={index} className={"py-3"}>
 												<div className={cn("relative size-6 cursor-pointer rounded-full", item.style)}>
-													<SameRadioGroupItem checked={item.slug === colorValue} className={"size-6 cursor-pointer rounded-full border-none"} value={item.slug} id={item.slug}>
+													<SameRadioGroupItem
+														checked={item.slug === colorValue}
+														className={"size-6 cursor-pointer rounded-full border-none"}
+														value={item.slug}
+														id={item.slug}>
 														<span className={"absolute size-6 rounded-full outline-2 outline-offset-2 outline-blue-700"}></span>
 													</SameRadioGroupItem>
 													<Label className={"cursor-pointer"} htmlFor={item.slug}>
@@ -162,4 +161,5 @@ function CollectionFilter(props: CollectionFilterProps) {
 		</Drawer>
 	);
 }
+
 export default memo(CollectionFilter);
