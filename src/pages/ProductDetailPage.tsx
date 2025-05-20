@@ -44,7 +44,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
 import { Input } from "@/components/ui/input.tsx";
 import Rate from "@/components/product-detail/Rate.tsx";
 import { SameRadioGroup, SameRadioGroupItem } from "@/components/radio-group/SameRadioGroup.tsx";
-import { ChangeEvent, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useNavigate, useParams } from "react-router";
 import { formatCurrency } from "@/utils/helper/format-data.ts";
@@ -52,15 +52,16 @@ import { getSizeSuggestion } from "@/utils/sizeModelManage.ts";
 import { useGetProductQuery } from "@/services/product.service.ts";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { OptionType } from "@/types/product/productOption.type.ts";
-import { DialogProductContext } from "@/context/dialogProductContext.props.ts";
 import ProductImageType from "@/types/product/productImage.type.ts";
 import { CollectionValue } from "@/utils/enums/collection.enum.ts";
+import { useDispatch } from "react-redux";
+import { showDialog } from "@/redux/slice/dialog.slice.ts";
 
 export default function ProductDetailPage() {
 	const [MIN_BOUGHT, MAX_BOUGHT] = [1, 100]
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { id } = useParams();
-	const { showDialog } = useContext(DialogProductContext);
 	const { data, isLoading } = useGetProductQuery(id);
 	const RESOURCE_IMAGE = import.meta.env.VITE_BASE_MEDIA_URL;
 	const [colorSelected, setColorSelected] = useState<string | undefined>();
@@ -157,7 +158,7 @@ export default function ProductDetailPage() {
 							</span>
 
 							<span onClick={() => {
-								showDialog("refer-friend");
+								dispatch(showDialog('refer-friend'))
 							}} className={"flex cursor-pointer items-center text-sm font-bold text-blue-600"}>
 										<Share2 className={"me-1 size-3 fill-blue-800"} /> <span> chia sẻ</span>
 									</span>
@@ -244,7 +245,7 @@ export default function ProductDetailPage() {
 									</span>
 								</span>
 								<span onClick={() => {
-									showDialog("guide-choose-size");
+									dispatch(showDialog('guide-choose-size'))
 								}} className={"cursor-pointer text-xs text-blue-600 underline md:text-sm lg:text-base"}>Hướng dẫn chọn size</span>
 							</p>
 							<div className="mb-3 flex flex-wrap gap-3">

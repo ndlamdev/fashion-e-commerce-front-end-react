@@ -148,14 +148,14 @@ function Header({ showMenu }: HeaderProps) {
 											</HoverCardTrigger>
 										))
 									}
-									<HoverCardContent className={"translate-y-6 -translate-x-12	grid min-h-25 w-[80vw] grid-cols-3 gap-2 place-content-around bg-linear-to-t from-sky-500 to-indigo-500"}>
+									<HoverCardContent className={"translate-y-6 -translate-x-12	grid min-h-25 w-[80vw] grid-cols-3 gap-2 place-content-around bg-linear-to-t  to-sky-400"}>
 										{isLoading && <Skeleton className={"w-[75vw]"} />}
 										{data?.data &&
 											data.data[type].map((item, index) => (
 												<span
 													key={index}
 													onClick={() => navigate(`collection?cid=${item.id}&type=${type}`, { state: { name: item.title } })}
-													className={"cursor-pointer hover:text-neutral-600 font-bold italic text-white"}>
+													className={"cursor-pointer hover:text-sky-600 font-bold italic "}>
 												{item.title}
 											</span>
 											))}
