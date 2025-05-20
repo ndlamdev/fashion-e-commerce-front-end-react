@@ -17,6 +17,10 @@ import { cartApi } from "@/redux/query/cart.query.ts";
 import { dialogSlice } from "@/redux/slice/dialog.slice.ts";
 import { addressOpenApi } from "@/redux/query/addressOpenApi.query.ts";
 import { cartSlice } from "@/redux/slice/cart.slice.ts";
+import { productApi } from "@/services/product.service.ts";
+import { dialogSlice } from "@/redux/slice/dialog.slice.ts";
+import { sheetSlice } from "@/redux/slice/sheet.slice.ts";
+import { collectionApi } from "@/services/collection.service.ts";
 
 const store = configureStore({
 	reducer: {
@@ -25,6 +29,11 @@ const store = configureStore({
 		[profileApi.reducerPath]: profileApi.reducer,
 		address: addressSlice,
 		[addressApi.reducerPath]: addressApi.reducer,
+		[productApi.reducerPath]: productApi.reducer,
+		dialog: dialogSlice.reducer,
+		sheet: sheetSlice.reducer,
+		[collectionApi.reducerPath]: collectionApi.reducer,
+
 		[cartApi.reducerPath]: cartApi.reducer,
 		dialogSlice: dialogSlice.reducer,
 		[addressOpenApi.reducerPath]: addressOpenApi.reducer,
@@ -37,7 +46,8 @@ const store = configureStore({
 			.concat(profileApi.middleware)
 			.concat(addressApi.middleware)
 			.concat(cartApi.middleware)
-			.concat(addressOpenApi.middleware),
+			.concat(addressOpenApi.middleware)
+			.concat(productApi.middleware),
 });
 
 // Get the type of our slice variable

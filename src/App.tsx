@@ -18,43 +18,43 @@ import Address from "@/components/profile/tab/AddressTab.tsx";
 import TestPage from "@/pages/TestPage.tsx";
 import store from "./configs/store.config";
 import { Provider } from "react-redux";
-import DialogAuthProvider from "@/context/provider/DialogAuthProvider.tsx";
-import SheetAccountProvider from "@/context/provider/SheetAccountProvider.tsx";
+import DialogProvider from "@/context/provider/DialogProvider.tsx";
+import SheetProvider from "@/context/provider/SheetProvider.tsx";
 import DialogLoading from "@/components/DialogLoading.tsx";
+
 
 function App() {
 	return (
 		<Provider store={store}>
 			<BrowserRouter>
-				<DialogAuthProvider>
-					<SheetAccountProvider>
-						<Routes>
-							<Route path={"/"} element={<RootLayout />}>
-								<Route index element={<HomePage />} />
-								<Route path={"/test"} element={<TestPage />} />
-								<Route path={"product-detail"}>
-									<Route path={":id"} element={<ProductDetailPage />} />
-								</Route>
-								<Route path={"collection"} element={<BoothPage />} />
-								<Route path={"profile"} element={<ProfilePage />}>
-									<Route path={"info"} index element={<Info />} />
-									<Route path={"refer-friend"} element={<ReferFriend />} />
-									<Route path={"orders"} element={<HistoryOrder />} />
-									<Route path={"voucher-wallet"} element={<VoucherWallet />} />
-									<Route path={"points"} element={<HistoryPoint />} />
-									<Route path={"addresses"} element={<Address />} />
-									<Route path={"reviews"} element={<Review />} />
-									<Route path={"faq"} element={<FAQTab />} />
-								</Route>
+				<SheetProvider>
+					<Routes>
+						<Route path={"/"} element={<RootLayout />}>
+							<Route index element={<HomePage />} />
+							<Route path={"/test"} element={<TestPage />} />
+							<Route path={"product-detail"}>
+								<Route path={":id"} element={<ProductDetailPage />} />
 							</Route>
-							<Route path='/cart' element={<CartLayout />}>
-								<Route index element={<CartPage />} />
+							<Route path={"collection"} element={<BoothPage />} />
+							<Route path={"profile"} element={<ProfilePage />}>
+								<Route path={"info"} index element={<Info />} />
+								<Route path={"refer-friend"} element={<ReferFriend />} />
+								<Route path={"orders"} element={<HistoryOrder />} />
+								<Route path={"voucher-wallet"} element={<VoucherWallet />} />
+								<Route path={"points"} element={<HistoryPoint />} />
+								<Route path={"addresses"} element={<Address />} />
+								<Route path={"reviews"} element={<Review />} />
+								<Route path={"faq"} element={<FAQTab />} />
 							</Route>
-						</Routes>
-						<Toaster />
-						<DialogLoading />
-					</SheetAccountProvider>
-				</DialogAuthProvider>
+						</Route>
+						<Route path='/cart' element={<CartLayout />}>
+							<Route index element={<CartPage />} />
+						</Route>
+					</Routes>
+					<Toaster />
+          <DialogLoading />
+				</SheetProvider>
+				<DialogProvider />
 			</BrowserRouter>
 		</Provider>
 	);

@@ -1,4 +1,4 @@
-import ProductType from "@/types/product/product.type.ts";
+import ProductResponseType from "@/types/product/productResponse.type.ts";
 
-type ProductDetailProp = ProductType & {};
+type ProductDetailProp = ProductResponseType & {};
 export default ProductDetailProp;

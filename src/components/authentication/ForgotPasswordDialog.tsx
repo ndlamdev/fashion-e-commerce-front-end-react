@@ -6,8 +6,7 @@
  *  User: lam-nguyen
  **/
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
-import { KeyboardEvent, useCallback, useContext } from "react";
-import { DialogAuthContext } from "@/context/DialogAuthContext.tsx";
+import { KeyboardEvent, useCallback } from "react";
 import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentication.tsx";
 import InputAuthentication from "@/components/authentication/ui/InputAuthentication.tsx";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -16,9 +15,13 @@ import authenticationService from "@/services/authentication.service.ts";
 import SessionStorage from "@/utils/helper/SessionStorage.ts";
 import { AxiosError } from "axios";
 import AxiosErrorCustom from "@/domain/ApiResponseError.ts";
+import { useDispatch, useSelector } from "react-redux";
+import { hiddenDialog, showDialog, showDialogWithCallback } from "@/redux/slice/dialog.slice";
+import { RootState } from "@/configs/store.config.ts";
 
 function ForgotPasswordDialog() {
-	const { showDialog, dialog } = useContext(DialogAuthContext);
+	const dispatch = useDispatch();
+	const { dialog } = useSelector((state: RootState) => state.dialog);
 	const {
 		register,
 		handleSubmit,
@@ -31,10 +34,10 @@ function ForgotPasswordDialog() {
 	const onVerifyHandler = useCallback(
 		async (otp: string): Promise<void> => {
 			return authenticationService.verifyResetPassword(otp).then(() => {
-				showDialog("new-password");
+				dispatch(showDialog("new-password"));
 			});
 		},
-		[showDialog],
+		[dispatch],
 	);
 
 	const onResendHandler = useCallback(async () => {
@@ -45,7 +48,7 @@ function ForgotPasswordDialog() {
 		authenticationService
 			.resetPassword(data.email)
 			.then(() => {
-				showDialog("input-otp", { sendOtp: onVerifyHandler, resendOtp: onResendHandler });
+				dispatch(showDialogWithCallback({ type: "input-otp", callback: { sendOtp: onVerifyHandler, resendOtp: onResendHandler } }));
 				reset();
 			})
 			.catch((error) => {
@@ -53,7 +56,7 @@ function ForgotPasswordDialog() {
 
 				const err = error as AxiosErrorCustom<any>;
 				if (err.response == null || err.response.data.code !== 90006) return;
-				showDialog("input-otp", { sendOtp: onVerifyHandler, resendOtp: onResendHandler });
+				dispatch(showDialogWithCallback({ type: "input-otp", callback: { sendOtp: onVerifyHandler, resendOtp: onResendHandler } }));
 				reset();
 			});
 	};
@@ -69,7 +72,7 @@ function ForgotPasswordDialog() {
 	};
 
 	return (
-		<Dialog open={dialog === "forgot-password"} onOpenChange={(value) => !value && showDialog("none")}>
+		<Dialog open={dialog === "forgot-password"} onOpenChange={(value) => !value && dispatch(hiddenDialog())}>
 			<DialogContent
 				aria-describedby={""}
 				className={"sm:max-w-[525px]"}

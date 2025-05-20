@@ -1,0 +1,7 @@
+export enum ProductTag {
+	BEST_SELLER = 'BEST_SELLER', WORTH_BUYING = 'WORTH_BUYING', CLEARANCE_SALE = 'CLEARANCE_SALE', OUTLET = 'OUTLET', SAVING_PACKS = 'SAVING_PACKS', NEW = 'NEW', LIMITED = 'LIMITED', HOT = 'HOT'
+}
+export enum DirectionSort {
+	ASC = 'ASC',
+	DESC = 'DESC',
+}
