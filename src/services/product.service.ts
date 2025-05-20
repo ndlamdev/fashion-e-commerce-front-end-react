@@ -23,21 +23,24 @@ export const productApi = createApi({
 		searchByImage: build.mutation<ApiResponse<ApiPageResponse<ProductResponseType[]>>, FormData | undefined>({
 			query: (file) => ({
 				url: `/search`,
-				method: 'POST',
-				body: file
-			})
+				method: "POST",
+				body: file,
+			}),
 		}),
 		voiceSearch: build.query<ApiResponse<ApiPageResponse<ProductResponseType[]>>, QueryType>({
-			query: ({ prompt } ) => `/voice-search?query=${prompt}`
-			}),
+			query: ({ prompt }) => `/voice-search?query=${prompt}`,
+		}),
 		searchByText: build.query<ApiResponse<ApiPageResponse<ProductResponseType[]>>, QueryType>({
-			query: ({ title, size = '12', page = '0', sort = '', colors = '', sizes = [] } ) => `/search?title=${title}&size=${size}&page=${page}` + (colors && `&colors=${colors}`) + (sizes && `&sizes=${sizes.join(',')}`) + (sort && `&sort=${sort}`),
+			query: ({ title, size = "12", page = "0", colors = "", sizes = [], tag, direction }) =>
+				`/search?title=${title}&size=${size}&page=${page}` +
+				(colors && `&colors=${colors}`) +
+				(sizes?.length ? `&sizes=${sizes?.join(",")}` : "") +
+				(tag && `&sort.tag=${tag}&sort.direction=${direction ?? "ASC"}`),
 		}),
 		quickSearch: build.query<ApiResponse<QuickSearchProductType[]>, string | undefined>({
-			query: (title ) => `/quick-search?query=${title}`
+			query: (title) => `/quick-search?query=${title}`,
 		}),
 	}),
-
 });
 
 export const { useGetProductQuery, useSearchByImageMutation, useVoiceSearchQuery, useSearchByTextQuery, useQuickSearchQuery } = productApi;

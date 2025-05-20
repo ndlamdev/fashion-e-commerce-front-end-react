@@ -9,9 +9,9 @@ import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError 
 import LocalStorage from "@/utils/helper/LocalStorage.ts";
 import { ApiResponse } from "@/domain/ApiResponse.ts";
 import CartType from "@/types/CartType.ts";
-import { closeDialog, openDialog } from "@/redux/slice/dialog.slice.ts";
+import { closeDialogLoading, showDialogLoading } from "@/redux/slice/dialog.slice.ts";
 
-export const BASE_URL = "http://localhost:8006/api/cart/v1";
+export const BASE_URL = import.meta.env.VITE_BASE_PRODUCT_URL + "/cart/v1";
 
 const baseQuery = fetchBaseQuery({
 	baseUrl: BASE_URL,
@@ -25,9 +25,9 @@ const baseQuery = fetchBaseQuery({
 });
 
 const baseQueryWithDispatch: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (args, api, extraOptions) => {
-	api.dispatch(openDialog());
+	api.dispatch(showDialogLoading());
 	const result = await baseQuery(args, api, extraOptions);
-	api.dispatch(closeDialog());
+	api.dispatch(closeDialogLoading());
 	return result;
 };
 

@@ -16,17 +16,25 @@ export const collectionApi = createApi({
 	baseQuery: baseQuery,
 	endpoints: (build) => ({
 		getProductByCollectionId: build.query<ApiResponse<ApiPageResponse<ProductResponseType[]>>, QueryType>({
-			query: ({cid, size = '12', page = '0', sort = '', colors = '', sizes = []}) => ({
-				url: `/${cid}/products?size=${size}&page=${page}` + (colors && `&colors=${colors}`) + (sizes && `&sizes=${sizes?.join(',')}`) + (sort && `&sort=${sort}`),
+			query: ({ cid, size = "12", page = "0", colors = "", sizes = [], tag, direction }) => ({
+				url:
+					`/${cid}/products?size=${size}&page=${page}` +
+					(colors && `&colors=${colors}`) +
+					(sizes?.length ? `&sizes=${sizes?.join(",")}` : "") +
+					(tag && `&sort.tag=${tag}&sort.direction=${direction ?? "ASC"}`),
 			}),
 		}),
 		getProductByCollectionType: build.query<ApiResponse<ApiPageResponse<ProductResponseType[]>>, QueryType>({
-			query: ({type = CollectionEnum.MALE, page = '0', size = '12', sort = '', colors = '', sizes = []} ) => (	{
-				url: `/type/${type}/products?size=${size}&page=${page}` + (colors && `&colors=${colors}`) + (sizes && `&sizes=${sizes?.join(',')}`) + (sort && `&sort=${sort}`),
+			query: ({ type = CollectionEnum.MALE, page = "0", size = "12", colors = "", sizes = [], tag, direction }) => ({
+				url:
+					`/type/${type}/products?size=${size}&page=${page}` +
+					(colors && `&colors=${colors}`) +
+					(sizes?.length ? `&sizes=${sizes?.join(",")}` : "") +
+					(tag && `&sort.tag=${tag}&sort.direction=${direction ?? "ASC"}`),
 			}),
 		}),
 		getCollections: build.query<ApiResponse<Record<CollectionEnum, CollectionType[]>>, void>({
-			query: () => ``
+			query: () => ``,
 		}),
 	}),
 });

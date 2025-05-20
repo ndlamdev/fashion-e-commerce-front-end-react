@@ -12,7 +12,7 @@ import ShoppingBagProps from "@/components/cart/props/shopping-bag-item.prop.ts"
 function ShoppingBagItem({ product, variant, quantity }: ShoppingBagProps) {
 	return (
 		<div className={"flex items-center gap-4"}>
-			<img className={"h-1/6 w-25 rounded-xl"} src={"http://localhost:8004/api/resource/images/" + product.image.src} alt='img.png' />
+			<img className={"h-1/6 w-25 rounded-xl"} src={import.meta.env.VITE_BASE_MEDIA_URL + "/resource/images/" + product.image.src} alt='img.png' />
 			<div className={"w-full"}>
 				<div className={"flex flex-nowrap items-center justify-between"}>
 					<p className={"overflow-hidden text-[0.8rem] font-bold"}>{product.title}</p>
@@ -21,7 +21,9 @@ function ShoppingBagItem({ product, variant, quantity }: ShoppingBagProps) {
 				<p className={"text-[0.8rem]"}>{Array.from(Object.values(variant.options)).join(" / ")}</p>
 				<div className={"mt-2 flex items-end gap-2"}>
 					<p className={"text-[1.25rem]"}>{formatCurrency(variant.regular_price)}</p>
-					{variant.compare_price !== variant.regular_price && <p className={"text-[0.9rem] text-gray-400 line-through"}>{formatCurrency(variant.compare_price)}</p>}
+					{variant.compare_price !== variant.regular_price && (
+						<p className={"text-[0.9rem] text-gray-400 line-through"}>{formatCurrency(variant.compare_price)}</p>
+					)}
 				</div>
 				<p className={"mt-[-5px] text-[0.8rem]"}>x{quantity}</p>
 			</div>

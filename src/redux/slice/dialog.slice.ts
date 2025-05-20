@@ -11,14 +11,16 @@ import EventInputOTPDialog from "@/components/authentication/props/InputOTPDialo
 
 export type CallbackDialogProps = EventInputOTPDialog & {};
 
-type SheetSliceState = {
+type DialogSliceState = {
 	dialog: DialogTypeEnum;
 	callBacksDialog: CallbackDialogProps | undefined;
+	loading: boolean;
 };
 
-const initialState: SheetSliceState = {
+const initialState: DialogSliceState = {
 	dialog: "none",
 	callBacksDialog: undefined as CallbackDialogProps | undefined,
+	loading: false,
 };
 
 export const dialogSlice = createSlice({
@@ -42,45 +44,15 @@ export const dialogSlice = createSlice({
 		hiddenDialog: (state) => {
 			state.dialog = "none";
 		},
+		showDialogLoading: (state) => {
+			state.loading = true;
+		},
+		closeDialogLoading: (state) => {
+			state.loading = false;
+		},
 	},
 });
 
-export const { showDialogWithCallback, showDialog, hiddenDialog } = dialogSlice.actions;
+export const { showDialogWithCallback, showDialog, hiddenDialog, showDialogLoading, closeDialogLoading } = dialogSlice.actions;
 
 export default dialogSlice.reducer;
-
-
-// /**
-//  * Author: Nguyen Dinh Lam
-//  * Email: kiminonawa1305@gmail.com
-//  * Phone number: +84 855354919
-//  * Create at: 3:21 AM - 18/05/2025
-//  * User: kimin
-//  **/
-// import { createSlice } from "@reduxjs/toolkit";
-//
-// type DialogSliceState = {
-// 	open: boolean;
-// };
-//
-// const initialState: DialogSliceState = {
-// 	open: false,
-// };
-//
-// export const dialogSlice = createSlice({
-// 	name: "dialog-slice",
-// 	initialState,
-// 	reducerPath: "dialog-slice",
-// 	reducers: {
-// 		openDialog: (state) => {
-// 			state.open = true;
-// 		},
-// 		closeDialog: (state) => {
-// 			state.open = false;
-// 		},
-// 	},
-// });
-//
-// export const { openDialog, closeDialog } = dialogSlice.actions;
-//
-// export default dialogSlice.reducer;

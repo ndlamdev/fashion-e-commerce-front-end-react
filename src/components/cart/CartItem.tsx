@@ -22,7 +22,7 @@ function CartItem({ id, product, variant, quantity, onDelete, onPlus, onMinute, 
 					onSelect?.(e.currentTarget.checked, id);
 				}}
 			/>
-			<img src={"http://localhost:8004/api/resource/images/" + product.image.src} alt='image.png' className={"h-full w-33 rounded-xl"} />
+			<img src={import.meta.env.VITE_BASE_MEDIA_URL + "/resource/images/" + product.image.src} alt='image.png' className={"h-full w-33 rounded-xl"} />
 			<div className={"flex h-full w-full flex-col justify-around"}>
 				<div>
 					<p>{product.title}</p>

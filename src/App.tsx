@@ -20,8 +20,6 @@ import store from "./configs/store.config";
 import { Provider } from "react-redux";
 import DialogProvider from "@/context/provider/DialogProvider.tsx";
 import SheetProvider from "@/context/provider/SheetProvider.tsx";
-import DialogLoading from "@/components/DialogLoading.tsx";
-
 
 function App() {
 	return (
@@ -52,7 +50,6 @@ function App() {
 						</Route>
 					</Routes>
 					<Toaster />
-          <DialogLoading />
 				</SheetProvider>
 				<DialogProvider />
 			</BrowserRouter>
