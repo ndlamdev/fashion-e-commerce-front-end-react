@@ -15,6 +15,8 @@ import InputOTPDialog from "@/components/authentication/InputOTPDialog.tsx";
 import RegisterWithFacebookDialog from "@/components/authentication/RegisterWithFacebookDialog";
 import VoiceSearchDialog from "@/components/header/dialog/VoiceSearchDialog";
 import DialogLoading from "@/components/DialogLoading.tsx";
+import ReferFriendDialog from "@/components/product-detail/dialog/ReferFriendDialog.tsx";
+import GuideChooseSizeDialog from "@/components/product-detail/dialog/GuideChooseSizeDialog.tsx";
 
 function DialogProvider() {
 	return (
@@ -30,6 +32,8 @@ function DialogProvider() {
 				<VoiceSearchDialog />
 			</GoogleOAuthProvider>
 			<DialogLoading />
+			<ReferFriendDialog/>
+			<GuideChooseSizeDialog/>
 		</>
 	);
 }

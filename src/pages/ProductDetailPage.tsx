@@ -44,7 +44,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
 import { Input } from "@/components/ui/input.tsx";
 import Rate from "@/components/product-detail/Rate.tsx";
 import { SameRadioGroup, SameRadioGroupItem } from "@/components/radio-group/SameRadioGroup.tsx";
-import { ChangeEvent, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useNavigate, useParams } from "react-router";
 import { formatCurrency } from "@/utils/helper/format-data.ts";
@@ -52,14 +52,16 @@ import { getSizeSuggestion } from "@/utils/sizeModelManage.ts";
 import { useGetProductQuery } from "@/services/product.service.ts";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { OptionType } from "@/types/product/productOption.type.ts";
-import { DialogProductContext } from "@/context/dialogProductContext.props.ts";
 import ProductImageType from "@/types/product/productImage.type.ts";
 import { CollectionValue } from "@/utils/enums/collection.enum.ts";
+import { useDispatch } from "react-redux";
+import { showDialog } from "@/redux/slice/dialog.slice.ts";
 
 export default function ProductDetailPage() {
+	const [MIN_BOUGHT, MAX_BOUGHT] = [1, 100]
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { id } = useParams();
-	const { showDialog } = useContext(DialogProductContext);
 	const { data, isLoading } = useGetProductQuery(id);
 	const RESOURCE_IMAGE = import.meta.env.VITE_BASE_MEDIA_URL;
 	const [colorSelected, setColorSelected] = useState<string | undefined>();
@@ -93,9 +95,9 @@ export default function ProductDetailPage() {
 	}, [data, colorSelected, RESOURCE_IMAGE]);
 
 	// handle decrement/increment quanlity buy
-	const [boughtQuantity, setBoughtQuantity] = useState<number>(1);
+	const [boughtQuantity, setBoughtQuantity] = useState<number>(MIN_BOUGHT);
 	const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>) => {
-		setBoughtQuantity(Number(event.target.value));
+		setBoughtQuantity((Number(event.target.value) <= MIN_BOUGHT )? MIN_BOUGHT : Number(event.target.value));
 	};
 
 	// handle fixed
@@ -156,7 +158,7 @@ export default function ProductDetailPage() {
 							</span>
 
 							<span onClick={() => {
-								showDialog("refer-friend");
+								dispatch(showDialog('refer-friend'))
 							}} className={"flex cursor-pointer items-center text-sm font-bold text-blue-600"}>
 										<Share2 className={"me-1 size-3 fill-blue-800"} /> <span> chia sẻ</span>
 									</span>
@@ -243,7 +245,7 @@ export default function ProductDetailPage() {
 									</span>
 								</span>
 								<span onClick={() => {
-									showDialog("guide-choose-size");
+									dispatch(showDialog('guide-choose-size'))
 								}} className={"cursor-pointer text-xs text-blue-600 underline md:text-sm lg:text-base"}>Hướng dẫn chọn size</span>
 							</p>
 							<div className="mb-3 flex flex-wrap gap-3">
@@ -288,16 +290,16 @@ export default function ProductDetailPage() {
 
 						<div className="mb-3 flex">
 							<Input onChange={handleQuantityChange} value={boughtQuantity}
-										 className={"me-3! w-1/4 rounded-2xl! text-center"} type={"number"} min={1} />
+										 className={"me-3! w-1/4 rounded-2xl! text-center"} type={"number"} min={MIN_BOUGHT} max={MAX_BOUGHT}/>
 							<Button
 								className={"flex w-3/4 cursor-pointer items-center rounded-2xl text-center text-xs hover:bg-neutral-300 hover:text-black sm:text-sm"}
-								disabled={!sizeSelected}
+								disabled={!sizeSelected || Number(boughtQuantity) > MAX_BOUGHT}
 								variant="default">
 								<ShoppingBag className={""} />
 								<span>{sizeSelected ? "Thêm vào giỏ hàng" : "Chọn kích thước"}</span>
 							</Button>
 						</div>
-
+						{boughtQuantity > MAX_BOUGHT && <p className="text-red-500">Số lượng mua vượt mức cho phép (từ 100 sản phẩm trở lại)</p>}
 						<Accordion className={"rounded-lg bg-blue-50 p-3"} type="single" collapsible>
 							<AccordionItem value="item-1">
 								<AccordionTrigger className={"p-0"}>
