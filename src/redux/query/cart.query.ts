@@ -10,6 +10,7 @@ import LocalStorage from "@/utils/helper/LocalStorage.ts";
 import { ApiResponse } from "@/domain/ApiResponse.ts";
 import CartType from "@/types/CartType.ts";
 import { closeDialogLoading, showDialogLoading } from "@/redux/slice/dialog.slice.ts";
+import { debounce } from "lodash";
 
 export const BASE_URL = import.meta.env.VITE_BASE_URL + "/cart/v1";
 
@@ -24,10 +25,14 @@ const baseQuery = fetchBaseQuery({
 	},
 });
 
+const debounceFc = debounce((api) => {
+	api.dispatch(closeDialogLoading());
+}, 200);
+
 const baseQueryWithDispatch: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (args, api, extraOptions) => {
 	api.dispatch(showDialogLoading());
 	const result = await baseQuery(args, api, extraOptions);
-	api.dispatch(closeDialogLoading());
+	debounceFc(api);
 	return result;
 };
 
@@ -58,6 +63,16 @@ export const cartApi = createApi({
 			}),
 			invalidatesTags: ["Cart"],
 		}),
+		addCartItem: build.mutation<ApiResponse<void>, { variantId: string; quantity: number }>({
+			query: (arg) => ({
+				url: `/add/${arg.variantId}`,
+				method: "POST",
+				body: {
+					quantity: arg.quantity,
+				},
+			}),
+			invalidatesTags: ["Cart"],
+		}),
 		deleteCartItem: build.mutation<ApiResponse<void>, { cartItemId: number }>({
 			query: (arg) => ({
 				url: `/remove/${arg.cartItemId}`,
@@ -70,4 +85,4 @@ export const cartApi = createApi({
 
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
-export const { useGetCartQuery } = cartApi;
+export const { useGetCartQuery, useAddCartItemMutation } = cartApi;

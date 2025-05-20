@@ -35,7 +35,6 @@ function CartPage() {
 	const [voucherRef, setVoucherRef] = useState<HTMLElement | null>(null);
 	const { voucher, setVoucher, setShowConfirm, showConfirm } = useContext(CartContext);
 	useHorizontalScroll(voucherRef);
-	const [deleted, setDeleted] = useState(false);
 	const [confirmDeleted, setConfirmDeleted] = useState(false);
 	const { data, error } = useGetCartQuery();
 	const cartItemsSelected = useSelector((state: RootState) => state.cartSlice.items);
@@ -66,6 +65,12 @@ function CartPage() {
 		}
 	};
 
+	const deleteAllProduct = useCallback(() => {
+		data?.data.cartItems.forEach((it) => {
+			deleteCartItem(it.id);
+		});
+	}, [data?.data.cartItems, deleteCartItem]);
+
 	return (
 		<Dialog open={confirmDeleted} onOpenChange={() => setConfirmDeleted(true)}>
 			<div className={"mt-10 grid grid-cols-1 grid-rows-subgrid gap-10 overflow-hidden pb-40 md:grid lg:grid-cols-7 lg:grid-rows-1 lg:px-20"}>
@@ -82,7 +87,7 @@ function CartPage() {
 				<div id={"right"} className={`order-1 px-5 md:block lg:order-2 lg:col-span-3 lg:px-0 ${!showConfirm ? "block" : "hidden"}`}>
 					<h1 className={"mb-5 text-3xl font-[600]"}>Giỏ hàng</h1>
 					<div className={"mt-5"}>
-						{deleted ? (
+						{!data?.data.cartItems.length ? (
 							<p className={"text-center"}>Giỏ hàng của bạn hiện đang trống.</p>
 						) : (
 							<>
@@ -184,7 +189,7 @@ function CartPage() {
 							className={"w-full rounded-full bg-black py-2 text-lg text-white"}
 							onClick={() => {
 								setConfirmDeleted(false);
-								setDeleted(true);
+								deleteAllProduct();
 							}}>
 							Đồng ký
 						</button>

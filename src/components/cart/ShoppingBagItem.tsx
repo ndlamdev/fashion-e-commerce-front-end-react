@@ -12,7 +12,7 @@ import ShoppingBagProps from "@/components/cart/props/shopping-bag-item.prop.ts"
 function ShoppingBagItem({ product, variant, quantity }: ShoppingBagProps) {
 	return (
 		<div className={"flex items-center gap-4"}>
-			<img className={"h-1/6 w-25 rounded-xl"} src={import.meta.env.VITE_BASE_MEDIA_URL + "/resource/images/" + product.image.src} alt='img.png' />
+			<img className={"h-1/6 w-25 rounded-xl"} src={import.meta.env.VITE_BASE_MEDIA_URL + product.image.src} alt='img.png' />
 			<div className={"w-full"}>
 				<div className={"flex flex-nowrap items-center justify-between"}>
 					<p className={"overflow-hidden text-[0.8rem] font-bold"}>{product.title}</p>

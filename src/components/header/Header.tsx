@@ -33,6 +33,7 @@ import QuickSearchProduct from "@/components/product/QuickSearchProduct.tsx";
 import { debounce } from "lodash";
 import { useQuickSearchQuery } from "@/services/product.service.ts";
 import { cn } from "@/lib/utils.ts";
+import { useGetCartQuery } from "@/redux/query/cart.query.ts";
 
 function Header({ showMenu }: HeaderProps) {
 	const [, scrollY] = useScrolled();
@@ -43,6 +44,7 @@ function Header({ showMenu }: HeaderProps) {
 	const [searchAction, setSearchAction] = useState<"SEARCH" | "EXIT" | "HIDDEN">("HIDDEN");
 	const { data, isLoading } = useGetCollectionsQuery();
 	const [type, setType] = useState<CollectionEnum>(CollectionEnum.MALE);
+	const { data: cartData } = useGetCartQuery();
 
 	const [title, setTitle] = useState<string>();
 	const { data: dataQuickSearch, isLoading: isLoadingQuickSearch, isError: isErrorQuickSearch } = useQuickSearchQuery(title, { skip: !title });
@@ -207,11 +209,11 @@ function Header({ showMenu }: HeaderProps) {
 						</a>
 						<div className={"group relative"}>
 							<a href={"/cart"} className={"relative z-3"}>
-								<ShoppingBag countItem={dataShoppingBagItems.length} />
+								<ShoppingBag countItem={cartData?.data.cartItems.length ?? 0} />
 							</a>
 							<div className={"absolute top-0 right-0 z-2 hidden w-[25rem] group-hover:lg:block"}>
-								<div className={"relative top-16 right-0 max-h-[27rem] overflow-y-scroll rounded-2xl bg-white p-4"}>
-									{dataShoppingBagItems.length ? (
+								<div className={"relative top-14 right-0 max-h-[27rem] min-h-[4rem] overflow-y-scroll rounded-2xl bg-white p-4"}>
+									{cartData?.data.cartItems.length ? (
 										<div className={"h-full overflow-auto"}>
 											<div className={"flex justify-between"}>
 												<p>{dataShoppingBagItems.length} sản phẩm</p>
@@ -221,8 +223,8 @@ function Header({ showMenu }: HeaderProps) {
 											</div>
 											<Separator className={"my-2"} />
 											<ul className={"flex h-full flex-col justify-between"}>
-												{dataShoppingBagItems.map((value, index) => (
-													<ShoppingBagItem {...value} key={`asdfafdas${index}`} />
+												{cartData.data.cartItems.map((value, index) => (
+													<ShoppingBagItem {...value} key={`shopping_bag_item_${index}`} />
 												))}
 											</ul>
 										</div>
