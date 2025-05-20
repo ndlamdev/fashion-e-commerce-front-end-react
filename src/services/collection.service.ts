@@ -6,7 +6,7 @@ import { CollectionEnum } from "@/utils/enums/collection.enum.ts";
 import { CollectionType } from "@/types/collection/category.type.ts";
 import { QueryType } from "@/types/collection/query.type.ts";
 
-export const BASE_COLLECTION_URL = import.meta.env.VITE_BASE_PRODUCT_URL + "/collection/v1";
+export const BASE_COLLECTION_URL = import.meta.env.VITE_BASE_URL + "/collection/v1";
 const baseQuery = fetchBaseQuery({
 	baseUrl: BASE_COLLECTION_URL,
 });

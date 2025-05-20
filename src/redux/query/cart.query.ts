@@ -11,7 +11,7 @@ import { ApiResponse } from "@/domain/ApiResponse.ts";
 import CartType from "@/types/CartType.ts";
 import { closeDialogLoading, showDialogLoading } from "@/redux/slice/dialog.slice.ts";
 
-export const BASE_URL = import.meta.env.VITE_BASE_PRODUCT_URL + "/cart/v1";
+export const BASE_URL = import.meta.env.VITE_BASE_URL + "/cart/v1";
 
 const baseQuery = fetchBaseQuery({
 	baseUrl: BASE_URL,

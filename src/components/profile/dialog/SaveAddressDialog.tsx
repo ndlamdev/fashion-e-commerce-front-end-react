@@ -9,8 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import { useSelector } from "react-redux";
 import { RootState } from "@/configs/store.config.ts";
-import { useGetAddressQuery, useSaveAddressMutation } from "@/services/profile.service.ts";
-import { useGetInfoAddressesQuery } from "@/services/address.service.ts";
+import { useGetAddressQuery, useGetInfoAddressesQuery, useSaveAddressMutation } from "@/services/address.service.ts";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { useContext, useEffect } from "react";
 import { DialogProfileContext } from "@/context/dialogProfileContext.props.ts";
@@ -42,7 +41,6 @@ const SaveAddressDialog = () => {
 		isLoading: isLoadingInfoAddresses,
 	} = useGetInfoAddressesQuery();
 	const [cityValue, districtValue] = watch(["city_code", "district_id"]);
-	console.log();
 	const [request, { isLoading: isLoadingAddressShippingResponse }] = useSaveAddressMutation();
 	const onSubmit = async (formValues: SaveAddressRequest) => {
 		try {

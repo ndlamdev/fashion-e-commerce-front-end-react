@@ -12,7 +12,7 @@ import { authenticationApi } from "@/redux/query/authentication.query.ts";
 import { authSlice } from "@/redux/slice/auth.slice.ts";
 import { profileApi } from "@/services/profile.service.ts";
 import addressSlice from "@/redux/slice/address.slice.ts";
-import { addressApi } from "@/services/address.service.ts";
+import { addressApi, addressCustomerApi } from "@/services/address.service.ts";
 import { cartApi } from "@/redux/query/cart.query.ts";
 import { addressOpenApi } from "@/redux/query/addressOpenApi.query.ts";
 import { cartSlice } from "@/redux/slice/cart.slice.ts";
@@ -35,6 +35,7 @@ const store = configureStore({
 		[cartApi.reducerPath]: cartApi.reducer,
 		dialogSlice: dialogSlice.reducer,
 		[addressOpenApi.reducerPath]: addressOpenApi.reducer,
+		[addressCustomerApi.reducerPath]: addressCustomerApi.reducer,
 		cartSlice: cartSlice.reducer,
 	},
 	middleware: (getDefaultMiddleware) =>
@@ -46,6 +47,7 @@ const store = configureStore({
 			.concat(cartApi.middleware)
 			.concat(addressOpenApi.middleware)
 			.concat(productApi.middleware)
+			.concat(addressCustomerApi.middleware)
 			.concat(collectionApi.middleware),
 });
 

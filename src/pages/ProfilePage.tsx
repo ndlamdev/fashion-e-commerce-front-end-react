@@ -12,10 +12,10 @@ import {
 	TicketPercentIcon,
 	UserRoundPlusIcon,
 } from "lucide-react";
-import { Outlet, useNavigate } from "react-router";
+import { Outlet, useLocation, useNavigate } from "react-router";
 import { TabNavProps } from "@/components/profile/props/tabNav.props.ts";
 import { TabNav } from "@/components/profile/TabNav.tsx";
-import { useCallback, useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
@@ -27,22 +27,20 @@ import { toast } from "sonner";
 import ConfirmDialog from "@/components/authentication/ConfirmDialog.tsx";
 import { DialogProfileContext } from "@/context/dialogProfileContext.props.ts";
 
-const tabNavValues: Record<number, TabNavProps> = {
-	0: { title: "Thông tin tài khoản", to: "info", iconLeft: <SquareUserRoundIcon className={'hover:text-white  flex-none'}/> },
-	1: { title: "Giới thiệu bạn bè", to: "refer-friend", iconLeft: <UserRoundPlusIcon className={'hover:text-white flex-none'}/> },
-	2: { title: "Lịch sử đơn hàng", to: "orders", iconLeft: <BaggageClaimIcon className={'hover:text-white flex-none'}/> },
-	3: { title: "Lịch sử Point", to: "points", iconLeft: <ReceiptIcon className={'hover:text-white flex-none'}/> },
-	4: { title: "Ví voucher", to: "voucher-wallet", iconLeft: <TicketPercentIcon className={'hover:text-white flex-none'}/>},
-	5: { title: "Sổ địa chỉ", to: "addresses", iconLeft: <MapPinHouseIcon className={'hover:text-white flex-none'}/> },
-	6: { title: "Đánh giá và phản hồi", to: "reviews", iconLeft: <StarIcon className={'hover:text-white flex-none'}/> },
-	7: { title: "Chính sách và câu hỏi thường gặp", to: "faq", iconLeft: <MessageCircleQuestionIcon className={'hover:text-white flex-none'}/> },
+const tabNavValues: Record<string, TabNavProps> = {
+	'0': { title: "Thông tin tài khoản", to: "info#0", iconLeft: <SquareUserRoundIcon className={'hover:text-white  flex-none'}/> },
+	'1': { title: "Giới thiệu bạn bè", to: "refer-friend#1", iconLeft: <UserRoundPlusIcon className={'hover:text-white flex-none'}/> },
+	'2': { title: "Lịch sử đơn hàng", to: "orders#2", iconLeft: <BaggageClaimIcon className={'hover:text-white flex-none'}/> },
+	'3': { title: "Lịch sử Point", to: "points#3", iconLeft: <ReceiptIcon className={'hover:text-white flex-none'}/> },
+	'4': { title: "Ví voucher", to: "voucher-wallet#4", iconLeft: <TicketPercentIcon className={'hover:text-white flex-none'}/>},
+	'5': { title: "Sổ địa chỉ", to: "addresses#5", iconLeft: <MapPinHouseIcon className={'hover:text-white flex-none'}/> },
+	'6': { title: "Đánh giá và phản hồi", to: "reviews#6", iconLeft: <StarIcon className={'hover:text-white flex-none'}/> },
+	'7': { title: "Chính sách và câu hỏi thường gặp", to: "faq#7", iconLeft: <MessageCircleQuestionIcon className={'hover:text-white flex-none'}/> },
 }
 
 export default function ProfilePage() {
-	const [activeTab, setActiveTab] = useState<number>(0);
-	const handleTabClick = useCallback((index: number) => {
-		setActiveTab(index);
-	}, []);
+	const {hash: index} = useLocation();
+	const [activeTab, setActiveTab] = useState<string>();
 	const [openDialog, setOpenDialog] = useState<"none" | "show-confirm" | "show-dialog">("none");
 	const {showDialog} = useContext(DialogProfileContext)
 	const navigate = useNavigate()
@@ -57,6 +55,10 @@ export default function ProfilePage() {
 		})
 	}
 	const isDesktop = useMediaQuery("(min-width: 769px)");
+
+	useEffect(() => {
+		setActiveTab(index.substring(1))
+	}, [index]);
 	return (
 		<DialogProfileProvider>
 			<main className={'p-4 md:p-8 bg-neutral-300'}>
@@ -68,11 +70,11 @@ export default function ProfilePage() {
 						<Sheet >
 							<div className="space-y-2" >
 								{
-									Array.from(Object.keys(tabNavValues)).map((_, key: number) => {
+									Array.from(Object.keys(tabNavValues)).map((key) => {
 										return (
 											<SheetTrigger key={key} asChild>
-												<TabNav onClick={() => handleTabClick(key)} style={{
-													backgroundColor: activeTab === key ? 'black' : '',
+												<TabNav 	style={{
+													backgroundColor: activeTab == key ? 'black' : '',
 													color: activeTab === key ? 'white' : '',
 												}} tailwindStyle={`hover:bg-black hover:text-white `} iconLeft={tabNavValues[key].iconLeft} title={tabNavValues[key].title} to={tabNavValues[key].to} iconRight={<ArrowRightIcon className={' hover:text-white'} />}/>
 											</SheetTrigger>

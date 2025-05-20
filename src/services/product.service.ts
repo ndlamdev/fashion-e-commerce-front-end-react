@@ -5,7 +5,7 @@ import { ApiPageResponse } from "@/domain/ApiPageResponse.ts";
 import { QueryType } from "@/types/collection/query.type.ts";
 import QuickSearchProductType from "@/types/product/quickSearchProduct.type.ts";
 
-export const BASE_PRODUCT_URL = import.meta.env.VITE_BASE_PRODUCT_URL + "/product/v1";
+export const BASE_PRODUCT_URL = import.meta.env.VITE_BASE_URL + "/product/v1";
 
 const baseQuery = fetchBaseQuery({
 	baseUrl: BASE_PRODUCT_URL,
