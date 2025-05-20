@@ -6,8 +6,7 @@
  *  User: lam-nguyen
  **/
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
-import { KeyboardEvent, useCallback, useContext, useEffect } from "react";
-import { DialogAuthContext } from "@/context/DialogAuthContext.tsx";
+import { KeyboardEvent, useCallback, useEffect } from "react";
 import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentication.tsx";
 import InputAuthentication from "@/components/authentication/ui/InputAuthentication.tsx";
 import LoginRequest from "@/domain/resquest/login.request.ts";
@@ -16,10 +15,14 @@ import authenticationService from "@/services/authentication.service.ts";
 import { useNavigate } from "react-router";
 import { useLoginWithGoogleMutation } from "@/redux/query/authentication.query.ts";
 import OtherLogin from "@/components/authentication/ui/OtherLogin.tsx";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/configs/store.config.ts";
+import { hiddenDialog, showDialog } from "@/redux/slice/dialog.slice";
 
 function LoginDialog() {
 	const [, loginWithGoogleApiResult] = useLoginWithGoogleMutation();
-	const { showDialog, dialog } = useContext(DialogAuthContext);
+	const { dialog } = useSelector((state: RootState) => state.dialog);
+	const dispatch = useDispatch();
 	const navigation = useNavigate();
 	const {
 		register,
@@ -33,12 +36,12 @@ function LoginDialog() {
 	const onSubmit: SubmitHandler<LoginRequest> = useCallback(
 		async (data) => {
 			await authenticationService.login(data).then(() => {
-				showDialog("none");
+				dispatch(hiddenDialog());
 				navigation("/test");
 				reset();
 			});
 		},
-		[navigation, reset, showDialog],
+		[navigation, reset, dispatch],
 	);
 
 	useEffect(() => {
@@ -48,8 +51,8 @@ function LoginDialog() {
 
 	useEffect(() => {
 		if (!loginWithGoogleApiResult.isSuccess) return;
-		showDialog("none");
-	}, [loginWithGoogleApiResult.data, loginWithGoogleApiResult.isSuccess, showDialog]);
+		dispatch(hiddenDialog());
+	}, [loginWithGoogleApiResult.data, loginWithGoogleApiResult.isSuccess, dispatch]);
 
 	const enterKeyHandler = useCallback(
 		(event: KeyboardEvent<HTMLInputElement>) => {
@@ -64,7 +67,7 @@ function LoginDialog() {
 	);
 
 	return (
-		<Dialog open={dialog === "login"} onOpenChange={(value) => !value && showDialog("none")}>
+		<Dialog open={dialog === "login"} onOpenChange={(value) => !value && dispatch(hiddenDialog())}>
 			<DialogContent className={"sm:max-w-[525px]"} classIcon={"bg-black p-4 border-2 border-gray-200 text-white !rounded-full top-[-20px] right-[-20px]"}>
 				<DialogHeader>
 					<DialogTitle className={"text-4xl"}>Đăng nhập ngay</DialogTitle>
@@ -110,17 +113,13 @@ function LoginDialog() {
 							<a
 								href='#'
 								className='!tw-text-base !tw-text-cm-blue'
-								onClick={() => {
-									showDialog("register");
-								}}>
+								onClick={() => dispatch(showDialog("register"))}>
 								Đăng ký
 							</a>
 							<a
 								href='#'
 								className='!tw-text-base !tw-text-cm-blue'
-								onClick={() => {
-									showDialog("forgot-password");
-								}}>
+								onClick={() => dispatch(showDialog("forgot-password"))}>
 								Quên mật khẩu
 							</a>
 						</div>

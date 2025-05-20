@@ -6,7 +6,7 @@
  *  User: lam-nguyen
  **/
 
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { HugeiconsCancel01 } from "@/assets/images/icons/HugeiconsCancel01.tsx";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel.tsx";
@@ -15,12 +15,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.t
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion.tsx";
 import useScrolled from "@/utils/helper/use-scrolled.ts";
 import VerticalMenuProps from "@/components/menu/props/vertical-menu.prop.ts";
-import { DialogAuthContext } from "@/context/DialogAuthContext.tsx";
+import { useDispatch } from "react-redux";
+import { showDialog } from "@/redux/slice/dialog.slice.ts";
 
 function VerticalMenu({ showMenu, onHidden, onAnimationComplete, onExitComplete }: VerticalMenuProps) {
 	const [hiddenMenu, setHiddenMenu] = useState<boolean>(true);
 	const [, scrollY] = useScrolled();
-	const { showDialog } = useContext(DialogAuthContext);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		setHiddenMenu(!showMenu);
@@ -172,7 +173,7 @@ function VerticalMenu({ showMenu, onHidden, onAnimationComplete, onExitComplete 
 							<li
 								className={"hover::bg-gray-200 rounded px-3 py-2 active:bg-gray-200"}
 								onClick={() => {
-									showDialog("login");
+									dispatch(showDialog("login"));
 								}}>
 								Đăng nhập
 							</li>

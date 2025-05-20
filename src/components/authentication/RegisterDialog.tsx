@@ -6,17 +6,20 @@
  *  User: lam-nguyen
  **/
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
-import { KeyboardEvent, useCallback, useContext } from "react";
-import { DialogAuthContext } from "@/context/DialogAuthContext.tsx";
+import { KeyboardEvent, useCallback } from "react";
 import InputAuthentication from "@/components/authentication/ui/InputAuthentication.tsx";
 import { SubmitHandler, useForm } from "react-hook-form";
 import RegisterRequest from "@/domain/resquest/register.request.ts";
 import authenticationService from "@/services/authentication.service.ts";
 import OtherLogin from "@/components/authentication/ui/OtherLogin.tsx";
 import InputPassword from "@/components/authentication/ui/InputPassword.tsx";
+import { hiddenDialog, showDialog, showDialogWithCallback } from "@/redux/slice/dialog.slice.ts";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/configs/store.config";
 
 function RegisterDialog() {
-	const { showDialog, dialog } = useContext(DialogAuthContext);
+	const dispatch = useDispatch();
+	const { dialog } = useSelector((state: RootState) => state.dialog);
 	const {
 		register,
 		handleSubmit,
@@ -33,10 +36,10 @@ function RegisterDialog() {
 	const onVerifyHandler = useCallback(
 		async (otp: string): Promise<void> => {
 			return authenticationService.verifyRegister(otp).then(() => {
-				showDialog("login");
+				dispatch(showDialog("login"));
 			});
 		},
-		[showDialog],
+		[dispatch],
 	);
 
 	const onResendHandler = useCallback(async () => {
@@ -45,10 +48,15 @@ function RegisterDialog() {
 
 	const registerHandler: SubmitHandler<RegisterRequest> = (data: RegisterRequest) => {
 		authenticationService.register(data).then(() => {
-			showDialog("input-otp", {
-				sendOtp: onVerifyHandler,
-				resendOtp: onResendHandler,
-			});
+			dispatch(
+				showDialogWithCallback({
+					type: "input-otp",
+					callback: {
+						sendOtp: onVerifyHandler,
+						resendOtp: onResendHandler,
+					},
+				}),
+			);
 			reset();
 		});
 	};
@@ -63,7 +71,7 @@ function RegisterDialog() {
 	};
 
 	return (
-		<Dialog open={dialog === "register"} onOpenChange={(value) => !value && showDialog("none")}>
+		<Dialog open={dialog === "register"} onOpenChange={(value) => !value && dispatch(hiddenDialog())}>
 			<DialogContent className={"sm:max-w-[525px]"} classIcon={"bg-black p-4 border-2 border-gray-200 text-white !rounded-full top-[-20px] right-[-20px]"}>
 				<DialogHeader>
 					<DialogTitle className={"text-4xl"}>Đăng ký ngay</DialogTitle>
@@ -112,7 +120,7 @@ function RegisterDialog() {
 						</div>
 						<InputPassword errors={errors} register={register} enterKeyHandler={enterKeyHandler} onClick={handleSubmit(registerHandler)} />
 						<div className='auth-actions mt-2 flex w-full text-blue-800'>
-							<a href='#' className='!tw-text-base !tw-text-cm-blue' onClick={() => showDialog("login")}>
+							<a href='#' className='!tw-text-base !tw-text-cm-blue' onClick={() => dispatch(showDialog("login"))}>
 								Đăng nhập
 							</a>
 						</div>

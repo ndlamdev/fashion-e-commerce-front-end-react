@@ -1,6 +1,6 @@
-import ProductType from "@/types/product/product.type.ts";
+import ProductResponseType from "@/types/product/productResponse.type.ts";
 
-type ProductCardProp = ProductType & {
+type ProductCardProp = ProductResponseType & {
 	className?: string;
 };
 

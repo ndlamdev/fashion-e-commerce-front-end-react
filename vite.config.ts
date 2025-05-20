@@ -15,13 +15,13 @@ export default defineConfig({
 	},
 	server: {
 		host: "0.0.0.0",
-		allowedHosts: ["33bc-14-169-45-197.ngrok-free.app", "fashion_fe.ndlamdev.website", "fashion.ndlamdev.website"],
+		allowedHosts: ["localhost_5173.ndlamdev.website", "fashion_fe.ndlamdev.website", "fashion.ndlamdev.website"],
 		proxy: {
 			// Khi bạn fetch('/treeVN.json') từ React, Vite sẽ forward đến target
-			'/treeVN.json': {
-				target: 'https://www.coolmate.me/json',
+			"/treeVN.json": {
+				target: "https://www.coolmate.me/json",
 				changeOrigin: true,
-				rewrite: (path) => path.replace(/^\/treeVN\.json/, '/treeVN.min.json'),
+				rewrite: (path) => path.replace(/^\/treeVN\.json/, "/treeVN.min.json"),
 			},
 		},
 	},

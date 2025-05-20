@@ -1,8 +1,6 @@
-import ProductDetailProp from "@/components/product-detail/props/productDetail.prop.ts";
+import { ApiPageResponse } from "@/domain/ApiPageResponse.ts";
+import ProductResponseType from "@/types/product/productResponse.type.ts";
 
 export type ZoneOfProductsProps = {
-	currentCategory: string;
-	showProducts: ProductDetailProp[] | undefined;
-	parentCategory?: string;
-	TotalProducts: number | undefined;
+	page: ApiPageResponse<ProductResponseType[]> | undefined;
 };
