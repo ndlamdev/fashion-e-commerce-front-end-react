@@ -24,6 +24,7 @@ import store from "./configs/store.config";
 import { Provider } from "react-redux";
 import DialogProvider from "@/context/provider/DialogProvider.tsx";
 import SheetProvider from "@/context/provider/SheetProvider.tsx";
+import { CustomerManagementPage } from "@/pages/admin/CustomerManagementPage.tsx";
 
 function App() {
 	return (
@@ -52,6 +53,12 @@ function App() {
 						<Route path='/cart' element={<CartLayout />}>
 							<Route index element={<CartPage />} />
 						</Route>
+						<Route path={"/admin"} element={<AdminLayout />}>
+							<Route path={"product/create"} element={<CreateProductPage />} />
+							<Route path={"product/update/:id"} element={<UpdateProductPage />} />
+							<Route path={"*"} element={<CustomerManagementPage />} />
+						</Route>
+						<Route path='*' element={<NotFoundPage />} />
 					</Routes>
 					<Toaster />
 				</SheetProvider>
