@@ -156,7 +156,7 @@ function Header({ showMenu }: HeaderProps) {
 										data.data[type].map((item, index) => (
 											<span
 												key={index}
-												onClick={() => navigate(`collection?cid=${item.id}&type=${type}`, { state: { name: item.title } })}
+												onClick={() => navigate(`/collection?cid=${item.id}&type=${type}`, { state: { name: item.title } })}
 												className={"cursor-pointer font-bold text-white italic hover:text-neutral-600"}>
 												{item.title}
 											</span>
@@ -222,7 +222,7 @@ function Header({ showMenu }: HeaderProps) {
 												</a>
 											</div>
 											<Separator className={"my-2"} />
-											<ul className={"flex h-full flex-col justify-between"}>
+											<ul className={"flex h-full flex-col justify-between gap-y-2"}>
 												{cartData.data.cartItems.map((value, index) => (
 													<ShoppingBagItem {...value} key={`shopping_bag_item_${index}`} />
 												))}

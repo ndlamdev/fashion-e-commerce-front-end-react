@@ -11,6 +11,7 @@ import { OptionType } from "@/types/product/productOption.type.ts";
 import { SameRadioGroup, SameRadioGroupItem } from "@/components/radio-group/SameRadioGroup.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import { useAddCartItemMutation } from "@/redux/query/cart.query.ts";
+import { toast } from "sonner";
 
 export default function CardProduct(props: ProductCardProp) {
 	const navigate = useNavigate();
@@ -55,7 +56,11 @@ export default function CardProduct(props: ProductCardProp) {
 		(size: string) => {
 			const variant = props.variants.find((v) => v.options.COLOR === colorSelected && v.options.SIZE === size);
 			if (!variant) return;
-			addCartItems({ variantId: variant?.id, quantity: 1 });
+			addCartItems({ variantId: variant?.id, quantity: 1 }).then((response) => {
+				if (response.data) {
+					toast.success("Thêm vào giỏ hàng thành công");
+				}
+			});
 		},
 		[addCartItems, colorSelected, props.variants],
 	);

@@ -8,15 +8,27 @@
 
 import { formatCurrency } from "@/utils/helper/format-data.ts";
 import ShoppingBagProps from "@/components/cart/props/shopping-bag-item.prop.ts";
+import { useCallback } from "react";
+import cartService from "@/services/cart.service.ts";
 
-function ShoppingBagItem({ product, variant, quantity }: ShoppingBagProps) {
+function ShoppingBagItem({ id, product, variant, quantity }: ShoppingBagProps) {
+	const deleteCartItem = useCallback((id: number) => {
+		cartService.deleteCartItem(id).then();
+	}, []);
+
 	return (
 		<div className={"flex items-center gap-4"}>
 			<img className={"h-1/6 w-25 rounded-xl"} src={import.meta.env.VITE_BASE_MEDIA_URL + product.image.src} alt='img.png' />
 			<div className={"w-full"}>
 				<div className={"flex flex-nowrap items-center justify-between"}>
 					<p className={"overflow-hidden text-[0.8rem] font-bold"}>{product.title}</p>
-					<button>x</button>
+					<button
+						className={
+							"flex h-[28px] w-[28px] items-center justify-center rounded-full border-1 border-white hover:border-black hover:bg-gray-200 hover:text-red-500"
+						}
+						onClick={() => deleteCartItem(id)}>
+						x
+					</button>
 				</div>
 				<p className={"text-[0.8rem]"}>{Array.from(Object.values(variant.options)).join(" / ")}</p>
 				<div className={"mt-2 flex items-end gap-2"}>

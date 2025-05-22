@@ -8,51 +8,75 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import DialogTypeEnum from "@/utils/enums/dialog.type.enum.ts";
 import EventInputOTPDialog from "@/components/authentication/props/InputOTPDialog.props.ts";
+import { PayOSConfig } from "@payos/payos-checkout";
 
 export type CallbackDialogProps = EventInputOTPDialog & {};
 
 type DialogSliceState = {
-	dialog: DialogTypeEnum;
-	callBacksDialog: CallbackDialogProps | undefined;
-	loading: boolean;
+  dialog: DialogTypeEnum;
+  callBacksDialog: CallbackDialogProps | undefined;
+  loading: boolean;
+  payOs: {
+    show: boolean;
+    config?: Pick<PayOSConfig, "CHECKOUT_URL" | "RETURN_URL">;
+  }
 };
 
 const initialState: DialogSliceState = {
-	dialog: "none",
-	callBacksDialog: undefined as CallbackDialogProps | undefined,
-	loading: false,
+  dialog: "none",
+  callBacksDialog: undefined as CallbackDialogProps | undefined,
+  loading: false,
+  payOs: {
+    show: false,
+  },
 };
 
 export const dialogSlice = createSlice({
-	name: "dialog-slice",
-	initialState,
-	reducerPath: "dialog-slice",
-	reducers: {
-		showDialogWithCallback: (
-			state,
-			action: PayloadAction<{
-				type: DialogTypeEnum;
-				callback?: CallbackDialogProps;
-			}>,
-		) => {
-			state.dialog = action.payload.type;
-			state.callBacksDialog = action.payload.callback;
-		},
-		showDialog: (state, action: PayloadAction<DialogTypeEnum>) => {
-			state.dialog = action.payload;
-		},
-		hiddenDialog: (state) => {
-			state.dialog = "none";
-		},
-		showDialogLoading: (state) => {
-			state.loading = true;
-		},
-		closeDialogLoading: (state) => {
-			state.loading = false;
-		},
-	},
+  name: "dialog-slice",
+  initialState,
+  reducerPath: "dialog-slice",
+  reducers: {
+    showDialogWithCallback: (
+      state,
+      action: PayloadAction<{
+        type: DialogTypeEnum;
+        callback?: CallbackDialogProps;
+      }>,
+    ) => {
+      state.dialog = action.payload.type;
+      state.callBacksDialog = action.payload.callback;
+    },
+    showDialog: (state, action: PayloadAction<DialogTypeEnum>) => {
+      state.dialog = action.payload;
+    },
+    hiddenDialog: (state) => {
+      state.dialog = "none";
+    },
+    showDialogLoading: (state) => {
+      state.loading = true;
+    },
+    closeDialogLoading: (state) => {
+      state.loading = false;
+    },
+    showDialogPayOs: (state, action: PayloadAction<Pick<PayOSConfig, "CHECKOUT_URL" | "RETURN_URL">>) => {
+      state.payOs.show = true;
+      state.payOs.config = action.payload;
+    },
+    hiddenDialogPayOs: (state) => {
+      state.payOs.show = false;
+      state.payOs.config = undefined;
+    },
+  },
 });
 
-export const { showDialogWithCallback, showDialog, hiddenDialog, showDialogLoading, closeDialogLoading } = dialogSlice.actions;
+export const {
+  showDialogWithCallback,
+  showDialog,
+  hiddenDialog,
+  showDialogLoading,
+  closeDialogLoading,
+  showDialogPayOs,
+  hiddenDialogPayOs,
+} = dialogSlice.actions;
 
 export default dialogSlice.reducer;
