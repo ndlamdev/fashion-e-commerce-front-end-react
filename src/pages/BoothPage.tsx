@@ -2,102 +2,196 @@ import { CollectionFilterProps } from "@/components/collection/props/collectionF
 import { mockCollectionFilters } from "@/assets/data/collection/collectionFileterProp.data.ts";
 import CollectionFilter from "@/components/collection/CollectionFilter.tsx";
 import ZoneOfProducts from "@/components/collection/ZoneOfProducts.tsx";
-import sampleProducts from "@/assets/data/product.data.ts";
-import { ScrollArea } from "@/components/ui/scroll-area.tsx";
-import { motion } from "motion/react";
-import { ArrowRight } from "lucide-react";
 import CategoryDescription from "@/components/collection/CategoryDescription.tsx";
 import { categoryDescriptionSamples } from "@/assets/data/collection/categoryDescription.data.ts";
+import { useLocation, useNavigate, useSearchParams } from "react-router";
+import { useEffect, useState } from "react";
+import RecentActivity from "@/components/collection/RecentActivity.tsx";
+import { useSearchByImageMutation, useSearchByTextQuery } from "@/services/product.service.ts";
+import { useGetProductByCollectionIdQuery, useGetProductByCollectionTypeQuery } from "@/services/collection.service.ts";
+import ProductResponseType from "@/types/product/productResponse.type.ts";
+import { ApiPageResponse } from "@/domain/ApiPageResponse.ts";
+import { CollectionValue } from "@/utils/enums/collection.enum.ts";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb.tsx";
+import { Skeleton } from "@/components/ui/skeleton";
+import { LoaderIcon } from "lucide-react";
 
 export default function BoothPage() {
-  const filters: CollectionFilterProps = mockCollectionFilters;
-  const products = sampleProducts;
-  const sportDescriptions = categoryDescriptionSamples
-  return (
-    <>
-      <div className="sm:flex p-3">
-        <div className="sm:w-1/4 sm:block hidden">
-          <CollectionFilter {...filters} />
-        </div>
-        <div className="sm:w-3/4 ">
-          <ScrollArea className={"h-dvh"}>
-            <ZoneOfProducts currentCategory={"lorem"} showProducts={products} TotalProducts={12} />
-          </ScrollArea>
-        </div>
-      </div>
-      <CategoryDescription {...sportDescriptions} />
-      <section className={"px-5 md:px-10 md:py-10 lg:px-15 lg:py-14"}>
-        <div className={"flex flex-col items-center gap-8 rounded-2xl bg-[#F1F1F1] p-5 md:flex-row md:p-8 lg:p-10"}>
-          <div className={"flex-2/3"}>
-            <h3 className={"mb-3 text-xl font-bold md:mb-5 md:text-2xl"}>ĐẶC QUYỀN DÀNH CHO 363,688 THÀNH VIÊN KIMICLUB</h3>
-            <div className={"flex flex-col gap-3 md:flex-row"}>
-              <picture className={"w-full"}>
-                <source
-                  media={"(max-width: 768px)"}
-                  srcSet={"https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/February2025/mceclip15.png"}
-                />
-                <img
-                  src={"https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/February2025/mceclip18.png"}
-                  alt={"image.png"}
-                  className={"aspect-[5/3] h-15 w-full flex-1 overflow-hidden rounded-2xl md:size-full"}
-                />
-              </picture>
-              <picture className={"w-full"}>
-                <source
-                  media={"(max-width: 768px)"}
-                  srcSet={"https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/February2025/mceclip14.png"}
-                />
-                <img
-                  src={"https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/February2025/mceclip19.png"}
-                  alt={"image.png"}
-                  className={"aspect-[5/3] h-15 w-full flex-1 overflow-hidden rounded-2xl md:size-full"}
-                />
-              </picture>
-              <picture className={"w-full"}>
-                <source
-                  media={"(max-width: 768px)"}
-                  srcSet={"https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/March2025/mceclip3_71.png"}
-                />
-                <img
-                  src={"https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/March2025/mceclip2_81.png"}
-                  alt={"image.png"}
-                  className={"aspect-[5/3] h-15 w-full flex-1 overflow-hidden rounded-2xl md:size-full"}
-                />
-              </picture>
-            </div>
-          </div>
-          <div className={"rounded-l-8xl rounded-r-8xl hidden h-46 w-2 rounded-t-2xl rounded-b-2xl bg-radial from-gray-400 from-10% to-white md:block"} />
-          <div className={"flex w-full flex-1/3 flex-col items-center overflow-hidden"}>
-            <h3 className={"mb-3 text-center text-xl font-bold md:mb-5 md:text-2xl"}>HOẠT ĐỘNG GẦN ĐÂY</h3>
-            <div className={"flex h-full w-full flex-col items-center justify-between"}>
-              <div className={"flex h-full flex-col justify-around py-3"}>
-                <motion.p
-                  className={"flex gap-3 text-nowrap"}
-                  animate={{ x: ["100%", "-100%"] }}
-                  transition={{ repeat: Infinity, duration: 10, ease: "linear" }}>
-                  <span> Các hoạt động gần đây</span>
-                  <span>Các hoạt động gần đây</span>
-                  <span>Các hoạt động gần đây</span>
-                  <span>Các hoạt động gần đây</span>
-                </motion.p>
-                <motion.p
-                  className={"flex gap-3 text-nowrap"}
-                  animate={{ x: ["100%", "-100%"] }}
-                  transition={{ repeat: Infinity, duration: 10, ease: "linear", delay: 2 }}>
-                  <span>Các hoạt động gần đây</span>
-                  <span>Các hoạt động gần đây</span>
-                  <span>Các hoạt động gần đây</span>
-                  <span>Các hoạt động gần đây</span>
-                </motion.p>
-              </div>
-              <a href={"#"} className={"flex flex-row flex-nowrap items-center rounded-full bg-black px-5 py-3 text-white md:flex-col lg:flex-row"}>
-                <span className={"text-center text-wrap"}>GIA NHẬP COOLCLUB NGAY</span>
-                <ArrowRight />
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
-  );
+	const [searchParams, setSearchParams] = useSearchParams();
+	const navigate = useNavigate();
+	const queryObj = Object.fromEntries(searchParams.entries()); // get all key-value
+	const location = useLocation();
+	const { file, prompt, name, type } = location.state || {
+		file: undefined,
+		prompt: undefined,
+		name: undefined,
+		type: undefined,
+	};
+	const [title, setTitle] = useState<{
+		name?: string;
+		prompt?: string;
+		fileName?: string | undefined;
+		type?: string | undefined;
+	}>();
+	useEffect(() => {
+		if (name) {
+			setTitle({ name: name });
+			return;
+		}
+		if (prompt) {
+			setSearchParams({ prompt: prompt });
+			setTitle({ prompt: prompt });
+			return;
+		}
+		if (file) {
+			setTitle({ fileName: file.name });
+			return;
+		}
+		if (type) setTitle({ type: type });
+	}, [name, prompt, file, type, setSearchParams]);
+	const [data, setData] = useState<ApiPageResponse<ProductResponseType[]> | undefined>();
+	const filters: CollectionFilterProps = mockCollectionFilters;
+	const sportDescriptions = categoryDescriptionSamples;
+	const [requestImageSearch, { isLoading: isLoadingImageSearch, isError: isErrorImageSearch, data: dataImageSearch }] = useSearchByImageMutation();
+
+	const {
+		data: productsOfId,
+		isLoading: isLoadingPOI,
+		isError: isErrorPOI,
+		isFetching: isFetchingPOI,
+	} = useGetProductByCollectionIdQuery(
+		{
+			...queryObj,
+			sizes: searchParams.getAll("sizes"),
+		},
+		{ skip: !queryObj["cid"] },
+	);
+
+	const {
+		data: productsOfType,
+		isLoading: isLoadingPOT,
+		isError: isErrorPOOT,
+		isFetching: isFetchingPOT,
+	} = useGetProductByCollectionTypeQuery(
+		{
+			...queryObj,
+			sizes: searchParams.getAll("sizes"),
+		},
+		{ skip: !!queryObj["cid"] || !queryObj["type"] },
+	);
+
+	// const {
+	// 	data: dataVoiceSearch,
+	// 	isLoading: isLoadingVoiceSearch,
+	// 	isError: isErrorVoiceSearch,
+	// } = useVoiceSearchQuery(prompt, { skip: !prompt });
+	const {
+		data: dataSearchByText,
+		isLoading: isLoadingSearchByText,
+		isError: isErrorSearchByText,
+		isFetching: isFetchingSearchByText,
+	} = useSearchByTextQuery(
+		{
+			...queryObj,
+			title: queryObj["prompt"]?.replace("+", " ") ?? prompt,
+			sizes: searchParams.getAll("sizes"),
+		},
+		{ skip: !prompt && !queryObj["prompt"] },
+	);
+
+	useEffect(() => {
+		if (!file) return;
+		const formData = new FormData();
+		formData.append("file", file);
+		requestImageSearch(formData)
+			.unwrap()
+			.then((res) => {
+				if (res.code >= 400) return;
+				setData(res.data);
+			})
+			.catch((err) => {
+				console.log(err);
+				setData(undefined);
+			});
+	}, [dataImageSearch, file, requestImageSearch]);
+
+	useEffect(() => {
+		if (!prompt && !queryObj["prompt"]) return;
+		setData(dataSearchByText?.data);
+	}, [prompt, dataSearchByText, queryObj]);
+
+	useEffect(() => {
+		if (!queryObj["cid"]) return;
+		setData(productsOfId?.data);
+	}, [productsOfId?.data, queryObj]);
+
+	useEffect(() => {
+		if (queryObj["cid"] || !queryObj["type"]) return;
+		setData(productsOfType?.data);
+	}, [productsOfType?.data, queryObj]);
+
+	return (
+		<main>
+			<div className='p-3 sm:flex'>
+				<div className='hidden sm:block sm:w-1/4'>
+					<CollectionFilter {...filters} />
+				</div>
+				<div className='sm:w-3/4'>
+					<Breadcrumb className={"text-xs lg:text-sm"}>
+						<BreadcrumbList>
+							<BreadcrumbItem>
+								<BreadcrumbLink href='/'>Trang chủ</BreadcrumbLink>
+							</BreadcrumbItem>
+							<BreadcrumbSeparator />
+							<BreadcrumbItem>
+								<BreadcrumbLink
+									className={"cursor-pointer"}
+									onClick={() => {
+										navigate(`/collection?type=${queryObj["type"]}`);
+										setTitle({ type: queryObj["type"] });
+									}}>
+									{CollectionValue[queryObj["type"]] ?? type}
+								</BreadcrumbLink>
+							</BreadcrumbItem>
+							{title?.name && <BreadcrumbSeparator />}
+							{title?.name && (
+								<BreadcrumbItem>
+									<BreadcrumbLink>{title.name}</BreadcrumbLink>
+								</BreadcrumbItem>
+							)}
+						</BreadcrumbList>
+					</Breadcrumb>
+
+					{(title?.name || title?.type) && <p className='my-3 font-bold uppercase lg:text-2xl'>{title.name ?? title.type}</p>}
+					{title?.prompt && <p className='my-3 font-bold uppercase lg:text-2xl'>Tìm kiếm: {title?.prompt}</p>}
+					{title?.fileName && <p className='my-3 font-bold uppercase lg:text-2xl'>Tìm kiếm: {title?.fileName}</p>}
+					<div className='my-4 border-1 border-gray-300' />
+					{/*<ScrollArea className={"h-dvh"}>*/}
+					{isLoadingPOI ||
+					isLoadingPOT ||
+					isLoadingImageSearch ||
+					isLoadingSearchByText ||
+					isErrorSearchByText ||
+					isErrorImageSearch ||
+					isErrorPOI ||
+					isErrorPOOT ||
+					isFetchingPOT ||
+					isFetchingSearchByText ||
+					isFetchingPOT ||
+					isFetchingPOI ? (
+						<Skeleton className={"h-screen w-full place-content-center place-items-center items-center"}>
+							<LoaderIcon className={"size-10 text-gray-600"} />
+						</Skeleton>
+					) : (
+						data && <ZoneOfProducts page={data} />
+					)}
+					{/*</ScrollArea>*/}
+				</div>
+			</div>
+			<CategoryDescription {...sportDescriptions} />
+			<section className={"px-5 md:px-10 md:py-10 lg:px-15 lg:py-14"}>
+				<RecentActivity />
+			</section>
+		</main>
+	);
 }

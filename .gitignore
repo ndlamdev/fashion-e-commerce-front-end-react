@@ -25,3 +25,7 @@ dist-ssr
 /.idea/
 /fashion-e-commerce.iml
 /package-lock.json
+/docker-compose.yml
+/Dockerfile
+/nginx.conf
+/.env

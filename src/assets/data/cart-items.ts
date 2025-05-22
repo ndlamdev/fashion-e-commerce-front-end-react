@@ -5,7 +5,7 @@
  * Create at: 10:00AM - 14/03/2025
  * User: lam-nguyen
  **/
-import { CartItemProps } from "@/components/cart/CartItem.tsx";
+import CartItemProps from "@/components/cart/props/cart-item.prop.ts";
 
 const dataCartItems: CartItemProps[] = [
 	{

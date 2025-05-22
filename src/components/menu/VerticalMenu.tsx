@@ -13,12 +13,15 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Card, CardContent } from "@/components/ui/card.tsx";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion.tsx";
-import useScrolled from "@/utils/use-scrolled.ts";
-import VerticalMenuProps from "@/components/menu/type/vertical-menu.prop.ts";
+import useScrolled from "@/utils/helper/use-scrolled.ts";
+import VerticalMenuProps from "@/components/menu/props/vertical-menu.prop.ts";
+import { useDispatch } from "react-redux";
+import { showDialog } from "@/redux/slice/dialog.slice.ts";
 
 function VerticalMenu({ showMenu, onHidden, onAnimationComplete, onExitComplete }: VerticalMenuProps) {
 	const [hiddenMenu, setHiddenMenu] = useState<boolean>(true);
 	const [, scrollY] = useScrolled();
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		setHiddenMenu(!showMenu);
@@ -35,7 +38,7 @@ function VerticalMenu({ showMenu, onHidden, onAnimationComplete, onExitComplete 
 					onUpdate={(value) => {
 						if (value.left == 0) onAnimationComplete?.();
 					}}
-					className={"absolute top-0 w-full bg-[#E5E5E5] lg:hidden"}>
+					className={"absolute top-0 z-999 w-full bg-[#E5E5E5] lg:hidden"}>
 					<div className={`sticky top-3 z-1 flex h-[40px] items-center justify-end ${scrollY < 20 ? "pe-3" : "pe-1"}`}>
 						<div
 							className={`${scrollY >= 20 && "rounded-full bg-gray-100 p-2"}`}
@@ -167,7 +170,13 @@ function VerticalMenu({ showMenu, onHidden, onAnimationComplete, onExitComplete 
 						<ul className={"flex flex-col"}>
 							<li className={"hover::bg-gray-200 rounded px-3 py-2 active:bg-gray-200"}>Trung tâm CSKH</li>
 							<li className={"hover::bg-gray-200 rounded px-3 py-2 active:bg-gray-200"}>Về KimiFashion</li>
-							<li className={"hover::bg-gray-200 rounded px-3 py-2 active:bg-gray-200"}>Đăng nhập</li>
+							<li
+								className={"hover::bg-gray-200 rounded px-3 py-2 active:bg-gray-200"}
+								onClick={() => {
+									dispatch(showDialog("login"));
+								}}>
+								Đăng nhập
+							</li>
 							<li className={"hover::bg-gray-200 rounded px-3 py-2 active:bg-gray-200"}>Blog</li>
 						</ul>
 					</div>

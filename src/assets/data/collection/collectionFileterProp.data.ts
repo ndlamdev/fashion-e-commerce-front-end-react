@@ -1,50 +1,24 @@
 import { CollectionFilterProps } from "@/components/collection/props/collectionFilter.props.ts";
 
-export const mockCollectionFilters: CollectionFilterProps =
-  {
-    color: [
-      {name: "red", codeColor : "#BF3131" },
-      {name: "blue", codeColor : "#57B4BA" },
-      {name: "pink", codeColor : "#FF2DF1" },
-    ],
-    size: ["S", "M", "L", "XL"],
-    categoryGroup: [
-      {
-        id: 1,
-        name: "Clothing",
-      },
-      { id: 2, name: "T-Shirts" },
-      { id: 3, name: "Hoodies" },
-    ],
-    material: ["Cotton", "Polyester"],
-    fitWith: ["Jeans", "Sneakers"],
-  }
-// {
-//   color: ["white", "gray", "navy"],
-//   size: ["M", "L"],
-//   categoryGroup: [
-//     {
-//       id: 3,
-//       name: "Footwear",
-//       subCategories: [
-//         { id: 31, name: "Sneakers" },
-//         { id: 32, name: "Boots" },
-//       ],
-//     },
-//   ],
-//   material: ["Leather", "Mesh"],
-//   fitWith: ["Trousers", "Jackets"],
-// },
-// {
-//   color: ["green", "yellow"],
-//   size: ["XS", "S", "M"],
-//   categoryGroup: [
-//     {
-//       id: 4,
-//       name: "Outerwear",
-//       subCategories: [{ id: 41, name: "Jackets" }, { id: 42, name: "Coats" }],
-//     },
-//   ],
-//   material: ["Nylon", "Wool"],
-//   fitWith: ["Shirts", "Boots"],
-// },
+export const mockCollectionFilters: CollectionFilterProps = {
+	size: ["S", "M", "L", "XL", "2XL", "3XL", "29",
+		"30",
+		"31",
+		"32",
+		"33"],
+	color: [
+		{ name: "Mix", style: "bg-conic/decreasing from-violet-700 via-lime-300 to-violet-700", slug: "mix" },
+		{ name: "Đen", style: "bg-stone-950", slug: "den" },
+		{ name: "Xám", style: "bg-neutral-400", slug: "xam" },
+		{ name: "Trắng", style: "bg-white", slug: "trang" },
+		{ name: "Be", style: "bg-amber-100", slug: "be" },
+		{ name: "Xanh lam", style: "bg-blue-500", slug: "xam-lam" },
+		{ name: "Xanh rêu", style: "bg-green-800", slug: "xanh-reu" },
+		{ name: "Xanh ngọc", style: "bg-cyan-500", slug: "xanh-ngoc" },
+		{ name: "Đỏ", style: "bg-red-500", slug: "do" },
+		{ name: "Cam", style: "bg-orange-500", slug: "cam" },
+		{ name: "Hồng", style: "bg-pink-400", slug: "hong" },
+		{ name: "Xanh đậm", style: "bg-blue-900", slug: "xanh-dam" },
+		{ name: "Đen Xám", style: "bg-slate-500", slug: "den-xam" },
+	],
+};

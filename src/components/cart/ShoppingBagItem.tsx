@@ -6,7 +6,7 @@
  *  User: lam-nguyen
  **/
 
-import { formatCurrency } from "@/utils/format-data.ts";
+import { formatCurrency } from "@/utils/helper/format-data.ts";
 import ShoppingBagProps from "@/components/cart/props/shopping-bag-item.prop.ts";
 
 function ShoppingBagItem({ image, name, price, discount, amount, color, size }: ShoppingBagProps) {

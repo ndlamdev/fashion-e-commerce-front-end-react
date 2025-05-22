@@ -1,6 +1,6 @@
 export type CategoryDescriptionProps = {
-  title: string;
-  description: string;
-  illustrationUrl?: string;
-  subDescription?: CategoryDescriptionProps[] | undefined;
-}
+	title: string;
+	description: string;
+	illustrationUrl?: string;
+	subDescription?: CategoryDescriptionProps[] | undefined;
+};

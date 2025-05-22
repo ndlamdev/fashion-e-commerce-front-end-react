@@ -7,6 +7,7 @@ import path from "path";
 
 export default defineConfig({
 	plugins: [react(), tailwindcss()],
+	assetsInclude: ["**/*.png"],
 	resolve: {
 		alias: {
 			"@": path.resolve(__dirname, "src"),
@@ -16,6 +17,15 @@ export default defineConfig({
 		entries: ["quill"],
 	},
 	server: {
-		allowedHosts: ["f164-14-161-7-63.ngrok-free.app", "9861-115-79-239-47.ngrok-free.app"],
+		host: "0.0.0.0",
+		allowedHosts: ["localhost_5173.ndlamdev.website", "fashion_fe.ndlamdev.website", "fashion.ndlamdev.website"],
+		proxy: {
+			// Khi bạn fetch('/treeVN.json') từ React, Vite sẽ forward đến target
+			"/treeVN.json": {
+				target: "https://www.coolmate.me/json",
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/treeVN\.json/, "/treeVN.min.json"),
+			},
+		},
 	},
 });

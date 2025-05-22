@@ -6,7 +6,7 @@
  *  User: lam-nguyen
  **/
 
-import type { SVGProps } from 'react';
+import type { SVGProps } from "react";
 
 export function FaSolidUserAlt(props: SVGProps<SVGSVGElement>) {
 	return (
