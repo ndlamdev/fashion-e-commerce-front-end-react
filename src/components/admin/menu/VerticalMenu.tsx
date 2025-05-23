@@ -18,7 +18,7 @@ export function VerticalMenu() {
 		<nav className={"p-3 bg-neutral-200"}>
 			{
 				Array.from(Object.keys(MenuValues)).map((key, index) => (
-					<AccordionCustom showContent={Array.from(Object.keys(SubMenuValues)).filter((sub) => sub.at(0) == key).length > 0} key={index} showIcon={false} trigger={
+					<AccordionCustom isDown={(tabIndex?.substring(1).includes(key))}	showContent={Array.from(Object.keys(SubMenuValues)).filter((sub) => sub.at(0) == key).length > 0} key={index} showIcon={false} trigger={
 						<TabNav style={{
 							backgroundColor: tabIndex?.substring(1) == key? "#F5F5FA" : "",
 						}} iconLeft={MenuValues[key].iconLeft} to={MenuValues[key].to} title={MenuValues[key].title}
@@ -43,7 +43,7 @@ export function VerticalMenu() {
 }
 
 const MenuValues: Record<string, TabNavProps> = {
-	"0": { title: "Home", to: "/admin", iconLeft: <HouseIcon /> },
+	"0": { title: "Home", to: "/admin#0", iconLeft: <HouseIcon /> },
 	"1": { title: "Orders", to: "/admin/orders#1", iconLeft: <LucideShoppingBag /> },
 	"2": { title: "Products", to: "/admin/products#2", iconLeft: <TagIcon /> },
 	"3": { title: "Customers", to: "/admin/customers#3", iconLeft: <UserRoundIcon /> },
