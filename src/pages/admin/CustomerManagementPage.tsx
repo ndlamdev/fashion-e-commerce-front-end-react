@@ -15,9 +15,11 @@ import {
 } from "@/components/ui/pagination.tsx";
 import { useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
+import { useMediaQuery } from "@uidotdev/usehooks";
 
 export function CustomerManagementPage() {
 	const [searchParams, setSearchParams] = useSearchParams();
+	const isDesktop = useMediaQuery("(min-width: 640px)");
 
 	const page = parseInt(searchParams.get("page") ?? "0");
 	const goToPage = (page: number) => {
@@ -45,32 +47,43 @@ export function CustomerManagementPage() {
 	return (
 		<main>
 			<header className={""}>
-				<div className="flex justify-between items-center">
-					<p className="flex justify-end items-center space-x-2">
-						<UserRoundIcon />
-						<span className={"font-bold text-2xl"}>Customer</span>
+				<div className="flex justify-between items-end">
+					<p className="flex justify-end items-center space-x-2 text-sm sm:text-lg lg:text-2xl">
+						<UserRoundIcon className={'size-4 sm:size-6 lg:size-8'} />
+						<span className={"font-bold "}>Customer</span>
 					</p>
-					<div className="flex space-x-2 text-center">
-						<Button variant={"outline"} className={"cursor-pointer active:bg-violet-700"}>Export</Button>
-						<Button variant={"outline"} className={"cursor-pointer"}>Import</Button>
-						<Button className={"cursor-pointer"}>Add customer</Button>
+					<div className="flex items-center space-x-2 text-center">
+						<Popover>
+							<PopoverTrigger className={"cursor-pointer visible sm:hidden"} asChild>
+								<Button variant={"outline"} className={"cursor-pointer max-sm:size-8"}>
+									<EllipsisIcon/>
+								</Button>
+							</PopoverTrigger>
+							<PopoverContent className={"max-w-[30vw] text-center -translate-1/14 translate-y-2 p-2 text-sm"}>
+								<p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>Import</p>
+								<p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>Export</p>
+							</PopoverContent>
+						</Popover>
+						<Button variant={"outline"} className={"cursor-pointer active:bg-violet-700 max-sm:hidden"}>Export</Button>
+						<Button variant={"outline"} className={"cursor-pointer max-sm:hidden"}>Import</Button>
+						<Button className={"cursor-pointer text-xs sm:text-md max-sm:h-8"}>Add customer</Button>
 					</div>
 				</div>
 			</header>
 			<section className={"my-5"}>
-				<div className={"flex py-2 justify-between"}>
+				<div className={"flex max-sm:flex-wrap py-2 justify-between"}>
 					<Input leftIcon={<SearchIcon />}
-								 className={"p-1 flex items-center space-x-2 w-8/10 bg-neutral-200 rounded-lg"}
+								 className={"p-1 flex items-center space-x-2 w-full sm:w-1/2 lg:w-8/10 bg-neutral-200 rounded-lg"}
 								 placeholder={"Search customers"} />
-					<div className="flex items-center space-x-2">
+					<div className="flex max-sm:justify-between max-sm:w-full max-sm:my-2 items-center space-x-2">
 						<span className={"font-bold"}>0 customers</span>
 						<Popover>
 							<PopoverTrigger className={"cursor-pointer"} asChild>
-								<Button variant={"outline"} className={"cursor-pointer"}>
-									<ArrowDownUpIcon />
+								<Button variant={"outline"} className={"cursor-pointer max-sm:size-8"}>
+									<ArrowDownUpIcon/>
 								</Button>
 							</PopoverTrigger>
-							<PopoverContent className={"-translate-1/14 translate-y-2"}>
+							<PopoverContent className={"translate-x-16 sm:translate-1/14 sm:translate-y-2  max-w-2/3 max-sm:p-2 max-sm:text-xs"}>
 								<p>Sort by</p>
 								<RadioGroup defaultValue="last-update" className={"border-b py-3"}>
 									<div className="flex items-center space-x-2">
@@ -118,53 +131,66 @@ export function CustomerManagementPage() {
 						</Popover>
 					</div>
 				</div>
-				<div className="flex items-center">
-					<Table>
-						<TableHeader>
-							<TableRow>
-								<TableHead className="space-x-2"><Checkbox className={"cursor-pointer"} checked={selectedAll || !!selectedCustomers?.length}
-																													 onCheckedChange={(value) => setSelectedAll(!!value)} />
-									<span>{selectedCustomers?.length} Customer name</span></TableHead>
-								{!selectedCustomers?.length && (<>
-									<TableHead> Email subscription</TableHead>
-									<TableHead>Location</TableHead>
-									<TableHead>Orders</TableHead>
-									<TableHead className="text-right">Amount spent</TableHead>
-								</>)}
-							</TableRow>
-						</TableHeader>
-					</Table>
-					{!!selectedCustomers?.length && <>
-						<Popover>
-							<PopoverTrigger className={"cursor-pointer"} asChild>
-								<Button variant={"outline"} className={"cursor-pointer"}>
-									<EllipsisIcon/>
-								</Button>
-							</PopoverTrigger>
-							<PopoverContent className={"-translate-1/14 translate-y-2 p-2 text-sm"}>
-								<p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>Add tag</p>
-								<p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>Remove tag</p>
-								<p className={'text-red-500 flex space-x-2 items-center p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}><Trash2Icon className={'size-4 flex-none'}/> <span>Delete customer</span></p>
-							</PopoverContent>
-						</Popover>
-					</>}
-				</div>
-				<Table>
-					<TableBody className={"odd:bg-white even:bg-gray-50"}>
-						{DataIds.map((id) => (
-							<TableRow key={id}>
-								<TableCell className="font-medium space-x-2"><Checkbox value={id}
-																																			 checked={(selectedCustomers && selectedCustomers.includes(id))}
-																																			 onCheckedChange={() => handleDeleteCustomersChange(id)} />
-									<span>Customer name</span></TableCell>
-								<TableCell>Paid</TableCell>
-								<TableCell>Credit Card</TableCell>
-								<TableCell>0 orders</TableCell>
-								<TableCell className="text-right">$250.00</TableCell>
-							</TableRow>
-						))}
-					</TableBody>
-				</Table>
+				{isDesktop ?
+					<>
+						<div className="flex items-center">
+							<Table>
+								<TableHeader>
+									<TableRow>
+										<TableHead className="space-x-2"><Checkbox className={"cursor-pointer"} checked={selectedAll && !!selectedCustomers?.length}
+																															 onCheckedChange={(value) => setSelectedAll(!!value)} />
+											<span>{selectedCustomers?.length} Customer name</span></TableHead>
+										{!selectedCustomers?.length && (<>
+											<TableHead> Email subscription</TableHead>
+											<TableHead>Location</TableHead>
+											<TableHead>Orders</TableHead>
+											<TableHead className="text-right">Amount spent</TableHead>
+										</>)}
+									</TableRow>
+								</TableHeader>
+							</Table>
+							{!!selectedCustomers?.length && <>
+								<Popover>
+									<PopoverTrigger className={"cursor-pointer"} asChild>
+										<Button variant={"outline"} className={"cursor-pointer"}>
+											<EllipsisIcon/>
+										</Button>
+									</PopoverTrigger>
+									<PopoverContent className={"-translate-1/14 translate-y-2 p-2 text-sm"}>
+										<p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>Add tag</p>
+										<p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>Remove tag</p>
+										<p className={'text-red-500 flex space-x-2 items-center p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}><Trash2Icon className={'size-4 flex-none'}/> <span>Delete customer</span></p>
+									</PopoverContent>
+								</Popover>
+							</>}
+						</div>
+						<Table>
+							<TableBody className={"odd:bg-white even:bg-gray-50"}>
+								{DataIds.map((id) => (
+									<TableRow key={id}>
+										<TableCell className="font-medium space-x-2"><Checkbox value={id}
+																																					 checked={(selectedCustomers && selectedCustomers.includes(id))}
+																																					 onCheckedChange={() => handleDeleteCustomersChange(id)} />
+											<span>Customer name</span></TableCell>
+										<TableCell>Paid</TableCell>
+										<TableCell>Credit Card</TableCell>
+										<TableCell>0 orders</TableCell>
+										<TableCell className="text-right">$250.00</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						</Table>
+					</> :
+					<>
+					{DataIds.map((id) => (
+						<div className={'text-xs py-2 border-b'} key={id}>
+							<p className="font-bold">Customer name</p>
+							<p className="">Location</p>
+							<p className="space-x-2"><span>0 orders</span><span>0VND</span></p>
+						</div>
+					))}
+					</>
+				}
 			</section>
 			<Pagination>
 				<PaginationContent>
