@@ -3,9 +3,9 @@ import { StarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button.tsx";
 import { toast } from "sonner";
 import { AddressProps } from "@/components/profile/props/address.props.ts";
-import { useSetDefaultAddressMutation } from "@/services/profile.service.ts";
 import { useSelector } from "react-redux";
 import { RootState } from "@/configs/store.config.ts";
+import { useSetDefaultAddressMutation } from "@/services/address.service.ts";
 
 const AddressItem: FC<AddressProps> = memo((props) => {
 	const { defaultId } = useSelector((state: RootState) => state.address);

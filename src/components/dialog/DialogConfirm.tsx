@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
 import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentication.tsx";
 
-function ConfirmDialog({
+function DialogConfirm({
 	open,
 	onOpenChange,
 	onClickCancel,
@@ -16,7 +16,8 @@ function ConfirmDialog({
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent
 				className={"sm:max-w-[525px]"}
-				classIcon={"bg-black p-4 border-2 border-gray-200 text-white !rounded-full top-[-20px] right-[-20px] !hidden"}>
+				classIcon={"bg-black p-4 border-2 border-gray-200 text-white !rounded-full top-[-20px] right-[-20px] !hidden"}
+				onClosed={onClickCancel}>
 				<DialogHeader>
 					<DialogTitle className={"text-4xl"}>Bạn có chắc muốn thoát khỏi bước xác không</DialogTitle>
 				</DialogHeader>
@@ -33,4 +34,4 @@ function ConfirmDialog({
 	);
 }
 
-export default ConfirmDialog;
+export default DialogConfirm;

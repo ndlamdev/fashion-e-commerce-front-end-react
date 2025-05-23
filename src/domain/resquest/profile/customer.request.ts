@@ -1,5 +1,5 @@
-import UserDto from "../../dto/user.dto";
+import UserDto from "@/domain/dto/user.dto";
 
 export type CustomerRequest = Omit<UserDto, "birthday" | "id"> & {
-	birthday: string;
+  birthday: string;
 }
