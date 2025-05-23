@@ -74,6 +74,7 @@ export default function ProfilePage() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const handleLogout = () => {
+		window.scrollTo({ top: 0, behavior: "smooth" });
 		authenticationService
 			.logout()
 			.then(() => {
@@ -118,7 +119,7 @@ export default function ProfilePage() {
 									);
 								})}
 								<TabNav
-									to={""}
+									to={window.location.href}
 									onClick={() => setOpenDialog("show-confirm")}
 									tailwindStyle={`hover:bg-black hover:text-white `}
 									iconLeft={<LogOutIcon className={"flex-none hover:text-white"} />}

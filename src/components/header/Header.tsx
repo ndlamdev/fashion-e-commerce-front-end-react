@@ -20,7 +20,6 @@ import { useNavigate } from "react-router";
 import HeaderProps from "@/components/header/props/header-prop.ts";
 import { FaSolidUserAlt } from "@/assets/images/icons/FaSolidUserAlt.tsx";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar.tsx";
-import { SheetTrigger } from "@/components/ui/sheet.tsx";
 import { RootState } from "@/configs/store.config.ts";
 import { useDispatch, useSelector } from "react-redux";
 import Searcher from "@/components/header/Searcher.tsx";
@@ -44,7 +43,9 @@ function Header({ showMenu }: HeaderProps) {
 	const [searchAction, setSearchAction] = useState<"SEARCH" | "EXIT" | "HIDDEN">("HIDDEN");
 	const { data, isLoading } = useGetCollectionsQuery();
 	const [type, setType] = useState<CollectionEnum>(CollectionEnum.MALE);
-	const { data: cartData } = useGetCartQuery();
+	const { data: cartData } = useGetCartQuery(undefined, {
+		skip: !access_token,
+	});
 
 	const [title, setTitle] = useState<string>();
 	const { data: dataQuickSearch, isLoading: isLoadingQuickSearch, isError: isErrorQuickSearch } = useQuickSearchQuery(title, { skip: !title });
@@ -194,12 +195,13 @@ function Header({ showMenu }: HeaderProps) {
 						</AnimatePresence>
 						<a href={"#"} className={"z-4"}>
 							{access_token && user ? (
-								<SheetTrigger>
-									<Avatar>
-										<AvatarImage src={"https://github.com/shadcn.png"} alt={"@shadcn"} />
-										<AvatarFallback>{user.full_name}</AvatarFallback>
-									</Avatar>
-								</SheetTrigger>
+								<Avatar
+									onClick={() => {
+										navigate("/profile/info");
+									}}>
+									<AvatarImage src={"https://github.com/shadcn.png"} alt={"@shadcn"} />
+									<AvatarFallback>{user.full_name}</AvatarFallback>
+								</Avatar>
 							) : (
 								<FaSolidUserAlt width={24} height={24} onClick={() => dispatch(showDialog("login"))} />
 							)}
@@ -208,7 +210,7 @@ function Header({ showMenu }: HeaderProps) {
 							<SolarHeartBold width={29} height={29} />
 						</a>
 						<div className={"group relative"}>
-							<a href={"/cart"} className={"relative z-3"}>
+							<a href={!access_token ? "#" : "/cart"} className={"relative z-3"}>
 								<ShoppingBag countItem={cartData?.data.cartItems.length ?? 0} />
 							</a>
 							<div className={"absolute top-0 right-0 z-2 hidden w-[25rem] group-hover:lg:block"}>

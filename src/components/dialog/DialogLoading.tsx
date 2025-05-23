@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/configs/store.config.ts";
 
 function DialogLoading() {
-	const open = useSelector((state: RootState) => state.dialogSlice.loading);
+	const open = useSelector((state: RootState) => state.dialog.loading);
 
 	return (
 		<Dialog open={open}>

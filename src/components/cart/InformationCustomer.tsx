@@ -38,7 +38,7 @@ function InformationCustomer() {
 	const [district, setDistrict] = useState<DistrictType>();
 	const [ward, setWard] = useState<WardType>();
 	const dispatch = useDispatch();
-	const { payment, showConfirm, trigger: triggerState } = useSelector((state: RootState) => state.cartSlice);
+	const { payment, showConfirm, trigger: triggerState } = useSelector((state: RootState) => state.cart);
 	const { data: dataProvinces, error: errorProvinces } = useGetProvincesOpenApiQuery();
 	const { data: dataDistrict, error: errorDistrict } = useGetDistrictsOpenApiQuery(province?.code ?? 0, {
 		skip: !province,
