@@ -13,24 +13,43 @@ import CreateOrderResponse from "@/domain/response/createOrder.response.ts";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL + "/order/v1";
 
+export const RETURN_URL = window.location.href;
+export const CANCEL_URL = window.location.href;
+
 export const orderApi = createApi({
-  reducerPath: "orderApi",
-  baseQuery: createBaseQueryWithDispatch(BASE_URL),
-  tagTypes: ["order"],
-  endpoints: (build) => ({
-    createOrder: build.mutation<ApiResponse<CreateOrderResponse>, CreateOrderRequest>({
-      query: (arg) => ({
-        url: "",
-        method: "POST",
-        body: {
-          ...arg,
-        },
-      }),
-      invalidatesTags: ["order"],
-    }),
-  }),
+	reducerPath: "orderApi",
+	baseQuery: createBaseQueryWithDispatch(BASE_URL),
+	tagTypes: ["order"],
+	endpoints: (build) => ({
+		createOrder: build.mutation<ApiResponse<CreateOrderResponse>, CreateOrderRequest>({
+			query: (arg) => ({
+				url: "",
+				method: "POST",
+				body: {
+					...arg,
+					payment: {
+						method: arg.payment.method,
+						return_url: RETURN_URL,
+						cancel_url: CANCEL_URL,
+					},
+				},
+			}),
+			invalidatesTags: ["order"],
+		}),
+		cancelOrder: build.mutation<ApiResponse<CreateOrderResponse>, { orderId: number; orderCode: number }>({
+			query: ({ orderId, orderCode }) => ({
+				url: "/cancel",
+				method: "POST",
+				body: {
+					order_id: orderId,
+					order_code: orderCode,
+				},
+			}),
+			invalidatesTags: ["order"],
+		}),
+	}),
 });
 
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
-export const { useCreateOrderMutation } = orderApi;
+export const { useCreateOrderMutation, useCancelOrderMutation } = orderApi;

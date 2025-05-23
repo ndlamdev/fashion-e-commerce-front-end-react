@@ -24,6 +24,7 @@ function ZoneOfProducts(props: ZoneOfProductsProps) {
 
 	const page = parseInt(searchParams.get("page") ?? "0");
 	const goToPage = (page: number) => {
+		window.scrollTo({ top: 0, behavior: "smooth" });
 		searchParams.set("page", page + "");
 		setSearchParams(searchParams);
 	};

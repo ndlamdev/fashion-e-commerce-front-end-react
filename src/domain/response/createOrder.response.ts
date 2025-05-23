@@ -10,20 +10,20 @@ import OrderStatusResponse from "@/domain/response/orderStatus.response.ts";
 import PaymentResponse from "@/domain/response/payment.response.ts";
 
 type CreateOrderResponse = {
-  id: number;
-  customer_id: number;
-  name: string;
-  phone: string;
-  email: string;
-  address_detail: string;
-  ward: string;
-  district: string;
-  province: string;
-  note: string;
-  items: OrderItemResponse[];
-  statuses: OrderStatusResponse[];
-  payment_response?: PaymentResponse,
-  update_at: number[];
-}
+	id: number;
+	customer_id: number;
+	name: string;
+	phone: string;
+	email: string;
+	address_detail: string;
+	ward: string;
+	district: string;
+	province: string;
+	note: string;
+	items: OrderItemResponse[];
+	statuses: OrderStatusResponse[];
+	payment_response: PaymentResponse;
+	update_at: number[];
+};
 
 export default CreateOrderResponse;

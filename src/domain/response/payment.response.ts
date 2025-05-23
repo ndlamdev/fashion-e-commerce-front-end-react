@@ -8,9 +8,10 @@
 import PaymentEnum from "@/utils/enums/payment.enum.ts";
 
 type PaymentResponse = {
-  method: PaymentEnum;
-  returnUrl: string;
-  checkoutUrl: string;
-}
+	order_code: number;
+	method: PaymentEnum;
+	status: string;
+	checkout_url: string;
+};
 
 export default PaymentResponse;

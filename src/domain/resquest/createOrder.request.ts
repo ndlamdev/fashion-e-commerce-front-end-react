@@ -8,23 +8,27 @@
 import PaymentEnum from "@/utils/enums/payment.enum.ts";
 
 type CreateOrderRequest = {
-  name: string;
-  email: string;
-  phone: string;
-  address: string;
-  ward: string;
-  district: string;
-  province: string;
-  note: string;
-  method: PaymentEnum;
-  items: VariantRequestType[];
+	name: string;
+	email: string;
+	phone: string;
+	address: string;
+	ward: string;
+	district: string;
+	province: string;
+	note: string;
+	payment: {
+		method: PaymentEnum;
+		return_url?: string;
+		cancel_url?: string;
+	};
+	items: VariantRequestType[];
 };
 
 export type VariantRequestType = {
-  variantId: string;
-  quantity: number;
-}
+	variantId: string;
+	quantity: number;
+};
 
-export type InfoCustomerCreateOrder = Omit<CreateOrderRequest, "items">
+export type InfoCustomerCreateOrder = Omit<CreateOrderRequest, "items">;
 
 export default CreateOrderRequest;

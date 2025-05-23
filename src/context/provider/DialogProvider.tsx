@@ -17,27 +17,25 @@ import VoiceSearchDialog from "@/components/header/dialog/VoiceSearchDialog";
 import DialogLoading from "@/components/dialog/DialogLoading.tsx";
 import ReferFriendDialog from "@/components/product-detail/dialog/ReferFriendDialog.tsx";
 import GuideChooseSizeDialog from "@/components/product-detail/dialog/GuideChooseSizeDialog.tsx";
-import DialogPayOs from "@/components/dialog/DialogPayOs";
 
 function DialogProvider() {
-  return (
-    <>
-      <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_KEY || ""}>
-        <ForgotPasswordDialog />
-        <LoginDialog />
-        <RegisterDialog />
-        <RegisterWithGoogleDialog />
-        <InputOTPDialog />
-        <NewPasswordDialog />
-        <RegisterWithFacebookDialog />
-        <VoiceSearchDialog />
-      </GoogleOAuthProvider>
-      <DialogLoading />
-      <ReferFriendDialog />
-      <GuideChooseSizeDialog />
-      <DialogPayOs />
-    </>
-  );
+	return (
+		<>
+			<GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_KEY || ""}>
+				<ForgotPasswordDialog />
+				<LoginDialog />
+				<RegisterDialog />
+				<RegisterWithGoogleDialog />
+				<InputOTPDialog />
+				<NewPasswordDialog />
+				<RegisterWithFacebookDialog />
+				<VoiceSearchDialog />
+			</GoogleOAuthProvider>
+			<DialogLoading />
+			<ReferFriendDialog />
+			<GuideChooseSizeDialog />
+		</>
+	);
 }
 
 export default DialogProvider;

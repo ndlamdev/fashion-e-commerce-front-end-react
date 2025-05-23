@@ -20,6 +20,7 @@ import store from "./configs/store.config";
 import { Provider } from "react-redux";
 import DialogProvider from "@/context/provider/DialogProvider.tsx";
 import SheetProvider from "@/context/provider/SheetProvider.tsx";
+import OrderResultPage from "@/pages/OrderResultPage.tsx";
 
 function App() {
 	return (
@@ -44,6 +45,7 @@ function App() {
 								<Route path={"reviews"} element={<Review />} />
 								<Route path={"faq"} element={<FAQTab />} />
 							</Route>
+							<Route path={"/order/result"} element={<OrderResultPage />} />
 						</Route>
 						<Route path='/cart' element={<CartLayout />}>
 							<Route index element={<CartPage />} />

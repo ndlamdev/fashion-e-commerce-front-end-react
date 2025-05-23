@@ -2,36 +2,72 @@
  * Author: Nguyen Dinh Lam
  * Email: kiminonawa1305@gmail.com
  * Phone number: +84 855354919
- * Create at: 2:55 AM - 18/05/2025
- *  User: Administrator
+ * Create at: 3:42 PM - 23/05/2025
+ *  User: kimin
  **/
-
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
+import { useCancelPaymentMutation } from "@/redux/query/payment.query.ts";
+import { useNavigate } from "react-router";
+import { usePayOS } from "@payos/payos-checkout";
+import { RETURN_URL } from "@/redux/query/order.query.ts";
 import { useEffect } from "react";
-import { PayOSConfig, usePayOS } from "@payos/payos-checkout";
 
-function DialogPayOs(config: PayOSConfig) {
-  const { open, exit } = usePayOS(config);
+const DialogPayOs = ({
+	orderCode,
+	orderId,
+	checkoutUrl,
+	onExit,
+	onCancel,
+	onSuccess,
+}: {
+	orderId: number;
+	orderCode: number;
+	checkoutUrl: string;
+	onExit?: (orderId: number, orderCode: number) => void;
+	onCancel?: (orderId: number, orderCode: number) => void;
+	onSuccess?: (orderId: number, orderCode: number) => void;
+}) => {
+	const [cancelPayment] = useCancelPaymentMutation();
+	const navigate = useNavigate();
 
-  useEffect(() => {
-    open();
-  }, [open]);
+	const { open, exit } = usePayOS({
+		embedded: false,
+		CHECKOUT_URL: checkoutUrl,
+		RETURN_URL: RETURN_URL,
+		ELEMENT_ID: "pay-os-container",
+		onExit: (e) => {
+			console.log("onExit", e);
+			onExit?.(orderId, orderCode);
+		},
+		onSuccess: (e) => {
+			console.log("onSuccess", e);
+			onSuccess?.(orderId, e.orderCode);
+			navigate("/order/result", {
+				state: {
+					success: true,
+				},
+			});
+		},
+		onCancel: (e) => {
+			console.log("onCancel", e);
+			onCancel?.(orderId, e.orderCode);
+			cancelPayment(e.orderCode);
+			navigate("/order/result", {
+				state: {
+					success: false,
+				},
+			});
+		},
+	});
 
-  return (
-    <Dialog open={true}>
-      <DialogContent
-        className={"max-w-[580px] p-0"}
-        classIcon={"hidden"}
-      >
-        <DialogHeader>
-          <DialogTitle className={"text-center text-xl"}></DialogTitle>
-          <DialogDescription className={"mt-5 flex w-full gap-5 px-10"}> </DialogDescription>
-        </DialogHeader>
-        <div id={"pay-os-container"} className={"w-full h-[100dvh]"}>
-        </div>
-      </DialogContent>
-    </Dialog>
-  );
-}
+	useEffect(() => {
+		open();
+
+		return () => {
+			exit();
+		};
+	}, [open, exit]);
+
+	return <></>;
+};
 
 export default DialogPayOs;
