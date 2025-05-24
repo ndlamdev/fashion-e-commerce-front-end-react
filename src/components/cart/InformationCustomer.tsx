@@ -13,39 +13,28 @@ import zaloPay from "@/assets/images/icons/zalo-pay.png";
 import cardSupport from "@/assets/images/icons/card-support.png";
 import { useCallback, useEffect, useState } from "react";
 import PaymentEnum from "@/utils/enums/payment.enum.ts";
-import {
-	useGetDistrictsOpenApiQuery,
-	useGetProvincesOpenApiQuery,
-	useGetWardsOpenApiQuery,
-} from "@/redux/query/addressOpenApi.query.ts";
-import ProvinceType from "@/types/address/province.type.ts";
-import ToastErrorApi from "@/utils/helper/toastErrorApi.ts";
-import DistrictType from "@/types/address/districtType.ts";
-import WardType from "@/types/address/ward.type.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/configs/store.config.ts";
 import { PayOs } from "@/assets/images/icons/PayOs.tsx";
 import { setPayment, updateInfoCustomerCreateOrder } from "@/redux/slice/cart.slice.ts";
 import { useForm } from "react-hook-form";
 import { InfoCustomerCreateOrder } from "@/domain/resquest/createOrder.request.ts";
+import { useGetDefaultAddressQuery, useGetInfoAddressesQuery } from "@/services/address.service.ts";
+import { getCities, getDistricts, getWards } from "@/utils/helper/AddressFilter.ts";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
 
 function InformationCustomer() {
 	const user = useSelector((state: RootState) => state.auth.user);
 	const [sex, setSex] = useState("Anh/Chị");
 	const [otherReceiver, setOtherReceiver] = useState(false);
 	const [paymentHover, setPaymentHover] = useState<PaymentEnum | null>();
-	const [province, setProvince] = useState<ProvinceType>();
-	const [district, setDistrict] = useState<DistrictType>();
-	const [ward, setWard] = useState<WardType>();
 	const dispatch = useDispatch();
 	const { payment, showConfirm, trigger: triggerState } = useSelector((state: RootState) => state.cart);
-	const { data: dataProvinces, error: errorProvinces } = useGetProvincesOpenApiQuery();
-	const { data: dataDistrict, error: errorDistrict } = useGetDistrictsOpenApiQuery(province?.code ?? 0, {
-		skip: !province,
-	});
-	const { data: dataWard, error: errorWard } = useGetWardsOpenApiQuery(district?.code ?? 0, {
-		skip: !district,
-	});
+	const { data: infoAddresses, isError: isErrorInfoAddresses, isLoading: isLoadingInfoAddresses } = useGetInfoAddressesQuery();
+	const { data: defaultAddress } = useGetDefaultAddressQuery();
+	const [cityCode, setCityCode] = useState<string | undefined>(defaultAddress?.data.city_code);
+	const [districtId, setDistrictId] = useState<string | undefined>(defaultAddress?.data.district_id);
+	const [wardId, setWardId] = useState<string | undefined>(defaultAddress?.data.ward_id);
 
 	const {
 		setValue,
@@ -53,59 +42,52 @@ function InformationCustomer() {
 		register,
 		trigger,
 		setError,
+		watch,
 		formState: { errors },
 	} = useForm<InfoCustomerCreateOrder>();
-
-	useEffect(() => {
-		if (!errorProvinces) return;
-		ToastErrorApi.toastErrorApiRTK(errorProvinces);
-	}, [errorProvinces]);
-
-	useEffect(() => {
-		ToastErrorApi.toastErrorApiRTK(errorDistrict);
-	}, [errorDistrict]);
-
-	useEffect(() => {
-		ToastErrorApi.toastErrorApiRTK(errorWard);
-	}, [errorWard]);
+	const [province, district, ward] = watch(["province", "district", "ward"]);
 
 	const handleChangeProvince = useCallback(
 		(code: string) => {
-			const province = dataProvinces?.find((it) => it.code.toString() === code);
-			setValue("province", province?.name ?? "");
-			setProvince(province);
+			const city = getCities(infoAddresses).find((item) => item.city_code === code)?.city ?? "";
+			setValue("province", city);
+			setCityCode(code);
+			setDistrictId(undefined);
+			setValue("district", "");
+			setValue("ward", "");
 		},
-		[dataProvinces, setValue],
+		[infoAddresses, setValue],
 	);
 
 	const handleChangeDistrict = useCallback(
 		(code: string) => {
-			const district = dataDistrict?.districts.find((it) => it.code.toString() === code);
-			setValue("district", district?.name ?? "");
-			setDistrict(district);
+			const district = getDistricts(infoAddresses, cityCode).find((item) => item.district_id === code)?.district ?? "";
+			setValue("district", district);
+			setValue("ward", "");
+			setDistrictId(code);
 		},
-		[dataDistrict, setValue],
+		[cityCode, infoAddresses, setValue],
 	);
 
 	const handleChangeWard = useCallback(
 		(code: string) => {
-			const ward = dataWard?.wards.find((it) => it.code.toString() === code);
-			setValue("ward", ward?.name ?? "");
-			setWard(ward);
+			const ward = getWards(infoAddresses, cityCode, districtId).find((item) => item.ward_id === code)?.ward ?? "";
+			setValue("ward", ward);
+			setWardId(code);
 		},
-		[dataWard, setValue],
+		[cityCode, districtId, infoAddresses, setValue],
 	);
 
 	useEffect(() => {
 		if (!province || !district || !ward) return;
-		setValue("address", ` , ${ward?.name ?? ""}, ${district?.name ?? ""}, ${province?.name ?? ""}.`);
-	}, [ward, district, province, setValue]);
+		setValue("address", ` , ${ward ?? ""}, ${district ?? ""}, ${province ?? ""}.`);
+	}, [setValue, province, district, ward]);
 
 	useEffect(() => {
 		if (triggerState == 0) return;
 		setValue("payment", { method: payment ?? "CASH" });
 		const { province, district, ward } = getValues();
-		if (!province) {
+		if (!province || !province.length) {
 			setError("province", {
 				type: "manual",
 				message: "Vui lòng chọn tỉnh/thành phố",
@@ -116,7 +98,7 @@ function InformationCustomer() {
 			});
 		}
 
-		if (!district) {
+		if (!district || !district.length) {
 			setError("district", {
 				type: "manual",
 				message: "Vui lòng chọn quận/huyện",
@@ -127,7 +109,7 @@ function InformationCustomer() {
 			});
 		}
 
-		if (!ward) {
+		if (!ward || !ward.length) {
 			setError("ward", {
 				type: "manual",
 				message: "Vui lòng chọn phường/xã",
@@ -144,7 +126,7 @@ function InformationCustomer() {
 			return;
 		}
 		dispatch(updateInfoCustomerCreateOrder(getValues()));
-	}, [triggerState, trigger, getValues, setError, dispatch, setValue]);
+	}, [triggerState, trigger, getValues, setError, dispatch, setValue, payment]);
 
 	return (
 		<div className={`px-5 md:pb-0 lg:px-0 ${showConfirm ? "pb-30" : "pb-0"}`}>
@@ -176,7 +158,7 @@ function InformationCustomer() {
 							<input
 								id={"name"}
 								className={"w-full outline-none"}
-								defaultValue={user?.full_name}
+								defaultValue={defaultAddress?.data.full_name ?? user?.full_name}
 								placeholder={"Nhập họ và tên của bạn"}
 								{...register("name", {
 									required: "Tên không được để trống",
@@ -192,7 +174,7 @@ function InformationCustomer() {
 						<input
 							id={"phone-number"}
 							placeholder={"Nhập số điện thoại của bạn"}
-							defaultValue={user?.phone}
+							defaultValue={defaultAddress?.data.phone ?? user?.phone}
 							type={"tel"}
 							className={"rounded-full border-1 border-gray-400 px-5 py-2 outline-none"}
 							{...register("phone", {
@@ -231,6 +213,7 @@ function InformationCustomer() {
 					<input
 						className={"w-full rounded-full border-1 border-gray-400 px-5 py-2 outline-none"}
 						placeholder={"Địa chỉ (ví dụ: 123 Vạn Phúc, phường Vạn Phúc)"}
+						defaultValue={defaultAddress?.data.street}
 						{...register("address", {
 							required: "Địa chỉ không được để trống",
 						})}
@@ -238,15 +221,18 @@ function InformationCustomer() {
 					{errors.address && <small className={"text-red-500"}>{errors.address?.message}</small>}
 					<div className={"mt-2 flex w-full flex-col flex-wrap gap-2 lg:flex-row"}>
 						<div className={"w-full py-5 lg:w-auto lg:grow"}>
-							<Select onValueChange={handleChangeProvince}>
-								<SelectTrigger className='w-full rounded-full border-gray-400'>
+							<Select onValueChange={handleChangeProvince} value={cityCode}>
+								<SelectTrigger className={"w-full rounded-full border-gray-400"}>
 									<SelectValue placeholder={"Vui lòng chọn tỉnh/thành phố"} className={"text-black"} />
 								</SelectTrigger>
 								<SelectContent>
-									{dataProvinces &&
-										dataProvinces.map((it) => (
-											<SelectItem key={`province_${it.code}`} value={it.code.toString()}>
-												{it.name}
+									{isLoadingInfoAddresses && <Skeleton className={"w-full"} />}
+									{isErrorInfoAddresses && <p className='text-sm text-red-500'>không tìm thấy dữ liệu</p>}
+									{infoAddresses &&
+										infoAddresses.length > 0 &&
+										getCities(infoAddresses).map((item, index) => (
+											<SelectItem key={index + "-" + item.city_code} value={item.city_code}>
+												{item.city}{" "}
 											</SelectItem>
 										))}
 								</SelectContent>
@@ -254,16 +240,16 @@ function InformationCustomer() {
 							{errors.province && <small className={"text-red-500"}>{errors.province?.message}</small>}
 						</div>
 						<div className={"w-full py-5 lg:w-auto lg:grow"}>
-							<Select onValueChange={handleChangeDistrict}>
+							<Select onValueChange={handleChangeDistrict} value={districtId}>
 								<SelectTrigger className='w-full rounded-full border-gray-400'>
 									<SelectValue placeholder={"Chọn Quận/Huyện"} className={"text-black"} />
 								</SelectTrigger>
 								<SelectContent>
 									<SelectContent>
-										{dataDistrict &&
-											dataDistrict.districts.map((it) => (
-												<SelectItem key={`district_${it.code}`} value={it.code.toString()}>
-													{it.name}
+										{infoAddresses &&
+											getDistricts(infoAddresses, cityCode).map((item, index) => (
+												<SelectItem key={index + "-" + item.district_id} data-district-code={item.district_id} value={item.district_id}>
+													{item.district}
 												</SelectItem>
 											))}
 									</SelectContent>
@@ -272,16 +258,16 @@ function InformationCustomer() {
 							{errors.district && <small className={"text-red-500"}>{errors.district?.message}</small>}
 						</div>
 						<div className={"w-full py-5 lg:w-auto lg:grow"}>
-							<Select onValueChange={handleChangeWard}>
+							<Select onValueChange={handleChangeWard} value={wardId}>
 								<SelectTrigger className='w-full rounded-full border-gray-400'>
 									<SelectValue placeholder={"Chọn Phường/Xã"} className={"text-black"} />
 								</SelectTrigger>
 								<SelectContent>
 									<SelectContent>
-										{dataWard &&
-											dataWard.wards.map((it) => (
-												<SelectItem key={`ward_${it.code}`} value={it.code.toString()}>
-													{it.name}
+										{infoAddresses &&
+											getWards(infoAddresses, cityCode, districtId).map((item, index) => (
+												<SelectItem key={index + "-" + item.ward_id} value={item.ward_id}>
+													{item.ward}
 												</SelectItem>
 											))}
 									</SelectContent>

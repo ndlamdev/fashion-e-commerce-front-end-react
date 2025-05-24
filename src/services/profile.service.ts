@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { CustomerResponse } from "@/domain/response/profile/customer.response.ts";
-import { CustomerRequest } from "@/domain/resquest/profile/customer.request.ts";
+import { ProfileResponse } from "@/domain/response/profile/profile.response.ts";
+import { ProfileRequest } from "@/domain/resquest/profile/profile.request.ts";
 import { ApiResponse } from "@/domain/ApiResponse.ts";
 import LocalStorage from "@/utils/helper/LocalStorage.ts";
 import { AddressShippingType } from "@/types/profile/address.type.ts";
@@ -24,14 +24,14 @@ export const profileApi = createApi({
 	baseQuery: baseQuery,
 	tagTypes: ["Address"],
 	endpoints: (build) => ({
-		getProfile: build.query<ApiResponse<CustomerResponse>, number | undefined>({
+		getProfile: build.query<ApiResponse<ProfileResponse>, number | undefined>({
 			query: (id) => ({
 				url: `/${id}`,
 				credentials: "include",
 			}),
 		}),
-		saveProfile: build.mutation<ApiResponse<CustomerResponse>, CustomerRequest>({
-			query: (request: CustomerRequest) => ({
+		saveProfile: build.mutation<ApiResponse<ProfileResponse>, ProfileRequest>({
+			query: (request: ProfileRequest) => ({
 				url: "",
 				method: "PUT",
 				body: request,

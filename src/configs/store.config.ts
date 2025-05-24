@@ -12,7 +12,7 @@ import { authApi } from "@/redux/query/auth.query.ts";
 import { authSlice } from "@/redux/slice/auth.slice.ts";
 import { profileApi } from "@/services/profile.service.ts";
 import addressSlice from "@/redux/slice/address.slice.ts";
-import { addressApi, addressCustomerApi } from "@/services/address.service.ts";
+import { addressApi, addressUserApi } from "@/services/address.service.ts";
 import { cartApi } from "@/redux/query/cart.query.ts";
 import { addressOpenApi } from "@/redux/query/addressOpenApi.query.ts";
 import { cartSlice } from "@/redux/slice/cart.slice.ts";
@@ -35,7 +35,7 @@ const store = configureStore({
 		[collectionApi.reducerPath]: collectionApi.reducer,
 		[cartApi.reducerPath]: cartApi.reducer,
 		[addressOpenApi.reducerPath]: addressOpenApi.reducer,
-		[addressCustomerApi.reducerPath]: addressCustomerApi.reducer,
+		[addressUserApi.reducerPath]: addressUserApi.reducer,
 		cart: cartSlice.reducer,
 		[orderApi.reducerPath]: orderApi.reducer,
 	},
@@ -48,7 +48,7 @@ const store = configureStore({
 			.concat(cartApi.middleware)
 			.concat(addressOpenApi.middleware)
 			.concat(productApi.middleware)
-			.concat(addressCustomerApi.middleware)
+			.concat(addressUserApi.middleware)
 			.concat(collectionApi.middleware)
 			.concat(orderApi.middleware),
 });
