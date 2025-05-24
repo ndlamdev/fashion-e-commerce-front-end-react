@@ -27,6 +27,7 @@ import SheetProvider from "@/context/provider/SheetProvider.tsx";
 import { CustomerManagementPage } from "@/pages/admin/customer/CustomerManagementPage.tsx";
 import CustomerDetailManagementPage from "@/pages/admin/customer/CustomerDetailManagementPage.tsx";
 import HoverCardProvider from "@/context/admin/customer/provider/HoverCardProvider.tsx";
+import OrderResultPage from "@/pages/OrderResultPage.tsx";
 
 function App() {
 	return (
@@ -52,6 +53,7 @@ function App() {
 									<Route path={"reviews"} element={<Review />} />
 									<Route path={"faq"} element={<FAQTab />} />
 								</Route>
+								<Route path={"/order/result"} element={<OrderResultPage />} />
 							</Route>
 							<Route path='/cart' element={<CartLayout />}>
 								<Route index element={<CartPage />} />
@@ -62,7 +64,7 @@ function App() {
 								<Route path={"customers"} element={<CustomerManagementPage />} />
 								<Route path={"*"} element={<CustomerDetailManagementPage />} />
 							</Route>
-							<Route path='*' element={<NotFoundPage />} />
+							<Route path="*" element={<NotFoundPage />} />
 						</Routes>
 						<Toaster />
 					</SheetProvider>

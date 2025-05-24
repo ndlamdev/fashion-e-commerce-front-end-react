@@ -11,7 +11,7 @@ import AxiosResponseCustom from "@/domain/ApiResponse.ts";
 
 const api = axios.create({
 	// baseURL: "https://fashion-server.ndlamdev.website/fashion-e-commerce/",
-	baseURL: "http://localhost:8001/api/",
+	baseURL: import.meta.env.VITE_BASE_URL + "/",
 	timeout: 5000,
 	withCredentials: true,
 	headers: {

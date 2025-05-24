@@ -15,7 +15,7 @@ import RegisterWithGoogleRequest from "@/domain/resquest/registerWithGoogle.requ
 import RegisterWithFacebookRequest from "@/domain/resquest/registerWithFacebook.request";
 import AccessTokenRequest from "@/domain/resquest/accesToken.request.ts";
 
-const baseQuery = fetchBaseQuery({ baseUrl: "http://localhost:8001/api/auth/v1/" });
+const baseQuery = fetchBaseQuery({ baseUrl: import.meta.env.VITE_BASE_URL + "/auth/v1/" });
 
 export const authenticationApi = createApi({
 	reducerPath: "authenticationApi",

@@ -52,7 +52,6 @@ function RecentActivity() {
 				<div className={"flex h-full w-full flex-col items-center justify-between"}>
 					<div className={"flex h-full flex-col justify-around py-3"}>
 						<motion.p className={"flex gap-3 text-nowrap"} animate={{ x: ["100%", "-100%"] }} transition={{ repeat: Infinity, duration: 10, ease: "linear" }}>
-							<span> Các hoạt động gần đây</span>
 							<span>Các hoạt động gần đây</span>
 							<span>Các hoạt động gần đây</span>
 							<span>Các hoạt động gần đây</span>

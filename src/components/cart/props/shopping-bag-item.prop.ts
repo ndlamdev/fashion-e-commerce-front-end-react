@@ -5,8 +5,8 @@
  * Create at: 11:02AM - 19/03/2025
  * User: lam-nguyen
  **/
-import ShoppingBagItemType from "@/types/shopping-bag-item.type.ts";
+import CartItemType from "@/types/CartItemType.ts";
 
-type ShoppingBagProps = ShoppingBagItemType & {};
+type ShoppingBagProps = CartItemType & {};
 
 export default ShoppingBagProps;
