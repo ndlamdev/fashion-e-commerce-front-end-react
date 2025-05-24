@@ -26,11 +26,14 @@ function ForgotPasswordDialog() {
 		handleSubmit,
 		trigger,
 		getValues,
+		reset,
 		formState: { errors },
 	} = useForm<Omit<NewPasswordRequest, "token">>();
 
 	const onSubmit: SubmitHandler<Omit<NewPasswordRequest, "token">> = (data) => {
 		authenticationService.setNewPassword(data).then(() => {
+			setOpenDialog("none");
+			reset();
 			dispatch(showDialog("login"));
 		});
 	};

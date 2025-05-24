@@ -17,7 +17,9 @@ function DialogLoading() {
 	return (
 		<Dialog open={open}>
 			<DialogContent
-				className={"data-[state=open]:animate-in data-[state=closed]:animate-out z-50 rounded-lg border-none bg-transparent p-6 shadow-none outline-none"}
+				className={
+					"data-[state=open]:animate-in data-[state=closed]:animate-out z-999999999 rounded-lg border-none bg-transparent p-6 shadow-none outline-none"
+				}
 				classIcon={"hidden"}>
 				<DialogHeader>
 					<DialogTitle className={"text-center text-xl"}></DialogTitle>

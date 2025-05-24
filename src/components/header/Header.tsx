@@ -43,9 +43,7 @@ function Header({ showMenu }: HeaderProps) {
 	const [searchAction, setSearchAction] = useState<"SEARCH" | "EXIT" | "HIDDEN">("HIDDEN");
 	const { data, isLoading } = useGetCollectionsQuery();
 	const [type, setType] = useState<CollectionEnum>(CollectionEnum.MALE);
-	const { data: cartData } = useGetCartQuery(undefined, {
-		skip: !access_token,
-	});
+	const { data: cartData } = useGetCartQuery();
 
 	const [title, setTitle] = useState<string>();
 	const { data: dataQuickSearch, isLoading: isLoadingQuickSearch, isError: isErrorQuickSearch } = useQuickSearchQuery(title, { skip: !title });

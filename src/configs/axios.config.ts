@@ -23,7 +23,7 @@ const api = axios.create({
 	},
 });
 
-axios.interceptors.response.use(
+api.interceptors.response.use(
 	function (response: AxiosResponseCustom<any>) {
 		appDispatch(closeDialogLoading());
 		// Bất kì mã trạng thái nào nằm trong tầm 2xx đều khiến hàm này được trigger
@@ -38,7 +38,7 @@ axios.interceptors.response.use(
 	},
 );
 
-axios.interceptors.request.use(
+api.interceptors.request.use(
 	(config) => {
 		appDispatch(showDialogLoading());
 		const token = LocalStorage.getValue("ACCESS_TOKEN");

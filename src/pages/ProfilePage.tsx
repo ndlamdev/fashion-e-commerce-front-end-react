@@ -22,10 +22,10 @@ import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { DialogProfileProvider } from "@/context/provider/DialogProfileProvider.tsx";
 import { useDispatch } from "react-redux";
 import authenticationService from "@/services/authentication.service.ts";
-import { logout } from "@/redux/slice/auth.slice.ts";
 import { toast } from "sonner";
 import DialogConfirm from "@/components/dialog/DialogConfirm.tsx";
 import { DialogProfileContext } from "@/context/dialogProfileContext.props.ts";
+import { cartApi } from "@/redux/query/cart.query.ts";
 
 const tabNavValues: Record<string, TabNavProps> = {
 	"0": {
@@ -75,10 +75,10 @@ export default function ProfilePage() {
 	const dispatch = useDispatch();
 	const handleLogout = () => {
 		window.scrollTo({ top: 0, behavior: "smooth" });
+		dispatch(cartApi.util.invalidateTags(["Cart"]));
 		authenticationService
 			.logout()
 			.then(() => {
-				dispatch(logout());
 				navigate("/");
 			})
 			.catch((error) => {

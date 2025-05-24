@@ -21,9 +21,9 @@ import LoginResponse from "@/domain/response/login.response.ts";
 import LocalStorage from "@/utils/helper/LocalStorage.ts";
 import LoginRequest from "@/domain/resquest/login.request.ts";
 import LoginWithGoogleRequest from "@/domain/resquest/loginWithGoogle.request.ts";
-import { authenticationApi } from "@/redux/query/authentication.query";
+import { authApi } from "@/redux/query/auth.query.ts";
 import { appDispatch } from "@/configs/store.config.ts";
-import { loginSuccess } from "@/redux/slice/auth.slice.ts";
+import { authSlice, loginSuccess } from "@/redux/slice/auth.slice.ts";
 import RegisterWithGoogleRequest from "@/domain/resquest/registerWithGoogle.request.ts";
 import RegisterWithFacebookRequest from "@/domain/resquest/registerWithFacebook.request";
 import AccesTokenRequest from "@/domain/resquest/accesToken.request.ts";
@@ -119,7 +119,7 @@ async function logout() {
 			headers: { Authorization: getAuthorizationToken() },
 		})
 		.then(() => {
-			LocalStorage.deleteValue("ACCESS_TOKEN");
+			appDispatch(authSlice.actions.logout());
 		});
 }
 
@@ -174,7 +174,7 @@ async function verifyResetPassword(otp: string) {
 async function setNewPassword(request: Omit<NewPasswordRequest, "token">) {
 	const token = SessionStorage.getValue("TOKEN_RESET_PASSWORD");
 	if (!token) {
-		toast.message("Token noi found!");
+		toast.message("Token not found!");
 		return Promise.reject();
 	}
 	return await api
@@ -192,7 +192,7 @@ async function setNewPassword(request: Omit<NewPasswordRequest, "token">) {
 }
 
 const loginWithGoogle = async (data: LoginWithGoogleRequest) => {
-	return await appDispatch(authenticationApi.endpoints.loginWithGoogle.initiate(data, { track: false })).then(({ data, error }) => {
+	return await appDispatch(authApi.endpoints.loginWithGoogle.initiate(data, { track: false })).then(({ data, error }) => {
 		if (error) {
 			return Promise.reject(error);
 		}
@@ -215,7 +215,7 @@ const registerWithGoogle = async (data: RegisterWithGoogleRequest) => {
 		} as ApiResponseError<string>);
 	}
 	data["register-token"] = token;
-	return await appDispatch(authenticationApi.endpoints.registerWithGoogle.initiate(data, { track: false })).then(({ error }) => {
+	return await appDispatch(authApi.endpoints.registerWithGoogle.initiate(data, { track: false })).then(({ error }) => {
 		if (error) {
 			const response = (error as any).data as ApiResponseError<string>;
 			toast.message(response.detail);
@@ -237,7 +237,7 @@ const registerWithFacebook = async (data: RegisterWithFacebookRequest) => {
 		} as ApiResponseError<string>);
 	}
 	data["register-token"] = token;
-	return await appDispatch(authenticationApi.endpoints.registerWithFacebook.initiate(data, { track: false })).then(({ error }) => {
+	return await appDispatch(authApi.endpoints.registerWithFacebook.initiate(data, { track: false })).then(({ error }) => {
 		if (error) {
 			SessionStorage.deleteValue("REGISTER_TOKEN_USING_FACEBOOK");
 			const response = (error as any).data as ApiResponseError<string>;
@@ -250,7 +250,7 @@ const registerWithFacebook = async (data: RegisterWithFacebookRequest) => {
 };
 
 const loginWithFacebook = async (data: AccesTokenRequest) => {
-	return await appDispatch(authenticationApi.endpoints.loginWithFacebook.initiate(data, { track: false })).then(({ data, error }) => {
+	return await appDispatch(authApi.endpoints.loginWithFacebook.initiate(data, { track: false })).then(({ data, error }) => {
 		if (error) {
 			return Promise.reject(error);
 		}

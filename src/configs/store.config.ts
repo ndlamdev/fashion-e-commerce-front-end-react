@@ -8,7 +8,7 @@ import { configureStore } from "@reduxjs/toolkit";
  * User: kimin
  **/
 import logger from "redux-logger";
-import { authenticationApi } from "@/redux/query/authentication.query.ts";
+import { authApi } from "@/redux/query/auth.query.ts";
 import { authSlice } from "@/redux/slice/auth.slice.ts";
 import { profileApi } from "@/services/profile.service.ts";
 import addressSlice from "@/redux/slice/address.slice.ts";
@@ -24,7 +24,7 @@ import { orderApi } from "@/redux/query/order.query.ts";
 
 const store = configureStore({
 	reducer: {
-		[authenticationApi.reducerPath]: authenticationApi.reducer,
+		[authApi.reducerPath]: authApi.reducer,
 		auth: authSlice.reducer,
 		[profileApi.reducerPath]: profileApi.reducer,
 		address: addressSlice,
@@ -42,7 +42,7 @@ const store = configureStore({
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware()
 			.concat(logger)
-			.concat(authenticationApi.middleware)
+			.concat(authApi.middleware)
 			.concat(profileApi.middleware)
 			.concat(addressApi.middleware)
 			.concat(cartApi.middleware)
