@@ -15,17 +15,17 @@ import {
 import { Outlet, useLocation, useNavigate } from "react-router";
 import { TabNavProps } from "@/components/profile/props/tabNav.props.ts";
 import { TabNav } from "@/components/profile/TabNav.tsx";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
-import { DialogProfileProvider } from "@/context/provider/DialogProfileProvider.tsx";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import authenticationService from "@/services/authentication.service.ts";
 import { logout } from "@/redux/slice/auth.slice.ts";
 import { toast } from "sonner";
 import DialogConfirm from "@/components/dialog/DialogConfirm.tsx";
-import { DialogProfileContext } from "@/context/dialogProfileContext.props.ts";
+import { hiddenDialog, showDialog } from "@/redux/slice/dialog.slice.ts";
+import { RootState } from "@/configs/store.config.ts";
 
 const tabNavValues: Record<string, TabNavProps> = {
 	"0": {
@@ -69,10 +69,9 @@ const tabNavValues: Record<string, TabNavProps> = {
 export default function ProfilePage() {
 	const { hash: index } = useLocation();
 	const [activeTab, setActiveTab] = useState<string>();
-	const [openDialog, setOpenDialog] = useState<"none" | "show-confirm" | "show-dialog">("none");
-	const { showDialog } = useContext(DialogProfileContext);
-	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const { dialog } = useSelector((state: RootState) => state.dialog);
+	const navigate = useNavigate();
 	const handleLogout = () => {
 		authenticationService
 			.logout()
@@ -91,7 +90,6 @@ export default function ProfilePage() {
 		setActiveTab(index.substring(1));
 	}, [index]);
 	return (
-		<DialogProfileProvider>
 			<main className={"bg-neutral-300 p-4 md:p-8"}>
 				<section>
 					<RankingHeader fullName={"LamHongPhong"} levelClub={0} nextLevel={1} resetRankingDate={new Date()} nextResetRankingDate={new Date()} />
@@ -119,21 +117,21 @@ export default function ProfilePage() {
 								})}
 								<TabNav
 									to={""}
-									onClick={() => setOpenDialog("show-confirm")}
+									onClick={() => dispatch(showDialog('show-confirm'))}
 									tailwindStyle={`hover:bg-black hover:text-white `}
 									iconLeft={<LogOutIcon className={"flex-none hover:text-white"} />}
 									title={"Đăng xuất"}
 									iconRight={<ArrowRightIcon className={"hover:text-white"} />}
 								/>
 								<DialogConfirm
-									open={openDialog === "show-confirm"}
+									open={dialog === "show-confirm"}
 									onOpenChange={(value) => !value && showDialog("none")}
 									onClickCancel={() => {
-										setOpenDialog("none");
+										dispatch(hiddenDialog())
 									}}
 									onClickSubmit={() => {
 										handleLogout();
-										setOpenDialog("none");
+										dispatch(hiddenDialog())
 										showDialog("none");
 									}}
 								/>
@@ -157,6 +155,5 @@ export default function ProfilePage() {
 					)}
 				</section>
 			</main>
-		</DialogProfileProvider>
 	);
 }

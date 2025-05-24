@@ -1,11 +1,16 @@
 import { useForm } from "react-hook-form";
-import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { ResetPasswordRequest } from "@/domain/resquest/resetPassword.request.ts";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/configs/store.config.ts";
+import { hiddenDialog } from "@/redux/slice/dialog.slice.ts";
 
 const ResetPasswordDialog = () => {
+	const dispatch = useDispatch();
+	const { dialog } = useSelector((state: RootState) => state.dialog);
 	const { register, handleSubmit, reset, formState: { errors } } = useForm<ResetPasswordRequest>();
 	const onSubmit = (data: ResetPasswordRequest) => {
 		console.log(data);
@@ -13,6 +18,7 @@ const ResetPasswordDialog = () => {
 		reset();
 	};
 	return (
+		<Dialog open={dialog === 'reset-password'} onOpenChange={() => dispatch(hiddenDialog())}>
 			<DialogContent classIcon={' bg-black text-white p-5 max-md:p-3 cursor-pointer !rounded-lg sm:!rounded-full -translate-y-3 sm:-translate-y-10 translate-x-3 sm:translate-x-10 opacity-100 '} className={"text-gray-500 max-w-80 sm:max-w-200 max-md:p-0  z-51"}>
 				<ScrollArea className={"max-sm:w-full h-80 p-5 max-md:p-2 overflow-auto overscroll-none"}>
 					<DialogHeader >
@@ -50,6 +56,8 @@ const ResetPasswordDialog = () => {
 					</form>
 				</ScrollArea>
 			</DialogContent>
+
+		</Dialog>
 	);
 };
 

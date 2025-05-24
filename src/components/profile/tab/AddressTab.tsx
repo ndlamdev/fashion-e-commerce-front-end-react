@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button.tsx";
 import { AddressItem } from "@/components/profile/AddressItem.tsx";
 import { toast } from "sonner";
-import { memo, useCallback, useContext, useEffect } from "react";
-import { DialogProfileContext } from "@/context/dialogProfileContext.props.ts";
+import { memo, useCallback, useEffect } from "react";
 import { SkeletonTab } from "@/components/profile/tab/SkeletonTab.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { setActionId, setDefaultId } from "@/redux/slice/address.slice.ts";
 import { RootState } from "@/configs/store.config.ts";
 import { useDeleteAddressMutation, useGetAddressesQuery } from "@/services/address.service.ts";
+import { showDialog } from "@/redux/slice/dialog.slice.ts";
 
 const AddressTab = memo(() => {
 	const dispatch = useDispatch();
@@ -18,7 +18,6 @@ const AddressTab = memo(() => {
 	}, [addresses, defaultId, dispatch])
 	const { actionId } = useSelector((state: RootState) => state.address);
 	const [ delAddress ,] = useDeleteAddressMutation();
-	const { showDialog } = useContext(DialogProfileContext);
 	const handleDelAddress = useCallback( (id: number | undefined) => {
 		dispatch(setActionId(id))
 		delAddress(actionId)
@@ -43,7 +42,7 @@ const AddressTab = memo(() => {
 				<Button
 					onClick={() => {
 						dispatch(setActionId(undefined))
-						showDialog("save-address");
+						dispatch(showDialog("save-address"))
 					}}
 					className={
 						"p-2 sm:p-6 text-sm sm:text-lg  text-center text-white bg-black rounded-full hover:bg-sky-600 cursor-pointer uppercase"
@@ -55,7 +54,7 @@ const AddressTab = memo(() => {
 			{isErrorAddresses && <p>không tìm thấy địa chỉ</p>}
 			{addresses && addresses.data.map((address) => <AddressItem key={address.id} {...address} onEdit={() => {
 				dispatch(setActionId(address.id));
-				showDialog("save-address");
+				dispatch(showDialog("save-address"))
 			}} onDelete={() => handleDelAddress(address.id)} />)}
 		</article>
 	);

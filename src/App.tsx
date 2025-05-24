@@ -26,7 +26,7 @@ import DialogProvider from "@/context/provider/DialogProvider.tsx";
 import SheetProvider from "@/context/provider/SheetProvider.tsx";
 import { CustomerManagementPage } from "@/pages/admin/customer/CustomerManagementPage.tsx";
 import CustomerDetailManagementPage from "@/pages/admin/customer/CustomerDetailManagementPage.tsx";
-import HoverCardProvider from "@/context/admin/customer/provider/HoverCardProvider.tsx";
+import HoverCardProvider from "@/context/provider/HoverCardProvider.tsx";
 import OrderResultPage from "@/pages/OrderResultPage.tsx";
 
 function App() {

@@ -20,6 +20,7 @@ type DialogTypeEnum =
 	| "save-address"
 	| "refer-friend"
 	| "guide-choose-size"
+	| "show-confirm"
 	| "voice-search";
 
 export default DialogTypeEnum;

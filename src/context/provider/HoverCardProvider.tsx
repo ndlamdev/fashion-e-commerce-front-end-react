@@ -1,5 +1,5 @@
 import { ReactNode, useState } from "react";
-import { HoverCardContext } from "@/context/admin/customer/HoverCardContext.ts";
+import { HoverCardContext } from "@/context/HoverCardContext.ts";
 import { HoverCardEnum } from "@/utils/enums/hoverCard.enum.ts";
 import { Link } from "react-router";
 

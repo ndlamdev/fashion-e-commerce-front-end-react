@@ -10,11 +10,11 @@ import {
 } from "@/components/ui/breadcrumb.tsx";
 import { CustomerManagementData } from "@/assets/data/cusotmerManagement.data.ts";
 import { useContext } from "react";
-import { HoverCardContext } from "@/context/admin/customer/HoverCardContext.ts";
+import { HoverCardContext } from "@/context/HoverCardContext.ts";
 import { formatCurrency } from "@/utils/helper/format-data.ts";
 import { HoverCardEnum } from "@/utils/enums/hoverCard.enum.ts";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card.tsx";
-import { HoverCardValues } from "@/context/admin/customer/provider/HoverCardProvider.tsx";
+import { HoverCardValues } from "@/context/provider/HoverCardProvider.tsx";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
 import { Label } from "@/components/ui/label.tsx";
 

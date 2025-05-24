@@ -17,6 +17,9 @@ import VoiceSearchDialog from "@/components/header/dialog/VoiceSearchDialog";
 import DialogLoading from "@/components/dialog/DialogLoading.tsx";
 import ReferFriendDialog from "@/components/product-detail/dialog/ReferFriendDialog.tsx";
 import GuideChooseSizeDialog from "@/components/product-detail/dialog/GuideChooseSizeDialog.tsx";
+import EditInfoProfileDialog from "@/components/profile/dialog/EditInfoProfileDialog.tsx";
+import SaveAddressDialog from "@/components/profile/dialog/SaveAddressDialog.tsx";
+import ResetPasswordDialog from "@/components/profile/dialog/ResetPasswordDialog.tsx";
 
 function DialogProvider() {
 	return (
@@ -34,6 +37,9 @@ function DialogProvider() {
 			<DialogLoading />
 			<ReferFriendDialog />
 			<GuideChooseSizeDialog />
+			<EditInfoProfileDialog />
+			<SaveAddressDialog />
+			<ResetPasswordDialog />
 		</>
 	);
 }
