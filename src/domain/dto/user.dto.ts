@@ -10,10 +10,11 @@ import { GenderType } from "@/types/profile/customer.type.ts";
 type UserDto = {
 	id: number;
 	full_name: string;
+	email: string;
 	avatar: string;
 	phone: string;
 	gender: GenderType;
-	birthday:number[];
+	birthday: number[];
 	height: number;
 	weight: number;
 	country_code: string;

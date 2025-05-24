@@ -5,7 +5,7 @@
  * Create at: 11:04AM - 19/03/2025
  * User: lam-nguyen
  **/
-import VoucherType from "@/types/VoucherType.ts";
+import VoucherType from "@/types/voucher.type.ts";
 
 type VoucherProps = VoucherType & { onClick?: () => void; selected?: boolean };
 

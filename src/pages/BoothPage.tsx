@@ -55,10 +55,10 @@ export default function BoothPage() {
 	const [requestImageSearch, { isLoading: isLoadingImageSearch, isError: isErrorImageSearch, data: dataImageSearch }] = useSearchByImageMutation();
 
 	const {
-		data: productsOfId,
-		isLoading: isLoadingPOI,
-		isError: isErrorPOI,
-		isFetching: isFetchingPOI,
+		data: productsOfCollectionId,
+		isLoading: isLoadingPOCI,
+		isError: isErrorPOCI,
+		isFetching: isFetchingPOCI,
 	} = useGetProductByCollectionIdQuery(
 		{
 			...queryObj,
@@ -122,8 +122,8 @@ export default function BoothPage() {
 
 	useEffect(() => {
 		if (!queryObj["cid"]) return;
-		setData(productsOfId?.data);
-	}, [productsOfId?.data, queryObj]);
+		setData(productsOfCollectionId?.data);
+	}, [productsOfCollectionId?.data, queryObj]);
 
 	useEffect(() => {
 		if (queryObj["cid"] || !queryObj["type"]) return;
@@ -167,18 +167,18 @@ export default function BoothPage() {
 					{title?.fileName && <p className='my-3 font-bold uppercase lg:text-2xl'>Tìm kiếm: {title?.fileName}</p>}
 					<div className='my-4 border-1 border-gray-300' />
 					{/*<ScrollArea className={"h-dvh"}>*/}
-					{isLoadingPOI ||
+					{isLoadingPOCI ||
 					isLoadingPOT ||
 					isLoadingImageSearch ||
 					isLoadingSearchByText ||
 					isErrorSearchByText ||
 					isErrorImageSearch ||
-					isErrorPOI ||
+					isErrorPOCI ||
 					isErrorPOOT ||
 					isFetchingPOT ||
 					isFetchingSearchByText ||
 					isFetchingPOT ||
-					isFetchingPOI ? (
+					isFetchingPOCI ? (
 						<Skeleton className={"h-screen w-full place-content-center place-items-center items-center"}>
 							<LoaderIcon className={"size-10 text-gray-600"} />
 						</Skeleton>

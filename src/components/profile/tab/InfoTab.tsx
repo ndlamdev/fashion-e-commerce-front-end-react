@@ -1,15 +1,15 @@
-import { memo, useContext } from "react";
+import { memo } from "react";
 import { InfoTabProps } from "@/components/profile/props/infoTab.props.ts";
 import { Button } from "@/components/ui/button.tsx";
 import { formatDateFromArray } from "@/utils/helper/format-data.ts";
-import { DialogProfileContext } from "@/context/dialogProfileContext.props.ts";
 import { getGenderByValue } from "@/components/profile/props/editInfoProfileDialog.props.ts";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/configs/store.config.ts";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
+import { showDialog } from "@/redux/slice/dialog.slice.ts";
 
 const InfoTab = memo((props: Partial<InfoTabProps>) => {
-	const { showDialog } = useContext(DialogProfileContext);
+	const dispatch = useDispatch();
 	return (
 		<article className={"space-y-10 max-md:space-y-5 max-sm:mt-10"}>
 			<h1 className={"text-4xl max-md:text-xl font-bold"}>Thông tin tài khoản</h1>
@@ -29,7 +29,7 @@ const InfoTab = memo((props: Partial<InfoTabProps>) => {
 				<span>Cân nặng</span>{props.weight ? <span className={"text-black"}>{props.weight}</span> :
 				<span className={"text-neutral-500 italic text-sm "}>Chưa cập nhật</span>}
 
-				<Button onClick={() => showDialog("edit-info-profile")}
+				<Button onClick={() => dispatch(showDialog("edit-info-profile"))}
 								className={"text-xl max-md:text-sm bg-white text-black font-bold p-5 border border-black hover:border-neutral-500 hover:text-white hover:bg-black cursor-pointer rounded-full"}>Cập
 					nhật</Button>
 			</div>
@@ -40,7 +40,7 @@ const InfoTab = memo((props: Partial<InfoTabProps>) => {
 				<span className={"text-neutral-500 italic text-sm"}>Chưa cập nhật</span>}
 				<span>Mật khẩu</span> <span>******************</span>
 
-				<Button onClick={() => showDialog("reset-password")}
+				<Button onClick={() => dispatch(showDialog("reset-password"))}
 								className={"text-xl max-md:text-sm bg-white text-black font-bold p-5 border border-black hover:border-neutral-500 hover:text-white hover:bg-black cursor-pointer rounded-full"}>Cập
 					nhật</Button>
 			</div>

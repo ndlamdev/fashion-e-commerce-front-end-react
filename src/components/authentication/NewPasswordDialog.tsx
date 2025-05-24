@@ -12,7 +12,7 @@ import InputAuthentication from "@/components/authentication/ui/InputAuthenticat
 import { SubmitHandler, useForm } from "react-hook-form";
 import NewPasswordRequest from "@/domain/resquest/newPassword.request.ts";
 import authenticationService from "@/services/authentication.service.ts";
-import ConfirmDialog from "@/components/authentication/ConfirmDialog.tsx";
+import DialogConfirm from "@/components/dialog/DialogConfirm.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/configs/store.config.ts";
 import { hiddenDialog, showDialog } from "@/redux/slice/dialog.slice.ts";
@@ -50,11 +50,12 @@ function ForgotPasswordDialog() {
 
 	return (
 		<>
-			<Dialog open={openDialog === "show-dialog"} onOpenChange={(value) => !value && dispatch(hiddenDialog())}>
+			<Dialog open={openDialog === "show-dialog"}>
 				<DialogContent
 					aria-describedby={""}
 					className={"sm:max-w-[525px]"}
-					classIcon={"bg-black p-4 border-2 border-gray-200 text-white !rounded-full top-[-20px] right-[-20px]"}>
+					classIcon={"bg-black p-4 border-2 border-gray-200 text-white !rounded-full top-[-20px] right-[-20px]"}
+					onClosed={() => setOpenDialog("show-confirm")}>
 					<DialogHeader>
 						<DialogTitle className={"text-center text-4xl"}>Cấp lại mật khẩu</DialogTitle>
 					</DialogHeader>
@@ -91,9 +92,9 @@ function ForgotPasswordDialog() {
 					</div>
 				</DialogContent>
 			</Dialog>
-			<ConfirmDialog
+			<DialogConfirm
 				open={openDialog === "show-confirm"}
-				onOpenChange={(value) => !value && dispatch(hiddenDialog())}
+				onOpenChange={(value) => !value && setOpenDialog("show-dialog")}
 				onClickCancel={() => {
 					setOpenDialog("show-dialog");
 				}}

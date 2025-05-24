@@ -1,0 +1,3 @@
+export enum HoverCardEnum {
+	NONE, AMOUNT_SPENT, ORDERS, CUSTOMER_SINCE, RFM_GROUP,
+}

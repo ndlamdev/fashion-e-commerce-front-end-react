@@ -13,7 +13,7 @@ import RegisterWithGoogleRequest from "@/domain/resquest/registerWithGoogle.requ
 import SessionStorage from "@/utils/helper/SessionStorage.ts";
 import authenticationService from "@/services/authentication.service.ts";
 import { ApiResponseError } from "@/domain/ApiResponseError.ts";
-import ConfirmDialog from "@/components/authentication/ConfirmDialog.tsx";
+import DialogConfirm from "@/components/dialog/DialogConfirm.tsx";
 import OtherLogin from "@/components/authentication/ui/OtherLogin.tsx";
 import InputPassword from "@/components/authentication/ui/InputPassword.tsx";
 import { useDispatch, useSelector } from "react-redux";
@@ -118,7 +118,7 @@ function RegisterWithGoogleDialog() {
 					</div>
 				</DialogContent>
 			</Dialog>
-			<ConfirmDialog
+			<DialogConfirm
 				open={localDialog === "confirm"}
 				onOpenChange={(value) => !value && dispatch(hiddenDialog())}
 				onClickCancel={() => {
