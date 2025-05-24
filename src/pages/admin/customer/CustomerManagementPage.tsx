@@ -26,7 +26,7 @@ export function CustomerManagementPage() {
 		searchParams.set("page", page + "");
 		setSearchParams(searchParams);
 	};
-	const DataIds = [0, 1, 2];
+	const DataIds = [0, 1, 2]; //TODO: replace customer ids
 
 	const [selectedAll, setSelectedAll] = useState<boolean>();
 	const [selectedCustomers, setSelectedCustomers] = useState<number[]>();
@@ -59,12 +59,12 @@ export function CustomerManagementPage() {
 									<EllipsisIcon/>
 								</Button>
 							</PopoverTrigger>
-							<PopoverContent className={"max-w-[30vw] text-center -translate-1/14 translate-y-2 p-2 text-sm"}>
+							<PopoverContent className={"w-auto text-center -translate-1/14 translate-y-2 p-2 text-sm"}>
 								<p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>Import</p>
 								<p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>Export</p>
 							</PopoverContent>
 						</Popover>
-						<Button variant={"outline"} className={"cursor-pointer active:bg-violet-700 max-sm:hidden"}>Export</Button>
+						<Button variant={"outline"} className={"cursor-pointer max-sm:hidden"}>Export</Button>
 						<Button variant={"outline"} className={"cursor-pointer max-sm:hidden"}>Import</Button>
 						<Button className={"cursor-pointer text-xs sm:text-md max-sm:h-8"}>Add customer</Button>
 					</div>
@@ -83,7 +83,7 @@ export function CustomerManagementPage() {
 									<ArrowDownUpIcon/>
 								</Button>
 							</PopoverTrigger>
-							<PopoverContent className={"translate-x-16 sm:translate-1/14 sm:translate-y-2  max-w-2/3 max-sm:p-2 max-sm:text-xs"}>
+							<PopoverContent className={"sm:-translate-2 sm:translate-y-2 w-auto max-sm:p-2 max-sm:text-xs"}>
 								<p>Sort by</p>
 								<RadioGroup defaultValue="last-update" className={"border-b py-3"}>
 									<div className="flex items-center space-x-2">
@@ -137,7 +137,7 @@ export function CustomerManagementPage() {
 							<Table>
 								<TableHeader>
 									<TableRow>
-										<TableHead className="space-x-2"><Checkbox className={"cursor-pointer"} checked={selectedAll && !!selectedCustomers?.length}
+										<TableHead className="space-x-2"><Checkbox className={"cursor-pointer"} checked={selectedAll || !!selectedCustomers?.length}
 																															 onCheckedChange={(value) => setSelectedAll(!!value)} />
 											<span>{selectedCustomers?.length} Customer name</span></TableHead>
 										{!selectedCustomers?.length && (<>
