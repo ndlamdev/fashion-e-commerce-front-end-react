@@ -62,7 +62,7 @@ function App() {
 								<Route path={"product/create"} element={<CreateProductPage />} />
 								<Route path={"product/update/:id"} element={<UpdateProductPage />} />
 								<Route path={"customers"} element={<CustomerManagementPage />} />
-								<Route path={"*"} element={<CustomerDetailManagementPage />} />
+								<Route path={"customers/:id"} element={<CustomerDetailManagementPage />} />
 							</Route>
 							<Route path="*" element={<NotFoundPage />} />
 						</Routes>

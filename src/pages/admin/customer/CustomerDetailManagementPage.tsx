@@ -17,10 +17,18 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
 import { HoverCardValues } from "@/context/provider/HoverCardProvider.tsx";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
 import { Label } from "@/components/ui/label.tsx";
+import { useDispatch, useSelector } from "react-redux";
+import { hiddenDialog, showDialog } from "@/redux/slice/dialog.slice.ts";
+import { RootState } from "@/configs/store.config.ts";
+import DialogConfirm from "@/components/dialog/DialogConfirm.tsx";
+import { useParams } from "react-router";
 
 export default function CustomerDetailManagementPage() {
 	const { showHoverCard, hoverCard } = useContext(HoverCardContext);
-	// const { id } = useParams();
+	const dispatch = useDispatch();
+	const { dialog } = useSelector((state: RootState) => state.dialog);
+	const { id } = useParams();
+	console.log(id);
 	const customer = CustomerManagementData;
 	const data = HoverCardValues[hoverCard];
 	return (
@@ -31,7 +39,7 @@ export default function CustomerDetailManagementPage() {
 						<Breadcrumb>
 							<BreadcrumbList>
 								<BreadcrumbItem>
-									<BreadcrumbLink href="/admin"><UserRoundIcon className={"size-4 sm:size-6"} /></BreadcrumbLink>
+									<BreadcrumbLink href="/admin/customers"><UserRoundIcon className={"size-4 sm:size-6"} /></BreadcrumbLink>
 								</BreadcrumbItem>
 								<BreadcrumbSeparator />
 								<BreadcrumbItem>
@@ -49,7 +57,7 @@ export default function CustomerDetailManagementPage() {
 								<p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>Merge Customer</p>
 								<p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>Request customer data</p>
 								<p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>Erase customer data</p>
-								<p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer text-red-500"}>Delete customer</p>
+								<p onClick={() => dispatch(showDialog('show-confirm'))} className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer text-red-500"}>Delete customer</p>
 							</PopoverContent>
 						</Popover>
 					</div>
@@ -117,7 +125,7 @@ export default function CustomerDetailManagementPage() {
 								</PopoverTrigger>
 								<PopoverContent className={"w-auto -translate-1/14 translate-y-2 p-2 text-xs sm:text-sm"}>
 									<p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>Edit contact information</p>
-									<p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>Manage address</p>
+									<p onClick={() => dispatch(showDialog('manage-addresses'))} className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>Manage address</p>
 									<p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>Edit marketing settings</p>
 									<p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer "}>Edit tax details</p>
 								</PopoverContent>
@@ -145,6 +153,19 @@ export default function CustomerDetailManagementPage() {
 					</section>
 				</div>
 			</main>
+			<DialogConfirm
+				open={dialog === "show-confirm"}
+				onOpenChange={(value) => !value && showDialog("none")}
+				onClickCancel={() => {
+					dispatch(hiddenDialog())
+				}}
+				onClickSubmit={() => {
+					dispatch(hiddenDialog())
+					showDialog("none");
+
+				}}
+				title={'Are you sure you want to delete this customer?'}
+			/>
 		</>
 	);
 }
