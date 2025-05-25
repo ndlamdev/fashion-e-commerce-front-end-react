@@ -31,7 +31,6 @@ import { Skeleton } from "@/components/ui/skeleton.tsx";
 import QuickSearchProduct from "@/components/product/QuickSearchProduct.tsx";
 import { debounce } from "lodash";
 import { useQuickSearchQuery } from "@/services/product.service.ts";
-import { cn } from "@/lib/utils.ts";
 import { useGetCartQuery } from "@/redux/query/cart.query.ts";
 
 function Header({ showMenu }: HeaderProps) {
@@ -49,13 +48,9 @@ function Header({ showMenu }: HeaderProps) {
 	const { data: dataQuickSearch, isLoading: isLoadingQuickSearch, isError: isErrorQuickSearch } = useQuickSearchQuery(title, { skip: !title });
 
 	const debounceSearch = debounce((title: string) => {
-		onSearchHandle(title);
-	}, 500);
-
-	const onSearchHandle = useCallback((title: string) => {
-		console.log(title);
+		console.log("title", title, !title.length);
 		setTitle(title);
-	}, []);
+	}, 500);
 
 	const onSearchHandler = useCallback(
 		(title: string) => {
@@ -131,7 +126,7 @@ function Header({ showMenu }: HeaderProps) {
 					</div>
 					<div className={"col-span-3 flex justify-center"}>
 						<div className={"block lg:hidden"}>
-							<div className={"flex size-[60px] cursor-pointer items-center justify-center bg-blue-400"} onClick={() => navigate("/")}>
+							<div className={"flex size-[60px] cursor-pointer items-center justify-center border-1 border-black"} onClick={() => navigate("/")}>
 								Logo
 							</div>
 						</div>
@@ -148,17 +143,18 @@ function Header({ showMenu }: HeaderProps) {
 								))}
 								<HoverCardContent
 									className={
-										"grid min-h-25 w-[80vw] -translate-x-12 translate-y-6 grid-cols-3 place-content-around gap-2 bg-linear-to-t from-sky-500 to-indigo-500"
+										"grid min-h-25 w-[80vw] -translate-x-12 translate-y-6 grid-cols-3 place-content-around gap-2 border-1 border-black bg-linear-to-t"
 									}>
 									{isLoading && <Skeleton className={"w-[75vw]"} />}
 									{data?.data &&
 										data.data[type].map((item, index) => (
-											<span
+											<p
 												key={index}
 												onClick={() => navigate(`/collection?cid=${item.id}&type=${type}`, { state: { name: item.title } })}
-												className={"cursor-pointer font-bold text-white italic hover:text-neutral-600"}>
+												className={"group flex cursor-pointer items-center gap-1 font-bold text-black hover:text-neutral-600"}>
 												{item.title}
-											</span>
+												<SolarArrowRightLinear className={"hidden group-hover:block"} height={20} width={20} />
+											</p>
 										))}
 								</HoverCardContent>
 							</HoverCard>
@@ -260,26 +256,32 @@ function Header({ showMenu }: HeaderProps) {
 			</motion.header>
 			{searchAction === "SEARCH" && (
 				<div
-					className={cn(
-						"border-gray absolute top-[115px] left-0 z-3 flex w-full flex-col gap-y-5 overflow-x-hidden overflow-y-auto border-t-5 bg-white p-5",
-						dataQuickSearch ? "h-screen sm:h-100" : "h-[50vw] sm:h-25",
-					)}>
+					className={
+						"border-gray absolute top-[115px] left-0 z-3 flex max-h-screen w-full flex-col gap-y-5 overflow-x-hidden overflow-y-auto border-t-5 border-b-5 border-black bg-white p-5 sm:max-h-100"
+					}>
 					{isLoadingQuickSearch && <Skeleton className={"min-h-5 w-full"} />}
 					{isErrorQuickSearch && <p className={"text-red-500 normal-case"}>lỗi tìm thấy sản phẩm</p>}
-					{dataQuickSearch &&
-						dataQuickSearch.data.map((it) => (
-							<QuickSearchProduct
-								className={"flex w-full cursor-pointer flex-row items-center gap-2"}
-								key={`quick_search_product_${it.id}`}
-								{...it}
-								image={it.image}
-								onClick={() => {
-									navigate(`/product-detail/${it.id}`);
-									setSearchAction("EXIT");
-								}}
-							/>
-						))}
-					{!dataQuickSearch && <div className={"min-h-5 w-full text-center font-bold"}>Nhập sản phẩm bạn muốn tìm.</div>}
+					{!title || !title.length || !dataQuickSearch ? (
+						<div className={"min-h-5 w-full text-center font-bold"}>Nhập sản phẩm bạn muốn tìm.</div>
+					) : (
+						dataQuickSearch &&
+						(dataQuickSearch.data.length ? (
+							dataQuickSearch.data.map((it) => (
+								<QuickSearchProduct
+									className={"flex w-full cursor-pointer flex-row items-center gap-2"}
+									key={`quick_search_product_${it.id}`}
+									{...it}
+									image={it.image}
+									onClick={() => {
+										navigate(`/product-detail/${it.id}`);
+										setSearchAction("EXIT");
+									}}
+								/>
+							))
+						) : (
+							<div className={"min-h-5 w-full text-center font-bold"}>Không tìm thấy sản phẩm.</div>
+						))
+					)}
 				</div>
 			)}
 		</div>

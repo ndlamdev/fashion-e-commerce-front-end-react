@@ -47,8 +47,12 @@ export default function BoothPage() {
 			setTitle({ fileName: file.name });
 			return;
 		}
-		if (type) setTitle({ type: type });
-	}, [name, prompt, file, type, setSearchParams]);
+		if (type) {
+			setTitle({ type: type });
+			return;
+		}
+		navigate("/collection?type=MALE");
+	}, [name, prompt, file, type, setSearchParams, searchParams, navigate]);
 	const [data, setData] = useState<ApiPageResponse<ProductResponseType[]> | undefined>();
 	const filters: CollectionFilterProps = mockCollectionFilters;
 	const sportDescriptions = categoryDescriptionSamples;

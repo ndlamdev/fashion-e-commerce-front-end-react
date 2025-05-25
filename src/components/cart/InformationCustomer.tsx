@@ -32,9 +32,9 @@ function InformationCustomer() {
 	const { payment, showConfirm, trigger: triggerState } = useSelector((state: RootState) => state.cart);
 	const { data: infoAddresses, isError: isErrorInfoAddresses, isLoading: isLoadingInfoAddresses } = useGetInfoAddressesQuery();
 	const { data: defaultAddress } = useGetDefaultAddressQuery();
-	const [cityCode, setCityCode] = useState<string | undefined>(defaultAddress?.data.city_code);
-	const [districtId, setDistrictId] = useState<string | undefined>(defaultAddress?.data.district_id);
-	const [wardId, setWardId] = useState<string | undefined>(defaultAddress?.data.ward_id);
+	const [cityCode, setCityCode] = useState<string | undefined>();
+	const [districtId, setDistrictId] = useState<string | undefined>();
+	const [wardId, setWardId] = useState<string | undefined>();
 
 	const {
 		setValue,
@@ -127,6 +127,14 @@ function InformationCustomer() {
 		}
 		dispatch(updateInfoCustomerCreateOrder(getValues()));
 	}, [triggerState, trigger, getValues, setError, dispatch, setValue, payment]);
+
+	useEffect(() => {
+		if (!defaultAddress) return;
+		const { city_code, district_id, ward_id } = defaultAddress.data;
+		setCityCode(city_code);
+		setDistrictId(district_id);
+		setWardId(ward_id);
+	}, [defaultAddress]);
 
 	return (
 		<div className={`px-5 md:pb-0 lg:px-0 ${showConfirm ? "pb-30" : "pb-0"}`}>

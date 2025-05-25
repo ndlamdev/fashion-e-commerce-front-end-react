@@ -6,7 +6,7 @@ import LocalStorage from "@/utils/helper/LocalStorage.ts";
 import { AddressShippingType } from "@/types/profile/address.type.ts";
 import { SaveAddressRequest } from "@/domain/resquest/profile/saveAddress.request.ts";
 
-export const BASE_PROFILE_URL = import.meta.env.VITE_BASE_URL + "/v1/profile";
+export const BASE_PROFILE_URL = import.meta.env.VITE_BASE_URL + "/profile/v1";
 
 const baseQuery = fetchBaseQuery({
 	baseUrl: BASE_PROFILE_URL,
