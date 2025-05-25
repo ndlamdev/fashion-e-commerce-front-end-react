@@ -17,10 +17,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { LoaderIcon } from "lucide-react";
 
 export default function BoothPage() {
+	const filters: CollectionFilterProps = mockCollectionFilters;
+	const sportDescriptions = categoryDescriptionSamples;
 	const [searchParams, setSearchParams] = useSearchParams();
 	const navigate = useNavigate();
 	const queryObj = Object.fromEntries(searchParams.entries()); // get all key-value
 	const location = useLocation();
+	const [data, setData] = useState<ApiPageResponse<ProductResponseType[]> | undefined>();
+	const [requestImageSearch, { isLoading: isLoadingImageSearch, isError: isErrorImageSearch, data: dataImageSearch }] = useSearchByImageMutation();
 	const { file, prompt, name, type } = location.state || {
 		file: undefined,
 		prompt: undefined,
@@ -33,30 +37,6 @@ export default function BoothPage() {
 		fileName?: string | undefined;
 		type?: string | undefined;
 	}>();
-	useEffect(() => {
-		if (name) {
-			setTitle({ name: name });
-			return;
-		}
-		if (prompt) {
-			setSearchParams({ prompt: prompt });
-			setTitle({ prompt: prompt });
-			return;
-		}
-		if (file) {
-			setTitle({ fileName: file.name });
-			return;
-		}
-		if (type) {
-			setTitle({ type: type });
-			return;
-		}
-		navigate("/collection?type=MALE");
-	}, [name, prompt, file, type, setSearchParams, searchParams, navigate]);
-	const [data, setData] = useState<ApiPageResponse<ProductResponseType[]> | undefined>();
-	const filters: CollectionFilterProps = mockCollectionFilters;
-	const sportDescriptions = categoryDescriptionSamples;
-	const [requestImageSearch, { isLoading: isLoadingImageSearch, isError: isErrorImageSearch, data: dataImageSearch }] = useSearchByImageMutation();
 
 	const {
 		data: productsOfCollectionId,
@@ -102,6 +82,27 @@ export default function BoothPage() {
 		},
 		{ skip: !prompt && !queryObj["prompt"] },
 	);
+
+	useEffect(() => {
+		if (name) {
+			setTitle({ name: name });
+			return;
+		}
+		if (prompt) {
+			setSearchParams({ prompt: prompt });
+			setTitle({ prompt: prompt });
+			return;
+		}
+		if (file) {
+			setTitle({ fileName: file.name });
+			return;
+		}
+		if (type) {
+			setTitle({ type: type });
+			return;
+		}
+		// navigate("/collection?type=MALE");
+	}, [name, prompt, file, type, setSearchParams, searchParams]);
 
 	useEffect(() => {
 		if (!file) return;

@@ -12,7 +12,6 @@ import InputAuthentication from "@/components/authentication/ui/InputAuthenticat
 import LoginRequest from "@/domain/resquest/login.request.ts";
 import { SubmitHandler, useForm } from "react-hook-form";
 import authenticationService from "@/services/authentication.service.ts";
-import { useNavigate } from "react-router";
 import { useLoginWithGoogleMutation } from "@/redux/query/auth.query.ts";
 import OtherLogin from "@/components/authentication/ui/OtherLogin.tsx";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,7 +22,6 @@ function LoginDialog() {
 	const [, loginWithGoogleApiResult] = useLoginWithGoogleMutation();
 	const { dialog } = useSelector((state: RootState) => state.dialog);
 	const dispatch = useDispatch();
-	const navigation = useNavigate();
 	const {
 		register,
 		trigger,
@@ -37,11 +35,10 @@ function LoginDialog() {
 		async (data) => {
 			await authenticationService.login(data).then(() => {
 				dispatch(hiddenDialog());
-				navigation("/test");
 				reset();
 			});
 		},
-		[navigation, reset, dispatch],
+		[reset, dispatch],
 	);
 
 	useEffect(() => {

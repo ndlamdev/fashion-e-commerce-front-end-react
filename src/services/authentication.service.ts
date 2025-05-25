@@ -26,7 +26,8 @@ import { appDispatch } from "@/configs/store.config.ts";
 import { authSlice, loginSuccess } from "@/redux/slice/auth.slice.ts";
 import RegisterWithGoogleRequest from "@/domain/resquest/registerWithGoogle.request.ts";
 import RegisterWithFacebookRequest from "@/domain/resquest/registerWithFacebook.request";
-import AccesTokenRequest from "@/domain/resquest/accesToken.request.ts";
+import AccessTokenRequest from "@/domain/resquest/accessToken.request.ts";
+import ChangePasswordRequest from "@/domain/resquest/changePassword.request.ts";
 
 const PATH_BASE_URL = "/auth/v1";
 
@@ -214,7 +215,7 @@ const registerWithGoogle = async (data: RegisterWithGoogleRequest) => {
 			detail: "Don't have any token",
 		} as ApiResponseError<string>);
 	}
-	data["register-token"] = token;
+	data.register_token = token;
 	return await appDispatch(authApi.endpoints.registerWithGoogle.initiate(data, { track: false })).then(({ error }) => {
 		if (error) {
 			const response = (error as any).data as ApiResponseError<string>;
@@ -236,7 +237,7 @@ const registerWithFacebook = async (data: RegisterWithFacebookRequest) => {
 			detail: "Don't have any token",
 		} as ApiResponseError<string>);
 	}
-	data["register-token"] = token;
+	data.register_token = token;
 	return await appDispatch(authApi.endpoints.registerWithFacebook.initiate(data, { track: false })).then(({ error }) => {
 		if (error) {
 			SessionStorage.deleteValue("REGISTER_TOKEN_USING_FACEBOOK");
@@ -249,7 +250,7 @@ const registerWithFacebook = async (data: RegisterWithFacebookRequest) => {
 	});
 };
 
-const loginWithFacebook = async (data: AccesTokenRequest) => {
+const loginWithFacebook = async (data: AccessTokenRequest) => {
 	return await appDispatch(authApi.endpoints.loginWithFacebook.initiate(data, { track: false })).then(({ data, error }) => {
 		if (error) {
 			return Promise.reject(error);
@@ -276,6 +277,18 @@ const getAuthorizationToken = () => {
 	return "Bearer " + LocalStorage.getValue("ACCESS_TOKEN") || "";
 };
 
+async function changePassword(request: ChangePasswordRequest) {
+	return await api
+		.post<any, AxiosResponseCustom<void>, ChangePasswordRequest>(PATH_BASE_URL + "/change-password", request)
+		.then(async (result) => {
+			toast.message(result.data.message);
+			appDispatch(authSlice.actions.logout());
+		})
+		.catch(async (error) => {
+			return showError(error);
+		});
+}
+
 const authenticationService = {
 	register,
 	verifyRegister,
@@ -291,6 +304,7 @@ const authenticationService = {
 	registerWithGoogle,
 	loginWithFacebook,
 	registerWithFacebook,
+	changePassword,
 };
 
 export default authenticationService;

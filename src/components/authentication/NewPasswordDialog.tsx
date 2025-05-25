@@ -81,8 +81,8 @@ function ForgotPasswordDialog() {
 								type='password'
 								onKeyDown={enterKeyHandler}
 								placeholder='Nhập lại mật khẩu của bạn'
-								error={errors?.["confirm-password"]?.message}
-								{...register("confirm-password", {
+								error={errors?.confirm_password?.message}
+								{...register("confirm_password", {
 									required: "Vui lòng nhập lại mật khẩu  của bạn",
 									validate: (value, formValues) => {
 										if (value == formValues.password) return undefined;

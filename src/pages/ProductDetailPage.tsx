@@ -50,6 +50,10 @@ export default function ProductDetailPage() {
 	const [sizeSelected, setSizeSelected] = useState<string | undefined>();
 	const [imagesColor, setImagesColor] = useState<(ProductImageType | undefined)[]>();
 
+	const sizes = useMemo(() => {
+		return data?.data.options.find((opt) => opt.type === OptionType.SIZE) || undefined;
+	}, [data]);
+
 	useEffect(() => {
 		if (!data) return;
 		setColorSelected(data.data.variants[0].options[OptionType.COLOR]);
@@ -100,8 +104,8 @@ export default function ProductDetailPage() {
 
 	const addCartItemFc = useCallback(() => {
 		if (!variant) return;
-		cartService.addCartItem(variant?.id, 1).then();
-	}, [variant]);
+		cartService.addCartItem(variant?.id, boughtQuantity).then();
+	}, [variant, boughtQuantity]);
 
 	if (isLoading) return <Skeleton className={"h-screen w-screen"} />;
 	return (
@@ -296,11 +300,19 @@ export default function ProductDetailPage() {
 							/>
 							<Button
 								className={"flex w-3/4 cursor-pointer items-center rounded-2xl text-center text-xs hover:bg-neutral-300 hover:text-black sm:text-sm"}
-								disabled={!sizeSelected || Number(boughtQuantity) > MAX_BOUGHT}
-								onClick={addCartItemFc}
+								disabled={(!!sizes && !sizeSelected) || Number(boughtQuantity) > MAX_BOUGHT}
+								onClick={() => {
+									if (!sizes) {
+										const v = data?.data.variants.find((v) => v.options.COLOR === colorSelected);
+										if (!v) return;
+										cartService.addCartItem(v.id, boughtQuantity).then();
+									} else {
+										addCartItemFc();
+									}
+								}}
 								variant='default'>
 								<ShoppingBag className={""} />
-								<span>{sizeSelected ? "Thêm vào giỏ hàng" : "Chọn kích thước"}</span>
+								<span>{sizeSelected || !sizes ? "Thêm vào giỏ hàng" : "Chọn kích thước"}</span>
 							</Button>
 						</div>
 						{boughtQuantity > MAX_BOUGHT && <p className='text-red-500'>Số lượng mua vượt mức cho phép (từ 100 sản phẩm trở lại)</p>}

@@ -9,8 +9,8 @@ import CartItemType from "@/types/CartItemType.ts";
 
 type CartType = {
 	id: number;
-	userId: number;
-	cartItems: CartItemType[];
+	user_id: number;
+	cart_items: CartItemType[];
 	lock: boolean;
 	create_at?: null | string[];
 	update_at?: null | string[];

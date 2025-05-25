@@ -100,7 +100,17 @@ export default function CardProduct(props: ProductCardProp) {
 					}
 					onMouseEnter={() => setShowDialog(true)}
 					onMouseLeave={() => setShowDialog(false)}>
-					<p className={"m-0 mb-1 p-0 text-sm font-bold"}>Thêm nhanh vào giỏ hàng +</p>
+					<p
+						className={"m-0 mb-1 p-0 text-sm font-bold"}
+						onClick={() => {
+							const sizes = props.options.find((opt) => opt.type === OptionType.SIZE);
+							if (sizes?.values?.length) return;
+							const variant = props.variants.find((v) => v.options.COLOR === colorSelected);
+							if (!variant) return;
+							cartService.addCartItem(variant.id, 1).then();
+						}}>
+						Thêm nhanh vào giỏ hàng +
+					</p>
 					<div className={"flex cursor-pointer flex-wrap gap-2"}>
 						{props.options
 							.find((opt) => opt.type === OptionType.SIZE)

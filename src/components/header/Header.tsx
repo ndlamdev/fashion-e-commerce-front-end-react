@@ -35,7 +35,7 @@ import { useGetCartQuery } from "@/redux/query/cart.query.ts";
 
 function Header({ showMenu }: HeaderProps) {
 	const [, scrollY] = useScrolled();
-	const [scrollUp, setScrollUp] = useState(false);
+	// const [scrollUp, setScrollUp] = useState(false);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { access_token, user } = useSelector((state: RootState) => state.auth);
@@ -205,11 +205,11 @@ function Header({ showMenu }: HeaderProps) {
 						</a>
 						<div className={"group relative"}>
 							<a href={!access_token ? "#" : "/cart"} className={"relative z-3"}>
-								<ShoppingBag countItem={cartData?.data.cartItems.length ?? 0} />
+								<ShoppingBag countItem={cartData?.data.cart_items.length ?? 0} />
 							</a>
 							<div className={"absolute top-0 right-0 z-2 hidden w-[25rem] group-hover:lg:block"}>
 								<div className={"relative top-14 right-0 max-h-[27rem] min-h-[4rem] overflow-y-scroll rounded-2xl bg-white p-4"}>
-									{cartData?.data.cartItems.length ? (
+									{cartData?.data.cart_items.length ? (
 										<div className={"h-full overflow-auto"}>
 											<div className={"flex justify-between"}>
 												<p>{dataShoppingBagItems.length} sản phẩm</p>
@@ -219,7 +219,7 @@ function Header({ showMenu }: HeaderProps) {
 											</div>
 											<Separator className={"my-2"} />
 											<ul className={"flex h-full flex-col justify-between gap-y-2"}>
-												{cartData.data.cartItems.map((value, index) => (
+												{cartData.data.cart_items.map((value, index) => (
 													<ShoppingBagItem {...value} key={`shopping_bag_item_${index}`} />
 												))}
 											</ul>
@@ -234,18 +234,18 @@ function Header({ showMenu }: HeaderProps) {
 				</div>
 				<motion.div
 					initial={{ height: 35 }}
-					animate={{ height: scrollY >= 10 ? 0 : 35 }}
+					// animate={{ height: scrollY >= 10 ? 0 : 35 }}
 					transition={{ duration: 0.75 }}
-					onUpdate={(latest) => {
-						if (scrollUp) window.scrollTo({ top: (window.scrollY - (latest as { height: number }).height) * 1.5 - 5 });
-					}}
-					onAnimationStart={(value) => setScrollUp((value as { height: number }).height != 0)}
+					// onUpdate={(latest) => {
+					// 	if (scrollUp) window.scrollTo({ top: (window.scrollY - (latest as { height: number }).height) * 1.5 - 5 });
+					// }}
+					// onAnimationStart={(value) => setScrollUp((value as { height: number }).height != 0)}
 					className={`mb-2 grid w-full grid-cols-5 gap-2 overflow-hidden bg-gray-700 lg:grid-cols-3 ${scrollY < 10 && "py-1"}`}>
 					<div className={"col-span-3 col-start-2 overflow-hidden lg:col-span-1 lg:col-start-2"}>
 						<motion.div
 							className='w-[400px] overflow-hidden text-nowrap text-white'
 							animate={{ x: ["100%", "-100%"] }}
-							transition={{ repeat: Infinity, duration: 10, ease: "linear" }}>
+							transition={{ repeat: 2, duration: 10, ease: "linear" }}>
 							Freeship mọi đơn hàng trong tháng 3 - duy nhất tại website
 						</motion.div>
 					</div>
