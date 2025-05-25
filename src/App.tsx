@@ -28,6 +28,7 @@ import { CustomerManagementPage } from "@/pages/admin/customer/CustomerManagemen
 import CustomerDetailManagementPage from "@/pages/admin/customer/CustomerDetailManagementPage.tsx";
 import HoverCardProvider from "@/context/provider/HoverCardProvider.tsx";
 import OrderResultPage from "@/pages/OrderResultPage.tsx";
+import OrderManagementPage from "@/pages/admin/order/OrderManagementPage.tsx";
 
 function App() {
 	return (
@@ -63,6 +64,7 @@ function App() {
 								<Route path={"product/update/:id"} element={<UpdateProductPage />} />
 								<Route path={"customers"} element={<CustomerManagementPage />} />
 								<Route path={"customers/:id"} element={<CustomerDetailManagementPage />} />
+								<Route path={"orders"} element={<OrderManagementPage />} />
 							</Route>
 							<Route path="*" element={<NotFoundPage />} />
 						</Routes>

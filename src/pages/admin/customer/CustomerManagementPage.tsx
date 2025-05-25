@@ -16,6 +16,8 @@ import {
 import { useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "@uidotdev/usehooks";
+import { CustomerSortEnum } from "@/utils/enums/admin/sort/customerSort.enum.ts";
+import { DirectionEnum } from "@/utils/enums/admin/sort/direction.enum.ts";
 
 export function CustomerManagementPage() {
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -85,47 +87,23 @@ export function CustomerManagementPage() {
 							</PopoverTrigger>
 							<PopoverContent className={"sm:-translate-2 sm:translate-y-2 w-auto max-sm:p-2 max-sm:text-xs"}>
 								<p>Sort by</p>
-								<RadioGroup defaultValue="last-update" className={"border-b py-3"}>
-									<div className="flex items-center space-x-2">
-										<RadioGroupItem value="last-update" id="last-update" />
-										<Label htmlFor="last-update">Last update</Label>
-									</div>
-									<div className="flex items-center space-x-2">
-										<RadioGroupItem value="amount-spent" id="amount-spent" />
-										<Label htmlFor="amount-spent">Amount spent</Label>
-									</div>
-									<div className="flex items-center space-x-2">
-										<RadioGroupItem value="total-orders" id="total-orders" />
-										<Label htmlFor="total-orders">Total orders</Label>
-									</div>
-									<div className="flex items-center space-x-2">
-										<RadioGroupItem value="last-order-date" id="last-order-date" />
-										<Label htmlFor="last-order-date">Last order date</Label>
-									</div>
-									<div className="flex items-center space-x-2">
-										<RadioGroupItem value="first-order-date" id="first-order-date" />
-										<Label htmlFor="first-order-date">
-											First order date</Label>
-									</div>
-									<div className="flex items-center space-x-2">
-										<RadioGroupItem value="date-added-as-customer" id="date-added-as-customer" />
-										<Label htmlFor="date-added-as-customer">
-											Date added as customer</Label>
-									</div>
-									<div className="flex items-center space-x-2">
-										<RadioGroupItem value="last-abandoned-order-date" id="last-abandoned-order-date" />
-										<Label htmlFor="last-abandoned-order-date">Last abandoned order date</Label>
-									</div>
+								<RadioGroup defaultValue={Object.keys(CustomerSortEnum)[0]} className={"border-b py-3"}>
+									{Object.entries(CustomerSortEnum).map((item) => (
+										<div key={item[0]} className="flex items-center space-x-2">
+											<RadioGroupItem value={item[0]} id={item[0]} />
+											<Label htmlFor={item[0]}>{item[1]}</Label>
+										</div>
+									))
+									}
 								</RadioGroup>
-								<RadioGroup defaultValue="o2n" className={"py-3"}>
-									<div className="flex items-center space-x-2">
-										<RadioGroupItem value="o2n" id="o2n" />
-										<Label htmlFor="o2n">Oldest to newest</Label>
-									</div>
-									<div className="flex items-center space-x-2">
-										<RadioGroupItem value="n2o" id="n2o" />
-										<Label htmlFor="n2o">Newest to oldest</Label>
-									</div>
+								<RadioGroup defaultValue={Object.keys(DirectionEnum)[0]} className={"py-3"}>
+									{Object.entries(DirectionEnum).map((value) => (
+										<div key={value[0]} className="flex items-center space-x-2">
+											<RadioGroupItem value={value[0]} id={value[0]} />
+											<Label htmlFor={value[0]}>{value[1]}</Label>
+										</div>
+									))
+									}
 								</RadioGroup>
 							</PopoverContent>
 						</Popover>

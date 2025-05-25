@@ -4,7 +4,7 @@ import {
 	ChartNoAxesColumnIcon,
 	CornerDownRight,
 	HouseIcon,
-	LucideShoppingBag,
+	InboxIcon,
 	TagIcon,
 	UserRoundIcon,
 } from "lucide-react";
@@ -44,7 +44,7 @@ export function VerticalMenu() {
 
 const MenuValues: Record<string, TabNavProps> = {
 	"0": { title: "Home", to: "/admin#0", iconLeft: <HouseIcon /> },
-	"1": { title: "Orders", to: "/admin/orders#1", iconLeft: <LucideShoppingBag /> },
+	"1": { title: "Orders", to: "/admin/orders#1", iconLeft: <InboxIcon /> },
 	"2": { title: "Products", to: "/admin/products#2", iconLeft: <TagIcon /> },
 	"3": { title: "Customers", to: "/admin/customers#3", iconLeft: <UserRoundIcon /> },
 	"4": { title: "Discounts", to: "/admin/discount#4", iconLeft: <BadgePercent /> },
