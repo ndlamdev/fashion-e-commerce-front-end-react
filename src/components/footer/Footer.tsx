@@ -6,6 +6,7 @@
  *  User: lam-nguyen
  **/
 import { SolarArrowRightLinear } from "@/assets/images/icons/SolarArrowRightLinear.tsx";
+import logo from "@/assets/images/icons/logo.jpg";
 
 function Footer() {
 	return (
@@ -71,7 +72,9 @@ function Footer() {
 				<div className={"mt-5 flex flex-col items-center gap-4"}>
 					<div>List social</div>
 					<p>Nội dung trên trang này được bảo vệ bản quyền và là tài sản của KimiFashion.</p>
-					<div className={"bg-blue-400 p-4"}>Logo</div>
+					<div className={"p-4"}>
+						<img src={logo} alt='KimiFashion Logo' className={"h-10 w-10  rounded-sm"} />
+					</div>
 				</div>
 			</div>
 		</footer>

@@ -32,6 +32,7 @@ import QuickSearchProduct from "@/components/product/QuickSearchProduct.tsx";
 import { debounce } from "lodash";
 import { useQuickSearchQuery } from "@/services/product.service.ts";
 import { useGetCartQuery } from "@/redux/query/cart.query.ts";
+import logo from "@/assets/images/icons/logo.jpg";
 
 function Header({ showMenu }: HeaderProps) {
 	const [, scrollY] = useScrolled();
@@ -92,7 +93,7 @@ function Header({ showMenu }: HeaderProps) {
 
 						<div className={"hidden lg:block"}>
 							<div className={"flex size-18 cursor-pointer items-center justify-center bg-blue-400"} onClick={() => navigate("/")}>
-								Logo
+								<img src={logo} alt='logo.jpg' />
 							</div>
 						</div>
 						<div className={"search-component relative block lg:hidden"}>
@@ -126,8 +127,8 @@ function Header({ showMenu }: HeaderProps) {
 					</div>
 					<div className={"col-span-3 flex justify-center"}>
 						<div className={"block lg:hidden"}>
-							<div className={"flex size-[60px] cursor-pointer items-center justify-center border-1 border-black"} onClick={() => navigate("/")}>
-								Logo
+							<div className={"flex size-[60px] cursor-pointer items-center justify-center"} onClick={() => navigate("/")}>
+								<img src={logo} alt='logo.jpg' />
 							</div>
 						</div>
 						<div className={"mb-0 hidden items-center justify-center gap-4 lg:flex"}>

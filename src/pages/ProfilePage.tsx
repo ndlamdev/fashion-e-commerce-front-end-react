@@ -74,12 +74,13 @@ export default function ProfilePage() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const handleLogout = () => {
-		window.scrollTo({ top: 0, behavior: "smooth" });
-		dispatch(cartApi.util.invalidateTags(["Cart"]));
 		authenticationService
 			.logout()
 			.then(() => {
 				navigate("/");
+				setOpenDialog("none");
+				window.scrollTo({ top: 0, behavior: "smooth" });
+				dispatch(cartApi.util.invalidateTags(["Cart"]));
 			})
 			.catch((error) => {
 				console.log(error);
@@ -134,8 +135,8 @@ export default function ProfilePage() {
 									}}
 									onClickSubmit={() => {
 										handleLogout();
-										setOpenDialog("none");
 										showDialog("none");
+										setOpenDialog("none");
 									}}
 								/>
 							</div>
