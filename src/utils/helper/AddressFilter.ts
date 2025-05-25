@@ -1,60 +1,43 @@
 import { AddressType } from "@/types/profile/address.type.ts";
 
-type CityInfo = { city: string; city_code: string };
-type DistrictInfo = { district: string; district_id: string };
-type WardInfo= { ward: string; ward_id: string };
+function getAllCities(data: AddressType[]): string[] {
+	return [...new Set(data.map(item => item.city))].sort();
+}
 
-const getCities = (addresses: AddressType[] | undefined): CityInfo[] => {
-	if (!addresses) return [];
-	const map = new Map<string, CityInfo>();
+function getDistrictsByCity(data: AddressType[] | undefined, city: string): string[] {
+	return [...new Set(
+		data
+			?.filter(item => item.city === city)
+			.map(item => item.district)
+	)].sort();
+}
 
-	for (const { city, city_code } of addresses) {
-		if (!map.has(city_code)) {
-			map.set(city_code, { city, city_code });
-		}
-	}
+function getWardsByDistrict(data: AddressType[] | undefined, city: string, district: string): string[] {
+	return [...new Set(
+		data
+			?.filter(item => item.city === city && item.district === district)
+			.map(item => item.ward)
+	)].sort();
+}
 
-	return Array.from(map.values());
-};
+function getCityCode(data: AddressType[] | undefined, city: string): string | null {
+	const item = data?.find(item => item.city === city);
+	return item ? item.city_code : null;
+}
 
-const getDistricts = (
-	addresses: AddressType[] | undefined,
-	cityCode?: string | null
-): DistrictInfo[] => {
-	if (!cityCode || !addresses) return [];
+function getDistrictId(data: AddressType[] | undefined, city: string, district: string): string | null {
+	const item = data?.find(item => item.city === city && item.district === district);
+	return item ? item.district_id : null;
+}
 
-	const districtMap = new Map<string, DistrictInfo>();
-
-	for (const { city_code, district, district_id } of addresses) {
-		if (city_code === cityCode && !districtMap.has(district_id)) {
-			districtMap.set(district_id, { district, district_id });
-		}
-	}
-
-	return Array.from(districtMap.values());
-};
-
-const getWards = (
-	addresses: AddressType[] | undefined,
-	cityCode?: string | null,
-	districtCode?: string | null
-): WardInfo[] => {
-	if (!cityCode || !districtCode || !addresses) return [];
-
-	const wardMap = new Map<string, WardInfo>();
-
-	for (const { city_code, district_id, ward, ward_id } of addresses) {
-		if (
-			city_code === cityCode &&
-			district_id === districtCode &&
-			!wardMap.has(ward_id)
-		) {
-			wardMap.set(ward_id, { ward, ward_id });
-		}
-	}
-
-	return Array.from(wardMap.values());
-};
+function getWardId(data: AddressType[] | undefined, city: string, district: string, ward: string): string | null {
+	const item = data?.find(item =>
+		item.city === city &&
+		item.district === district &&
+		item.ward === ward
+	);
+	return item ? item.ward_id : null;
+}
 
 
-export {getCities, getDistricts, getWards};
+export {getAllCities, getCityCode, getDistrictsByCity, getDistrictId, getWardsByDistrict, getWardId};
