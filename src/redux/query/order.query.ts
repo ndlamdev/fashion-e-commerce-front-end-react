@@ -47,9 +47,14 @@ export const orderApi = createApi({
 			}),
 			invalidatesTags: ["order"],
 		}),
+		historyOrder: build.query<ApiResponse<CreateOrderResponse>, number | undefined>({
+			query: (page = 0) => ({
+				url: `/cancel?page=${page}`,
+			}),
+		}),
 	}),
 });
 
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
-export const { useCreateOrderMutation, useCancelOrderMutation } = orderApi;
+export const { useCreateOrderMutation, useCancelOrderMutation, useHistoryOrderQuery } = orderApi;

@@ -20,12 +20,13 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { DialogProfileProvider } from "@/context/provider/DialogProfileProvider.tsx";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import authenticationService from "@/services/authentication.service.ts";
 import { toast } from "sonner";
 import DialogConfirm from "@/components/dialog/DialogConfirm.tsx";
 import { DialogProfileContext } from "@/context/dialogProfileContext.props.ts";
 import { cartApi } from "@/redux/query/cart.query.ts";
+import { RootState } from "@/configs/store.config.ts";
 
 const tabNavValues: Record<string, TabNavProps> = {
 	"0": {
@@ -74,12 +75,12 @@ export default function ProfilePage() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const handleLogout = () => {
-		window.scrollTo({ top: 0, behavior: "smooth" });
-		dispatch(cartApi.util.invalidateTags(["Cart"]));
 		authenticationService
 			.logout()
 			.then(() => {
 				navigate("/");
+				window.scrollTo({ top: 0, behavior: "smooth" });
+				dispatch(cartApi.util.invalidateTags(["Cart"]));
 			})
 			.catch((error) => {
 				console.log(error);
@@ -87,15 +88,21 @@ export default function ProfilePage() {
 			});
 	};
 	const isDesktop = useMediaQuery("(min-width: 769px)");
+	const { user, access_token } = useSelector((state: RootState) => state.auth);
 
 	useEffect(() => {
 		setActiveTab(index.substring(1));
 	}, [index]);
+
+	useEffect(() => {
+		if (!user || !access_token) navigate("/");
+	}, [user, access_token, navigate]);
+
 	return (
 		<DialogProfileProvider>
 			<main className={"bg-neutral-300 p-4 md:p-8"}>
 				<section>
-					<RankingHeader fullName={"LamHongPhong"} levelClub={0} nextLevel={1} resetRankingDate={new Date()} nextResetRankingDate={new Date()} />
+					<RankingHeader fullName={user?.full_name ?? ""} levelClub={0} nextLevel={1} resetRankingDate={new Date()} nextResetRankingDate={new Date()} />
 				</section>
 				<section className={"my-9 flex space-x-20"}>
 					<nav className={"w-1/4 max-md:w-full"}>

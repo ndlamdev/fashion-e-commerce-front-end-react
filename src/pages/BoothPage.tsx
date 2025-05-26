@@ -53,7 +53,7 @@ export default function BoothPage() {
 		}
 		navigate("/collection?type=MALE");
 	}, [name, prompt, file, type, setSearchParams, searchParams, navigate]);
-	const [data, setData] = useState<ApiPageResponse<ProductResponseType[]> | undefined>();
+	const [data, setData] = useState<ApiPageResponse<ProductResponseType> | undefined>();
 	const filters: CollectionFilterProps = mockCollectionFilters;
 	const sportDescriptions = categoryDescriptionSamples;
 	const [requestImageSearch, { isLoading: isLoadingImageSearch, isError: isErrorImageSearch, data: dataImageSearch }] = useSearchByImageMutation();
