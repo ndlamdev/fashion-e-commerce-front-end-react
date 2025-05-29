@@ -19,7 +19,7 @@ import { toast } from "sonner";
 import { useCallback, useEffect, useState } from "react";
 import { useCreateOrderMutation } from "@/redux/query/order.query.ts";
 import { InfoCustomerCreateOrder, VariantRequestType } from "@/domain/resquest/createOrder.request.ts";
-import CartItemType from "@/types/CartItemType.ts";
+import CartItemType from "@/types/CartItemType";
 import { useNavigate } from "react-router";
 import DialogPayOs from "@/components/dialog/DialogPayOs.tsx";
 import { cartApi } from "@/redux/query/cart.query.ts";

@@ -62,21 +62,21 @@ function CartPage() {
 	const checkboxAllHandler = (e: ChangeEvent<HTMLInputElement>) => {
 		const check = e.currentTarget.checked;
 		if (check) {
-			data?.data.cartItems.forEach((it) => {
+			data?.data.cart_items.forEach((it) => {
 				dispatch(selectItems(it));
 			});
 		} else {
-			data?.data.cartItems.forEach((it) => {
+			data?.data.cart_items.forEach((it) => {
 				dispatch(unselectItems(it));
 			});
 		}
 	};
 
 	const deleteAllProduct = useCallback(() => {
-		data?.data.cartItems.forEach((it) => {
+		data?.data.cart_items.forEach((it) => {
 			deleteCartItem(it.id);
 		});
-	}, [data?.data.cartItems, deleteCartItem]);
+	}, [data?.data.cart_items, deleteCartItem]);
 
 	return (
 		<Dialog open={confirmDeleted} onOpenChange={() => setConfirmDeleted(true)}>
@@ -94,7 +94,7 @@ function CartPage() {
 				<div id={"right"} className={`order-1 px-5 md:block lg:order-2 lg:col-span-3 lg:px-0 ${!showConfirm ? "block" : "hidden"}`}>
 					<h1 className={"mb-5 text-3xl font-[600]"}>Giỏ hàng</h1>
 					<div className={"mt-5"}>
-						{!data?.data.cartItems.length ? (
+						{!data?.data.cart_items.length ? (
 							<p className={"text-center"}>Giỏ hàng của bạn hiện đang trống.</p>
 						) : (
 							<>
@@ -105,7 +105,7 @@ function CartPage() {
 												type='checkbox'
 												className={"h-5 w-5"}
 												onChange={checkboxAllHandler}
-												checked={cartItemsSelected.length === data?.data.cartItems.length}
+												checked={cartItemsSelected.length === data?.data.cart_items.length}
 											/>
 											<p>tất cả sản phẩm</p>
 										</div>
@@ -116,7 +116,7 @@ function CartPage() {
 									<div className={"hidden basis-1/12 sm:block"}>giá</div>
 								</div>
 								<ul>
-									{data?.data.cartItems.map((it) => (
+									{data?.data.cart_items.map((it) => (
 										<li key={`cart_item_${it.id}`}>
 											<CartItem
 												selected={!!cartItemsSelected.find((item) => item.id === it.id)}

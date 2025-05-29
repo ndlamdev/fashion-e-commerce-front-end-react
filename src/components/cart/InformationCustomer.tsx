@@ -45,7 +45,7 @@ function InformationCustomer() {
 		watch,
 		formState: { errors },
 	} = useForm<InfoCustomerCreateOrder>();
-	const [province, district, ward] = watch(["province", "district", "ward"]);
+	const [province, district, ward, address] = watch(["province", "district", "ward", "address"]);
 
 	const handleChangeProvince = useCallback(
 		(code: string) => {
@@ -79,9 +79,9 @@ function InformationCustomer() {
 	);
 
 	useEffect(() => {
-		if (!province || !district || !ward) return;
+		if (address || !province || !district || !ward) return;
 		setValue("address", ` , ${ward ?? ""}, ${district ?? ""}, ${province ?? ""}.`);
-	}, [setValue, province, district, ward]);
+	}, [setValue, province, district, ward, address]);
 
 	useEffect(() => {
 		if (triggerState == 0) return;
@@ -130,11 +130,17 @@ function InformationCustomer() {
 
 	useEffect(() => {
 		if (!defaultAddress) return;
-		const { city_code, district_id, ward_id } = defaultAddress.data;
+		const { city_code, district_id, ward_id, street, city, ward, district, full_name, phone } = defaultAddress.data;
 		setCityCode(city_code);
 		setDistrictId(district_id);
 		setWardId(ward_id);
-	}, [defaultAddress]);
+		if (street?.length) setValue("address", street);
+		setValue("province", city);
+		setValue("district", district);
+		setValue("ward", ward);
+		setValue("name", full_name ?? user?.full_name ?? "");
+		setValue("phone", phone ?? user?.phone ?? "");
+	}, [defaultAddress, setValue, user?.full_name]);
 
 	return (
 		<div className={`px-5 md:pb-0 lg:px-0 ${showConfirm ? "pb-30" : "pb-0"}`}>
@@ -166,7 +172,6 @@ function InformationCustomer() {
 							<input
 								id={"name"}
 								className={"w-full outline-none"}
-								defaultValue={defaultAddress?.data.full_name ?? user?.full_name}
 								placeholder={"Nhập họ và tên của bạn"}
 								{...register("name", {
 									required: "Tên không được để trống",
@@ -182,7 +187,6 @@ function InformationCustomer() {
 						<input
 							id={"phone-number"}
 							placeholder={"Nhập số điện thoại của bạn"}
-							defaultValue={defaultAddress?.data.phone ?? user?.phone}
 							type={"tel"}
 							className={"rounded-full border-1 border-gray-400 px-5 py-2 outline-none"}
 							{...register("phone", {
@@ -221,7 +225,6 @@ function InformationCustomer() {
 					<input
 						className={"w-full rounded-full border-1 border-gray-400 px-5 py-2 outline-none"}
 						placeholder={"Địa chỉ (ví dụ: 123 Vạn Phúc, phường Vạn Phúc)"}
-						defaultValue={defaultAddress?.data.street}
 						{...register("address", {
 							required: "Địa chỉ không được để trống",
 						})}

@@ -79,6 +79,7 @@ export default function ProfilePage() {
 			.logout()
 			.then(() => {
 				navigate("/");
+				setOpenDialog("none");
 				window.scrollTo({ top: 0, behavior: "smooth" });
 				dispatch(cartApi.util.invalidateTags(["Cart"]));
 			})
@@ -141,8 +142,8 @@ export default function ProfilePage() {
 									}}
 									onClickSubmit={() => {
 										handleLogout();
-										setOpenDialog("none");
 										showDialog("none");
+										setOpenDialog("none");
 									}}
 								/>
 							</div>

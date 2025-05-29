@@ -13,7 +13,7 @@ import LoginWithGoogleRequest from "@/domain/resquest/loginWithGoogle.request.ts
 import EmailResponse from "@/domain/response/email.response.ts";
 import RegisterWithGoogleRequest from "@/domain/resquest/registerWithGoogle.request.ts";
 import RegisterWithFacebookRequest from "@/domain/resquest/registerWithFacebook.request";
-import AccessTokenRequest from "@/domain/resquest/accesToken.request.ts";
+import AccessTokenRequest from "@/domain/resquest/accessToken.request.ts";
 import { createBaseQueryWithDispatch } from "@/redux/query/baseQueryWithDispatch.ts";
 
 export const authApi = createApi({
