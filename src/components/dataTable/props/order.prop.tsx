@@ -13,7 +13,7 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
 import { DataTableColumnHeader } from "@/components/dataTable/DataTableColumnHeader.tsx";
 
-export type PaymentProp = {
+export type OrderProp = {
 	order_number: number;
 	date: number[]
 	customer_name: string
@@ -22,7 +22,7 @@ export type PaymentProp = {
 	email: string
 }
 
-export const columns: ColumnDef<PaymentProp | unknown, string | unknown>[] = [
+export const columns: ColumnDef<OrderProp | unknown, string | unknown>[] = [
 	{
 		id: "select",
 		header: ({ table }) => (
@@ -51,17 +51,9 @@ export const columns: ColumnDef<PaymentProp | unknown, string | unknown>[] = [
 	},
 	{
 		accessorKey: "status",
-		header: ({ column }) => {
-			return (
-				<Button
-					variant="ghost"
-					className={'cursor-pointer font-bold'}
-				>
-					Status
-					<ArrowUpDown className="ml-2 size-4 " 	onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} />
-				</Button>
-			)
-		},
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title="Status" />
+		),
 		cell: ({ row }) => (
 			<div>
 				<Badge variant={OrderStatusColors[row.getValue("status") as OrderStatusEnum]}>

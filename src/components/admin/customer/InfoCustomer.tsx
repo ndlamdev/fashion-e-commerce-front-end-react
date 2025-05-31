@@ -9,10 +9,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/configs/store.config.ts";
 import { InfoCustomerProp } from "@/components/admin/customer/props/infoCustomer.prop.ts";
 import DialogConfirm from "@/components/dialog/DialogConfirm.tsx";
+import { useLocation, Link } from "react-router";
 
 const InfoCustomer: FC<InfoCustomerProp> = memo((props) => {
 	const dispatch = useDispatch();
 	const { dialog } = useSelector((state: RootState) => state.dialog);
+	const {pathname} = useLocation()
 	return (
 		<>
 			<section className={"rounded-lg shadow-sm shadow-accent-foreground w-full sm:w-3/10 p-3 bg-white text-xs sm:text-sm text-neutral-600"}>
@@ -32,6 +34,12 @@ const InfoCustomer: FC<InfoCustomerProp> = memo((props) => {
 						</PopoverContent>
 					</Popover>
 				</div>
+				{!pathname.includes('/admin/customers/') &&
+					<>
+						<Link to={`/admin/customers/${props.id}`} className={'text-sky-600 '}><span className={'hover:underline'}>{props.full_name}</span></Link>
+						<p className="">{props.no_order ? `${props.no_order} orders` : 'no orders'}</p>
+					</>
+				}
 				<p className={'font-bold my-2'}>Contact information</p>
 				<p className={'flex justify-between'}><span className={'text-sky-700 hover:underline cursor-pointer'}>{props.email}</span> <ClipboardIcon onClick={() => navigator.clipboard.writeText(props.email ?? '')} className={'size-4 cursor-pointer'}/></p>
 				{props.phone && <p>{props.phone}</p>}
@@ -63,7 +71,7 @@ const InfoCustomer: FC<InfoCustomerProp> = memo((props) => {
 					showDialog("none");
 
 				}}
-				title={'Are you sure you want to delete this customer?'}
+				title={'Do you want to delete this?'}
 			/>
 		</>
 	)

@@ -1,6 +1,6 @@
-import { PaymentProp } from "@/components/dataTable/props/payment.prop.ts";
+import { OrderProp } from "@/components/dataTable/props/order.prop.tsx";
 
-export const mockPayments: PaymentProp[] = [
+export const mockPayments: OrderProp[] = [
 	{
 		order_number: 1001,
 		date: [2025, 5, 20],

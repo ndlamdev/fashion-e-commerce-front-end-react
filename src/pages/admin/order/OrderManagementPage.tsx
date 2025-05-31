@@ -2,7 +2,10 @@ import { InboxIcon } from "lucide-react";
 import { Button } from "@/components/ui/button.tsx";
 import { mockPayments } from "@/assets/data/admin/order/orders.data.ts";
 import DataTable from "@/components/dataTable/DataTable.tsx";
-import { columns } from "@/components/dataTable/props/payment.prop.tsx";
+import { columns } from "@/components/dataTable/props/order.prop.tsx";
+import FilterColumnData from "@/components/admin/filterColumnData/FiterColumndata.tsx";
+import { OrderSortEnum } from "@/utils/enums/admin/sort/orderSort.enum.ts";
+import { SortDirection } from "@tanstack/react-table";
 
 export default function OrderManagementPage() {
 	const data = mockPayments
@@ -20,7 +23,13 @@ export default function OrderManagementPage() {
 					</div>
 				</div>
 			</header>
+			<FilterColumnData sortEnum={OrderSortEnum} placeholderInput={'Search Order'} DirectionSortBy={DirectionValues}/>
 			<DataTable columns={columns} data={data} />
 		</main>
 	)
+}
+
+const DirectionValues: Record<SortDirection, string> = {
+	asc: 'Oldest to newest',
+	desc: 'Newest to oldest',
 }

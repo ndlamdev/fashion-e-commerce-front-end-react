@@ -2,30 +2,26 @@
 
 import {
 	ColumnDef,
+	ColumnFiltersState,
 	flexRender,
-	getCoreRowModel, getPaginationRowModel, getSortedRowModel, SortingState,
+	getCoreRowModel,
+	getFilteredRowModel,
+	getPaginationRowModel,
+	getSortedRowModel,
+	SortingState,
 	useReactTable,
 	VisibilityState,
-	getFilteredRowModel, ColumnFiltersState,
 } from "@tanstack/react-table";
 
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { memo, useState } from "react";
 import { Button } from "@/components/ui/button.tsx";
-import { Input } from "@/components/ui/input"
 import {
 	DropdownMenu,
 	DropdownMenuCheckboxItem,
 	DropdownMenuContent,
 	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import { FunnelIcon } from "@heroicons/react/16/solid";
 import { DataTablePagination } from "@/components/dataTable/DataTablePagination.tsx";
 
@@ -68,14 +64,6 @@ function DataTable<TData, TValue>({
 	return (
 		<div className="rounded-md border text-neutral-600">
 			<div className="flex items-center py-4 px-2">
-				<Input
-					placeholder="Filter emails..."
-					value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-					onChange={(event) =>
-						table.getColumn("email")?.setFilterValue(event.target.value)
-					}
-					className="max-w-sm"
-				/>
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<Button variant="outline" className="ml-auto cursor-pointer">

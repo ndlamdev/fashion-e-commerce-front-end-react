@@ -1,11 +1,8 @@
-import { ArrowDownUpIcon, EllipsisIcon, SearchIcon, Trash2Icon, UserRoundIcon } from "lucide-react";
+import { EllipsisIcon, Trash2Icon, UserRoundIcon } from "lucide-react";
 import { Button } from "@/components/ui/button.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table.tsx";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
-import Input from "@/components/form/Input.tsx";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover.tsx";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group.tsx";
-import { Label } from "@/components/ui/label.tsx";
 import {
 	Pagination,
 	PaginationContent,
@@ -16,8 +13,14 @@ import {
 import { useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "@uidotdev/usehooks";
+import { SortDirection } from "@tanstack/react-table";
+import FilterColumnData from "@/components/admin/filterColumnData/FiterColumndata.tsx";
 import { CustomerSortEnum } from "@/utils/enums/admin/sort/customerSort.enum.ts";
-import { DirectionEnum } from "@/utils/enums/admin/sort/direction.enum.ts";
+
+const DirectionValues: Record<SortDirection, string> = {
+	asc: 'Oldest to newest',
+	desc: 'Newest to oldest',
+}
 
 export function CustomerManagementPage() {
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -73,42 +76,7 @@ export function CustomerManagementPage() {
 				</div>
 			</header>
 			<section className={"my-5"}>
-				<div className={"flex max-sm:flex-wrap py-2 justify-between"}>
-					<Input leftIcon={<SearchIcon />}
-								 className={"p-1 flex items-center space-x-2 w-full sm:w-1/2 lg:w-8/10 bg-neutral-200 rounded-lg"}
-								 placeholder={"Search customers"} />
-					<div className="flex max-sm:justify-between max-sm:w-full max-sm:my-2 items-center space-x-2">
-						<span className={"font-bold"}>0 customers</span>
-						<Popover>
-							<PopoverTrigger className={"cursor-pointer"} asChild>
-								<Button variant={"outline"} className={"cursor-pointer max-sm:size-8"}>
-									<ArrowDownUpIcon/>
-								</Button>
-							</PopoverTrigger>
-							<PopoverContent className={"sm:-translate-2 sm:translate-y-2 w-auto max-sm:p-2 max-sm:text-xs"}>
-								<p>Sort by</p>
-								<RadioGroup defaultValue={Object.keys(CustomerSortEnum)[0]} className={"border-b py-3"}>
-									{Object.entries(CustomerSortEnum).map((item) => (
-										<div key={item[0]} className="flex items-center space-x-2">
-											<RadioGroupItem value={item[0]} id={item[0]} />
-											<Label htmlFor={item[0]}>{item[1]}</Label>
-										</div>
-									))
-									}
-								</RadioGroup>
-								<RadioGroup defaultValue={Object.keys(DirectionEnum)[0]} className={"py-3"}>
-									{Object.entries(DirectionEnum).map((value) => (
-										<div key={value[0]} className="flex items-center space-x-2">
-											<RadioGroupItem value={value[0]} id={value[0]} />
-											<Label htmlFor={value[0]}>{value[1]}</Label>
-										</div>
-									))
-									}
-								</RadioGroup>
-							</PopoverContent>
-						</Popover>
-					</div>
-				</div>
+				<FilterColumnData sortEnum={CustomerSortEnum} infoData={'0 customer'} placeholderInput={'Search Customer'} DirectionSortBy={DirectionValues} />
 				{isDesktop ?
 					<>
 						<div className="flex items-center">
@@ -134,7 +102,7 @@ export function CustomerManagementPage() {
 											<EllipsisIcon/>
 										</Button>
 									</PopoverTrigger>
-									<PopoverContent className={"-translate-1/14 translate-y-2 p-2 text-sm"}>
+									<PopoverContent className={"-translate-1/14 translate-y-2 p-2 text-sm w-auto"}>
 										<p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>Add tag</p>
 										<p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>Remove tag</p>
 										<p className={'text-red-500 flex space-x-2 items-center p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}><Trash2Icon className={'size-4 flex-none'}/> <span>Delete customer</span></p>
