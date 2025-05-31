@@ -66,7 +66,7 @@ export const productColumns: ColumnDef<ProductProp | unknown, string | unknown>[
 			return (
 				<Input onChange={handleChange}
 							 value={data.quantity}
-							 className={" w-1/2 rounded-2xl text-center float-end"}
+							 className={"w-full sm:w-1/2 rounded-2xl text-center float-end"}
 							 type={"number"}
 							 min={1}
 							 max={9999999}

@@ -14,12 +14,13 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { CustomerManagementData } from "@/assets/data/cusotmerManagement.data.ts";
 import DataTable from "@/components/dataTable/DataTable.tsx";
-import { productColumns } from "@/components/dataTable/props/product.prop.tsx";
+import { productColumns, ProductProp } from "@/components/dataTable/props/product.prop.tsx";
 import { productColumnVariants } from "@/assets/data/admin/product/productColumns.data.ts";
 import { useCallback, useState } from "react";
+import OrderPaymentInfo from "@/components/admin/order/OrderPaymentInfo.tsx";
 import FilterColumnData from "@/components/admin/filterColumnData/FiterColumndata.tsx";
-import { OrderSortEnum } from "@/utils/enums/admin/sort/orderSort.enum.ts";
 import { SortDirection } from "@tanstack/react-table";
+import { ProductSortEnum } from "@/utils/enums/admin/sort/productItemSort.enum.ts";
 
 const OrderDetailManagementPage = () => {
 	const dispatch = useDispatch();
@@ -42,7 +43,6 @@ const OrderDetailManagementPage = () => {
 	}));
 
 	return (
-		<>
 			<main>
 				<header>
 					<div className="flex justify-between items-center">
@@ -72,9 +72,10 @@ const OrderDetailManagementPage = () => {
 					</div>
 				</header>
 				<section
-					className={"flex justify-between my-4 p-2 space-x-3 items-start"}>
+					className={"flex justify-between max-sm:flex-wrap max-sm:space-y-2 my-4 space-x-3 items-start"}>
 					<div className="rounded-lg shadow-sm shadow-accent-foreground  w-full sm:w-7/10 p-3 bg-white text-xs sm:text-sm text-neutral-600">
 						<span>Products</span>
+						<FilterColumnData sortEnum={ProductSortEnum} placeholderInput={'Search prodcut'} DirectionSortBy={DirectionValues}/>
 						<DataTable columns={productColumns} data={dataWithHandler} />
 					</div>
 					<InfoCustomer {...customer} />
@@ -82,11 +83,15 @@ const OrderDetailManagementPage = () => {
 
 				<div className="flex items-start max-sm:flex-wrap my-5 sm:space-x-6 max-sm:space-y-4">
 					<section className={"rounded-lg shadow-sm shadow-accent-foreground w-full sm:w-7/10 p-3 bg-white"}>
+						<span>Payment</span>
+						<OrderPaymentInfo productItems={products} shippingFee={200000} paymentMethod={'MOMO'} />
 					</section>
 				</div>
 			</main>
-		</>
 	)
 }
-
+const DirectionValues: Record<SortDirection, string> = {
+	asc: 'Oldest to newest',
+	desc: 'Newest to oldest',
+}
 export default OrderDetailManagementPage

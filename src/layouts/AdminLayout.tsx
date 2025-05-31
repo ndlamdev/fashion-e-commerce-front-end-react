@@ -11,7 +11,7 @@ import { VerticalMenu } from "@/components/admin/menu/VerticalMenu.tsx";
 
 function AdminLayout() {
 	return (
-		<div className={"flex h-[100vh] flex-col bg-black"}>
+		<div className={"flex flex-col bg-black"}>
 			<div className={"flex h-10 items-center justify-center text-white"}>This is header</div>
 			<div className={"grid flex-1 grid-cols-12 grid-rows-1 overflow-y-hidden rounded-tl-2xl rounded-tr-2xl border bg-white"}>
 				<div className={"col-span-2 hidden h-full bg-neutral-200 md:block"}>

@@ -5,7 +5,6 @@ import { ArrowDownUpIcon, SearchIcon } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group.tsx";
-import { CustomerSortEnum } from "@/utils/enums/admin/sort/customerSort.enum.ts";
 import { Label } from "@/components/ui/label.tsx";
 import { cn } from "@/lib/utils.ts";
 
@@ -26,7 +25,7 @@ const FilterColumnData: FC<FilterColumnDataProps> = memo((props: FilterColumnDat
 						</PopoverTrigger>
 						<PopoverContent className={"sm:-translate-2 sm:translate-y-2 w-auto max-sm:p-2 max-sm:text-xs"}>
 							<p>Sort by</p>
-							<RadioGroup defaultValue={Object.keys(CustomerSortEnum)[0]} className={"border-b py-3"}>
+							<RadioGroup defaultValue={Object.keys(props.sortEnum)[0]} className={"border-b py-3"}>
 								{Object.entries(props.sortEnum).map((item) => (
 									<div key={item[0]} className="flex items-center space-x-2">
 										<RadioGroupItem value={item[0]} id={item[0]} />

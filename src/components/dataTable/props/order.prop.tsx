@@ -4,12 +4,14 @@ import { formatCurrency, formatDateFromArray } from "@/utils/helper/format-data.
 import { Badge } from "@/components/ui/badge";
 import {
 	DropdownMenu,
-	DropdownMenuContent, DropdownMenuItem,
-	DropdownMenuLabel, DropdownMenuSeparator,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
 import { DataTableColumnHeader } from "@/components/dataTable/DataTableColumnHeader.tsx";
 

@@ -62,8 +62,9 @@ function DataTable<TData, TValue>({
 	});
 
 	return (
-		<div className="rounded-md border text-neutral-600">
-			<div className="flex items-center py-4 px-2">
+		<div className="rounded-md text-neutral-600">
+
+			<div className="flex items-center py-4 ">
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<Button variant="outline" className="ml-auto cursor-pointer">
