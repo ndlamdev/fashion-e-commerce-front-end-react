@@ -11,8 +11,9 @@ import {
 import { TabNav } from "@/components/profile/TabNav.tsx";
 import { useLocation } from "react-router";
 import AccordionCustom from "@/components/accordion/AccordionCustom.tsx";
+import { memo } from "react";
 
-export function VerticalMenu() {
+export const VerticalMenu = memo(() => {
 	const { hash: tabIndex } = useLocation();
 	return (
 		<nav className={"p-3 bg-neutral-200"}>
@@ -40,7 +41,7 @@ export function VerticalMenu() {
 			}
 		</nav>
 	);
-}
+})
 
 const MenuValues: Record<string, TabNavProps> = {
 	"0": { title: "Home", to: "/admin#0", iconLeft: <HouseIcon /> },

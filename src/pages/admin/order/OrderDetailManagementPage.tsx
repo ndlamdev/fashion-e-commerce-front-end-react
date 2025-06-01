@@ -37,7 +37,7 @@ const OrderDetailManagementPage = () => {
 	}, [])
 
 // Before passing to <DataTable />
-	const dataWithHandler = tableData.map((item, index) => ({
+	const dataWithHandler = tableData.map((item) => ({
 		...item,
 		onInputChange: handleInputChange
 	}));
@@ -74,15 +74,15 @@ const OrderDetailManagementPage = () => {
 				<section
 					className={"flex justify-between max-sm:flex-wrap max-sm:space-y-2 my-4 space-x-3 items-start"}>
 					<div className="rounded-lg shadow-sm shadow-accent-foreground  w-full sm:w-7/10 p-3 bg-white text-xs sm:text-sm text-neutral-600">
-						<span>Products</span>
-						<FilterColumnData sortEnum={ProductSortEnum} placeholderInput={'Search prodcut'} DirectionSortBy={DirectionValues}/>
+						<span className={'text-base'}>Products</span>
+						<FilterColumnData sortEnum={ProductSortEnum} placeholderInput={'Search product'} DirectionSortBy={DirectionValues}/>
 						<DataTable columns={productColumns} data={dataWithHandler} />
 					</div>
 					<InfoCustomer {...customer} />
 				</section>
 
 				<div className="flex items-start max-sm:flex-wrap my-5 sm:space-x-6 max-sm:space-y-4">
-					<section className={"rounded-lg shadow-sm shadow-accent-foreground w-full sm:w-7/10 p-3 bg-white"}>
+					<section className={"rounded-lg shadow-sm shadow-accent-foreground w-full sm:w-7/10 p-3 bg-white text-neutral-600"}>
 						<span>Payment</span>
 						<OrderPaymentInfo productItems={products} shippingFee={200000} paymentMethod={'MOMO'} />
 					</section>
