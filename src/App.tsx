@@ -68,7 +68,7 @@ function App() {
 								<Route path={"customers/:id"} element={<CustomerDetailManagementPage />} />
 								<Route path={"orders"} element={<OrderManagementPage />} />
 								<Route path={"orders/:id"} element={<OrderDetailManagementPage />} />
-								<Route index element={<DashBoardPage />} />
+								<Route path={'analytics'} element={<DashBoardPage />} />
 							</Route>
 							<Route path="*" element={<NotFoundPage />} />
 						</Routes>

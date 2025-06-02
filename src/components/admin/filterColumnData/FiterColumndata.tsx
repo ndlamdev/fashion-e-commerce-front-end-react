@@ -26,7 +26,7 @@ const FilterColumnData: FC<FilterColumnDataProps> = memo((props: FilterColumnDat
 						<PopoverContent className={"sm:-translate-2 sm:translate-y-2 w-auto max-sm:p-2 max-sm:text-xs"}>
 							<p>Sort by</p>
 							<RadioGroup defaultValue={Object.keys(props.sortEnum)[0]} className={"border-b py-3"}>
-								{Object.entries(props.sortEnum).map((item) => (
+								{Object.entries<[string, string]>(props.sortEnum).map((item) => (
 									<div key={item[0]} className="flex items-center space-x-2">
 										<RadioGroupItem value={item[0]} id={item[0]} />
 										<Label htmlFor={item[0]}>{item[1]}</Label>
@@ -37,10 +37,10 @@ const FilterColumnData: FC<FilterColumnDataProps> = memo((props: FilterColumnDat
 							{
 								props.DirectionSortBy &&
 								<RadioGroup defaultValue={Object.keys(props.DirectionSortBy)[0]} className={"py-3"}>
-									{Object.entries(props.DirectionSortBy).map((value) => (
+									{Object.entries<[string, string]>(props.DirectionSortBy).map((value) => (
 										<div key={value[0]} className="flex items-center space-x-2">
 											<RadioGroupItem value={value[0]} id={value[0]} />
-											<Label htmlFor={value[0]}>{value[1]}</Label>
+											<Label htmlFor={value[0]}>{value[1] ?? ''}</Label>
 										</div>
 									))
 									}

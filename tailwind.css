@@ -166,3 +166,10 @@
   transition: 2s ease;
   display: none;
 }
+
+
+@theme {
+  --animate-star-movement-top: 'star-movement-top linear infinite alternate';
+  --animation-star-movement-bottom: 'star-movement-bottom linear infinite alternate';
+  --animate-gradient: 'gradient 8s linear infinite';
+}

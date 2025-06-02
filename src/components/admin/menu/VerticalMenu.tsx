@@ -49,7 +49,7 @@ const MenuValues: Record<string, TabNavProps> = {
 	"2": { title: "Products", to: "/admin/products#2", iconLeft: <TagIcon /> },
 	"3": { title: "Customers", to: "/admin/customers#3", iconLeft: <UserRoundIcon /> },
 	"4": { title: "Discounts", to: "/admin/discount#4", iconLeft: <BadgePercent /> },
-	"5": { title: "Analytics", to: "/admin/analytics#4", iconLeft: <ChartNoAxesColumnIcon /> },
+	"5": { title: "Analytics", to: "/admin/analytics#5", iconLeft: <ChartNoAxesColumnIcon /> },
 };
 
 const SubMenuValues: Record<string, TabNavProps> = {

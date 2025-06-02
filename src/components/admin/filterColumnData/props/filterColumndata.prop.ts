@@ -1,6 +1,6 @@
 export type FilterColumnDataProps = {
-	sortEnum: {};
+	sortEnum: {}
 	placeholderInput?: string;
 	infoData?: string
-	DirectionSortBy?: unknown
+	DirectionSortBy?: {}
 }
