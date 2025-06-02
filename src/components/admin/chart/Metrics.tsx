@@ -12,7 +12,7 @@ const Metrics: FC<MetricsProp> = memo((props) => {
 		<div className={cn(" w-100 p-2 rounded-lg bg-gray-300", props.className)}>
 			<div className="flex items-center justify-between">
 				<div className={" text-start"}>
-					<p>{props.title}</p>
+					<p className={'font-bold text-neutral-500'}>{props.title}</p>
 					<div className="float-start text-2xl">
 						{props.unit === MetricsUnitType.CURRENCY &&
 							<GradientText ><SplitText className={' text-black px-1'} text={formatCurrency(props.value)} /></GradientText>}

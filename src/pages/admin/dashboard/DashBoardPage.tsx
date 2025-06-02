@@ -15,12 +15,14 @@ import { Badge } from "@/components/ui/badge.tsx";
 import { MetricsProp } from "@/components/admin/chart/props/metrics.prop.ts";
 import { MetricsUnitType } from "@/utils/enums/admin/chart/metricsUnit.enum.ts";
 import Metrics from "@/components/admin/chart/Metrics.tsx";
-import LineChartCustomization from "@/components/admin/chart/LineChartCustomization.tsx";
-import { LineChartData } from "@/assets/data/admin/chart/chart.data.ts";
+import LineChartCustomization, { LineChartData } from "@/components/admin/chart/LineChartCustomization.tsx";
+import BestSaleTop from "@/components/admin/chart/BestSaleTop.tsx";
+import { bestSaleData } from "@/assets/data/admin/chart/bestsale.data.ts";
+import PieChartCustomization, { PieChartData } from "@/components/admin/chart/PieChartCustomization.tsx";
 
 export default function DashBoardPage() {
 	return (
-		<main>
+		<main className={'text-sm sm:text-base'}>
 			<header className={"my-3"}>
 				<div className="flex justify-between items-end">
 					<p className="flex justify-end items-center space-x-2 text-sm sm:text-lg lg:text-2xl">
@@ -42,6 +44,7 @@ export default function DashBoardPage() {
 					</SelectTrigger>
 					<SelectContent>
 						<SelectItem value="day">Day</SelectItem>
+						<SelectItem value="week">Month</SelectItem>
 						<SelectItem value="month">Month</SelectItem>
 						<SelectItem value="year">Year</SelectItem>
 					</SelectContent>
@@ -53,9 +56,19 @@ export default function DashBoardPage() {
 					<Metrics className={"my-4"} key={index} {...metrics} />
 				))}
 			</section>
-			<section className={" flex items-center justify-between space-x-2"}>
-				<Metrics className={"w-6/10"} title={"Total sales over time"} value={20000000} unit={MetricsUnitType.CURRENCY}
+			<section className={" flex items-start justify-between space-x-2"}>
+				<Metrics className={"w-7/10"} title={"Total sales over time"} value={20000000} unit={MetricsUnitType.CURRENCY}
 								 chart={<LineChartCustomization {...LineChartData} />} />
+				<div className="w-3/10 p-3 rounded-lg bg-gray-300">
+					<BestSaleTop {...bestSaleData} />
+				</div>
+			</section>
+			<section className={"flex items-center justify-between space-x-2 my-4"}>
+				<div className="w-3/9">
+					<Metrics title={'Return Rate'} value={25} unit={MetricsUnitType.PERCENTAGE} chart={<PieChartCustomization {...PieChartData} />} />
+				</div>
+				<div className="w-3/9"></div>
+				<div className="w-3/9"></div>
 			</section>
 		</main>
 	);
