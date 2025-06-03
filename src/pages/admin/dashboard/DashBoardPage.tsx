@@ -19,6 +19,8 @@ import LineChartCustomization, { LineChartData } from "@/components/admin/chart/
 import BestSaleTop from "@/components/admin/chart/BestSaleTop.tsx";
 import { bestSaleData } from "@/assets/data/admin/chart/bestsale.data.ts";
 import PieChartCustomization, { PieChartData } from "@/components/admin/chart/PieChartCustomization.tsx";
+import PieChartLabel from "@/components/admin/chart/PieChartLabel.tsx";
+import { pieChartLabelValue } from "@/components/admin/chart/props/pieChartLabel.prop.ts";
 
 export default function DashBoardPage() {
 	return (
@@ -63,20 +65,26 @@ export default function DashBoardPage() {
 					<BestSaleTop {...bestSaleData} />
 				</div>
 			</section>
-			<section className={"flex items-center justify-between space-x-2 my-4"}>
+			<section className={"flex items-center justify-between space-x-4 my-4"}>
 				<div className="w-3/9">
+					{/*Tỷ lệ đơn hàng bị trả về*/}
 					<Metrics title={'Return Rate'} value={25} unit={MetricsUnitType.PERCENTAGE} chart={<PieChartCustomization {...PieChartData} />} />
 				</div>
-				<div className="w-3/9"></div>
-				<div className="w-3/9"></div>
+				<div className="w-3/9">
+					{/*Giá trị đơn hàng trung bình (value là gía trị tổng đơn hàng trung bình)*/}
+					<Metrics title={'Average Order Value'} value={100} unit={MetricsUnitType.NUMBER} chart={<PieChartLabel {...pieChartLabelValue} />} />
+				</div>
+				<div className="w-3/9">
+					{/*Tỷ lệ bỏ giỏ hàng*/}
+				</div>
 			</section>
 		</main>
 	);
 }
 
 const metricsValues: Record<number, MetricsProp> = {
-	0: { title: "Gross sale", value: 120000, unit: MetricsUnitType.CURRENCY, iconRight: <BanknoteIcon /> },
-	1: { title: "Returning customer rate", value: 50, unit: MetricsUnitType.PERCENTAGE, iconRight: <UsersRoundIcon /> },
-	2: { title: "Orders fulfilled", value: 99, unit: MetricsUnitType.NUMBER, iconRight: <PackageCheckIcon /> },
-	3: { title: "Orders", value: 200, unit: MetricsUnitType.NUMBER, iconRight: <ScrollTextIcon /> },
+	0: { title: "Gross sale", value: 120000, unit: MetricsUnitType.CURRENCY, iconRight: <BanknoteIcon className={'font-bold text-neutral-500 size-4 sm:size-8'} /> },
+	1: { title: "Returning customer rate", value: 50, unit: MetricsUnitType.PERCENTAGE, iconRight: <UsersRoundIcon className={'font-bold text-neutral-500 size-4 sm:size-8'} /> },
+	2: { title: "Orders fulfilled", value: 99, unit: MetricsUnitType.NUMBER, iconRight: <PackageCheckIcon className={'font-bold text-neutral-500 size-4 sm:size-8'} /> },
+	3: { title: "Orders", value: 200, unit: MetricsUnitType.NUMBER, iconRight: <ScrollTextIcon className={'font-bold text-neutral-500 size-4 sm:size-8'} /> },
 };
