@@ -4,12 +4,13 @@ import { PieChartLabelProps } from "@/components/admin/chart/props/pieChartLabel
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart.tsx";
 import { Pie, PieChart, Sector } from "recharts";
 import { PieSectorDataItem } from "recharts/types/polar/Pie";
+import { cn } from "@/lib/utils.ts";
 
 const PieChartDonutActive: FC<ChartProp<PieChartLabelProps>> = memo((props) => {
 	return (
 		<ChartContainer
 			config={props.chartConfig}
-			className={props.className}
+			className={cn(props.className)}
 		>
 			<PieChart>
 				<ChartTooltip content={<ChartTooltipContent hideLabel />} />
@@ -17,7 +18,7 @@ const PieChartDonutActive: FC<ChartProp<PieChartLabelProps>> = memo((props) => {
 					data={props.chartData}
 					dataKey="value"
 					nameKey="dateName"
-					innerRadius={60}
+					innerRadius={40}
 					strokeWidth={5}
 					activeIndex={0}
 					activeShape={({
