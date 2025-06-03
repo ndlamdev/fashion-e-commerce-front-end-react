@@ -9,7 +9,7 @@ import { formatCurrency } from "@/utils/helper/format-data.ts";
 
 const Metrics: FC<MetricsProp> = memo((props) => {
 	return (
-		<div className={cn(" w-100 p-2 rounded-lg bg-gray-300", props.className)}>
+		<div className={cn("p-2 rounded-lg bg-gray-300", props.className)}>
 			<div className="flex items-center justify-between">
 				<div className={" text-start"}>
 					<p className={'font-bold text-neutral-500'}>{props.title}</p>
@@ -26,7 +26,7 @@ const Metrics: FC<MetricsProp> = memo((props) => {
 				</div>
 				<p className="">{props.iconRight}</p>
 			</div>
-			{props.chart}
+				{props.chart}
 		</div>
 	);
 });

@@ -21,6 +21,10 @@ import { bestSaleData } from "@/assets/data/admin/chart/bestsale.data.ts";
 import PieChartCustomization, { PieChartData } from "@/components/admin/chart/PieChartCustomization.tsx";
 import PieChartLabel from "@/components/admin/chart/PieChartLabel.tsx";
 import { pieChartLabelValue } from "@/components/admin/chart/props/pieChartLabel.prop.ts";
+import PieChartDonutActive from "@/components/admin/chart/PieChartDonutActive.tsx";
+import {
+	pieChartDonutActiveValue,
+} from "@/components/admin/chart/props/pieChartDonutActive.prop.ts";
 
 export default function DashBoardPage() {
 	return (
@@ -55,7 +59,7 @@ export default function DashBoardPage() {
 			</section>
 			<section className={"flex items-center justify-between space-x-2"}>
 				{Object.values(metricsValues).map((metrics, index) => (
-					<Metrics className={"my-4"} key={index} {...metrics} />
+					<Metrics className={"my-4 w-100"} key={index} {...metrics} />
 				))}
 			</section>
 			<section className={" flex items-start justify-between space-x-2"}>
@@ -71,11 +75,12 @@ export default function DashBoardPage() {
 					<Metrics title={'Return Rate'} value={25} unit={MetricsUnitType.PERCENTAGE} chart={<PieChartCustomization {...PieChartData} />} />
 				</div>
 				<div className="w-3/9">
-					{/*Giá trị đơn hàng trung bình (value là gía trị tổng đơn hàng trung bình)*/}
+					{/*Giá trị đơn hàng trung bình (value là gía trị tổng đơn hàng trung bình) cong thuc: Tổng doanh thu / Số đơn hàng.*/}
 					<Metrics title={'Average Order Value'} value={100} unit={MetricsUnitType.NUMBER} chart={<PieChartLabel {...pieChartLabelValue} />} />
 				</div>
 				<div className="w-3/9">
-					{/*Tỷ lệ bỏ giỏ hàng*/}
+					{/*Tỷ lệ bỏ giỏ hàng (Công thức: (Số giỏ hàng bị bỏ / Tổng số giỏ hàng) × 100.)*/}
+					<Metrics title={'Cart Abandonment Rate'} value={25} unit={MetricsUnitType.PERCENTAGE} chart={<PieChartDonutActive {...pieChartDonutActiveValue} />} />
 				</div>
 			</section>
 		</main>

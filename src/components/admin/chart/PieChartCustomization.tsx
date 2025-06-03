@@ -37,7 +37,7 @@ const PieChartCustomization: FC<ChartProp<PieChartProp>> = memo((props) => {
 		<ChartContainer className={props.className} config={props.chartConfig}>
 			<PieChart>
 				<ChartTooltip
-					content={<ChartTooltipContent nameKey="value" hideLabel />}
+					content={<ChartTooltipContent className={''} nameKey="value" hideLabel />}
 				/>
 				<Pie data={props.chartData} dataKey="value">
 					<LabelList

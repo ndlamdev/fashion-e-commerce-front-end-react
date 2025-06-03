@@ -7,7 +7,7 @@ import { ChartProp } from "@/components/admin/chart/props/chart.prop.ts";
 import { PieChartLabelProps } from "@/components/admin/chart/props/pieChartLabel.prop.ts";
 
 
-const ChartPieLabel: FC<ChartProp<PieChartLabelProps>> = memo((props) => {
+const PieChartLabel: FC<ChartProp<PieChartLabelProps>> = memo((props) => {
 	return (
 			<ChartContainer
 				config={props.chartConfig}
@@ -21,4 +21,4 @@ const ChartPieLabel: FC<ChartProp<PieChartLabelProps>> = memo((props) => {
 	);
 });
 
-export default ChartPieLabel
+export default PieChartLabel
