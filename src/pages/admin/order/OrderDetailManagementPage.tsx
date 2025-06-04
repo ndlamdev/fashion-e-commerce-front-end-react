@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { CustomerManagementData } from "@/assets/data/cusotmerManagement.data.ts";
 import DataTable from "@/components/dataTable/DataTable.tsx";
-import { productColumns, ProductProp } from "@/components/dataTable/props/product.prop.tsx";
+import { productColumns, ProductColumn } from "@/components/dataTable/dataColumns/product.column.tsx";
 import { productColumnVariants } from "@/assets/data/admin/product/productColumns.data.ts";
 import { useCallback, useState } from "react";
 import OrderPaymentInfo from "@/components/admin/order/OrderPaymentInfo.tsx";
@@ -28,9 +28,9 @@ const OrderDetailManagementPage = () => {
 	console.log(id);
 	const customer = CustomerManagementData;
 	const products = productColumnVariants
-	const [tableData, setTableData] = useState<ProductProp[]>(products);
+	const [tableData, setTableData] = useState<ProductColumn[]>(products);
 
-	const handleInputChange = useCallback((updater: (item: ProductProp, index: number) => ProductProp) => {
+	const handleInputChange = useCallback((updater: (item: ProductColumn, index: number) => ProductColumn) => {
 		setTableData(prev =>
 			prev.map((item, index) => updater(item, index))
 		);

@@ -148,11 +148,11 @@ export function CustomerManagementPage() {
 							onClick={() => goToPage(page <= 0 ? 0 : page)}
 						>{page}</PaginationLink>
 					</PaginationItem>
-					{/*{page < props.page.totalPages - 1 &&*/}
+					{/*{page < dataColumns.page.totalPages - 1 &&*/}
 					{/*	<PaginationItem>*/}
 					{/*		<PaginationEllipsis />*/}
 					{/*	</PaginationItem>}*/}
-					{/*{(page < props.page.totalPages - 1) &&*/}
+					{/*{(page < dataColumns.page.totalPages - 1) &&*/}
 					{/*	<PaginationItem className={'cursor-pointer'}>*/}
 					{/*		<PaginationNext onClick={() => goToPage(page + 1)}/>*/}
 					{/*	</PaginationItem>*/}

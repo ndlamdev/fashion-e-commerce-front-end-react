@@ -15,7 +15,7 @@ import { MoreHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
 import { DataTableColumnHeader } from "@/components/dataTable/DataTableColumnHeader.tsx";
 
-export type OrderProp = {
+export type OrderColumn = {
 	order_number: number;
 	date: number[]
 	customer_name: string
@@ -24,7 +24,7 @@ export type OrderProp = {
 	email: string
 }
 
-export const columns: ColumnDef<OrderProp | unknown, string | unknown>[] = [
+export const columns: ColumnDef<OrderColumn | unknown, string | unknown>[] = [
 	{
 		id: "select",
 		header: ({ table }) => (

@@ -9,11 +9,11 @@ import { OptionType } from "@/types/product/productOption.type.ts";
 import { Input } from "@/components/ui/input.tsx";
 import { DiscountType } from "@/types/product/product.type.ts";
 
-export type ProductProp = ProductVariantsType & Pick<DiscountType, 'percent'> & Pick<ProductImageType, "src"> & {
-	onInputChange: (updater: (item: ProductProp, index: number) => ProductProp) => void;
+export type ProductColumn = ProductVariantsType & Pick<DiscountType, 'percent'> & Pick<ProductImageType, "src"> & {
+	onInputChange: (updater: (item: ProductColumn, index: number) => ProductColumn) => void;
 }
 
-export const productColumns: ColumnDef<ProductProp | unknown, string | unknown>[] = [
+export const productColumns: ColumnDef<ProductColumn | unknown, string | unknown>[] = [
 	{
 		id: "select",
 		header: ({ table }) => (
@@ -38,7 +38,7 @@ export const productColumns: ColumnDef<ProductProp | unknown, string | unknown>[
 	{
 		header: "Product",
 		cell: ({ row }) => {
-			const product = row.original as ProductProp;
+			const product = row.original as ProductColumn;
 			return (
 				<div className=" flex items-center space-x-2">
 					<img className={"size-10 border border-neutral-500 rounded-lg object-cover"} src={product.src} alt={product.title} />
@@ -55,7 +55,7 @@ export const productColumns: ColumnDef<ProductProp | unknown, string | unknown>[
 		header: <p className={"text-end"}>Quantity</p>,
 		cell: ({ row }) => {
 			const rowIndex = row.index;
-			const data = row.original as ProductProp;
+			const data = row.original as ProductColumn;
 			const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 				const value = Math.max(Number(e.target.value), 1);
 				data.onInputChange((item, index) =>
@@ -78,7 +78,7 @@ export const productColumns: ColumnDef<ProductProp | unknown, string | unknown>[
 		id: "amount",
 		header: <p className={"text-end"}>Amount</p>,
 		cell: ({ row }) => {
-			const product = row.original as ProductProp;
+			const product = row.original as ProductColumn;
 			return <div className=" font-medium text-balance break-words w-25 float-end text-end">{formatCurrency(product.regular_price * product.quantity)}</div>;
 		},
 	},

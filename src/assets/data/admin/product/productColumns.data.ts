@@ -1,6 +1,6 @@
-import { ProductProp } from "@/components/dataTable/props/product.prop.tsx";
+import { ProductColumn } from "@/components/dataTable/dataColumns/product.column.tsx";
 
-export const productColumnVariants: ProductProp[] = [
+export const productColumnVariants: ProductColumn[] = [
 	{
 		id: "v1",
 		title: "T-Shirt Red M",

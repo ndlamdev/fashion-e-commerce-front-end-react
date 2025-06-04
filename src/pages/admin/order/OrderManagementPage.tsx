@@ -2,7 +2,7 @@ import { InboxIcon } from "lucide-react";
 import { Button } from "@/components/ui/button.tsx";
 import { mockPayments } from "@/assets/data/admin/order/orders.data.ts";
 import DataTable from "@/components/dataTable/DataTable.tsx";
-import { columns } from "@/components/dataTable/props/order.prop.tsx";
+import { columns } from "@/components/dataTable/dataColumns/order.column.tsx";
 import FilterColumnData from "@/components/admin/filterColumnData/FiterColumndata.tsx";
 import { OrderSortEnum } from "@/utils/enums/admin/sort/orderSort.enum.ts";
 import { SortDirection } from "@tanstack/react-table";
