@@ -11,14 +11,16 @@ import EventInputOTPDialog from "@/components/authentication/props/InputOTPDialo
 
 export type CallbackDialogProps = EventInputOTPDialog & {};
 
-type SheetSliceState = {
+type DialogSliceState = {
 	dialog: DialogTypeEnum;
 	callBacksDialog: CallbackDialogProps | undefined;
+	loading: boolean;
 };
 
-const initialState: SheetSliceState = {
+const initialState: DialogSliceState = {
 	dialog: "none",
 	callBacksDialog: undefined as CallbackDialogProps | undefined,
+	loading: false,
 };
 
 export const dialogSlice = createSlice({
@@ -42,9 +44,15 @@ export const dialogSlice = createSlice({
 		hiddenDialog: (state) => {
 			state.dialog = "none";
 		},
+		showDialogLoading: (state) => {
+			state.loading = true;
+		},
+		closeDialogLoading: (state) => {
+			state.loading = false;
+		},
 	},
 });
 
-export const { showDialogWithCallback, showDialog, hiddenDialog } = dialogSlice.actions;
+export const { showDialogWithCallback, showDialog, hiddenDialog, showDialogLoading, closeDialogLoading } = dialogSlice.actions;
 
 export default dialogSlice.reducer;

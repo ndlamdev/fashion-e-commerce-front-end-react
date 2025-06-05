@@ -11,7 +11,7 @@ import InputAuthentication from "@/components/authentication/ui/InputAuthenticat
 import { SubmitHandler, useForm } from "react-hook-form";
 import authenticationService from "@/services/authentication.service.ts";
 import RegisterWithFacebookRequest from "@/domain/resquest/registerWithFacebook.request.ts";
-import ConfirmDialog from "@/components/authentication/ConfirmDialog.tsx";
+import DialogConfirm from "@/components/dialog/DialogConfirm.tsx";
 import SessionStorage from "@/utils/helper/SessionStorage.ts";
 import OtherLogin from "@/components/authentication/ui/OtherLogin.tsx";
 import InputPassword from "@/components/authentication/ui/InputPassword.tsx";
@@ -127,7 +127,7 @@ function RegisterWithFacebookDialog() {
 					</div>
 				</DialogContent>
 			</Dialog>
-			<ConfirmDialog
+			<DialogConfirm
 				open={localDialog === "confirm"}
 				onOpenChange={(value) => !value && dispatch(hiddenDialog())}
 				onClickCancel={() => {

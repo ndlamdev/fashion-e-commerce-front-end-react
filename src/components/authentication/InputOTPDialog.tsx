@@ -11,7 +11,7 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp
 import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentication.tsx";
 import { useForm } from "react-hook-form";
 import OTPRequest from "@/domain/resquest/otp.request.ts";
-import ConfirmDialog from "@/components/authentication/ConfirmDialog.tsx";
+import DialogConfirm from "@/components/dialog/DialogConfirm.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/configs/store.config.ts";
 import { hiddenDialog } from "@/redux/slice/dialog.slice";
@@ -87,7 +87,7 @@ function InputOTPDialog() {
 					</div>
 				</DialogContent>
 			</Dialog>
-			<ConfirmDialog
+			<DialogConfirm
 				open={openDialog === "show-confirm"}
 				onOpenChange={(value) => !value && dispatch(hiddenDialog())}
 				onClickCancel={() => {

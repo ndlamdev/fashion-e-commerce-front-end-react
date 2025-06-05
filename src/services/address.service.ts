@@ -1,5 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { AddressType } from "@/types/profile/address.type.ts";
+import { AddressShippingType, AddressType } from "@/types/profile/address.type.ts";
+import LocalStorage from "@/utils/helper/LocalStorage.ts";
+import { ApiResponse } from "@/domain/ApiResponse.ts";
+import { SaveAddressRequest } from "@/domain/resquest/profile/saveAddress.request.ts";
 
 export const addressApi = createApi({
 	reducerPath: "addressApi",
@@ -12,5 +15,65 @@ export const addressApi = createApi({
 		}),
 	}),
 });
+export const BASE_ADDRESS_URL = import.meta.env.VITE_BASE_URL + "/address/v1";
 
+const baseQuery = fetchBaseQuery({
+	baseUrl: BASE_ADDRESS_URL,
+	prepareHeaders: (headers) => {
+		const token = LocalStorage.getValue("ACCESS_TOKEN");
+		if (token) {
+			headers.set("Authorization", `Bearer ${token}`);
+		}
+		return headers;
+	},
+});
+
+export const addressCustomerApi = createApi({
+	reducerPath: "addressCustomerApi",
+	baseQuery: baseQuery,
+	tagTypes: ['Address'],
+	endpoints: (build) => ({
+		getAddresses: build.query<ApiResponse<AddressShippingType[]>, void>({
+			query : () => ({
+				url: "",
+				credentials: "include",
+			}),
+			providesTags: ['Address'],
+		}),
+		getAddress: build.query<ApiResponse<AddressShippingType>, number | undefined>({
+			query: (id) => ({
+				url: `/${id}`,
+				credentials: "include",
+			})
+		}),
+		saveAddress: build.mutation<ApiResponse<AddressShippingType>, SaveAddressRequest>({
+			query: (request) => ({
+				url: request.id ? `/${request.id}` : ``,
+				method: request.id ? 'PUT' : 'POST',
+				body: request,
+				credentials: 'include',
+			}),
+			invalidatesTags: ['Address'],
+		}),
+		deleteAddress: build.mutation<ApiResponse<void>, number | undefined>({
+			query: (id) => ({
+				url: `/${id}`,
+				method: 'DELETE',
+				credentials: 'include',
+			}),
+			invalidatesTags: ['Address'],
+		}),
+		setDefaultAddress:  build.mutation<ApiResponse<void>, {old_id: number | undefined, new_id: number | undefined}>({
+			query: ({old_id, new_id}) => ({
+				url: `?old=${old_id}&new=${new_id}`,
+				method: 'PATCH',
+				credentials: 'include',
+			}),
+			invalidatesTags: ['Address'],
+		})
+	}),
+});
+
+
+export const { useGetAddressQuery, useGetAddressesQuery, useSetDefaultAddressMutation, useDeleteAddressMutation, useSaveAddressMutation} = addressCustomerApi
 export const { useGetInfoAddressesQuery } = addressApi;
