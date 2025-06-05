@@ -31,6 +31,7 @@ import OrderResultPage from "@/pages/OrderResultPage.tsx";
 import OrderDetailPage from "@/pages/OrderDetailPage.tsx";
 import OrderManagementPage from "@/pages/admin/order/OrderManagementPage.tsx";
 import OrderDetailManagementPage from "@/pages/admin/order/OrderDetailManagementPage.tsx";
+import DashBoardPage from "@/pages/admin/dashboard/DashBoardPage.tsx";
 
 function App() {
 	return (
@@ -69,6 +70,7 @@ function App() {
 								<Route path={"customers/:id"} element={<CustomerDetailManagementPage />} />
 								<Route path={"orders"} element={<OrderManagementPage />} />
 								<Route path={"orders/:id"} element={<OrderDetailManagementPage />} />
+								<Route path={"analytics"} element={<DashBoardPage />} />
 							</Route>
 							<Route path="*" element={<NotFoundPage />} />
 						</Routes>
