@@ -8,17 +8,17 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState, useAppSelector } from "@/configs/store.config.ts";
+import { RootState } from "@/configs/store.config.ts";
 import { useGetAddressQuery, useGetInfoAddressesQuery, useSaveAddressMutation } from "@/redux/api/address.api.ts";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { useEffect } from "react";
 import { toast } from "sonner";
-import { getCities, getDistricts, getWards } from "@/utils/helper/AddressFilter.ts";
+import { getAllCities, getCityCode, getDistrictId, getDistrictsByCity, getWardId, getWardsByCityAndDistrict } from "@/utils/helper/AddressFilter.ts";
 import { hiddenDialog } from "@/redux/slice/dialog.slice.ts";
 
 const SaveAddressDialog = () => {
 	const dispatch = useDispatch();
-	const { dialog } = useAppSelector((state) => state.dialog);
+	const { dialog } = useSelector((state: RootState) => state.dialog);
 	const { user } = useSelector((state: RootState) => state.auth);
 	// fetch data
 	const { actionId } = useSelector((state: RootState) => state.address);
@@ -37,16 +37,16 @@ const SaveAddressDialog = () => {
 		}
 	}, [address, reset]);
 	const { data: infoAddresses, isError: isErrorInfoAddresses, isLoading: isLoadingInfoAddresses } = useGetInfoAddressesQuery();
-	const [cityValue, districtValue] = watch(["city_code", "district_id"]);
+	const [cityValue, districtValue] = watch(["city", "district"]);
 	const [request, { isLoading: isLoadingAddressShippingResponse }] = useSaveAddressMutation();
 	const onSubmit = async (formValues: SaveAddressRequest) => {
 		try {
 			const data = {
 				...formValues,
 				country_code: user?.country_code,
-				city: getCities(infoAddresses).find((item) => item.city_code === formValues.city_code)?.city ?? "",
-				district: getDistricts(infoAddresses, formValues.city_code).find((item) => item.district_id === formValues.district_id)?.district ?? "",
-				ward: getWards(infoAddresses, formValues.city_code, formValues.district_id).find((item) => item.ward_id === formValues.ward_id)?.ward ?? "",
+				city_code: getCityCode(infoAddresses, formValues.city),
+				district_id: getDistrictId(infoAddresses, formValues.city, formValues.district),
+				ward_id: getWardId(infoAddresses, formValues.city, formValues.district, formValues.ward),
 				active: formValues.active ?? false,
 			} as SaveAddressRequest;
 			const result = await request(data).unwrap();
@@ -68,7 +68,7 @@ const SaveAddressDialog = () => {
 					" bg-black text-white p-2 sm:p-5 cursor-pointer !rounded-lg sm:!rounded-full -translate-y-3 sm:-translate-y-10 translate-x-3 sm:translate-x-10 opacity-100 "
 				}
 				className={"z-51 max-w-full text-gray-500 max-sm:bottom-0 max-sm:h-3/4 max-sm:-translate-y-1/4 max-sm:rounded-b-none max-sm:p-2 sm:max-w-200"}>
-				<DialogTitle></DialogTitle>
+				<DialogTitle />
 				<ScrollArea className={"h-80 overflow-auto overscroll-none p-5 max-md:p-2 max-sm:h-full max-sm:w-full"}>
 					<form onSubmit={handleSubmit(onSubmit)} className={"w-full space-y-3 p-2 max-sm:my-5"}>
 						<div className={"grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4 sm:p-2"}>
@@ -113,15 +113,15 @@ const SaveAddressDialog = () => {
 												{isErrorInfoAddresses && <p className='text-sm text-red-500'>không tìm thấy dữ liệu</p>}
 												{infoAddresses &&
 													infoAddresses.length > 0 &&
-													getCities(infoAddresses).map((item, index) => (
-														<SelectItem key={index + "-" + item.city_code} value={item.city_code}>
-															{item.city}{" "}
+													getAllCities(infoAddresses).map((item) => (
+														<SelectItem key={item} value={item}>
+															{item}{" "}
 														</SelectItem>
 													))}
 											</SelectContent>
 										</Select>
 									)}
-									name={"city_code"}
+									name={"city"}
 									control={control}
 									rules={{ required: "Không được bỏ trống" }}
 								/>
@@ -137,16 +137,16 @@ const SaveAddressDialog = () => {
 											{cityValue && (
 												<SelectContent className={"z-52"}>
 													{infoAddresses &&
-														getDistricts(infoAddresses, cityValue).map((item, index) => (
-															<SelectItem key={index + "-" + item.district_id} data-district-code={item.district_id} value={item.district_id}>
-																{item.district}
+														getDistrictsByCity(infoAddresses, cityValue).map((item) => (
+															<SelectItem key={item} data-district-code={item} value={item}>
+																{item}
 															</SelectItem>
 														))}
 												</SelectContent>
 											)}
 										</Select>
 									)}
-									name={"district_id"}
+									name={"district"}
 									control={control}
 									rules={{ required: "Không được bỏ trống" }}
 								/>
@@ -162,16 +162,16 @@ const SaveAddressDialog = () => {
 											{districtValue && (
 												<SelectContent className={"z-52"}>
 													{infoAddresses &&
-														getWards(infoAddresses, cityValue, districtValue).map((item, index) => (
-															<SelectItem key={index + "-" + item.ward_id} value={item.ward_id}>
-																{item.ward}
+														getWardsByCityAndDistrict(infoAddresses, cityValue, districtValue).map((item) => (
+															<SelectItem key={item} value={item}>
+																{item}
 															</SelectItem>
 														))}
 												</SelectContent>
 											)}
 										</Select>
 									)}
-									name={"ward_id"}
+									name={"ward"}
 									control={control}
 									rules={{ required: "Không được bỏ trống" }}
 								/>
