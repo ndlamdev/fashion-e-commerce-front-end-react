@@ -7,7 +7,7 @@
  **/
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { ApiResponse } from "@/domain/ApiResponse.ts";
-import { createBaseQueryWithDispatch } from "@/redux/query/baseQueryWithDispatch.ts";
+import { createBaseQueryWithDispatch } from "@/redux/api/baseQueryWithDispatch.ts";
 import CreateOrderResponse from "@/domain/response/createOrder.response.ts";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL + "/payment/v1";

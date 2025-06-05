@@ -19,7 +19,7 @@ import ReferFriendDialog from "@/components/product-detail/dialog/ReferFriendDia
 import GuideChooseSizeDialog from "@/components/product-detail/dialog/GuideChooseSizeDialog.tsx";
 import EditInfoProfileDialog from "@/components/profile/dialog/EditInfoProfileDialog.tsx";
 import SaveAddressDialog from "@/components/profile/dialog/SaveAddressDialog.tsx";
-import ResetPasswordDialog from "@/components/profile/dialog/ResetPasswordDialog.tsx";
+import ChangePasswordDialog from "@/components/profile/dialog/ChangePasswordDialog.tsx";
 import AddressManagementDialog from "@/components/dialog/AddressManagementDialog.tsx";
 
 function DialogProvider() {
@@ -40,7 +40,7 @@ function DialogProvider() {
 			<GuideChooseSizeDialog />
 			<EditInfoProfileDialog />
 			<SaveAddressDialog />
-			<ResetPasswordDialog />
+			<ChangePasswordDialog />
 			<AddressManagementDialog />
 		</>
 	);

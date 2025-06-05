@@ -17,6 +17,7 @@ import useScrolled from "@/utils/helper/use-scrolled.ts";
 import VerticalMenuProps from "@/components/menu/props/vertical-menu.prop.ts";
 import { useDispatch } from "react-redux";
 import { showDialog } from "@/redux/slice/dialog.slice.ts";
+import logo from "@/assets/images/icons/logo.jpg";
 
 function VerticalMenu({ showMenu, onHidden, onAnimationComplete, onExitComplete }: VerticalMenuProps) {
 	const [hiddenMenu, setHiddenMenu] = useState<boolean>(true);
@@ -50,7 +51,7 @@ function VerticalMenu({ showMenu, onHidden, onAnimationComplete, onExitComplete 
 						</div>
 					</div>
 					<div className={"absolute top-3 left-4 h-[40px] w-[40px]"}>
-						<div className={"flex items-center justify-center bg-blue-400 p-2"}>LOGO</div>
+						<img src={logo} alt='KimiFashion Logo' className={"!h-10 !w-10 rounded-sm"} />
 					</div>
 					<div className={"mx-3 my-4 flex flex-col items-center gap-3 rounded-2xl bg-white p-3"}>
 						<Tabs defaultValue='male' className='w-full'>

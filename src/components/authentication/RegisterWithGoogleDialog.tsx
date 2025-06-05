@@ -29,6 +29,7 @@ function RegisterWithGoogleDialog() {
 		handleSubmit,
 		getValues,
 		trigger,
+		reset,
 		formState: { errors },
 	} = useForm<RegisterWithGoogleRequest>({
 		resetOptions: {
@@ -44,13 +45,15 @@ function RegisterWithGoogleDialog() {
 		authenticationService
 			.registerWithGoogle(data)
 			.then(() => {
-				setLocalDialog("dialog");
-				dispatch(hiddenDialog());
+				setLocalDialog("none");
+				reset();
+				dispatch(showDialog("login"));
 			})
 			.catch((error: ApiResponseError<string>) => {
-				if (error.code == 90000012) {
-					setLocalDialog("dialog");
-					dispatch(hiddenDialog());
+				if (error.code == 90001) {
+					setLocalDialog("none");
+					reset();
+					dispatch(showDialog("login"));
 				}
 			});
 	};

@@ -5,10 +5,10 @@
  * Create at: 3:42 PM - 23/05/2025
  *  User: kimin
  **/
-import { useCancelPaymentMutation } from "@/redux/query/payment.query.ts";
+import { useCancelPaymentMutation } from "@/redux/api/payment.api.ts";
 import { useNavigate } from "react-router";
 import { usePayOS } from "@payos/payos-checkout";
-import { RETURN_URL } from "@/redux/query/order.query.ts";
+import { RETURN_URL } from "@/redux/api/order.api.ts";
 import { useEffect } from "react";
 
 const DialogPayOs = ({

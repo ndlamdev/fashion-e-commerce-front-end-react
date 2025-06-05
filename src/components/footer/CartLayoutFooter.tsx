@@ -17,19 +17,19 @@ import CartHelper from "@/utils/helper/CartHelper.ts";
 import { createOrder, setShowConfirm } from "@/redux/slice/cart.slice";
 import { toast } from "sonner";
 import { useCallback, useEffect, useState } from "react";
-import { useCreateOrderMutation } from "@/redux/query/order.query.ts";
+import { useCreateOrderMutation } from "@/redux/api/order.api.ts";
 import { InfoCustomerCreateOrder, VariantRequestType } from "@/domain/resquest/createOrder.request.ts";
-import CartItemType from "@/types/CartItemType.ts";
+import CartItemType from "@/types/CartItemType";
 import { useNavigate } from "react-router";
 import DialogPayOs from "@/components/dialog/DialogPayOs.tsx";
-import { cartApi } from "@/redux/query/cart.query.ts";
+import { cartApi } from "@/redux/api/cart.api.ts";
 
 function CartLayoutFooter() {
-	const cartItemsSelected = useSelector((state: RootState) => state.cartSlice.items);
+	const cartItemsSelected = useSelector((state: RootState) => state.cart.items);
 	const { user, access_token } = useSelector((state: RootState) => state.auth);
 	const dispatch = useDispatch();
-	const { payment, showConfirm } = useSelector((state: RootState) => state.cartSlice);
-	const { infoCustomerCreateOrder, items } = useSelector((state: RootState) => state.cartSlice);
+	const { payment, showConfirm } = useSelector((state: RootState) => state.cart);
+	const { infoCustomerCreateOrder, items } = useSelector((state: RootState) => state.cart);
 	const [createOrderApi, { data, error }] = useCreateOrderMutation();
 	const [payOsConfig, setPayOsConfig] = useState<{ orderId: number; checkoutUrl: string; orderCode: number }>();
 	const navigate = useNavigate();

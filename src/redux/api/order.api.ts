@@ -7,7 +7,7 @@
  **/
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { ApiResponse } from "@/domain/ApiResponse.ts";
-import { createBaseQueryWithDispatch } from "@/redux/query/baseQueryWithDispatch.ts";
+import { createBaseQueryWithDispatch } from "@/redux/api/baseQueryWithDispatch.ts";
 import CreateOrderRequest from "@/domain/resquest/createOrder.request.ts";
 import CreateOrderResponse from "@/domain/response/createOrder.response.ts";
 
@@ -47,9 +47,14 @@ export const orderApi = createApi({
 			}),
 			invalidatesTags: ["order"],
 		}),
+		historyOrder: build.query<ApiResponse<CreateOrderResponse>, number | undefined>({
+			query: (page = 0) => ({
+				url: `/cancel?page=${page}`,
+			}),
+		}),
 	}),
 });
 
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
-export const { useCreateOrderMutation, useCancelOrderMutation } = orderApi;
+export const { useCreateOrderMutation, useCancelOrderMutation, useHistoryOrderQuery } = orderApi;

@@ -10,8 +10,7 @@ import ProductImageType from "@/types/product/productImage.type.ts";
 import { OptionType } from "@/types/product/productOption.type.ts";
 import { SameRadioGroup, SameRadioGroupItem } from "@/components/radio-group/SameRadioGroup.tsx";
 import { Label } from "@/components/ui/label.tsx";
-import { useAddCartItemMutation } from "@/redux/query/cart.query.ts";
-import { toast } from "sonner";
+import cartService from "@/services/cart.service.ts";
 
 export default function CardProduct(props: ProductCardProp) {
 	const navigate = useNavigate();
@@ -20,7 +19,6 @@ export default function CardProduct(props: ProductCardProp) {
 	const [sizeSelected, setSizeSelected] = useState<string | undefined>();
 	const [imagesColor, setImagesColor] = useState<(ProductImageType | undefined)[]>();
 	const [showDialog, setShowDialog] = useState<boolean>(false);
-	const [addCartItems] = useAddCartItemMutation();
 
 	useEffect(() => {
 		if (!props) return;
@@ -56,13 +54,9 @@ export default function CardProduct(props: ProductCardProp) {
 		(size: string) => {
 			const variant = props.variants.find((v) => v.options.COLOR === colorSelected && v.options.SIZE === size);
 			if (!variant) return;
-			addCartItems({ variantId: variant?.id, quantity: 1 }).then((response) => {
-				if (response.data) {
-					toast.success("Thêm vào giỏ hàng thành công");
-				}
-			});
+			cartService.addCartItem(variant.id, 1).then();
 		},
-		[addCartItems, colorSelected, props.variants],
+		[colorSelected, props.variants],
 	);
 
 	return (
@@ -106,7 +100,17 @@ export default function CardProduct(props: ProductCardProp) {
 					}
 					onMouseEnter={() => setShowDialog(true)}
 					onMouseLeave={() => setShowDialog(false)}>
-					<p className={"m-0 mb-1 p-0 text-sm font-bold"}>Thêm nhanh vào giỏ hàng +</p>
+					<p
+						className={"m-0 mb-1 p-0 text-sm font-bold"}
+						onClick={() => {
+							const sizes = props.options.find((opt) => opt.type === OptionType.SIZE);
+							if (sizes?.values?.length) return;
+							const variant = props.variants.find((v) => v.options.COLOR === colorSelected);
+							if (!variant) return;
+							cartService.addCartItem(variant.id, 1).then();
+						}}>
+						Thêm nhanh vào giỏ hàng +
+					</p>
 					<div className={"flex cursor-pointer flex-wrap gap-2"}>
 						{props.options
 							.find((opt) => opt.type === OptionType.SIZE)

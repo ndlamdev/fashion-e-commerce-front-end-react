@@ -14,7 +14,7 @@ function OtherLogin() {
 	const googleLogin = useGoogleLogin({
 		onSuccess: async (tokenResponse) => {
 			await authenticationService
-				.loginWithGoogle({ "auth-code": tokenResponse.code })
+				.loginWithGoogle({ "auth_code": tokenResponse.code })
 				.then(() => {
 					dispatch(hiddenDialog());
 				})
