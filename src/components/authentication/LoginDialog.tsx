@@ -12,8 +12,7 @@ import InputAuthentication from "@/components/authentication/ui/InputAuthenticat
 import LoginRequest from "@/domain/resquest/login.request.ts";
 import { SubmitHandler, useForm } from "react-hook-form";
 import authenticationService from "@/services/authentication.service.ts";
-import { useNavigate } from "react-router";
-import { useLoginWithGoogleMutation } from "@/redux/query/authentication.query.ts";
+import { useLoginWithGoogleMutation } from "@/redux/api/auth.api.ts";
 import OtherLogin from "@/components/authentication/ui/OtherLogin.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/configs/store.config.ts";
@@ -23,7 +22,6 @@ function LoginDialog() {
 	const [, loginWithGoogleApiResult] = useLoginWithGoogleMutation();
 	const { dialog } = useSelector((state: RootState) => state.dialog);
 	const dispatch = useDispatch();
-	const navigation = useNavigate();
 	const {
 		register,
 		trigger,
@@ -37,11 +35,10 @@ function LoginDialog() {
 		async (data) => {
 			await authenticationService.login(data).then(() => {
 				dispatch(hiddenDialog());
-				navigation("/test");
 				reset();
 			});
 		},
-		[navigation, reset, dispatch],
+		[reset, dispatch],
 	);
 
 	useEffect(() => {
@@ -110,16 +107,10 @@ function LoginDialog() {
 							<ButtonAuthentication onClick={handleSubmit(onSubmit)}>Đăng nhập</ButtonAuthentication>
 						</div>
 						<div className='auth-actions mt-2 flex w-full justify-between text-blue-800'>
-							<a
-								href='#'
-								className='!tw-text-base !tw-text-cm-blue'
-								onClick={() => dispatch(showDialog("register"))}>
+							<a href='#' className='!tw-text-base !tw-text-cm-blue' onClick={() => dispatch(showDialog("register"))}>
 								Đăng ký
 							</a>
-							<a
-								href='#'
-								className='!tw-text-base !tw-text-cm-blue'
-								onClick={() => dispatch(showDialog("forgot-password"))}>
+							<a href='#' className='!tw-text-base !tw-text-cm-blue' onClick={() => dispatch(showDialog("forgot-password"))}>
 								Quên mật khẩu
 							</a>
 						</div>

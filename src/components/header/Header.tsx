@@ -20,7 +20,6 @@ import { useNavigate } from "react-router";
 import HeaderProps from "@/components/header/props/header-prop.ts";
 import { FaSolidUserAlt } from "@/assets/images/icons/FaSolidUserAlt.tsx";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar.tsx";
-import { SheetTrigger } from "@/components/ui/sheet.tsx";
 import { RootState } from "@/configs/store.config.ts";
 import { useDispatch, useSelector } from "react-redux";
 import Searcher from "@/components/header/Searcher.tsx";
@@ -32,12 +31,12 @@ import { Skeleton } from "@/components/ui/skeleton.tsx";
 import QuickSearchProduct from "@/components/product/QuickSearchProduct.tsx";
 import { debounce } from "lodash";
 import { useQuickSearchQuery } from "@/services/product.service.ts";
-import { cn } from "@/lib/utils.ts";
-import { useGetCartQuery } from "@/redux/query/cart.query.ts";
+import { useGetCartQuery } from "@/redux/api/cart.api.ts";
+import logo from "@/assets/images/icons/logo.jpg";
 
 function Header({ showMenu }: HeaderProps) {
 	const [, scrollY] = useScrolled();
-	const [scrollUp, setScrollUp] = useState(false);
+	// const [scrollUp, setScrollUp] = useState(false);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { access_token, user } = useSelector((state: RootState) => state.auth);
@@ -50,13 +49,9 @@ function Header({ showMenu }: HeaderProps) {
 	const { data: dataQuickSearch, isLoading: isLoadingQuickSearch, isError: isErrorQuickSearch } = useQuickSearchQuery(title, { skip: !title });
 
 	const debounceSearch = debounce((title: string) => {
-		onSearchHandle(title);
-	}, 500);
-
-	const onSearchHandle = useCallback((title: string) => {
-		console.log(title);
+		console.log("title", title, !title.length);
 		setTitle(title);
-	}, []);
+	}, 500);
 
 	const onSearchHandler = useCallback(
 		(title: string) => {
@@ -98,7 +93,7 @@ function Header({ showMenu }: HeaderProps) {
 
 						<div className={"hidden lg:block"}>
 							<div className={"flex size-18 cursor-pointer items-center justify-center bg-blue-400"} onClick={() => navigate("/")}>
-								Logo
+								<img src={logo} alt='logo.jpg' />
 							</div>
 						</div>
 						<div className={"search-component relative block lg:hidden"}>
@@ -132,8 +127,8 @@ function Header({ showMenu }: HeaderProps) {
 					</div>
 					<div className={"col-span-3 flex justify-center"}>
 						<div className={"block lg:hidden"}>
-							<div className={"flex size-[60px] cursor-pointer items-center justify-center bg-blue-400"} onClick={() => navigate("/")}>
-								Logo
+							<div className={"flex size-[60px] cursor-pointer items-center justify-center"} onClick={() => navigate("/")}>
+								<img src={logo} alt='logo.jpg' />
 							</div>
 						</div>
 						<div className={"mb-0 hidden items-center justify-center gap-4 lg:flex"}>
@@ -149,17 +144,18 @@ function Header({ showMenu }: HeaderProps) {
 								))}
 								<HoverCardContent
 									className={
-										"grid min-h-25 w-[80vw] -translate-x-12 translate-y-6 grid-cols-3 place-content-around gap-2 bg-linear-to-t from-sky-500 to-indigo-500"
+										"grid min-h-25 w-[80vw] -translate-x-12 translate-y-6 grid-cols-3 place-content-around gap-2 border-1 border-black bg-linear-to-t"
 									}>
 									{isLoading && <Skeleton className={"w-[75vw]"} />}
 									{data?.data &&
 										data.data[type].map((item, index) => (
-											<span
+											<p
 												key={index}
 												onClick={() => navigate(`/collection?cid=${item.id}&type=${type}`, { state: { name: item.title } })}
-												className={"cursor-pointer font-bold text-white italic hover:text-neutral-600"}>
+												className={"group flex cursor-pointer items-center gap-1 font-bold text-black hover:text-neutral-600"}>
 												{item.title}
-											</span>
+												<SolarArrowRightLinear className={"hidden group-hover:block"} height={20} width={20} />
+											</p>
 										))}
 								</HoverCardContent>
 							</HoverCard>
@@ -192,28 +188,29 @@ function Header({ showMenu }: HeaderProps) {
 								</motion.div>
 							)}
 						</AnimatePresence>
-						<a href={"#"} className={"z-4"}>
+						<div className={"z-4 cursor-pointer"}>
 							{access_token && user ? (
-								<SheetTrigger>
-									<Avatar>
-										<AvatarImage src={"https://github.com/shadcn.png"} alt={"@shadcn"} />
-										<AvatarFallback>{user.full_name}</AvatarFallback>
-									</Avatar>
-								</SheetTrigger>
+								<Avatar
+									onClick={() => {
+										navigate("/profile/info");
+									}}>
+									<AvatarImage src={"https://github.com/shadcn.png"} alt={"@shadcn"} />
+									<AvatarFallback>{user.full_name}</AvatarFallback>
+								</Avatar>
 							) : (
 								<FaSolidUserAlt width={24} height={24} onClick={() => dispatch(showDialog("login"))} />
 							)}
-						</a>
-						<a href={"#"} className={"z-4"}>
+						</div>
+						<div className={"z-4 cursor-pointer"}>
 							<SolarHeartBold width={29} height={29} />
-						</a>
+						</div>
 						<div className={"group relative"}>
-							<a href={"/cart"} className={"relative z-3"}>
-								<ShoppingBag countItem={cartData?.data.cartItems.length ?? 0} />
+							<a href={!access_token ? "#" : "/cart"} className={"relative z-3"}>
+								<ShoppingBag countItem={cartData?.data.cart_items.length ?? 0} />
 							</a>
 							<div className={"absolute top-0 right-0 z-2 hidden w-[25rem] group-hover:lg:block"}>
 								<div className={"relative top-14 right-0 max-h-[27rem] min-h-[4rem] overflow-y-scroll rounded-2xl bg-white p-4"}>
-									{cartData?.data.cartItems.length ? (
+									{cartData?.data.cart_items.length ? (
 										<div className={"h-full overflow-auto"}>
 											<div className={"flex justify-between"}>
 												<p>{dataShoppingBagItems.length} sản phẩm</p>
@@ -223,7 +220,7 @@ function Header({ showMenu }: HeaderProps) {
 											</div>
 											<Separator className={"my-2"} />
 											<ul className={"flex h-full flex-col justify-between gap-y-2"}>
-												{cartData.data.cartItems.map((value, index) => (
+												{cartData.data.cart_items.map((value, index) => (
 													<ShoppingBagItem {...value} key={`shopping_bag_item_${index}`} />
 												))}
 											</ul>
@@ -238,18 +235,18 @@ function Header({ showMenu }: HeaderProps) {
 				</div>
 				<motion.div
 					initial={{ height: 35 }}
-					animate={{ height: scrollY >= 10 ? 0 : 35 }}
+					// animate={{ height: scrollY >= 10 ? 0 : 35 }}
 					transition={{ duration: 0.75 }}
-					onUpdate={(latest) => {
-						if (scrollUp) window.scrollTo({ top: (window.scrollY - (latest as { height: number }).height) * 1.5 - 5 });
-					}}
-					onAnimationStart={(value) => setScrollUp((value as { height: number }).height != 0)}
+					// onUpdate={(latest) => {
+					// 	if (scrollUp) window.scrollTo({ top: (window.scrollY - (latest as { height: number }).height) * 1.5 - 5 });
+					// }}
+					// onAnimationStart={(value) => setScrollUp((value as { height: number }).height != 0)}
 					className={`mb-2 grid w-full grid-cols-5 gap-2 overflow-hidden bg-gray-700 lg:grid-cols-3 ${scrollY < 10 && "py-1"}`}>
 					<div className={"col-span-3 col-start-2 overflow-hidden lg:col-span-1 lg:col-start-2"}>
 						<motion.div
 							className='w-[400px] overflow-hidden text-nowrap text-white'
 							animate={{ x: ["100%", "-100%"] }}
-							transition={{ repeat: Infinity, duration: 10, ease: "linear" }}>
+							transition={{ repeat: 2, duration: 10, ease: "linear" }}>
 							Freeship mọi đơn hàng trong tháng 3 - duy nhất tại website
 						</motion.div>
 					</div>
@@ -260,26 +257,32 @@ function Header({ showMenu }: HeaderProps) {
 			</motion.header>
 			{searchAction === "SEARCH" && (
 				<div
-					className={cn(
-						"border-gray absolute top-[115px] left-0 z-3 flex w-full flex-col gap-y-5 overflow-x-hidden overflow-y-auto border-t-5 bg-white p-5",
-						dataQuickSearch ? "h-screen sm:h-100" : "h-[50vw] sm:h-25",
-					)}>
+					className={
+						"border-gray absolute top-[115px] left-0 z-3 flex max-h-screen w-full flex-col gap-y-5 overflow-x-hidden overflow-y-auto border-t-5 border-b-5 border-black bg-white p-5 sm:max-h-100"
+					}>
 					{isLoadingQuickSearch && <Skeleton className={"min-h-5 w-full"} />}
 					{isErrorQuickSearch && <p className={"text-red-500 normal-case"}>lỗi tìm thấy sản phẩm</p>}
-					{dataQuickSearch &&
-						dataQuickSearch.data.map((it) => (
-							<QuickSearchProduct
-								className={"flex w-full cursor-pointer flex-row items-center gap-2"}
-								key={`quick_search_product_${it.id}`}
-								{...it}
-								image={it.image}
-								onClick={() => {
-									navigate(`/product-detail/${it.id}`);
-									setSearchAction("EXIT");
-								}}
-							/>
-						))}
-					{!dataQuickSearch && <div className={"min-h-5 w-full text-center font-bold"}>Nhập sản phẩm bạn muốn tìm.</div>}
+					{!title || !title.length || !dataQuickSearch ? (
+						<div className={"min-h-5 w-full text-center font-bold"}>Nhập sản phẩm bạn muốn tìm.</div>
+					) : (
+						dataQuickSearch &&
+						(dataQuickSearch.data.length ? (
+							dataQuickSearch.data.map((it) => (
+								<QuickSearchProduct
+									className={"flex w-full cursor-pointer flex-row items-center gap-2"}
+									key={`quick_search_product_${it.id}`}
+									{...it}
+									image={it.image}
+									onClick={() => {
+										navigate(`/product-detail/${it.id}`);
+										setSearchAction("EXIT");
+									}}
+								/>
+							))
+						) : (
+							<div className={"min-h-5 w-full text-center font-bold"}>Không tìm thấy sản phẩm.</div>
+						))
+					)}
 				</div>
 			)}
 		</div>

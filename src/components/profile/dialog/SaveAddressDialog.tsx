@@ -9,17 +9,11 @@ import { Checkbox } from "@/components/ui/checkbox.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/configs/store.config.ts";
-import { useGetAddressQuery, useGetInfoAddressesQuery, useSaveAddressMutation } from "@/services/address.service.ts";
+import { useGetAddressQuery, useGetInfoAddressesQuery, useSaveAddressMutation } from "@/redux/api/address.api.ts";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { useEffect } from "react";
 import { toast } from "sonner";
-import {
-	getAllCities,
-	getCityCode,
-	getDistrictId,
-	getDistrictsByCity, getWardId,
-	getWardsByDistrict,
-} from "@/utils/helper/AddressFilter.ts";
+import { getAllCities, getCityCode, getDistrictId, getDistrictsByCity, getWardId, getWardsByCityAndDistrict } from "@/utils/helper/AddressFilter.ts";
 import { hiddenDialog } from "@/redux/slice/dialog.slice.ts";
 
 const SaveAddressDialog = () => {
@@ -39,14 +33,10 @@ const SaveAddressDialog = () => {
 	} = useForm<SaveAddressRequest>();
 	useEffect(() => {
 		if (address?.data) {
-			reset(address.data,);
+			reset(address.data);
 		}
 	}, [address, reset]);
-	const {
-		data: infoAddresses,
-		isError: isErrorInfoAddresses,
-		isLoading: isLoadingInfoAddresses,
-	} = useGetInfoAddressesQuery();
+	const { data: infoAddresses, isError: isErrorInfoAddresses, isLoading: isLoadingInfoAddresses } = useGetInfoAddressesQuery();
 	const [cityValue, districtValue] = watch(["city", "district"]);
 	const [request, { isLoading: isLoadingAddressShippingResponse }] = useSaveAddressMutation();
 	const onSubmit = async (formValues: SaveAddressRequest) => {
@@ -64,7 +54,7 @@ const SaveAddressDialog = () => {
 				toast("Cập nhật thất bại " + result?.message, {});
 				return;
 			}
-			dispatch(hiddenDialog())
+			dispatch(hiddenDialog());
 			toast("Cập nhật thành công ");
 		} catch (error) {
 			console.log(error);
@@ -72,127 +62,142 @@ const SaveAddressDialog = () => {
 		}
 	};
 	return (
-		<Dialog open={dialog === 'save-address'} onOpenChange={() => dispatch(hiddenDialog())}>
+		<Dialog open={dialog === "save-address"} onOpenChange={() => dispatch(hiddenDialog())}>
 			<DialogContent
-				classIcon={" bg-black text-white p-2 sm:p-5 cursor-pointer !rounded-lg sm:!rounded-full -translate-y-3 sm:-translate-y-10 translate-x-3 sm:translate-x-10 opacity-100 "}
-				className={"max-w-full max-sm:h-3/4 max-sm:p-2 text-gray-500 sm:max-w-200 z-51 max-sm:-translate-y-1/4  max-sm:bottom-0 max-sm:rounded-b-none"}>
-				<DialogTitle/>
-				<ScrollArea className={"h-80 max-sm:w-full max-sm:h-full p-5 max-md:p-2 overflow-auto overscroll-none"}>
+				classIcon={
+					" bg-black text-white p-2 sm:p-5 cursor-pointer !rounded-lg sm:!rounded-full -translate-y-3 sm:-translate-y-10 translate-x-3 sm:translate-x-10 opacity-100 "
+				}
+				className={"z-51 max-w-full text-gray-500 max-sm:bottom-0 max-sm:h-3/4 max-sm:-translate-y-1/4 max-sm:rounded-b-none max-sm:p-2 sm:max-w-200"}>
+				<DialogTitle />
+				<ScrollArea className={"h-80 overflow-auto overscroll-none p-5 max-md:p-2 max-sm:h-full max-sm:w-full"}>
 					<form onSubmit={handleSubmit(onSubmit)} className={"w-full space-y-3 p-2 max-sm:my-5"}>
-						<div className={"grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 sm:p-2"}>
-							<div className="">
-								<Input placeholder={"Họ và tên"}
-											 className={"rounded-lg h-10"} {...register("full_name", {
-									required: "vui lòng nhập họ và tên",
-								})} />
-								{errors.full_name && <p className={"text-red-500 ml-2"}>{errors.full_name.message}</p>}
+						<div className={"grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4 sm:p-2"}>
+							<div className=''>
+								<Input
+									placeholder={"Họ và tên"}
+									className={"h-10 rounded-lg"}
+									{...register("full_name", {
+										required: "vui lòng nhập họ và tên",
+									})}
+								/>
+								{errors.full_name && <p className={"ml-2 text-red-500"}>{errors.full_name.message}</p>}
 							</div>
-							<div className="">
-								<Input placeholder={"Số điện thoại"}
-											 className={"rounded-lg h-10"} {...register("phone", {
-									required: "vui lòng nhập số điện thoại",
-									pattern: {
-										value: /(0[35789])+([0-9]{8})\b/g,
-										message: "số điện thoại không đúng khu vực Việt Nam",
-									},
-								})} />
-								{errors.phone && <p className={"text-red-500 ml-2"}>{errors.phone.message}</p>}
+							<div className=''>
+								<Input
+									placeholder={"Số điện thoại"}
+									className={"h-10 rounded-lg"}
+									{...register("phone", {
+										required: "vui lòng nhập số điện thoại",
+										pattern: {
+											value: /(0[35789])+([0-9]{8})\b/g,
+											message: "số điện thoại không đúng khu vực Việt Nam",
+										},
+									})}
+								/>
+								{errors.phone && <p className={"ml-2 text-red-500"}>{errors.phone.message}</p>}
 							</div>
-							<Input placeholder={"Địa chỉ"}
-										 className={"rounded-lg h-10"} {...register("street")} />
-							<div className="">
+							<Input placeholder={"Địa chỉ"} className={"h-10 rounded-lg"} {...register("street")} />
+							<div className=''>
 								<Controller
 									render={({ field }) => (
-										<Select value={field.value}
-														onValueChange={(value) => {
-															field.onChange(value);
-														}}
-										>
+										<Select
+											value={field.value}
+											onValueChange={(value) => {
+												field.onChange(value);
+											}}>
 											<SelectTrigger className={"max-sm:w-full"}>
-												<SelectValue placeholder="Thành phố/tỉnh"
-												/>
+												<SelectValue placeholder='Thành phố/tỉnh' />
 											</SelectTrigger>
 											<SelectContent className={"z-52"}>
 												{isLoadingInfoAddresses && <Skeleton className={"w-full"} />}
-												{isErrorInfoAddresses && <p className="text-sm text-red-500">không tìm thấy dữ liệu</p>}
-												{infoAddresses && infoAddresses.length > 0 && getAllCities(infoAddresses).map((item) => (
-													<SelectItem key={item}
-																			value={item}
-													>{item} </SelectItem>
-												))}
+												{isErrorInfoAddresses && <p className='text-sm text-red-500'>không tìm thấy dữ liệu</p>}
+												{infoAddresses &&
+													infoAddresses.length > 0 &&
+													getAllCities(infoAddresses).map((item) => (
+														<SelectItem key={item} value={item}>
+															{item}{" "}
+														</SelectItem>
+													))}
 											</SelectContent>
 										</Select>
-
 									)}
 									name={"city"}
 									control={control}
 									rules={{ required: "Không được bỏ trống" }}
 								/>
-								{errors.city && <p className={"text-red-500 ml-2"}>{errors.city.message}</p>}
+								{errors.city && <p className={"ml-2 text-red-500"}>{errors.city.message}</p>}
 							</div>
 							<div>
-									<Controller
-										render={({ field }) => (
-											<Select value={field.value} onValueChange={field.onChange}>
-												<SelectTrigger disabled={!cityValue} className={"max-sm:w-full"}>
-													<SelectValue placeholder="Quận/huyện" />
-												</SelectTrigger>
-												{cityValue && <SelectContent className={"z-52"}>
-													{infoAddresses && getDistrictsByCity(infoAddresses, cityValue).map((item) => (
-														<SelectItem key={item} data-district-code={item}
-																				value={item}
-														>{item}</SelectItem>
-													))}
-												</SelectContent>}
-											</Select>
-										)}
-										name={"district"}
-										control={control}
-										rules={{ required: "Không được bỏ trống" }}
-									/>
-								{errors.district && <p className={"text-red-500 ml-2"}>{errors.district.message}</p>}
+								<Controller
+									render={({ field }) => (
+										<Select value={field.value} onValueChange={field.onChange}>
+											<SelectTrigger disabled={!cityValue} className={"max-sm:w-full"}>
+												<SelectValue placeholder='Quận/huyện' />
+											</SelectTrigger>
+											{cityValue && (
+												<SelectContent className={"z-52"}>
+													{infoAddresses &&
+														getDistrictsByCity(infoAddresses, cityValue).map((item) => (
+															<SelectItem key={item} data-district-code={item} value={item}>
+																{item}
+															</SelectItem>
+														))}
+												</SelectContent>
+											)}
+										</Select>
+									)}
+									name={"district"}
+									control={control}
+									rules={{ required: "Không được bỏ trống" }}
+								/>
+								{errors.district && <p className={"ml-2 text-red-500"}>{errors.district.message}</p>}
 							</div>
 							<div>
-									<Controller
-										render={({ field }) => (
-											<Select value={field.value} onValueChange={field.onChange}>
-												<SelectTrigger disabled={!districtValue} className={"max-sm:w-full"}>
-													<SelectValue placeholder="Phường/xã" />
-												</SelectTrigger>
-												{districtValue && <SelectContent className={"z-52"}>
-													{infoAddresses && getWardsByDistrict(infoAddresses, cityValue, districtValue).map((item) => (
-														<SelectItem key={item}
-																				value={item}
-														>{item}</SelectItem>
-													))}
-												</SelectContent>}
-											</Select>
-										)}
-										name={"ward"}
-										control={control}
-										rules={{ required: "Không được bỏ trống" }}
-									/>
-								{errors.ward && <p className={"text-red-500 ml-2"}>{errors.ward.message}</p>}
+								<Controller
+									render={({ field }) => (
+										<Select value={field.value} onValueChange={field.onChange}>
+											<SelectTrigger disabled={!districtValue} className={"max-sm:w-full"}>
+												<SelectValue placeholder='Phường/xã' />
+											</SelectTrigger>
+											{districtValue && (
+												<SelectContent className={"z-52"}>
+													{infoAddresses &&
+														getWardsByCityAndDistrict(infoAddresses, cityValue, districtValue).map((item) => (
+															<SelectItem key={item} value={item}>
+																{item}
+															</SelectItem>
+														))}
+												</SelectContent>
+											)}
+										</Select>
+									)}
+									name={"ward"}
+									control={control}
+									rules={{ required: "Không được bỏ trống" }}
+								/>
+								{errors.ward && <p className={"ml-2 text-red-500"}>{errors.ward.message}</p>}
 							</div>
 							<Controller
 								name={"active"}
 								control={control}
 								render={({ field }) => (
-									<div className="flex items-center content-start space-x-3">
-										<Checkbox defaultChecked={address?.data.active} id={"is-default"} checked={field.value}
-															onCheckedChange={field.onChange} />
+									<div className='flex content-start items-center space-x-3'>
+										<Checkbox defaultChecked={address?.data.active} id={"is-default"} checked={field.value} onCheckedChange={field.onChange} />
 										<Label htmlFor={"is-default"}>Đặt làm mặc định</Label>
 									</div>
-								)}
-							>
-							</Controller>
+								)}></Controller>
 						</div>
-						<div className="flex items-center place-content-end w-full space-x-4">
-							<DialogClose><Button
-								disabled={isLoadingAddressShippingResponse}
-								className={"sm:p-5 text-black bg-neutral-200 rounded-full hover:text-white hover:bg-neutral-500  uppercase cursor-pointer"}>Hủy</Button></DialogClose>
-							<Button type={"submit"}
-											className={"sm:p-5 text-white bg-black rounded-full  uppercase cursor-pointer active:bg-neutral-500"}>Lưu</Button>
+						<div className='flex w-full place-content-end items-center space-x-4'>
+							<DialogClose>
+								<Button
+									disabled={isLoadingAddressShippingResponse}
+									className={"cursor-pointer rounded-full bg-neutral-200 text-black uppercase hover:bg-neutral-500 hover:text-white sm:p-5"}>
+									Hủy
+								</Button>
+							</DialogClose>
+							<Button type={"submit"} className={"cursor-pointer rounded-full bg-black text-white uppercase active:bg-neutral-500 sm:p-5"}>
+								Lưu
+							</Button>
 						</div>
 					</form>
 				</ScrollArea>

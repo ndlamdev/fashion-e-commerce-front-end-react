@@ -1,4 +1,4 @@
 export enum ProductSortEnum {
-	PRICE = 'Price',
-	QUANTITY = 'Quantity',
+	PRICE = "Price",
+	QUANTITY = "Quantity",
 }

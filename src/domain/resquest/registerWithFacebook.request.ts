@@ -7,8 +7,8 @@
  **/
 import RegisterRequest from "@/domain/resquest/register.request.ts";
 
-type RegisterWithFacebookRequest = Omit<RegisterRequest, "full-name"> & {
-	"register-token": string;
+type RegisterWithFacebookRequest = Omit<RegisterRequest, "full_name"> & {
+	register_token: string;
 };
 
 export default RegisterWithFacebookRequest;

@@ -17,109 +17,83 @@ import { DataTableColumnHeader } from "@/components/dataTable/DataTableColumnHea
 
 export type OrderProp = {
 	order_number: number;
-	date: number[]
-	customer_name: string
-	status: OrderStatusEnum
-	total: number
-	email: string
-}
+	date: number[];
+	customer_name: string;
+	status: OrderStatusEnum;
+	total: number;
+	email: string;
+};
 
 export const columns: ColumnDef<OrderProp | unknown, string | unknown>[] = [
 	{
 		id: "select",
 		header: ({ table }) => (
 			<Checkbox
-				checked={
-					table.getIsAllPageRowsSelected() ||
-					(table.getIsSomePageRowsSelected() && "indeterminate")
-				}
+				checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")}
 				onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-				aria-label="Select all"
+				aria-label='Select all'
 			/>
 		),
 		cell: ({ row }) => (
-			<Checkbox
-				checked={row.getIsSelected()}
-				onCheckedChange={(value) => row.toggleSelected(!!value)}
-				aria-label="Select row"
-				className={'cursor-pointer'}
-			/>
+			<Checkbox checked={row.getIsSelected()} onCheckedChange={(value) => row.toggleSelected(!!value)} aria-label='Select row' className={"cursor-pointer"} />
 		),
 	},
 	{
 		accessorKey: "order_number",
-		header: 'Order',
-		cell: ({ row }) => (<div className="font-bold">#{(row.getValue("order_number"))}</div>),
+		header: "Order",
+		cell: ({ row }) => <div className='font-bold'>#{row.getValue("order_number")}</div>,
 	},
 	{
 		accessorKey: "status",
-		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title="Status" />
-		),
+		header: ({ column }) => <DataTableColumnHeader column={column} title='Status' />,
 		cell: ({ row }) => (
 			<div>
-				<Badge variant={OrderStatusColors[row.getValue("status") as OrderStatusEnum]}>
-				{(row.getValue("status"))}
-				</Badge>
+				<Badge variant={OrderStatusColors[row.getValue("status") as OrderStatusEnum]}>{row.getValue("status")}</Badge>
 			</div>
 		),
 	},
 	{
 		accessorKey: "email",
-		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title="Email" />
-		),
+		header: ({ column }) => <DataTableColumnHeader column={column} title='Email' />,
 	},
 	{
 		accessorKey: "date",
-		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title="Date" />
-		),
-		cell: ({ row }) => (<div className="font-medium">{formatDateFromArray(row.getValue("date"))}</div>),
+		header: ({ column }) => <DataTableColumnHeader column={column} title='Date' />,
+		cell: ({ row }) => <div className='font-medium'>{formatDateFromArray(row.getValue("date"))}</div>,
 	},
 	{
 		accessorKey: "customer_name",
-		header: ({ column }) => (
-			<DataTableColumnHeader className={'cursor-pointer'} column={column} title="Customer" />
-		),
+		header: ({ column }) => <DataTableColumnHeader className={"cursor-pointer"} column={column} title='Customer' />,
 	},
 	{
 		accessorKey: "total",
-		header: ({ column }) => (
-			<DataTableColumnHeader className={'cursor-pointer'} column={column} title="Total" />
-		),
+		header: ({ column }) => <DataTableColumnHeader className={"cursor-pointer"} column={column} title='Total' />,
 		cell: ({ row }) => {
-			return <div className=" font-medium text-center">{formatCurrency(row.getValue("total"))}</div>;
+			return <div className='text-center font-medium'>{formatCurrency(row.getValue("total"))}</div>;
 		},
 	},
 	{
 		id: "actions",
-		cell: ({ row }) => {
-			//TODO: implement some action
-			console.log(row.original);
-
+		cell: () => {
 			return (
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
-						<Button variant="ghost" className="size-8 cursor-pointer p-0">
-							<span className="sr-only">Open menu</span>
-							<MoreHorizontal className="size-4" />
+						<Button variant='ghost' className='size-8 cursor-pointer p-0'>
+							<span className='sr-only'>Open menu</span>
+							<MoreHorizontal className='size-4' />
 						</Button>
 					</DropdownMenuTrigger>
-					<DropdownMenuContent align="end">
+					<DropdownMenuContent align='end'>
 						<DropdownMenuLabel>Actions</DropdownMenuLabel>
-						<DropdownMenuItem
-							className={'cursor-pointer'}
-							onClick={() => navigator.clipboard.writeText('')}
-						>
+						<DropdownMenuItem className={"cursor-pointer"} onClick={() => navigator.clipboard.writeText("")}>
 							Copy payment ID
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem className={'cursor-pointer'}>View customer</DropdownMenuItem>
-						<DropdownMenuItem className={'cursor-pointer'}>View payment details</DropdownMenuItem>
+						<DropdownMenuItem className={"cursor-pointer"}>View customer</DropdownMenuItem>
+						<DropdownMenuItem className={"cursor-pointer"}>View payment details</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
-			)
+			);
 		},
 	},
 ];

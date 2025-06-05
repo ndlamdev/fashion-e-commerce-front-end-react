@@ -8,6 +8,9 @@
 
 import axios from "axios";
 import AxiosResponseCustom from "@/domain/ApiResponse.ts";
+import LocalStorage from "@/utils/helper/LocalStorage.ts";
+import { appDispatch } from "@/configs/store.config.ts";
+import { closeDialogLoading, showDialogLoading } from "@/redux/slice/dialog.slice.ts";
 
 const api = axios.create({
 	// baseURL: "https://fashion-server.ndlamdev.website/fashion-e-commerce/",
@@ -20,15 +23,33 @@ const api = axios.create({
 	},
 });
 
-axios.interceptors.response.use(
+api.interceptors.response.use(
 	function (response: AxiosResponseCustom<any>) {
+		appDispatch(closeDialogLoading());
 		// Bất kì mã trạng thái nào nằm trong tầm 2xx đều khiến hàm này được trigger
 		// Làm gì đó với dữ liệu response
 		return response;
 	},
 	function (error) {
+		appDispatch(closeDialogLoading());
 		// Bất kì mã trạng thái nào lọt ra ngoài tầm 2xx đều khiến hàm này được trigger\
 		// Làm gì đó với lỗi response
+		return Promise.reject(error);
+	},
+);
+
+api.interceptors.request.use(
+	(config) => {
+		appDispatch(showDialogLoading());
+		const token = LocalStorage.getValue("ACCESS_TOKEN");
+		if (token) {
+			config.headers["Authorization"] = `Bearer ${token}`;
+		}
+
+		return config;
+	},
+	(error) => {
+		appDispatch(closeDialogLoading());
 		return Promise.reject(error);
 	},
 );

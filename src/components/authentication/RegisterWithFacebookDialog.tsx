@@ -18,6 +18,7 @@ import InputPassword from "@/components/authentication/ui/InputPassword.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/configs/store.config.ts";
 import { hiddenDialog, showDialog } from "@/redux/slice/dialog.slice.ts";
+import { ApiResponseError } from "@/domain/ApiResponseError.ts";
 
 function RegisterWithFacebookDialog() {
 	const dispatch = useDispatch();
@@ -44,11 +45,15 @@ function RegisterWithFacebookDialog() {
 		authenticationService
 			.registerWithFacebook(data)
 			.then(() => {
+				setLocalDialog("none");
 				dispatch(showDialog("login"));
 				reset();
 			})
-			.catch(() => {
-				dispatch(showDialog("login"));
+			.catch((error: ApiResponseError<string>) => {
+				if (error.code == 90001) {
+					setLocalDialog("none");
+					dispatch(showDialog("login"));
+				}
 			});
 	};
 

@@ -28,6 +28,7 @@ import { CustomerManagementPage } from "@/pages/admin/customer/CustomerManagemen
 import CustomerDetailManagementPage from "@/pages/admin/customer/CustomerDetailManagementPage.tsx";
 import HoverCardProvider from "@/context/provider/HoverCardProvider.tsx";
 import OrderResultPage from "@/pages/OrderResultPage.tsx";
+import OrderDetailPage from "@/pages/OrderDetailPage.tsx";
 import OrderManagementPage from "@/pages/admin/order/OrderManagementPage.tsx";
 import OrderDetailManagementPage from "@/pages/admin/order/OrderDetailManagementPage.tsx";
 import DashBoardPage from "@/pages/admin/dashboard/DashBoardPage.tsx";
@@ -57,6 +58,7 @@ function App() {
 									<Route path={"faq"} element={<FAQTab />} />
 								</Route>
 								<Route path={"/order/result"} element={<OrderResultPage />} />
+								<Route path={"/order-detail"} element={<OrderDetailPage />} />
 							</Route>
 							<Route path='/cart' element={<CartLayout />}>
 								<Route index element={<CartPage />} />
@@ -68,7 +70,7 @@ function App() {
 								<Route path={"customers/:id"} element={<CustomerDetailManagementPage />} />
 								<Route path={"orders"} element={<OrderManagementPage />} />
 								<Route path={"orders/:id"} element={<OrderDetailManagementPage />} />
-								<Route path={'analytics'} element={<DashBoardPage />} />
+								<Route path={"analytics"} element={<DashBoardPage />} />
 							</Route>
 							<Route path="*" element={<NotFoundPage />} />
 						</Routes>

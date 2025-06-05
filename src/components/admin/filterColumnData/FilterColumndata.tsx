@@ -1,0 +1,54 @@
+import { FC, memo } from "react";
+import { FilterColumnDataProps } from "@/components/admin/filterColumnData/props/filterColumndata.prop.ts";
+import Input from "@/components/form/Input.tsx";
+import { ArrowDownUpIcon, SearchIcon } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group.tsx";
+import { Label } from "@/components/ui/label.tsx";
+import { cn } from "@/lib/utils.ts";
+
+const FilterColumnData: FC<FilterColumnDataProps> = memo((props: FilterColumnDataProps) => {
+	return (
+		<div className={cn("flex space-x-3 gap-2", props.infoData)}>
+			<Input
+				leftIcon={<SearchIcon />}
+				className={"flex items-center space-x-2 rounded-lg bg-neutral-200 p-1 flex-1"}
+				placeholder={props.placeholderInput ?? ""}
+			/>
+			<div className={cn("flex", props.infoData ? "items-center space-x-2 max-sm:my-2 max-sm:w-full max-sm:justify-between" : "grow-0")}>
+				{props.infoData && <span className={"text-sm font-bold lg:text-base"}>{props.infoData}</span>}
+				<Popover>
+					<PopoverTrigger className={"cursor-pointer"} asChild>
+						<Button variant={"outline"} className={"cursor-pointer max-sm:size-8"}>
+							<ArrowDownUpIcon />
+						</Button>
+					</PopoverTrigger>
+					<PopoverContent className={"w-auto max-sm:p-2 max-sm:text-xs sm:-translate-2 sm:translate-y-2"}>
+						<p>Sort by</p>
+						<RadioGroup defaultValue={Object.keys(props.sortEnum)[0]} className={"border-b py-3"}>
+							{Object.entries(props.sortEnum).map((item) => (
+								<div key={item[0]} className='flex items-center space-x-2'>
+									<RadioGroupItem value={item[0]} id={item[0]} />
+									<Label htmlFor={item[0]}>{item[1]}</Label>
+								</div>
+							))}
+						</RadioGroup>
+						{props.DirectionSortBy && (
+							<RadioGroup defaultValue={Object.keys(props.DirectionSortBy)[0]} className={"py-3"}>
+								{Object.entries(props.DirectionSortBy).map((value) => (
+									<div key={value[0]} className='flex items-center space-x-2'>
+										<RadioGroupItem value={value[0]} id={value[0]} />
+										<Label htmlFor={value[0]}>{value[1]}</Label>
+									</div>
+								))}
+							</RadioGroup>
+						)}
+					</PopoverContent>
+				</Popover>
+			</div>
+		</div>
+	);
+});
+
+export default FilterColumnData;
