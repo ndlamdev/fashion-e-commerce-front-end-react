@@ -11,7 +11,7 @@ import PaymentResponse from "@/domain/response/payment.response.ts";
 
 type CreateOrderResponse = {
 	id: number;
-	customer_id: number;
+	user_id: number;
 	name: string;
 	phone: string;
 	email: string;

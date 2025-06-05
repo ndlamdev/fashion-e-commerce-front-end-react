@@ -13,8 +13,34 @@ import { useForm } from "react-hook-form";
 import OTPRequest from "@/domain/resquest/otp.request.ts";
 import DialogConfirm from "@/components/dialog/DialogConfirm.tsx";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/configs/store.config.ts";
-import { hiddenDialog } from "@/redux/slice/dialog.slice";
+import { appDispatch, RootState } from "@/configs/store.config.ts";
+import { hiddenDialog, showDialog } from "@/redux/slice/dialog.slice";
+import EventInputOTPDialog from "@/components/authentication/props/InputOTPDialog.props.ts";
+import authenticationService from "@/services/authentication.service.ts";
+import SessionStorage from "@/utils/helper/SessionStorage.ts";
+
+const mapCallbacks: Record<"register" | "forget-password", EventInputOTPDialog> = {
+	register: {
+		sendOtp: async (otp: string): Promise<void> => {
+			return authenticationService.verifyRegister(otp).then(() => {
+				appDispatch(showDialog("login"));
+			});
+		},
+		resendOtp: () => {
+			return authenticationService.resendCodeVerify();
+		},
+	},
+	"forget-password": {
+		sendOtp: async (otp: string): Promise<void> => {
+			return authenticationService.verifyResetPassword(otp).then(() => {
+				appDispatch(showDialog("new-password"));
+			});
+		},
+		resendOtp: () => {
+			return authenticationService.resetPassword(SessionStorage.getValue("EMAIL_FORGET_PASSWORD") || "");
+		},
+	},
+};
 
 function InputOTPDialog() {
 	const dispatch = useDispatch();
@@ -40,7 +66,8 @@ function InputOTPDialog() {
 			return;
 		}
 
-		await callBacksDialog?.sendOtp?.(otp).then(() => {
+		if (!callBacksDialog) return;
+		await mapCallbacks[callBacksDialog]?.sendOtp?.(otp).then(() => {
 			setOpenDialog("none");
 		});
 	};
@@ -80,7 +107,8 @@ function InputOTPDialog() {
 						<button
 							className={"rounded-2xl border-1 border-black px-4 py-1 hover:border-white hover:bg-green-400 hover:text-white"}
 							onClick={async () => {
-								await callBacksDialog?.resendOtp?.().then();
+								if (!callBacksDialog) return;
+								await mapCallbacks[callBacksDialog]?.resendOtp?.().then();
 							}}>
 							Gửi
 						</button>

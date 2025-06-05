@@ -6,7 +6,7 @@
  *  User: lam-nguyen
  **/
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
-import { KeyboardEvent, useCallback } from "react";
+import { KeyboardEvent } from "react";
 import InputAuthentication from "@/components/authentication/ui/InputAuthentication.tsx";
 import { SubmitHandler, useForm } from "react-hook-form";
 import RegisterRequest from "@/domain/resquest/register.request.ts";
@@ -33,30 +33,9 @@ function RegisterDialog() {
 		},
 	});
 
-	const onVerifyHandler = useCallback(
-		async (otp: string): Promise<void> => {
-			return authenticationService.verifyRegister(otp).then(() => {
-				dispatch(showDialog("login"));
-			});
-		},
-		[dispatch],
-	);
-
-	const onResendHandler = useCallback(async () => {
-		return authenticationService.resendCodeVerify();
-	}, []);
-
 	const registerHandler: SubmitHandler<RegisterRequest> = (data: RegisterRequest) => {
 		authenticationService.register(data).then(() => {
-			dispatch(
-				showDialogWithCallback({
-					type: "input-otp",
-					callback: {
-						sendOtp: onVerifyHandler,
-						resendOtp: onResendHandler,
-					},
-				}),
-			);
+			dispatch(showDialogWithCallback({ type: "input-otp", callback: "register" }));
 			reset();
 		});
 	};
@@ -99,8 +78,8 @@ function RegisterDialog() {
 								type='text'
 								placeholder='Tên của bạn'
 								onKeyDown={enterKeyHandler}
-								error={errors["full-name"]?.message}
-								{...register("full-name", {
+								error={errors.full_name?.message}
+								{...register("full_name", {
 									required: "Vui lòng nhập họ tên của bạn",
 								})}
 							/>
@@ -115,6 +94,21 @@ function RegisterDialog() {
 										value: 10,
 										message: "Vui lòng nhập số điện thoại của bạn",
 									},
+								})}
+							/>
+						</div>
+						<div className={"my-3"}>
+							<InputAuthentication
+								onKeyDown={enterKeyHandler}
+								type={"email"}
+								placeholder={"Email của bạn"}
+								error={errors.email?.message}
+								{...register("email", {
+									pattern: {
+										value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+										message: "Vui lòng nhập email hợp lệ",
+									},
+									required: "Vui lòng nhập email hợp lệ",
 								})}
 							/>
 						</div>

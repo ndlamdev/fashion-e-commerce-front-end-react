@@ -28,18 +28,19 @@ export default tseslint.config(
 				},
 			],
 			"react/react-in-jsx-scope": "off",
-			"@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^" }],
-			"react-hooks/rules-of-hooks": "error",
-			"react-hooks/exhaustive-deps": "warn",
-			"no-unused-vars": [
+			"@typescript-eslint/no-unused-vars": [
 				"error",
 				{
 					vars: "all",
 					args: "after-used",
 					ignoreRestSiblings: true,
-					argsIgnorePattern: "^",
+					argsIgnorePattern: "^_",
+					varsIgnorePattern: "^_",
 				},
 			],
+			"react-hooks/rules-of-hooks": "error",
+			"react-hooks/exhaustive-deps": "warn",
+			"no-unused-vars": "off",
 			"@typescript-eslint/no-explicit-any": "off",
 			"@typescript-eslint/no-empty-object-type": "off",
 			"no-trailing-spaces": "error", // Xóa space ở đầu và cuối dòng

@@ -13,13 +13,12 @@ export type CallbackDialogProps = EventInputOTPDialog & {};
 
 type DialogSliceState = {
 	dialog: DialogTypeEnum;
-	callBacksDialog: CallbackDialogProps | undefined;
+	callBacksDialog?: "register" | "forget-password";
 	loading: boolean;
 };
 
 const initialState: DialogSliceState = {
 	dialog: "none",
-	callBacksDialog: undefined as CallbackDialogProps | undefined,
 	loading: false,
 };
 
@@ -32,7 +31,7 @@ export const dialogSlice = createSlice({
 			state,
 			action: PayloadAction<{
 				type: DialogTypeEnum;
-				callback?: CallbackDialogProps;
+				callback?: "register" | "forget-password";
 			}>,
 		) => {
 			state.dialog = action.payload.type;

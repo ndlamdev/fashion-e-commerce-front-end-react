@@ -9,8 +9,8 @@ import LoginRequest from "@/domain/resquest/login.request.ts";
 
 type RegisterRequest = LoginRequest & {
 	phone: string;
-	"full-name": string;
-	"confirm-password": string;
+	full_name: string;
+	confirm_password: string;
 };
 
 export default RegisterRequest;

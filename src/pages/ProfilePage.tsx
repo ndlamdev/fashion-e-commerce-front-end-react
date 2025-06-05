@@ -20,10 +20,12 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import authenticationService from "@/services/authentication.service.ts";
-import { logout } from "@/redux/slice/auth.slice.ts";
 import { toast } from "sonner";
 import DialogConfirm from "@/components/dialog/DialogConfirm.tsx";
+import { cartApi } from "@/redux/query/cart.query.ts";
+import { RootState } from "@/configs/store.config.ts";
 import { hiddenDialog, showDialog } from "@/redux/slice/dialog.slice.ts";
 import { RootState } from "@/configs/store.config.ts";
 
@@ -76,8 +78,10 @@ export default function ProfilePage() {
 		authenticationService
 			.logout()
 			.then(() => {
-				dispatch(logout());
 				navigate("/");
+				setOpenDialog("none");
+				window.scrollTo({ top: 0, behavior: "smooth" });
+				dispatch(cartApi.util.invalidateTags(["Cart"]));
 			})
 			.catch((error) => {
 				console.log(error);
@@ -85,75 +89,81 @@ export default function ProfilePage() {
 			});
 	};
 	const isDesktop = useMediaQuery("(min-width: 769px)");
+	const { user, access_token } = useSelector((state: RootState) => state.auth);
 
 	useEffect(() => {
 		setActiveTab(index.substring(1));
 	}, [index]);
+
+	useEffect(() => {
+		if (!user || !access_token) navigate("/");
+	}, [user, access_token, navigate]);
+
 	return (
-			<main className={"bg-neutral-300 p-4 md:p-8"}>
-				<section>
-					<RankingHeader fullName={"LamHongPhong"} levelClub={0} nextLevel={1} resetRankingDate={new Date()} nextResetRankingDate={new Date()} />
-				</section>
-				<section className={"my-9 flex space-x-20"}>
-					<nav className={"w-1/4 max-md:w-full"}>
-						<Sheet>
-							<div className='space-y-2'>
-								{Array.from(Object.keys(tabNavValues)).map((key) => {
-									return (
-										<SheetTrigger key={key} asChild>
-											<TabNav
-												style={{
-													backgroundColor: activeTab == key ? "black" : "",
-													color: activeTab === key ? "white" : "",
-												}}
-												tailwindStyle={`hover:bg-black hover:text-white `}
-												iconLeft={tabNavValues[key].iconLeft}
-												title={tabNavValues[key].title}
-												to={tabNavValues[key].to}
-												iconRight={<ArrowRightIcon className={"hover:text-white"} />}
-											/>
-										</SheetTrigger>
-									);
-								})}
-								<TabNav
-									to={""}
-									onClick={() => dispatch(showDialog('show-confirm'))}
-									tailwindStyle={`hover:bg-black hover:text-white `}
-									iconLeft={<LogOutIcon className={"flex-none hover:text-white"} />}
-									title={"Đăng xuất"}
-									iconRight={<ArrowRightIcon className={"hover:text-white"} />}
-								/>
-								<DialogConfirm
-									open={dialog === "show-confirm"}
-									onOpenChange={(value) => !value && showDialog("none")}
-									onClickCancel={() => {
-										dispatch(hiddenDialog())
-									}}
-									onClickSubmit={() => {
-										handleLogout();
-										dispatch(hiddenDialog())
-										showDialog("none");
-									}}
-								/>
-							</div>
-							{!isDesktop && (
-								<SheetContent
-									className={"!w-screen !max-w-none rounded-none bg-white p-2 sm:p-10"}
-									classNameClose='left-4'
-									iconRight={<MoveLeftIcon className={"size-8 rounded-full !bg-neutral-300 !fill-black p-1"} />}>
-									<ScrollArea className={"scrollbar-none h-screen overflow-auto"}>
-										<Outlet />
-									</ScrollArea>
-								</SheetContent>
-							)}
-						</Sheet>
-					</nav>
-					{isDesktop && (
-						<aside className={"w-3/4 rounded-md bg-white p-10 shadow-lg"}>
-							<Outlet />
-						</aside>
-					)}
-				</section>
-			</main>
+		<main className={"bg-neutral-300 p-4 md:p-8"}>
+			<section>
+				<RankingHeader fullName={user?.full_name ?? ""} levelClub={0} nextLevel={1} resetRankingDate={new Date()} nextResetRankingDate={new Date()} />
+			</section>
+			<section className={"my-9 flex space-x-20"}>
+				<nav className={"w-1/4 max-md:w-full"}>
+					<Sheet>
+						<div className='space-y-2'>
+							{Array.from(Object.keys(tabNavValues)).map((key) => {
+								return (
+									<SheetTrigger key={key} asChild>
+										<TabNav
+											style={{
+												backgroundColor: activeTab == key ? "black" : "",
+												color: activeTab === key ? "white" : "",
+											}}
+											tailwindStyle={`hover:bg-black hover:text-white `}
+											iconLeft={tabNavValues[key].iconLeft}
+											title={tabNavValues[key].title}
+											to={tabNavValues[key].to}
+											iconRight={<ArrowRightIcon className={"hover:text-white"} />}
+										/>
+									</SheetTrigger>
+								);
+							})}
+							<TabNav
+								to={window.location.href}
+								onClick={() => setOpenDialog("show-confirm")}
+								tailwindStyle={`hover:bg-black hover:text-white `}
+								iconLeft={<LogOutIcon className={"flex-none hover:text-white"} />}
+								title={"Đăng xuất"}
+								iconRight={<ArrowRightIcon className={"hover:text-white"} />}
+							/>
+							<DialogConfirm
+								open={openDialog === "show-confirm"}
+								onOpenChange={(value) => !value && showDialog("none")}
+								onClickCancel={() => {
+									setOpenDialog("none");
+								}}
+								onClickSubmit={() => {
+									handleLogout();
+									dispatch(hiddenDialog());
+									setOpenDialog("none");
+								}}
+							/>
+						</div>
+						{!isDesktop && (
+							<SheetContent
+								className={"!w-screen !max-w-none rounded-none bg-white p-2 sm:p-10"}
+								classNameClose='left-4'
+								iconRight={<MoveLeftIcon className={"size-8 rounded-full !bg-neutral-300 !fill-black p-1"} />}>
+								<ScrollArea className={"scrollbar-none h-screen overflow-auto"}>
+									<Outlet />
+								</ScrollArea>
+							</SheetContent>
+						)}
+					</Sheet>
+				</nav>
+				{isDesktop && (
+					<aside className={"w-3/4 rounded-md bg-white p-10 shadow-lg"}>
+						<Outlet />
+					</aside>
+				)}
+			</section>
+		</main>
 	);
 }

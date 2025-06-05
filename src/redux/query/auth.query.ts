@@ -5,7 +5,7 @@
  * Create at: 9:31 AM - 18/04/2025
  * User: kimin
  **/
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import LoginRequest from "@/domain/resquest/login.request.ts";
 import LoginResponse from "@/domain/response/login.response.ts";
 import { ApiResponse } from "@/domain/ApiResponse.ts";
@@ -13,13 +13,12 @@ import LoginWithGoogleRequest from "@/domain/resquest/loginWithGoogle.request.ts
 import EmailResponse from "@/domain/response/email.response.ts";
 import RegisterWithGoogleRequest from "@/domain/resquest/registerWithGoogle.request.ts";
 import RegisterWithFacebookRequest from "@/domain/resquest/registerWithFacebook.request";
-import AccessTokenRequest from "@/domain/resquest/accesToken.request.ts";
+import AccessTokenRequest from "@/domain/resquest/accessToken.request.ts";
+import { createBaseQueryWithDispatch } from "@/redux/query/baseQueryWithDispatch.ts";
 
-const baseQuery = fetchBaseQuery({ baseUrl: import.meta.env.VITE_BASE_URL + "/auth/v1/" });
-
-export const authenticationApi = createApi({
+export const authApi = createApi({
 	reducerPath: "authenticationApi",
-	baseQuery,
+	baseQuery: createBaseQueryWithDispatch(import.meta.env.VITE_BASE_URL + "/auth/v1/"),
 	endpoints: (build) => ({
 		login: build.mutation<ApiResponse<LoginResponse>, LoginRequest>({
 			query: (request) => ({
@@ -61,7 +60,6 @@ export const authenticationApi = createApi({
 		}),
 	}),
 });
-
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
-export const { useLoginMutation, useLoginWithGoogleMutation } = authenticationApi;
+export const { useLoginMutation, useLoginWithGoogleMutation } = authApi;
