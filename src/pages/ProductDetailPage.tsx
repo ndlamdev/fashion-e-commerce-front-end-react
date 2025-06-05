@@ -37,7 +37,7 @@ import ProductImageType from "@/types/product/productImage.type.ts";
 import { CollectionValue } from "@/utils/enums/collection.enum.ts";
 import { useDispatch } from "react-redux";
 import { showDialog } from "@/redux/slice/dialog.slice.ts";
-import { useAddCartItemMutation } from "@/redux/query/cart.query.ts";
+import cartService from "@/services/cart.service.ts";
 
 export default function ProductDetailPage() {
 	const [MIN_BOUGHT, MAX_BOUGHT] = [1, 100];
@@ -49,7 +49,10 @@ export default function ProductDetailPage() {
 	const [colorSelected, setColorSelected] = useState<string | undefined>();
 	const [sizeSelected, setSizeSelected] = useState<string | undefined>();
 	const [imagesColor, setImagesColor] = useState<(ProductImageType | undefined)[]>();
-	const [addCartItems] = useAddCartItemMutation();
+
+	const sizes = useMemo(() => {
+		return data?.data.options.find((opt) => opt.type === OptionType.SIZE) || undefined;
+	}, [data]);
 
 	useEffect(() => {
 		if (!data) return;
@@ -64,7 +67,7 @@ export default function ProductDetailPage() {
 		);
 	}, [data]);
 
-	const variants = useMemo(() => {
+	const variant = useMemo(() => {
 		return data?.data.variants.find((v) => v.options.COLOR === colorSelected && v.options.SIZE === sizeSelected);
 	}, [data, colorSelected, sizeSelected]);
 
@@ -100,13 +103,9 @@ export default function ProductDetailPage() {
 	}, []);
 
 	const addCartItemFc = useCallback(() => {
-		if (!variants) return;
-		addCartItems({ variantId: variants?.id, quantity: 1 }).then((response) => {
-			if (response.data) {
-				toast.success("Thêm vào giỏ hàng thành công");
-			}
-		});
-	}, [variants]);
+		if (!variant) return;
+		cartService.addCartItem(variant?.id, boughtQuantity).then();
+	}, [variant, boughtQuantity]);
 
 	if (isLoading) return <Skeleton className={"h-screen w-screen"} />;
 	return (
@@ -164,11 +163,11 @@ export default function ProductDetailPage() {
 								<Share2 className={"me-1 size-3 fill-blue-800"} /> <span> chia sẻ</span>
 							</span>
 						</span>
-						{data?.data.discount && <p className={"text-sm text-neutral-400 line-through md:text-base"}>{formatCurrency(variants?.regular_price as number)}</p>}
+						{data?.data.discount && <p className={"text-sm text-neutral-400 line-through md:text-base"}>{formatCurrency(variant?.regular_price as number)}</p>}
 						<p className={"flex font-bold"}>
 							<span className={"me-3 text-sm md:text-base lg:text-2xl"}>
 								{formatCurrency(
-									data?.data.discount && variants ? variants.regular_price * (1 - data?.data.discount.percent / 100) : (variants?.regular_price as number),
+									data?.data.discount && variant ? variant.regular_price * (1 - data?.data.discount.percent / 100) : (variant?.regular_price as number),
 								)}
 							</span>
 							{data?.data.discount && <Badge className={"bg-blue-700 text-xs font-bold text-white md:text-xl"}>-{data?.data.discount.percent}%</Badge>}
@@ -301,11 +300,19 @@ export default function ProductDetailPage() {
 							/>
 							<Button
 								className={"flex w-3/4 cursor-pointer items-center rounded-2xl text-center text-xs hover:bg-neutral-300 hover:text-black sm:text-sm"}
-								disabled={!sizeSelected || Number(boughtQuantity) > MAX_BOUGHT}
-								onClick={addCartItemFc}
+								disabled={(!!sizes && !sizeSelected) || Number(boughtQuantity) > MAX_BOUGHT}
+								onClick={() => {
+									if (!sizes) {
+										const v = data?.data.variants.find((v) => v.options.COLOR === colorSelected);
+										if (!v) return;
+										cartService.addCartItem(v.id, boughtQuantity).then();
+									} else {
+										addCartItemFc();
+									}
+								}}
 								variant='default'>
 								<ShoppingBag className={""} />
-								<span>{sizeSelected ? "Thêm vào giỏ hàng" : "Chọn kích thước"}</span>
+								<span>{sizeSelected || !sizes ? "Thêm vào giỏ hàng" : "Chọn kích thước"}</span>
 							</Button>
 						</div>
 						{boughtQuantity > MAX_BOUGHT && <p className='text-red-500'>Số lượng mua vượt mức cho phép (từ 100 sản phẩm trở lại)</p>}
@@ -584,7 +591,7 @@ export default function ProductDetailPage() {
 				className={`fixed top-0 z-50 w-full -translate-y-full overflow-hidden border-gray-200 bg-white opacity-1 transition-all duration-900 ease-in-out ${isVisible ? "lg:h-auto lg:translate-y-0 lg:opacity-100" : "-translate-y-full overflow-hidden opacity-0"}`}>
 				<div className='flex'>
 					<section className='flex border-r-1'>
-						<img src={RESOURCE_IMAGE + data?.data.images[0].src} alt={`${variants?.title}`} className='w-16 object-cover' />
+						<img src={RESOURCE_IMAGE + data?.data.images[0].src} alt={`${variant?.title}`} className='w-16 object-cover' />
 						<div className='p-4'>
 							<span className='flex flex-wrap gap-1'>
 								<Rate className={"fill-black stroke-black"} defaultValue={3.5} allowHalf disabled />
@@ -596,11 +603,11 @@ export default function ProductDetailPage() {
 							<span className='flex flex-wrap items-center gap-4 font-bold'>
 								<p className={"text-lg xl:text-xl"}>
 									{formatCurrency(
-										data?.data.discount && variants ? variants.regular_price * (1 - data?.data.discount.percent / 100) : (variants?.regular_price as number),
+										data?.data.discount && variant ? variant.regular_price * (1 - data?.data.discount.percent / 100) : (variant?.regular_price as number),
 									)}
 								</p>
 								{data?.data.discount && <Badge className='rounded-lg bg-blue-700 text-sm text-white'>-{data?.data.discount.percent}%</Badge>}
-								{data?.data.discount && <span className='text-sm text-gray-400 line-through'>{variants?.regular_price}</span>}
+								{data?.data.discount && <span className='text-sm text-gray-400 line-through'>{variant?.regular_price}</span>}
 							</span>
 						</div>
 					</section>

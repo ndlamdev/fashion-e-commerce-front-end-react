@@ -6,8 +6,10 @@
  * User: Administrator
  **/
 import { appDispatch } from "@/configs/store.config.ts";
-import { cartApi } from "@/redux/query/cart.query.ts";
+import { cartApi } from "@/redux/api/cart.api.ts";
 import ToastErrorApi from "@/utils/helper/toastErrorApi.ts";
+import { toast } from "sonner";
+import LocalStorage from "@/utils/helper/LocalStorage.ts";
 
 const modifyQuantityCartItem = async (cartItemId: number, quantity: number) => {
 	return await appDispatch(
@@ -40,9 +42,33 @@ const deleteCartItem = async (id: any) => {
 	});
 };
 
+const addCartItem = async (variantId: string, quantity: number) => {
+	if (!LocalStorage.getValue("ACCESS_TOKEN")) {
+		toast.error("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng");
+		return Promise.reject("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng");
+	}
+
+	return await appDispatch(
+		cartApi.endpoints.addCartItem.initiate({
+			variantId: variantId,
+			quantity: quantity,
+		}),
+	).then(({ data, error }) => {
+		if (error) {
+			ToastErrorApi.toastErrorApiRTK(error);
+			return Promise.reject(error);
+		}
+
+		toast.success("Thêm vào giỏ hàng thành công");
+
+		return data;
+	});
+};
+
 const cartService = {
 	modifyQuantityCartItem,
 	deleteCartItem,
+	addCartItem,
 };
 
 export default cartService;

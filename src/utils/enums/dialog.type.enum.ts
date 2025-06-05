@@ -16,10 +16,12 @@ type DialogTypeEnum =
 	| "register-with-google"
 	| "register-with-facebook"
 	| "edit-info-profile"
-	| "reset-password"
+	| "change-password"
 	| "save-address"
 	| "refer-friend"
 	| "guide-choose-size"
+	| "show-confirm"
+	| "manage-addresses"
 	| "voice-search";
 
 export default DialogTypeEnum;

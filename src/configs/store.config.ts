@@ -8,51 +8,51 @@ import { configureStore } from "@reduxjs/toolkit";
  * User: kimin
  **/
 import logger from "redux-logger";
-import { authenticationApi } from "@/redux/query/authentication.query.ts";
+import { authApi } from "@/redux/api/auth.api.ts";
 import { authSlice } from "@/redux/slice/auth.slice.ts";
 import { profileApi } from "@/services/profile.service.ts";
 import addressSlice from "@/redux/slice/address.slice.ts";
-import { addressApi, addressCustomerApi } from "@/services/address.service.ts";
-import { cartApi } from "@/redux/query/cart.query.ts";
-import { addressOpenApi } from "@/redux/query/addressOpenApi.query.ts";
+import { addressCoolMateApi } from "@/redux/api/addressCoolMate.api.ts";
+import { addressApi } from "@/redux/api/address.api.ts";
+import { cartApi } from "@/redux/api/cart.api.ts";
 import { cartSlice } from "@/redux/slice/cart.slice.ts";
 import { productApi } from "@/services/product.service.ts";
 import { dialogSlice } from "@/redux/slice/dialog.slice.ts";
 import { sheetSlice } from "@/redux/slice/sheet.slice.ts";
 import { collectionApi } from "@/services/collection.service.ts";
-import { orderApi } from "@/redux/query/order.query.ts";
+import { orderApi } from "@/redux/api/order.api.ts";
+import { TypedUseSelectorHook, useSelector } from "react-redux";
 
 const store = configureStore({
-  reducer: {
-    [authenticationApi.reducerPath]: authenticationApi.reducer,
-    auth: authSlice.reducer,
-    [profileApi.reducerPath]: profileApi.reducer,
-    address: addressSlice,
-    [addressApi.reducerPath]: addressApi.reducer,
-    [productApi.reducerPath]: productApi.reducer,
-    dialog: dialogSlice.reducer,
-    sheet: sheetSlice.reducer,
-    [collectionApi.reducerPath]: collectionApi.reducer,
-    [cartApi.reducerPath]: cartApi.reducer,
-    dialogSlice: dialogSlice.reducer,
-    [addressOpenApi.reducerPath]: addressOpenApi.reducer,
-    [addressCustomerApi.reducerPath]: addressCustomerApi.reducer,
-    cartSlice: cartSlice.reducer,
-    [orderApi.reducerPath]: orderApi.reducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware()
-      .concat(logger)
-      .concat(authenticationApi.middleware)
-      .concat(profileApi.middleware)
-      .concat(addressApi.middleware)
-      .concat(cartApi.middleware)
-      .concat(addressOpenApi.middleware)
-      .concat(productApi.middleware)
-      .concat(addressCustomerApi.middleware)
-      .concat(collectionApi.middleware)
-      .concat(orderApi.middleware)
-  ,
+	reducer: {
+		/*===========================for slice======================*/
+		dialog: dialogSlice.reducer,
+		sheet: sheetSlice.reducer,
+		auth: authSlice.reducer,
+		address: addressSlice,
+		cart: cartSlice.reducer,
+
+		/*===========================for api======================*/
+		[authApi.reducerPath]: authApi.reducer,
+		[profileApi.reducerPath]: profileApi.reducer,
+		[addressCoolMateApi.reducerPath]: addressCoolMateApi.reducer,
+		[collectionApi.reducerPath]: collectionApi.reducer,
+		[productApi.reducerPath]: productApi.reducer,
+		[cartApi.reducerPath]: cartApi.reducer,
+		[addressApi.reducerPath]: addressApi.reducer,
+		[orderApi.reducerPath]: orderApi.reducer,
+	},
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware()
+			.concat(logger)
+			.concat(authApi.middleware)
+			.concat(profileApi.middleware)
+			.concat(addressCoolMateApi.middleware)
+			.concat(addressApi.middleware)
+			.concat(cartApi.middleware)
+			.concat(productApi.middleware)
+			.concat(collectionApi.middleware)
+			.concat(orderApi.middleware),
 });
 
 // Get the type of our slice variable
@@ -62,5 +62,6 @@ export type RootState = ReturnType<AppStore["getState"]>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = AppStore["dispatch"];
 export const appDispatch = store.dispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export default store;

@@ -13,6 +13,9 @@ export default defineConfig({
 			"@": path.resolve(__dirname, "src"),
 		},
 	},
+	optimizeDeps: {
+		entries: ["quill"],
+	},
 	server: {
 		host: "0.0.0.0",
 		allowedHosts: ["localhost_5173.ndlamdev.website", "fashion_fe.ndlamdev.website", "fashion.ndlamdev.website"],

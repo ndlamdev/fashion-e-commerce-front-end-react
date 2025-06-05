@@ -1,11 +1,7 @@
 import { CollectionFilterProps } from "@/components/collection/props/collectionFilter.props.ts";
 
 export const mockCollectionFilters: CollectionFilterProps = {
-	size: ["S", "M", "L", "XL", "2XL", "3XL", "29",
-		"30",
-		"31",
-		"32",
-		"33"],
+	size: ["S", "M", "L", "XL", "2XL", "3XL", "29", "30", "31", "32", "33"],
 	color: [
 		{ name: "Mix", style: "bg-conic/decreasing from-violet-700 via-lime-300 to-violet-700", slug: "mix" },
 		{ name: "Đen", style: "bg-stone-950", slug: "den" },

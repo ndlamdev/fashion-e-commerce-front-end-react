@@ -35,8 +35,8 @@ function InputPassword({
 				type='password'
 				placeholder='Nhập lại mật khẩu'
 				onKeyDown={enterKeyHandler}
-				error={errors["confirm-password"]?.message}
-				{...register("confirm-password", {
+				error={errors.confirm_password?.message}
+				{...register("confirm_password", {
 					required: "Vui lòng nhập lại mật khẩu",
 					validate: (value, formValues) => {
 						if (value == formValues.password) return undefined;

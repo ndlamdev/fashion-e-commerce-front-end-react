@@ -20,17 +20,17 @@ export const productApi = createApi({
 				url: `/${id}`,
 			}),
 		}),
-		searchByImage: build.mutation<ApiResponse<ApiPageResponse<ProductResponseType[]>>, FormData | undefined>({
+		searchByImage: build.mutation<ApiResponse<ApiPageResponse<ProductResponseType>>, FormData | undefined>({
 			query: (file) => ({
 				url: `/search`,
 				method: "POST",
 				body: file,
 			}),
 		}),
-		voiceSearch: build.query<ApiResponse<ApiPageResponse<ProductResponseType[]>>, QueryType>({
+		voiceSearch: build.query<ApiResponse<ApiPageResponse<ProductResponseType>>, QueryType>({
 			query: ({ prompt }) => `/voice-search?query=${prompt}`,
 		}),
-		searchByText: build.query<ApiResponse<ApiPageResponse<ProductResponseType[]>>, QueryType>({
+		searchByText: build.query<ApiResponse<ApiPageResponse<ProductResponseType>>, QueryType>({
 			query: ({ title, size = "12", page = "0", colors = "", sizes = [], tag, direction }) =>
 				`/search?title=${title}&size=${size}&page=${page}` +
 				(colors && `&colors=${colors}`) +

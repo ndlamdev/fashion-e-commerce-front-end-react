@@ -1,79 +1,80 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { AddressShippingType, AddressType } from "@/types/profile/address.type.ts";
-import LocalStorage from "@/utils/helper/LocalStorage.ts";
 import { ApiResponse } from "@/domain/ApiResponse.ts";
 import { SaveAddressRequest } from "@/domain/resquest/profile/saveAddress.request.ts";
+import { createBaseQueryWithDispatch } from "@/redux/api/baseQueryWithDispatch.ts";
 
-export const addressApi = createApi({
-	reducerPath: "addressApi",
+export const addressCoolMateApi = createApi({
+	reducerPath: "address-coolmate-api",
 	baseQuery: fetchBaseQuery({ baseUrl: "/treeVN.json" }),
 	endpoints: (build) => ({
 		getInfoAddresses: build.query<AddressType[], void>({
 			query: () => ({
-				url: ''
-			})
+				url: "",
+			}),
 		}),
 	}),
 });
 export const BASE_ADDRESS_URL = import.meta.env.VITE_BASE_URL + "/address/v1";
 
-const baseQuery = fetchBaseQuery({
-	baseUrl: BASE_ADDRESS_URL,
-	prepareHeaders: (headers) => {
-		const token = LocalStorage.getValue("ACCESS_TOKEN");
-		if (token) {
-			headers.set("Authorization", `Bearer ${token}`);
-		}
-		return headers;
-	},
-});
-
-export const addressCustomerApi = createApi({
-	reducerPath: "addressCustomerApi",
-	baseQuery: baseQuery,
-	tagTypes: ['Address'],
+export const addressApi = createApi({
+	reducerPath: "addressUserApi",
+	baseQuery: createBaseQueryWithDispatch(BASE_ADDRESS_URL),
+	tagTypes: ["Address"],
 	endpoints: (build) => ({
 		getAddresses: build.query<ApiResponse<AddressShippingType[]>, void>({
-			query : () => ({
+			query: () => ({
 				url: "",
 				credentials: "include",
 			}),
-			providesTags: ['Address'],
+			providesTags: ["Address"],
 		}),
 		getAddress: build.query<ApiResponse<AddressShippingType>, number | undefined>({
 			query: (id) => ({
 				url: `/${id}`,
 				credentials: "include",
-			})
+			}),
+		}),
+		getDefaultAddress: build.query<ApiResponse<AddressShippingType>, void>({
+			query: () => ({
+				url: `/default`,
+				credentials: "include",
+			}),
 		}),
 		saveAddress: build.mutation<ApiResponse<AddressShippingType>, SaveAddressRequest>({
 			query: (request) => ({
 				url: request.id ? `/${request.id}` : ``,
-				method: request.id ? 'PUT' : 'POST',
+				method: request.id ? "PUT" : "POST",
 				body: request,
-				credentials: 'include',
+				credentials: "include",
 			}),
-			invalidatesTags: ['Address'],
+			invalidatesTags: ["Address"],
 		}),
 		deleteAddress: build.mutation<ApiResponse<void>, number | undefined>({
 			query: (id) => ({
 				url: `/${id}`,
-				method: 'DELETE',
-				credentials: 'include',
+				method: "DELETE",
+				credentials: "include",
 			}),
-			invalidatesTags: ['Address'],
+			invalidatesTags: ["Address"],
 		}),
-		setDefaultAddress:  build.mutation<ApiResponse<void>, {old_id: number | undefined, new_id: number | undefined}>({
-			query: ({old_id, new_id}) => ({
+		setDefaultAddress: build.mutation<ApiResponse<void>, { old_id: number | undefined; new_id: number | undefined }>({
+			query: ({ old_id, new_id }) => ({
 				url: `?old=${old_id}&new=${new_id}`,
-				method: 'PATCH',
-				credentials: 'include',
+				method: "PATCH",
+				credentials: "include",
 			}),
-			invalidatesTags: ['Address'],
-		})
+			invalidatesTags: ["Address"],
+		}),
 	}),
 });
 
-
-export const { useGetAddressQuery, useGetAddressesQuery, useSetDefaultAddressMutation, useDeleteAddressMutation, useSaveAddressMutation} = addressCustomerApi
-export const { useGetInfoAddressesQuery } = addressApi;
+export const {
+	useGetAddressQuery,
+	useGetAddressesQuery,
+	useSetDefaultAddressMutation,
+	useDeleteAddressMutation,
+	useSaveAddressMutation,
+	useGetDefaultAddressQuery,
+} = addressApi;
+export const { useGetInfoAddressesQuery } = addressCoolMateApi;

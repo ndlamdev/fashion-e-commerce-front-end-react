@@ -18,3 +18,23 @@ ul {
   margin: 0;
   padding: 0;
 }
+
+.ql-align-center img {
+  display: inline !important;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+#editor .ql-editor.ql-blank {
+  height: 170px
+}
