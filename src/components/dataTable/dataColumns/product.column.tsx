@@ -61,7 +61,7 @@ export const productColumns: ColumnDef<ProductColumnProp | unknown, string | unk
 			return (
 				<Input onChange={handleChange}
 							 value={data.quantity}
-							 className={"w-full sm:w-1/2 rounded-2xl text-center float-end"}
+							 className={"w-full sm:w-1/2 rounded-2xl text-center float-start"}
 							 type={"number"}
 							 min={1}
 							 max={9999999}
@@ -74,7 +74,7 @@ export const productColumns: ColumnDef<ProductColumnProp | unknown, string | unk
 		header: 'Amount',
 		cell: ({ row }) => {
 			const product = row.original as ProductColumnProp;
-			return <div className=" font-medium text-balance break-words w-25 float-end text-end">{formatCurrency(product.regular_price * product.quantity)}</div>;
+			return <div className=" font-medium text-balance break-words w-25 float-start text-start">{formatCurrency(product.regular_price * product.quantity)}</div>;
 		},
 	},
 	{

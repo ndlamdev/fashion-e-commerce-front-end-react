@@ -13,7 +13,7 @@ export default function OrderManagementPage() {
 	const data = mockPayments
 	const navigate = useNavigate();
 	const handleWatchDetail = useCallback((id: number) => {
-		navigate(`/admin/customers/${id}`);
+		navigate(`/admin/orders/${id}`);
 	}, [])
 	const handleDelete = useCallback((id: number) => {
 		//TODO: implement delete here
