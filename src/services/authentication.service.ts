@@ -21,7 +21,7 @@ import LoginResponse from "@/domain/response/login.response.ts";
 import LocalStorage from "@/utils/helper/LocalStorage.ts";
 import LoginRequest from "@/domain/resquest/login.request.ts";
 import LoginWithGoogleRequest from "@/domain/resquest/loginWithGoogle.request.ts";
-import { authApi } from "@/redux/query/auth.query.ts";
+import { authApi } from "@/redux/api/auth.api.ts";
 import { appDispatch } from "@/configs/store.config.ts";
 import { authSlice, loginSuccess } from "@/redux/slice/auth.slice.ts";
 import RegisterWithGoogleRequest from "@/domain/resquest/registerWithGoogle.request.ts";

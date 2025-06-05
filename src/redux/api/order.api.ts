@@ -7,7 +7,7 @@
  **/
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { ApiResponse } from "@/domain/ApiResponse.ts";
-import { createBaseQueryWithDispatch } from "@/redux/query/baseQueryWithDispatch.ts";
+import { createBaseQueryWithDispatch } from "@/redux/api/baseQueryWithDispatch.ts";
 import CreateOrderRequest from "@/domain/resquest/createOrder.request.ts";
 import CreateOrderResponse from "@/domain/response/createOrder.response.ts";
 

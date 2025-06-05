@@ -10,6 +10,7 @@ import { showDialog } from "@/redux/slice/dialog.slice.ts";
 
 const InfoTab = memo((props: Partial<InfoTabProps>) => {
 	const dispatch = useDispatch();
+
 	return (
 		<article className={"space-y-10 max-md:space-y-5 max-sm:mt-10"}>
 			<h1 className={"text-4xl font-bold max-md:text-xl"}>Thông tin tài khoản</h1>
@@ -35,7 +36,7 @@ const InfoTab = memo((props: Partial<InfoTabProps>) => {
 				<span>Cân nặng</span>
 				{props.weight ? <span className={"text-black"}>{props.weight}</span> : <span className={"text-sm text-neutral-500 italic"}>Chưa cập nhật</span>}
 				<Button
-					onClick={() => showDialog("edit-info-profile")}
+					onClick={() => dispatch(showDialog("edit-info-profile"))}
 					className={
 						"cursor-pointer rounded-full border border-black bg-white p-5 text-xl font-bold text-black hover:border-neutral-500 hover:bg-black hover:text-white max-md:text-sm"
 					}>
@@ -44,12 +45,12 @@ const InfoTab = memo((props: Partial<InfoTabProps>) => {
 			</div>
 
 			<h1 className={"text-4xl font-bold max-md:text-xl"}>Thông tin đăng nhập</h1>
-			<div className="grid grid-cols-2 place-items-start gap-4 even:text-neutral-500 text-sm xl:text-xl md:text-lg">
-				<span>Email</span>{props.email ? <span className={"text-black"}>{props.email}</span> :
-				<span className={"text-neutral-500 italic text-sm"}>Chưa cập nhật</span>}
+			<div className='grid grid-cols-2 place-items-start gap-4 text-sm even:text-neutral-500 md:text-lg xl:text-xl'>
+				<span>Email</span>
+				{props.email ? <span className={"text-black"}>{props.email}</span> : <span className={"text-sm text-neutral-500 italic"}>Chưa cập nhật</span>}
 				<span>Mật khẩu</span> <span>******************</span>
 				<Button
-					onClick={() => showDialog("change-password")}
+					onClick={() => dispatch(showDialog("change-password"))}
 					className={
 						"cursor-pointer rounded-full border border-black bg-white p-5 text-xl font-bold text-black hover:border-neutral-500 hover:bg-black hover:text-white max-md:text-sm"
 					}>

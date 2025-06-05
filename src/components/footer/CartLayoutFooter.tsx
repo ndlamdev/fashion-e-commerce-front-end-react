@@ -17,12 +17,12 @@ import CartHelper from "@/utils/helper/CartHelper.ts";
 import { createOrder, setShowConfirm } from "@/redux/slice/cart.slice";
 import { toast } from "sonner";
 import { useCallback, useEffect, useState } from "react";
-import { useCreateOrderMutation } from "@/redux/query/order.query.ts";
+import { useCreateOrderMutation } from "@/redux/api/order.api.ts";
 import { InfoCustomerCreateOrder, VariantRequestType } from "@/domain/resquest/createOrder.request.ts";
 import CartItemType from "@/types/CartItemType";
 import { useNavigate } from "react-router";
 import DialogPayOs from "@/components/dialog/DialogPayOs.tsx";
-import { cartApi } from "@/redux/query/cart.query.ts";
+import { cartApi } from "@/redux/api/cart.api.ts";
 
 function CartLayoutFooter() {
 	const cartItemsSelected = useSelector((state: RootState) => state.cart.items);

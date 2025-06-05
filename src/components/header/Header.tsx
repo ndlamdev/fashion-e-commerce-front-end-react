@@ -31,7 +31,7 @@ import { Skeleton } from "@/components/ui/skeleton.tsx";
 import QuickSearchProduct from "@/components/product/QuickSearchProduct.tsx";
 import { debounce } from "lodash";
 import { useQuickSearchQuery } from "@/services/product.service.ts";
-import { useGetCartQuery } from "@/redux/query/cart.query.ts";
+import { useGetCartQuery } from "@/redux/api/cart.api.ts";
 import logo from "@/assets/images/icons/logo.jpg";
 
 function Header({ showMenu }: HeaderProps) {

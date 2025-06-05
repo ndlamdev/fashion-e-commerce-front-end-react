@@ -22,7 +22,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { useGetCartQuery } from "@/redux/query/cart.query";
+import { useGetCartQuery } from "@/redux/api/cart.api";
 import cartService from "@/services/cart.service.ts";
 import ToastErrorApi from "@/utils/helper/toastErrorApi.ts";
 import { useDispatch, useSelector } from "react-redux";

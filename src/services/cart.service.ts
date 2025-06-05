@@ -6,7 +6,7 @@
  * User: Administrator
  **/
 import { appDispatch } from "@/configs/store.config.ts";
-import { cartApi } from "@/redux/query/cart.query.ts";
+import { cartApi } from "@/redux/api/cart.api.ts";
 import ToastErrorApi from "@/utils/helper/toastErrorApi.ts";
 import { toast } from "sonner";
 import LocalStorage from "@/utils/helper/LocalStorage.ts";

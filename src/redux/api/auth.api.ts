@@ -14,7 +14,7 @@ import EmailResponse from "@/domain/response/email.response.ts";
 import RegisterWithGoogleRequest from "@/domain/resquest/registerWithGoogle.request.ts";
 import RegisterWithFacebookRequest from "@/domain/resquest/registerWithFacebook.request";
 import AccessTokenRequest from "@/domain/resquest/accessToken.request.ts";
-import { createBaseQueryWithDispatch } from "@/redux/query/baseQueryWithDispatch.ts";
+import { createBaseQueryWithDispatch } from "@/redux/api/baseQueryWithDispatch.ts";
 
 export const authApi = createApi({
 	reducerPath: "authenticationApi",

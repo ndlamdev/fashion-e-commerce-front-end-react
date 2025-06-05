@@ -1,6 +1,6 @@
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table.tsx";
 import { ApiPageResponse } from "@/domain/ApiPageResponse.ts";
-import { useHistoryOrderQuery } from "@/redux/query/order.query";
+import { useHistoryOrderQuery } from "@/redux/api/order.api";
 import HistoryOrderType from "@/types/historyOrder.type";
 import FormatData from "@/utils/helper/format-data.ts";
 import { useState } from "react";

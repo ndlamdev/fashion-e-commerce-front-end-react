@@ -12,7 +12,7 @@ import InputAuthentication from "@/components/authentication/ui/InputAuthenticat
 import LoginRequest from "@/domain/resquest/login.request.ts";
 import { SubmitHandler, useForm } from "react-hook-form";
 import authenticationService from "@/services/authentication.service.ts";
-import { useLoginWithGoogleMutation } from "@/redux/query/auth.query.ts";
+import { useLoginWithGoogleMutation } from "@/redux/api/auth.api.ts";
 import OtherLogin from "@/components/authentication/ui/OtherLogin.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/configs/store.config.ts";

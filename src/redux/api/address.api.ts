@@ -2,10 +2,10 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { AddressShippingType, AddressType } from "@/types/profile/address.type.ts";
 import { ApiResponse } from "@/domain/ApiResponse.ts";
 import { SaveAddressRequest } from "@/domain/resquest/profile/saveAddress.request.ts";
-import { createBaseQueryWithDispatch } from "@/redux/query/baseQueryWithDispatch.ts";
+import { createBaseQueryWithDispatch } from "@/redux/api/baseQueryWithDispatch.ts";
 
-export const addressApi = createApi({
-	reducerPath: "addressApi",
+export const addressCoolMateApi = createApi({
+	reducerPath: "address-coolmate-api",
 	baseQuery: fetchBaseQuery({ baseUrl: "/treeVN.json" }),
 	endpoints: (build) => ({
 		getInfoAddresses: build.query<AddressType[], void>({
@@ -17,7 +17,7 @@ export const addressApi = createApi({
 });
 export const BASE_ADDRESS_URL = import.meta.env.VITE_BASE_URL + "/address/v1";
 
-export const addressUserApi = createApi({
+export const addressApi = createApi({
 	reducerPath: "addressUserApi",
 	baseQuery: createBaseQueryWithDispatch(BASE_ADDRESS_URL),
 	tagTypes: ["Address"],
@@ -76,5 +76,5 @@ export const {
 	useDeleteAddressMutation,
 	useSaveAddressMutation,
 	useGetDefaultAddressQuery,
-} = addressUserApi;
-export const { useGetInfoAddressesQuery } = addressApi;
+} = addressApi;
+export const { useGetInfoAddressesQuery } = addressCoolMateApi;

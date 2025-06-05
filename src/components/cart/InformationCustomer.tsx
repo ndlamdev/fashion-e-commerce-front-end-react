@@ -19,7 +19,7 @@ import { PayOs } from "@/assets/images/icons/PayOs.tsx";
 import { setPayment, updateInfoCustomerCreateOrder } from "@/redux/slice/cart.slice.ts";
 import { useForm } from "react-hook-form";
 import { InfoCustomerCreateOrder } from "@/domain/resquest/createOrder.request.ts";
-import { useGetDefaultAddressQuery, useGetInfoAddressesQuery } from "@/services/address.service.ts";
+import { useGetDefaultAddressQuery, useGetInfoAddressesQuery } from "@/redux/api/address.api.ts";
 import { getCities, getDistricts, getWards } from "@/utils/helper/AddressFilter.ts";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 
