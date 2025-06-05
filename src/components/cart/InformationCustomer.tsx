@@ -20,7 +20,7 @@ import { setPayment, updateInfoCustomerCreateOrder } from "@/redux/slice/cart.sl
 import { useForm } from "react-hook-form";
 import { InfoCustomerCreateOrder } from "@/domain/resquest/createOrder.request.ts";
 import { useGetDefaultAddressQuery, useGetInfoAddressesQuery } from "@/redux/api/address.api.ts";
-import { getCities, getDistricts, getWards } from "@/utils/helper/AddressFilter.ts";
+import { getAllCities, getDistrictsByCity, getWardsByCityAndDistrict } from "@/utils/helper/AddressFilter.ts";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 
 function InformationCustomer() {
@@ -32,9 +32,6 @@ function InformationCustomer() {
 	const { payment, showConfirm, trigger: triggerState } = useSelector((state: RootState) => state.cart);
 	const { data: infoAddresses, isError: isErrorInfoAddresses, isLoading: isLoadingInfoAddresses } = useGetInfoAddressesQuery();
 	const { data: defaultAddress } = useGetDefaultAddressQuery();
-	const [cityCode, setCityCode] = useState<string | undefined>();
-	const [districtId, setDistrictId] = useState<string | undefined>();
-	const [wardId, setWardId] = useState<string | undefined>();
 
 	const {
 		setValue,
@@ -48,11 +45,9 @@ function InformationCustomer() {
 	const [province, district, ward, address] = watch(["province", "district", "ward", "address"]);
 
 	const handleChangeProvince = useCallback(
-		(code: string) => {
-			const city = getCities(infoAddresses).find((item) => item.city_code === code)?.city ?? "";
+		(city: string) => {
+			if (!infoAddresses) return;
 			setValue("province", city);
-			setCityCode(code);
-			setDistrictId(undefined);
 			setValue("district", "");
 			setValue("ward", "");
 		},
@@ -60,22 +55,18 @@ function InformationCustomer() {
 	);
 
 	const handleChangeDistrict = useCallback(
-		(code: string) => {
-			const district = getDistricts(infoAddresses, cityCode).find((item) => item.district_id === code)?.district ?? "";
+		(district: string) => {
 			setValue("district", district);
 			setValue("ward", "");
-			setDistrictId(code);
 		},
-		[cityCode, infoAddresses, setValue],
+		[setValue],
 	);
 
 	const handleChangeWard = useCallback(
-		(code: string) => {
-			const ward = getWards(infoAddresses, cityCode, districtId).find((item) => item.ward_id === code)?.ward ?? "";
+		(ward: string) => {
 			setValue("ward", ward);
-			setWardId(code);
 		},
-		[cityCode, districtId, infoAddresses, setValue],
+		[setValue],
 	);
 
 	useEffect(() => {
@@ -130,17 +121,14 @@ function InformationCustomer() {
 
 	useEffect(() => {
 		if (!defaultAddress) return;
-		const { city_code, district_id, ward_id, street, city, ward, district, full_name, phone } = defaultAddress.data;
-		setCityCode(city_code);
-		setDistrictId(district_id);
-		setWardId(ward_id);
+		const { street, city, ward, district, full_name, phone } = defaultAddress.data;
 		if (street?.length) setValue("address", street);
 		setValue("province", city);
 		setValue("district", district);
 		setValue("ward", ward);
 		setValue("name", full_name ?? user?.full_name ?? "");
 		setValue("phone", phone ?? user?.phone ?? "");
-	}, [defaultAddress, setValue, user?.full_name]);
+	}, [defaultAddress, setValue, user?.full_name, user?.phone]);
 
 	return (
 		<div className={`px-5 md:pb-0 lg:px-0 ${showConfirm ? "pb-30" : "pb-0"}`}>
@@ -232,7 +220,7 @@ function InformationCustomer() {
 					{errors.address && <small className={"text-red-500"}>{errors.address?.message}</small>}
 					<div className={"mt-2 flex w-full flex-col flex-wrap gap-2 lg:flex-row"}>
 						<div className={"w-full py-5 lg:w-auto lg:grow"}>
-							<Select onValueChange={handleChangeProvince} value={cityCode}>
+							<Select onValueChange={handleChangeProvince} value={province}>
 								<SelectTrigger className={"w-full rounded-full border-gray-400"}>
 									<SelectValue placeholder={"Vui lòng chọn tỉnh/thành phố"} className={"text-black"} />
 								</SelectTrigger>
@@ -241,9 +229,9 @@ function InformationCustomer() {
 									{isErrorInfoAddresses && <p className='text-sm text-red-500'>không tìm thấy dữ liệu</p>}
 									{infoAddresses &&
 										infoAddresses.length > 0 &&
-										getCities(infoAddresses).map((item, index) => (
-											<SelectItem key={index + "-" + item.city_code} value={item.city_code}>
-												{item.city}{" "}
+										getAllCities(infoAddresses).map((city, index) => (
+											<SelectItem key={index + "-" + city} value={city}>
+												{city}
 											</SelectItem>
 										))}
 								</SelectContent>
@@ -251,16 +239,16 @@ function InformationCustomer() {
 							{errors.province && <small className={"text-red-500"}>{errors.province?.message}</small>}
 						</div>
 						<div className={"w-full py-5 lg:w-auto lg:grow"}>
-							<Select onValueChange={handleChangeDistrict} value={districtId}>
+							<Select onValueChange={handleChangeDistrict} value={district}>
 								<SelectTrigger className='w-full rounded-full border-gray-400'>
 									<SelectValue placeholder={"Chọn Quận/Huyện"} className={"text-black"} />
 								</SelectTrigger>
 								<SelectContent>
 									<SelectContent>
 										{infoAddresses &&
-											getDistricts(infoAddresses, cityCode).map((item, index) => (
-												<SelectItem key={index + "-" + item.district_id} data-district-code={item.district_id} value={item.district_id}>
-													{item.district}
+											getDistrictsByCity(infoAddresses, province).map((district, index) => (
+												<SelectItem key={index + "-" + district} data-district-code={district} value={district}>
+													{district}
 												</SelectItem>
 											))}
 									</SelectContent>
@@ -269,16 +257,16 @@ function InformationCustomer() {
 							{errors.district && <small className={"text-red-500"}>{errors.district?.message}</small>}
 						</div>
 						<div className={"w-full py-5 lg:w-auto lg:grow"}>
-							<Select onValueChange={handleChangeWard} value={wardId}>
+							<Select onValueChange={handleChangeWard} value={ward}>
 								<SelectTrigger className='w-full rounded-full border-gray-400'>
 									<SelectValue placeholder={"Chọn Phường/Xã"} className={"text-black"} />
 								</SelectTrigger>
 								<SelectContent>
 									<SelectContent>
 										{infoAddresses &&
-											getWards(infoAddresses, cityCode, districtId).map((item, index) => (
-												<SelectItem key={index + "-" + item.ward_id} value={item.ward_id}>
-													{item.ward}
+											getWardsByCityAndDistrict(infoAddresses, province, district).map((ward, index) => (
+												<SelectItem key={index + "-" + ward} value={ward}>
+													{ward}
 												</SelectItem>
 											))}
 									</SelectContent>

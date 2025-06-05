@@ -30,7 +30,7 @@ function AdminLayout() {
 	return (
 		<div className={"flex h-[100vh] flex-col bg-black"}>
 			<div className={"flex h-10 items-center justify-center text-white"}>This is header</div>
-			<div className={"grid flex-1 grid-cols-12 grid-rows-1 overflow-y-hidden rounded-tl-2xl rounded-tr-2xl border bg-white"}>
+			<div className={"grid flex-1 grid-cols-12 grid-rows-1 overflow-y-hidden rounded-tl-2xl rounded-tr-2xl border"}>
 				<div className={"col-span-3 hidden h-full bg-neutral-200 md:block"}>
 					<VerticalMenu />
 				</div>

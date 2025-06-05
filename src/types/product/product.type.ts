@@ -32,7 +32,7 @@ type ProductType = {
 	gender_type?: GenderType;
 };
 
-type DiscountType = {
+export type DiscountType = {
 	percent: number;
 	start: Date;
 	end: Date;

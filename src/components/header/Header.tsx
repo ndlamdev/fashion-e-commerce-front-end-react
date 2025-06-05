@@ -188,7 +188,7 @@ function Header({ showMenu }: HeaderProps) {
 								</motion.div>
 							)}
 						</AnimatePresence>
-						<a href={"#"} className={"z-4"}>
+						<div className={"z-4 cursor-pointer"}>
 							{access_token && user ? (
 								<Avatar
 									onClick={() => {
@@ -200,10 +200,10 @@ function Header({ showMenu }: HeaderProps) {
 							) : (
 								<FaSolidUserAlt width={24} height={24} onClick={() => dispatch(showDialog("login"))} />
 							)}
-						</a>
-						<a href={"#"} className={"z-4"}>
+						</div>
+						<div className={"z-4 cursor-pointer"}>
 							<SolarHeartBold width={29} height={29} />
-						</a>
+						</div>
 						<div className={"group relative"}>
 							<a href={!access_token ? "#" : "/cart"} className={"relative z-3"}>
 								<ShoppingBag countItem={cartData?.data.cart_items.length ?? 0} />

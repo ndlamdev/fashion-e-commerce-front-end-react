@@ -6,6 +6,15 @@
  * User: kimin
  **/
 
-type OrderStatusEnum = "PENDING" | "PAYMENT" | "SHIPPING" | "COMPLETED" | "CANCEL"
+type OrderStatusEnum = "PENDING" | "PAYMENT" | "SHIPPING" | "COMPLETED" | "CANCEL";
+
+type variantBadgeType = "default" | "secondary" | "success" | "destructive" | "outline" | null | undefined;
+export const OrderStatusColors: Record<OrderStatusEnum, variantBadgeType> = {
+	CANCEL: "destructive",
+	COMPLETED: "success",
+	PENDING: "secondary",
+	PAYMENT: "outline",
+	SHIPPING: "default",
+};
 
 export default OrderStatusEnum;
