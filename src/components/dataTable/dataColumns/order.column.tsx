@@ -11,41 +11,15 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { MoreHorizontal } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox.tsx";
+import { MoreHorizontal, TrashIcon } from "lucide-react";
 import { DataTableColumnHeader } from "@/components/dataTable/DataTableColumnHeader.tsx";
+import { OrderColumnProp } from "@/components/dataTable/props/orderColumn.prop.ts";
 
-export type OrderColumn = {
-	order_number: number;
-	date: number[]
-	customer_name: string
-	status: OrderStatusEnum
-	total: number
-	email: string
-}
 
-export const columns: ColumnDef<OrderColumn | unknown, string | unknown>[] = [
-	{
-		id: "select",
-		header: ({ table }) => (
-			<Checkbox
-				checked={
-					table.getIsAllPageRowsSelected() ||
-					(table.getIsSomePageRowsSelected() && "indeterminate")
-				}
-				onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-				aria-label="Select all"
-			/>
-		),
-		cell: ({ row }) => (
-			<Checkbox
-				checked={row.getIsSelected()}
-				onCheckedChange={(value) => row.toggleSelected(!!value)}
-				aria-label="Select row"
-				className={'cursor-pointer'}
-			/>
-		),
-	},
+export const columns = (
+	watchDetail: (id: number) => void,
+	onDelete: (id: number) => void,
+): ColumnDef<OrderColumnProp | unknown, string | unknown>[] => [
 	{
 		accessorKey: "order_number",
 		header: 'Order',
@@ -96,27 +70,19 @@ export const columns: ColumnDef<OrderColumn | unknown, string | unknown>[] = [
 		id: "actions",
 		cell: ({ row }) => {
 			//TODO: implement some action
-			console.log(row.original);
-
+			const data = row.original as OrderColumnProp
 			return (
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<Button variant="ghost" className="size-8 cursor-pointer p-0">
-							<span className="sr-only">Open menu</span>
 							<MoreHorizontal className="size-4" />
 						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end">
-						<DropdownMenuLabel>Actions</DropdownMenuLabel>
-						<DropdownMenuItem
-							className={'cursor-pointer'}
-							onClick={() => navigator.clipboard.writeText('')}
-						>
-							Copy payment ID
-						</DropdownMenuItem>
+						<DropdownMenuLabel>Hành động</DropdownMenuLabel>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem className={'cursor-pointer'}>View customer</DropdownMenuItem>
-						<DropdownMenuItem className={'cursor-pointer'}>View payment details</DropdownMenuItem>
+						<DropdownMenuItem className={'cursor-pointer'} onClick={() => watchDetail(data.order_number)}>Xem chi tiết</DropdownMenuItem>
+						<DropdownMenuItem className={'cursor-pointer text-red-500'} onClick={() => onDelete(data.order_number)}><span>Xóa đơn hàng</span> <TrashIcon className={'text-red-500'} /></DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
 			)

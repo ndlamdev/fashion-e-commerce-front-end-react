@@ -6,9 +6,19 @@ import { columns } from "@/components/dataTable/dataColumns/order.column.tsx";
 import FilterColumnData from "@/components/admin/filterColumnData/FiterColumndata.tsx";
 import { OrderSortEnum } from "@/utils/enums/admin/sort/orderSort.enum.ts";
 import { SortDirection } from "@tanstack/react-table";
+import { useCallback } from "react";
+import { useNavigate } from "react-router";
 
 export default function OrderManagementPage() {
 	const data = mockPayments
+	const navigate = useNavigate();
+	const handleWatchDetail = useCallback((id: number) => {
+		navigate(`/admin/customers/${id}`);
+	}, [])
+	const handleDelete = useCallback((id: number) => {
+		//TODO: implement delete here
+		console.log(id);
+	}, [])
 	return (
 		<main>
 			<header className={"my-3"}>
@@ -24,7 +34,7 @@ export default function OrderManagementPage() {
 				</div>
 			</header>
 			<FilterColumnData sortEnum={OrderSortEnum} placeholderInput={'Search Order'} DirectionSortBy={DirectionValues}/>
-			<DataTable columns={columns} data={data} />
+			<DataTable columns={columns(handleWatchDetail, handleDelete)} data={data} />
 		</main>
 	)
 }

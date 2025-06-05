@@ -1,6 +1,6 @@
-import { OrderColumn } from "@/components/dataTable/dataColumns/order.column.tsx";
+import { OrderColumnProp } from "@/components/dataTable/props/orderColumn.prop.ts";
 
-export const mockPayments: OrderColumn[] = [
+export const mockPayments: OrderColumnProp[] = [
 	{
 		order_number: 1001,
 		date: [2025, 5, 20],

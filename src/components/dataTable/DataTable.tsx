@@ -15,14 +15,6 @@ import {
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { memo, useState } from "react";
-import { Button } from "@/components/ui/button.tsx";
-import {
-	DropdownMenu,
-	DropdownMenuCheckboxItem,
-	DropdownMenuContent,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { FunnelIcon } from "@heroicons/react/16/solid";
 import { DataTablePagination } from "@/components/dataTable/DataTablePagination.tsx";
 
 interface DataTableProps<TData, TValue> {
@@ -62,39 +54,7 @@ function DataTable<TData, TValue>({
 	});
 
 	return (
-		<div className="rounded-md text-neutral-600">
-
-			<div className="flex items-center py-4 ">
-				<DropdownMenu>
-					<DropdownMenuTrigger asChild>
-						<Button variant="outline" className="ml-auto cursor-pointer">
-							Columns
-							<FunnelIcon />
-						</Button>
-					</DropdownMenuTrigger>
-					<DropdownMenuContent align="end">
-						{table
-							.getAllColumns()
-							.filter(
-								(column) => column.getCanHide()
-							)
-							.map((column) => {
-								return (
-									<DropdownMenuCheckboxItem
-										key={column.id}
-										className="capitalize"
-										checked={column.getIsVisible()}
-										onCheckedChange={(value) =>
-											column.toggleVisibility(!!value)
-										}
-									>
-										{column.id}
-									</DropdownMenuCheckboxItem>
-								)
-							})}
-					</DropdownMenuContent>
-				</DropdownMenu>
-			</div>
+		<div className="rounded-md text-neutral-600 my-4">
 			<Table>
 				<TableHeader>
 					{table.getHeaderGroups().map((headerGroup) => (

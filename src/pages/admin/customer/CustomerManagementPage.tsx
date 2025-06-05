@@ -22,7 +22,7 @@ export function CustomerManagementPage() {
 		navigate(`/admin/customers/${id}`);
 	}, [])
 	const handleSaveLock = useCallback((id: number) => {
-		//TODO: implement here
+		//TODO: implement lock or open lock here
 		console.log(id);
 	}, [])
 	return (

@@ -60,3 +60,5 @@ const SubMenuValues: Record<string, TabNavProps> = {
 	"22": { title: "Purchase order", to: "/admin/products/purchase-order#22" },
 	"30": { title: "Segments", to: "/admin/customers/segments#30" },
 };
+
+export {MenuValues, SubMenuValues}

@@ -9,7 +9,7 @@ import {
 	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb.tsx";
 import { CustomerManagementData } from "@/assets/data/cusotmerManagement.data.ts";
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import { HoverCardContext } from "@/context/HoverCardContext.ts";
 import { formatCurrency } from "@/utils/helper/format-data.ts";
 import { HoverCardEnum } from "@/utils/enums/hoverCard.enum.ts";
@@ -17,8 +17,15 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
 import { HoverCardValues } from "@/context/provider/HoverCardProvider.tsx";
 import { useDispatch } from "react-redux";
 import { showDialog } from "@/redux/slice/dialog.slice.ts";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import InfoCustomer from "@/components/admin/customer/InfoCustomer.tsx";
+import FilterColumnData from "@/components/admin/filterColumnData/FiterColumndata.tsx";
+import { OrderSortEnum } from "@/utils/enums/admin/sort/orderSort.enum.ts";
+import DataTable from "@/components/dataTable/DataTable.tsx";
+import { columns } from "@/components/dataTable/dataColumns/order.column.tsx";
+import { SortDirection } from "@tanstack/react-table";
+import { mockPayments } from "@/assets/data/admin/order/orders.data.ts";
+import { MenuValues } from "@/components/admin/menu/VerticalMenu.tsx";
 
 export default function CustomerDetailManagementPage() {
 	const { showHoverCard, hoverCard } = useContext(HoverCardContext);
@@ -27,6 +34,15 @@ export default function CustomerDetailManagementPage() {
 	console.log(id);
 	const customer = CustomerManagementData;
 	const data = HoverCardValues[hoverCard];
+	const orders = mockPayments
+	const navigate = useNavigate();
+	const handleWatchDetail = useCallback((id: number) => {
+		navigate(`/admin/orders/${id}`);
+	}, [])
+	const handleDelete = useCallback((id: number) => {
+		//TODO: implement delete order here
+		console.log(id);
+	}, [])
 	return (
 		<>
 			<main>
@@ -35,7 +51,7 @@ export default function CustomerDetailManagementPage() {
 						<Breadcrumb>
 							<BreadcrumbList>
 								<BreadcrumbItem>
-									<BreadcrumbLink href="/admin/customers"><UserRoundIcon className={"size-4 sm:size-6"} /></BreadcrumbLink>
+									<BreadcrumbLink href={MenuValues["3"].to}><UserRoundIcon className={"size-4 sm:size-6"} /></BreadcrumbLink>
 								</BreadcrumbItem>
 								<BreadcrumbSeparator />
 								<BreadcrumbItem>
@@ -102,9 +118,11 @@ export default function CustomerDetailManagementPage() {
 
 				<div className="flex items-start max-sm:flex-wrap my-5 sm:space-x-6 max-sm:space-y-4">
 					<section className={"rounded-lg shadow-sm shadow-accent-foreground w-full sm:w-7/10 p-3 bg-white"}>
+						<p className="font-bold text-xs sm:text-sm">Last order placed</p>
+						<FilterColumnData sortEnum={OrderSortEnum} placeholderInput={'Search Order'} DirectionSortBy={DirectionValues}/>
+						{customer.order_list?.length && <DataTable columns={columns(handleWatchDetail, handleDelete)} data={orders} />}
 						{!customer.order_list?.length && <div className={"flex justify-between items-center"}>
 							<div className="space-y-3">
-								<p className="font-bold text-xs sm:text-sm">Last order placed</p>
 								<p className="text-xs sm:text-sm text-neutral-600 italic">This customer hasn’t placed any orders yet</p>
 								<Button variant={'outline'} className={'cursor-pointer'}>Create Order</Button>
 							</div>
@@ -116,4 +134,9 @@ export default function CustomerDetailManagementPage() {
 			</main>
 		</>
 	);
+}
+
+const DirectionValues: Record<SortDirection, string> = {
+	asc: 'Oldest to newest',
+	desc: 'Newest to oldest',
 }
