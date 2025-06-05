@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils.ts";
 const FilterColumnData: FC<FilterColumnDataProps> = memo((props: FilterColumnDataProps ) => {
 	return (
 		<>
-			<div className={cn("flex py-2 space-x-3", props.infoData && 'flex-wrap')}>
+			<div className={cn("flex py-2 space-x-3 ", props.infoData && 'flex-wrap')}>
 				<Input leftIcon={<SearchIcon />}
 							 className={"p-1 flex items-center space-x-2 w-full lg:w-8/10 bg-neutral-200 rounded-lg grow"}
 							 placeholder={props.placeholderInput ?? ''} />
@@ -24,7 +24,7 @@ const FilterColumnData: FC<FilterColumnDataProps> = memo((props: FilterColumnDat
 							</Button>
 						</PopoverTrigger>
 						<PopoverContent className={"sm:-translate-2 sm:translate-y-2 w-auto max-sm:p-2 max-sm:text-xs"}>
-							<p>Sort by</p>
+							<p className={'font-bold text-neutral-500'}>Sắp xếp theo</p>
 							<RadioGroup defaultValue={Object.keys(props.sortEnum)[0]} className={"border-b py-3"}>
 								{Object.entries<[string, string]>(props.sortEnum).map((item) => (
 									<div key={item[0]} className="flex items-center space-x-2">

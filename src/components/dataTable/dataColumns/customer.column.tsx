@@ -9,37 +9,18 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { MoreHorizontal } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox.tsx";
+import { LockIcon, LockOpenIcon, MoreHorizontal } from "lucide-react";
 import { DataTableColumnHeader } from "@/components/dataTable/DataTableColumnHeader.tsx";
 import { CustomerColumnProp } from "@/components/dataTable/props/customerColumn.prop.ts";
 
 
-export const customerColumns: ColumnDef<CustomerColumnProp | unknown, string | unknown>[] = [
-	{
-		id: "select",
-		header: ({ table }) => (
-			<Checkbox
-				checked={
-					table.getIsAllPageRowsSelected() ||
-					(table.getIsSomePageRowsSelected() && "indeterminate")
-				}
-				onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-				aria-label="Select all"
-			/>
-		),
-		cell: ({ row }) => (
-			<Checkbox
-				checked={row.getIsSelected()}
-				onCheckedChange={(value) => row.toggleSelected(!!value)}
-				aria-label="Select row"
-				className={'cursor-pointer'}
-			/>
-		),
-	},
+export const customerColumns = (
+	watchDetail: (id: number) => void,
+	saveLock: (id: number) => void,
+): ColumnDef<CustomerColumnProp | unknown, string | unknown>[] => [
 	{
 		accessorKey: "name",
-		header: 'Tên',
+		header: "Tên",
 		cell: ({ row }) => (<div className="font-bold">{(row.getValue("name"))}</div>),
 	},
 	{
@@ -65,18 +46,17 @@ export const customerColumns: ColumnDef<CustomerColumnProp | unknown, string | u
 	{
 		accessorKey: "amount_spent",
 		header: ({ column }) => (
-			<DataTableColumnHeader className={'cursor-pointer'} column={column} title="Đã chi tiêu" />
+			<DataTableColumnHeader className={"cursor-pointer "} column={column} title="Đã chi tiêu" />
 		),
 		cell: ({ row }) => {
-			return <div className=" font-medium text-center">{formatCurrency(row.getValue("amount_spent"))}</div>;
+			return <div className=" font-medium">{formatCurrency(row.getValue("amount_spent"))}</div>;
 		},
 	},
 	{
 		id: "actions",
 		cell: ({ row }) => {
 			//TODO: implement some action
-			const data = row.original
-			console.log(data);
+			const data = row.original as CustomerColumnProp;
 
 			return (
 				<DropdownMenu>
@@ -88,11 +68,11 @@ export const customerColumns: ColumnDef<CustomerColumnProp | unknown, string | u
 					<DropdownMenuContent align="end">
 						<DropdownMenuLabel>Hành động</DropdownMenuLabel>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem className={'cursor-pointer'}>Xem chi tiết</DropdownMenuItem>
-						<DropdownMenuItem className={'cursor-pointer'}>Xóa</DropdownMenuItem>
+						<DropdownMenuItem className={"cursor-pointer"} onClick={() => watchDetail(data.id)}>Xem chi tiết</DropdownMenuItem>
+						<DropdownMenuItem className={"cursor-pointer text-red-500 flex justify-between"} onClick={() => saveLock(data.id)}><span>Tình trạng</span> {data.is_locked ? <LockOpenIcon className={'flex-none text-red-500'} /> : <LockIcon className={'flex-none text-red-500'} />}</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
-			)
+			);
 		},
 	},
 ];

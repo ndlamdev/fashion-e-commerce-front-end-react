@@ -8,6 +8,7 @@ import ProductImageType from "@/types/product/productImage.type.ts";
 import { OptionType } from "@/types/product/productOption.type.ts";
 import { Input } from "@/components/ui/input.tsx";
 import { DiscountType } from "@/types/product/product.type.ts";
+import { ChangeEvent } from "react";
 
 export type ProductColumn = ProductVariantsType & Pick<DiscountType, 'percent'> & Pick<ProductImageType, "src"> & {
 	onInputChange: (updater: (item: ProductColumn, index: number) => ProductColumn) => void;
