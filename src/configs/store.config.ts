@@ -21,38 +21,38 @@ import { dialogSlice } from "@/redux/slice/dialog.slice.ts";
 import { sheetSlice } from "@/redux/slice/sheet.slice.ts";
 import { collectionApi } from "@/services/collection.service.ts";
 import { orderApi } from "@/redux/query/order.query.ts";
+import { TypedUseSelectorHook, useSelector } from "react-redux";
 
 const store = configureStore({
-  reducer: {
-    [authenticationApi.reducerPath]: authenticationApi.reducer,
-    auth: authSlice.reducer,
-    [profileApi.reducerPath]: profileApi.reducer,
-    address: addressSlice,
-    [addressApi.reducerPath]: addressApi.reducer,
-    [productApi.reducerPath]: productApi.reducer,
-    dialog: dialogSlice.reducer,
-    sheet: sheetSlice.reducer,
-    [collectionApi.reducerPath]: collectionApi.reducer,
-    [cartApi.reducerPath]: cartApi.reducer,
-    dialogSlice: dialogSlice.reducer,
-    [addressOpenApi.reducerPath]: addressOpenApi.reducer,
-    [addressCustomerApi.reducerPath]: addressCustomerApi.reducer,
-    cartSlice: cartSlice.reducer,
-    [orderApi.reducerPath]: orderApi.reducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware()
-      .concat(logger)
-      .concat(authenticationApi.middleware)
-      .concat(profileApi.middleware)
-      .concat(addressApi.middleware)
-      .concat(cartApi.middleware)
-      .concat(addressOpenApi.middleware)
-      .concat(productApi.middleware)
-      .concat(addressCustomerApi.middleware)
-      .concat(collectionApi.middleware)
-      .concat(orderApi.middleware)
-  ,
+	reducer: {
+		[authenticationApi.reducerPath]: authenticationApi.reducer,
+		auth: authSlice.reducer,
+		[profileApi.reducerPath]: profileApi.reducer,
+		address: addressSlice,
+		[addressApi.reducerPath]: addressApi.reducer,
+		[productApi.reducerPath]: productApi.reducer,
+		dialog: dialogSlice.reducer,
+		sheet: sheetSlice.reducer,
+		[collectionApi.reducerPath]: collectionApi.reducer,
+		[cartApi.reducerPath]: cartApi.reducer,
+		dialogSlice: dialogSlice.reducer,
+		[addressOpenApi.reducerPath]: addressOpenApi.reducer,
+		[addressCustomerApi.reducerPath]: addressCustomerApi.reducer,
+		cartSlice: cartSlice.reducer,
+		[orderApi.reducerPath]: orderApi.reducer,
+	},
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware()
+			.concat(logger)
+			.concat(authenticationApi.middleware)
+			.concat(profileApi.middleware)
+			.concat(addressApi.middleware)
+			.concat(cartApi.middleware)
+			.concat(addressOpenApi.middleware)
+			.concat(productApi.middleware)
+			.concat(addressCustomerApi.middleware)
+			.concat(collectionApi.middleware)
+			.concat(orderApi.middleware),
 });
 
 // Get the type of our slice variable
@@ -62,5 +62,6 @@ export type RootState = ReturnType<AppStore["getState"]>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = AppStore["dispatch"];
 export const appDispatch = store.dispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export default store;
