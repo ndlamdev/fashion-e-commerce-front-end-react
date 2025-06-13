@@ -72,7 +72,7 @@ function App() {
 								<Route path={"orders/:id"} element={<OrderDetailManagementPage />} />
 								<Route path={""} element={<DashBoardPage />} />
 							</Route>
-							<Route path='*' element={<NotFoundPage />} />
+							<Route path={"*"} element={<NotFoundPage />} />
 						</Routes>
 						<Toaster />
 					</SheetProvider>
