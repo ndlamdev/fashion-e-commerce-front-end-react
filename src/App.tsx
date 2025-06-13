@@ -42,7 +42,7 @@ function App() {
 						<Routes>
 							<Route path={"/"} element={<RootLayout />}>
 								<Route index element={<HomePage />} />
-								<Route path={"/test"} element={<TestPage />} />
+								<Route path={"test"} element={<TestPage />} />
 								<Route path={"product-detail"}>
 									<Route path={":id"} element={<ProductDetailPage />} />
 								</Route>
@@ -57,8 +57,8 @@ function App() {
 									<Route path={"reviews"} element={<Review />} />
 									<Route path={"faq"} element={<FAQTab />} />
 								</Route>
-								<Route path={"/order/result"} element={<OrderResultPage />} />
-								<Route path={"/order-detail"} element={<OrderDetailPage />} />
+								<Route path={"order/result"} element={<OrderResultPage />} />
+								<Route path={"order/detail"} element={<OrderDetailPage />} />
 							</Route>
 							<Route path='/cart' element={<CartLayout />}>
 								<Route index element={<CartPage />} />
@@ -70,9 +70,9 @@ function App() {
 								<Route path={"customers/:id"} element={<CustomerDetailManagementPage />} />
 								<Route path={"orders"} element={<OrderManagementPage />} />
 								<Route path={"orders/:id"} element={<OrderDetailManagementPage />} />
-								<Route path={"analytics"} element={<DashBoardPage />} />
+								<Route path={""} element={<DashBoardPage />} />
 							</Route>
-							<Route path="*" element={<NotFoundPage />} />
+							<Route path='*' element={<NotFoundPage />} />
 						</Routes>
 						<Toaster />
 					</SheetProvider>

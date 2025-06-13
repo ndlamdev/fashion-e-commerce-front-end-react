@@ -10,6 +10,8 @@ import { ApiResponse } from "@/domain/ApiResponse.ts";
 import { createBaseQueryWithDispatch } from "@/redux/api/baseQueryWithDispatch.ts";
 import CreateOrderRequest from "@/domain/resquest/createOrder.request.ts";
 import CreateOrderResponse from "@/domain/response/createOrder.response.ts";
+import { ApiPageResponse } from "@/domain/ApiPageResponse";
+import HistoryOrderType from "@/types/historyOrder.type";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL + "/order/v1";
 
@@ -47,9 +49,22 @@ export const orderApi = createApi({
 			}),
 			invalidatesTags: ["order"],
 		}),
-		historyOrder: build.query<ApiResponse<CreateOrderResponse>, number | undefined>({
+		historyOrder: build.query<ApiResponse<ApiPageResponse<HistoryOrderType>>, number | undefined>({
 			query: (page = 0) => ({
-				url: `/cancel?page=${page}`,
+				url: `/history?page=${page}`,
+			}),
+		}),
+	}),
+});
+
+export const adminOrderApi = createApi({
+	reducerPath: "AdminOrderApi",
+	baseQuery: createBaseQueryWithDispatch(import.meta.env.VITE_BASE_URL + "/admin/order/v1"),
+	tagTypes: ["admin_order"],
+	endpoints: (build) => ({
+		adminOrderHistories: build.query<ApiResponse<HistoryOrderType[]>, void>({
+			query: () => ({
+				url: ``,
 			}),
 		}),
 	}),
@@ -58,3 +73,4 @@ export const orderApi = createApi({
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
 export const { useCreateOrderMutation, useCancelOrderMutation, useHistoryOrderQuery } = orderApi;
+export const { useAdminOrderHistoriesQuery } = adminOrderApi;

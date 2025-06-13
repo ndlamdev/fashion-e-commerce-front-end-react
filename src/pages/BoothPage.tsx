@@ -33,26 +33,6 @@ export default function BoothPage() {
 		fileName?: string | undefined;
 		type?: string | undefined;
 	}>();
-	useEffect(() => {
-		if (name) {
-			setTitle({ name: name });
-			return;
-		}
-		if (prompt) {
-			setSearchParams({ prompt: prompt });
-			setTitle({ prompt: prompt });
-			return;
-		}
-		if (file) {
-			setTitle({ fileName: file.name });
-			return;
-		}
-		if (type) {
-			setTitle({ type: type });
-			return;
-		}
-		navigate("/collection?type=MALE");
-	}, [name, prompt, file, type, setSearchParams, searchParams, navigate]);
 	const [data, setData] = useState<ApiPageResponse<ProductResponseType> | undefined>();
 	const filters: CollectionFilterProps = mockCollectionFilters;
 	const sportDescriptions = categoryDescriptionSamples;
@@ -133,6 +113,26 @@ export default function BoothPage() {
 		if (queryObj["cid"] || !queryObj["type"]) return;
 		setData(productsOfType?.data);
 	}, [productsOfType?.data, queryObj]);
+
+	useEffect(() => {
+		if (name) {
+			setTitle({ name: name });
+			return;
+		}
+		if (prompt) {
+			setSearchParams({ prompt: prompt });
+			setTitle({ prompt: prompt });
+			return;
+		}
+		if (file) {
+			setTitle({ fileName: file.name });
+			return;
+		}
+		if (type) {
+			setTitle({ type: type });
+			return;
+		}
+	}, [name, prompt, file, type, setSearchParams, navigate]);
 
 	return (
 		<main>

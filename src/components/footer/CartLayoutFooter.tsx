@@ -5,24 +5,23 @@
  * Create at: 5:45PM - 13/03/2025
  * User: lam-nguyen
  **/
-import momo from "@/assets/images/icons/momo.png";
-import zaloPay from "@/assets/images/icons/zalo-pay.png";
 import { LaShippingFast } from "@/assets/images/icons/LaShippingFast";
+import momo from "@/assets/images/icons/momo.png";
+import { PayOs } from "@/assets/images/icons/PayOs.tsx";
+import zaloPay from "@/assets/images/icons/zalo-pay.png";
+import DialogPayOs from "@/components/dialog/DialogPayOs.tsx";
+import { RootState } from "@/configs/store.config.ts";
+import { InfoCustomerCreateOrder, VariantRequestType } from "@/domain/resquest/createOrder.request.ts";
+import { createOrder, setShowConfirm } from "@/redux/slice/cart.slice";
+import OrderService from "@/services/order.service";
+import CartItemType from "@/types/CartItemType";
+import CartHelper from "@/utils/helper/CartHelper.ts";
 import { formatCurrency } from "@/utils/helper/format-data.ts";
 import { ArrowRight } from "lucide-react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/configs/store.config.ts";
-import { PayOs } from "@/assets/images/icons/PayOs.tsx";
-import CartHelper from "@/utils/helper/CartHelper.ts";
-import { createOrder, setShowConfirm } from "@/redux/slice/cart.slice";
-import { toast } from "sonner";
 import { useCallback, useEffect, useState } from "react";
-import { useCreateOrderMutation } from "@/redux/api/order.api.ts";
-import { InfoCustomerCreateOrder, VariantRequestType } from "@/domain/resquest/createOrder.request.ts";
-import CartItemType from "@/types/CartItemType";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import DialogPayOs from "@/components/dialog/DialogPayOs.tsx";
-import { cartApi } from "@/redux/api/cart.api.ts";
+import { toast } from "sonner";
 
 function CartLayoutFooter() {
 	const cartItemsSelected = useSelector((state: RootState) => state.cart.items);
@@ -30,7 +29,6 @@ function CartLayoutFooter() {
 	const dispatch = useDispatch();
 	const { payment, showConfirm } = useSelector((state: RootState) => state.cart);
 	const { infoCustomerCreateOrder, items } = useSelector((state: RootState) => state.cart);
-	const [createOrderApi, { data, error }] = useCreateOrderMutation();
 	const [payOsConfig, setPayOsConfig] = useState<{ orderId: number; checkoutUrl: string; orderCode: number }>();
 	const navigate = useNavigate();
 
@@ -57,9 +55,31 @@ function CartLayoutFooter() {
 					quantity: it.quantity,
 				};
 			});
-			createOrderApi({ ...info, items: items });
+			OrderService.createOrder({ ...info, items: items })
+				.then((data) => {
+					const { method, checkout_url, order_code, status } = data.payment_response;
+					if (status === "FAIL") return;
+					switch (method) {
+						case "CASH":
+							toast.success("Đặt hàng thành công");
+							navigate("/order/result", {
+								state: {
+									success: true,
+								},
+							});
+							break;
+						case "MOMO":
+						case "ZALO_PAY":
+							break;
+						case "PAY_OS":
+							setPayOsConfig({ orderId: data.id, orderCode: order_code, checkoutUrl: checkout_url });
+							break;
+						default:
+							toast.error("Đặt hàng thất bại");
+					}
+				});
 		},
-		[createOrderApi],
+		[navigate],
 	);
 
 	useEffect(() => {
@@ -77,36 +97,6 @@ function CartLayoutFooter() {
 
 		callApi(infoCustomerCreateOrder, items);
 	}, [infoCustomerCreateOrder]);
-
-	useEffect(() => {
-		if (!data) return;
-		dispatch(cartApi.util.invalidateTags(["Cart"]));
-		const { method, checkout_url, order_code, status } = data.data.payment_response;
-		if (status === "FAIL") return;
-		switch (method) {
-			case "CASH":
-				toast.success("Đặt hàng thành công");
-				navigate("/order/result", {
-					state: {
-						success: true,
-					},
-				});
-				break;
-			case "MOMO":
-			case "ZALO_PAY":
-				break;
-			case "PAY_OS":
-				setPayOsConfig({ orderId: data.data.id, orderCode: order_code, checkoutUrl: checkout_url });
-				break;
-			default:
-				toast.error("Đặt hàng thất bại");
-		}
-	}, [data, dispatch, navigate]);
-
-	useEffect(() => {
-		if (!error) return;
-		toast.error("Đặt hàng thất bại");
-	}, [error]);
 
 	return (
 		<>

@@ -78,7 +78,7 @@ export default function CardProduct(props: ProductCardProp) {
 							</Badge>
 						))}
 					<div className=''></div>
-					{props.icon_thumbnail && <img className={"size-7 object-fill"} src={props.icon_thumbnail?.src} alt={props.title} />}
+					{props.icon_thumbnail && <img className={"size-7 object-fill"} loading={"lazy"} src={props.icon_thumbnail?.src} alt={props.title} />}
 				</div>
 
 				<span className={"absolute top-2 left-2 flex items-center font-bold"}>
@@ -89,7 +89,7 @@ export default function CardProduct(props: ProductCardProp) {
 
 				{props.icon_thumbnail && (
 					<div className='absolute bottom-0'>
-						<img className={"rounded-b-lg"} src={props.icon_thumbnail.src} alt={props.title} />
+						<img className={"rounded-b-lg"} loading={"lazy"} src={props.icon_thumbnail.src} alt={props.title} />
 					</div>
 				)}
 

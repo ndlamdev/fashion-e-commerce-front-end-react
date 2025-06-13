@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button.tsx";
 import { toast } from "sonner";
 import { AddressProps } from "@/components/profile/props/address.props.ts";
 import { useSelector } from "react-redux";
-import { RootState } from "@/configs/store.config.ts";
-import { useSetDefaultAddressMutation } from "@/redux/api/address.api.ts";
+import { appDispatch, RootState } from "@/configs/store.config.ts";
+import { addressApi, useSetDefaultAddressMutation } from "@/redux/api/address.api.ts";
 
 const AddressItem: FC<AddressProps> = memo((props) => {
 	const { defaultId } = useSelector((state: RootState) => state.address);
@@ -18,6 +18,7 @@ const AddressItem: FC<AddressProps> = memo((props) => {
 					toast("đặt địa chỉ mặc định thất bại");
 					return;
 				}
+				appDispatch(addressApi.util.invalidateTags(["Address"]));
 				toast("đặt địa chỉ mặc định thành công");
 			})
 			.catch((error) => {
@@ -25,6 +26,7 @@ const AddressItem: FC<AddressProps> = memo((props) => {
 				toast("đặt địa chỉ mặc định thất bại");
 			});
 	}, [props.id, setDefault, defaultId]);
+
 	return (
 		<div className={"border-b py-5"}>
 			<div className='flex items-center justify-between max-sm:space-y-3'>

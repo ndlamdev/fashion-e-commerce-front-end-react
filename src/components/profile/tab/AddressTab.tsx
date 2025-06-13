@@ -5,8 +5,8 @@ import { memo, useCallback, useEffect } from "react";
 import { SkeletonTab } from "@/components/profile/tab/SkeletonTab.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { setActionId, setDefaultId } from "@/redux/slice/address.slice.ts";
-import { RootState } from "@/configs/store.config.ts";
-import { useDeleteAddressMutation, useGetAddressesQuery } from "@/redux/api/address.api.ts";
+import { appDispatch, RootState } from "@/configs/store.config.ts";
+import { addressApi, useDeleteAddressMutation, useGetAddressesQuery } from "@/redux/api/address.api.ts";
 import { showDialog } from "@/redux/slice/dialog.slice.ts";
 
 const AddressTab = memo(() => {
@@ -28,6 +28,7 @@ const AddressTab = memo(() => {
 						toast("xóa địa chỉ thất bại");
 						return;
 					}
+					appDispatch(addressApi.util.invalidateTags(["Address"]));
 					toast("xóa địa chỉ thành công");
 				})
 				.catch((error) => {

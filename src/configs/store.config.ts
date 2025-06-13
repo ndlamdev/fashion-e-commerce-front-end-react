@@ -20,7 +20,7 @@ import { productApi } from "@/services/product.service.ts";
 import { dialogSlice } from "@/redux/slice/dialog.slice.ts";
 import { sheetSlice } from "@/redux/slice/sheet.slice.ts";
 import { collectionApi } from "@/services/collection.service.ts";
-import { orderApi } from "@/redux/api/order.api.ts";
+import { adminOrderApi, orderApi } from "@/redux/api/order.api.ts";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 
 const store = configureStore({
@@ -41,6 +41,7 @@ const store = configureStore({
 		[cartApi.reducerPath]: cartApi.reducer,
 		[addressApi.reducerPath]: addressApi.reducer,
 		[orderApi.reducerPath]: orderApi.reducer,
+		[adminOrderApi.reducerPath]: adminOrderApi.reducer
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware()
@@ -52,7 +53,8 @@ const store = configureStore({
 			.concat(cartApi.middleware)
 			.concat(productApi.middleware)
 			.concat(collectionApi.middleware)
-			.concat(orderApi.middleware),
+			.concat(orderApi.middleware)
+			.concat(adminOrderApi.middleware),
 });
 
 // Get the type of our slice variable

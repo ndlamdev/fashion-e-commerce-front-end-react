@@ -1,7 +1,7 @@
-import OrderStatusEnum, { OrderStatusColors } from "@/utils/enums/orderStatus.enum.ts";
-import { ColumnDef } from "@tanstack/react-table";
-import { formatCurrency, formatDateFromArray } from "@/utils/helper/format-data.ts";
+import { DataTableColumnHeader } from "@/components/dataTable/DataTableColumnHeader.tsx";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button.tsx";
+import { Checkbox } from "@/components/ui/checkbox.tsx";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -10,21 +10,13 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
-import { Button } from "@/components/ui/button.tsx";
+import HistoryOrderType from "@/types/historyOrder.type";
+import OrderStatusEnum, { OrderStatusColors } from "@/utils/enums/orderStatus.enum.ts";
+import { formatCurrency } from "@/utils/helper/format-data.ts";
+import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox.tsx";
-import { DataTableColumnHeader } from "@/components/dataTable/DataTableColumnHeader.tsx";
 
-export type OrderProp = {
-	order_number: number;
-	date: number[];
-	customer_name: string;
-	status: OrderStatusEnum;
-	total: number;
-	email: string;
-};
-
-export const columns: ColumnDef<OrderProp | unknown, string | unknown>[] = [
+export const columns: ColumnDef<HistoryOrderType | unknown, unknown>[] = [
 	{
 		id: "select",
 		header: ({ table }) => (
@@ -39,9 +31,9 @@ export const columns: ColumnDef<OrderProp | unknown, string | unknown>[] = [
 		),
 	},
 	{
-		accessorKey: "order_number",
+		accessorKey: "id",
 		header: "Order",
-		cell: ({ row }) => <div className='font-bold'>#{row.getValue("order_number")}</div>,
+		cell: ({ row }) => <div className='font-bold'>#{row.getValue("id")}</div>,
 	},
 	{
 		accessorKey: "status",
@@ -57,19 +49,14 @@ export const columns: ColumnDef<OrderProp | unknown, string | unknown>[] = [
 		header: ({ column }) => <DataTableColumnHeader column={column} title='Email' />,
 	},
 	{
-		accessorKey: "date",
-		header: ({ column }) => <DataTableColumnHeader column={column} title='Date' />,
-		cell: ({ row }) => <div className='font-medium'>{formatDateFromArray(row.getValue("date"))}</div>,
-	},
-	{
-		accessorKey: "customer_name",
+		accessorKey: "full_name",
 		header: ({ column }) => <DataTableColumnHeader className={"cursor-pointer"} column={column} title='Customer' />,
 	},
 	{
-		accessorKey: "total",
+		accessorKey: "amount",
 		header: ({ column }) => <DataTableColumnHeader className={"cursor-pointer"} column={column} title='Total' />,
 		cell: ({ row }) => {
-			return <div className='text-center font-medium'>{formatCurrency(row.getValue("total"))}</div>;
+			return <div className='font-medium'>{formatCurrency(row.getValue("amount"))}</div>;
 		},
 	},
 	{

@@ -48,7 +48,6 @@ export const addressApi = createApi({
 				body: request,
 				credentials: "include",
 			}),
-			invalidatesTags: ["Address"],
 		}),
 		deleteAddress: build.mutation<ApiResponse<void>, number | undefined>({
 			query: (id) => ({
@@ -56,7 +55,6 @@ export const addressApi = createApi({
 				method: "DELETE",
 				credentials: "include",
 			}),
-			invalidatesTags: ["Address"],
 		}),
 		setDefaultAddress: build.mutation<ApiResponse<void>, { old_id: number | undefined; new_id: number | undefined }>({
 			query: ({ old_id, new_id }) => ({
@@ -64,7 +62,6 @@ export const addressApi = createApi({
 				method: "PATCH",
 				credentials: "include",
 			}),
-			invalidatesTags: ["Address"],
 		}),
 	}),
 });
@@ -77,4 +74,3 @@ export const {
 	useSaveAddressMutation,
 	useGetDefaultAddressQuery,
 } = addressApi;
-export const { useGetInfoAddressesQuery } = addressCoolMateApi;

@@ -23,7 +23,7 @@ function Searcher({ onSearch, onEnter, onTextChange, ...props }: SearcherProps) 
 
 	const defaultSearchHandle = () => {
 		if (!promptSearch) return;
-		navigate("/collection", {
+		navigate(`/collection`, {
 			state: {
 				prompt: promptSearch,
 			},

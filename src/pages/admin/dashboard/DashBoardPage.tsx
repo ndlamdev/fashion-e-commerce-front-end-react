@@ -37,7 +37,7 @@ export default function DashBoardPage() {
 					</p>
 					<div className="flex items-center space-x-2 text-center">
 						<Button variant={"outline"}
-										className={"cursor-pointer text-xs sm:text-md max-sm:h-8"}><RefreshCcw /></Button>
+							className={"cursor-pointer text-xs sm:text-md max-sm:h-8"}><RefreshCcw /></Button>
 						<Button variant={"outline"} className={"cursor-pointer text-xs sm:text-md max-sm:h-8"}><BellRing /></Button>
 					</div>
 				</div>
@@ -57,14 +57,14 @@ export default function DashBoardPage() {
 				</Select>
 				<Badge variant={"default"} className={""}>Today</Badge>
 			</section>
-			<section className={"flex flex-wrap items-center justify-between xl:space-x-2 max-xl:space-y-2 my-4"}>
+			<section className={"flex flex-wrap items-center justify-between xl:space-x-2 max-xl:space-y-2 my-4 gap-y-5"}>
 				{Object.values(metricsValues).map((metrics, index) => (
 					<Metrics className={"w-full sm:w-72 lg:w-95 xl:w-70"} key={index} {...metrics} />
 				))}
 			</section>
 			<section className={" flex max-lg:flex-wrap items-start justify-between lg:space-x-2 max-lg:space-y-2"}>
 				<Metrics className={"w-full lg:w-7/10"} title={"Total sales over time"} value={20000000} unit={MetricsUnitType.CURRENCY}
-								 chart={<LineChartCustomization {...LineChartData} />} />
+					chart={<LineChartCustomization {...LineChartData} />} />
 				<div className="w-full lg:w-3/10 p-3 rounded-lg bg-gray-300">
 					<BestSaleTop {...bestSaleData} />
 				</div>

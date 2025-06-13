@@ -137,7 +137,11 @@ function Header({ showMenu }: HeaderProps) {
 									<HoverCardTrigger
 										key={collection}
 										onMouseEnter={() => setType(collection)}
-										onClick={() => navigate(`/collection?type=${collection}`, { state: { type: CollectionValue[collection] } })}
+										onClick={() =>
+											navigate(`/collection?type=${collection}`, {
+												state: { type: CollectionValue[collection] },
+											})
+										}
 										className={"cursor-pointer text-lg font-bold uppercase hover:border-b-2"}>
 										{CollectionValue[collection]}
 									</HoverCardTrigger>
@@ -260,7 +264,7 @@ function Header({ showMenu }: HeaderProps) {
 					className={
 						"border-gray absolute top-[115px] left-0 z-3 flex max-h-screen w-full flex-col gap-y-5 overflow-x-hidden overflow-y-auto border-t-5 border-b-5 border-black bg-white p-5 sm:max-h-100"
 					}>
-					{isLoadingQuickSearch && <Skeleton className={"min-h-5 w-full"} />}
+					{isLoadingQuickSearch && <Skeleton className={"min-h-5 w-full bg-blue-500"} />}
 					{isErrorQuickSearch && <p className={"text-red-500 normal-case"}>lỗi tìm thấy sản phẩm</p>}
 					{!title || !title.length || !dataQuickSearch ? (
 						<div className={"min-h-5 w-full text-center font-bold"}>Nhập sản phẩm bạn muốn tìm.</div>
