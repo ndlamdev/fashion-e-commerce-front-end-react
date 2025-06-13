@@ -59,7 +59,7 @@ export default function DashBoardPage() {
 			</section>
 			<section className={"flex flex-wrap items-center justify-between xl:space-x-2 max-xl:space-y-2 my-4 gap-y-5"}>
 				{Object.values(metricsValues).map((metrics, index) => (
-					<Metrics className={"w-full sm:w-72 lg:w-95 xl:w-70"} key={index} {...metrics} />
+					<Metrics className={"w-full sm:w-72 lg:w-95 xl:w-60"} key={index} {...metrics} />
 				))}
 			</section>
 			<section className={" flex max-lg:flex-wrap items-start justify-between lg:space-x-2 max-lg:space-y-2"}>

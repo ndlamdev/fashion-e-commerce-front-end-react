@@ -1,4 +1,5 @@
 import { CustomerDetailManagementType } from "@/types/admin/customer/customerDetailManagement.type.ts";
+import { mockPayments } from "@/assets/data/admin/order/orders.data.ts";
 
 export const CustomerManagementData: CustomerDetailManagementType = {
 	full_name: 'phong',
@@ -11,6 +12,6 @@ export const CustomerManagementData: CustomerDetailManagementType = {
 	customer_since: 2,
 	phone: '012345678',
 	email: 'giotrang124@gmail.com',
-	order_list: [],
+	order_list: mockPayments,
 	rfm_group: 'analytics',
 }

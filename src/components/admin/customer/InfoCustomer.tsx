@@ -30,7 +30,6 @@ const InfoCustomer: FC<InfoCustomerProp> = memo((props) => {
 							<p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>Edit contact information</p>
 							<p onClick={() => dispatch(showDialog('manage-addresses'))} className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>Manage address</p>
 							<p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>Edit marketing settings</p>
-							<p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer "}>Edit tax details</p>
 						</PopoverContent>
 					</Popover>
 				</div>

@@ -1,47 +1,45 @@
-import FilterColumnData from "@/components/admin/filterColumnData/FilterColumndata.tsx";
-import DataTable from "@/components/dataTable/DataTable.tsx";
-import { columns } from "@/components/dataTable/props/order.prop.tsx";
+import { InboxIcon } from "lucide-react";
 import { Button } from "@/components/ui/button.tsx";
-import { useAdminOrderHistoriesQuery } from "@/redux/api/order.api";
+import { mockPayments } from "@/assets/data/admin/order/orders.data.ts";
+import DataTable from "@/components/dataTable/DataTable.tsx";
+import { columns } from "@/components/dataTable/dataColumns/order.column.tsx";
+import FilterColumnData from "@/components/admin/filterColumnData/FiterColumndata.tsx";
 import { OrderSortEnum } from "@/utils/enums/admin/sort/orderSort.enum.ts";
 import { SortDirection } from "@tanstack/react-table";
-import { InboxIcon } from "lucide-react";
-import { useEffect } from "react";
-import { toast } from "sonner";
+import { useCallback } from "react";
+import { useNavigate } from "react-router";
 
 export default function OrderManagementPage() {
-	const { data, error } = useAdminOrderHistoriesQuery();
-
-	useEffect(() => {
-		if (!error) return;
-		toast.error("Lỗi hệ thống")
-	}, [error])
-
+	const data = mockPayments
+	const navigate = useNavigate();
+	const handleWatchDetail = useCallback((id: number) => {
+		navigate(`/admin/orders/${id}`);
+	}, [])
+	const handleDelete = useCallback((id: number) => {
+		//TODO: implement delete here
+		console.log(id);
+	}, [])
 	return (
-		<div>
-			<header className={"mb-3"}>
-				<div className='flex items-end justify-between'>
-					<p className='flex items-center justify-end space-x-2 text-sm sm:text-lg lg:text-2xl'>
-						<InboxIcon className={"size-4 sm:size-6 lg:size-8"} />
-						<span className={"font-bold"}>Orders</span>
+		<main>
+			<header className={"my-3"}>
+				<div className="flex justify-between items-end">
+					<p className="flex justify-end items-center space-x-2 text-sm sm:text-lg lg:text-2xl">
+						<InboxIcon className={'size-4 sm:size-6 lg:size-8'} />
+						<span className={"font-bold "}>Orders</span>
 					</p>
-					<div className='flex items-center space-x-2 text-center'>
-						<Button variant={"outline"} className={"sm:text-md cursor-pointer text-xs max-sm:h-8"}>
-							Export
-						</Button>
-						<Button className={"sm:text-md cursor-pointer text-xs max-sm:h-8"}>Create Order</Button>
+					<div className="flex items-center space-x-2 text-center">
+						<Button variant={"outline"} className={"cursor-pointer text-xs sm:text-md max-sm:h-8"}>Export</Button>
+						<Button className={"cursor-pointer text-xs sm:text-md max-sm:h-8"}>Create Order</Button>
 					</div>
 				</div>
 			</header>
-			<main>
-				<FilterColumnData sortEnum={OrderSortEnum} placeholderInput={"Search Order"} DirectionSortBy={DirectionValues} />
-				<DataTable columns={columns} data={data?.data ?? []} />
-			</main>
-		</div>
-	);
+			<FilterColumnData sortEnum={OrderSortEnum} placeholderInput={'Search Order'} DirectionSortBy={DirectionValues}/>
+			<DataTable columns={columns(handleWatchDetail, handleDelete)} data={data} />
+		</main>
+	)
 }
 
 const DirectionValues: Record<SortDirection, string> = {
-	asc: "Oldest to newest",
-	desc: "Newest to oldest",
-};
+	asc: 'Oldest to newest',
+	desc: 'Newest to oldest',
+}

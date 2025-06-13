@@ -3,17 +3,12 @@ import { formatCurrency } from "@/utils/helper/format-data.ts";
 import { Button } from "@/components/ui/button.tsx";
 import { XIcon } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
-import { ProductVariantsType } from "@/types/product/productVariants.type.ts";
-import ProductImageType from "@/types/product/productImage.type.ts";
 import { OptionType } from "@/types/product/productOption.type.ts";
 import { Input } from "@/components/ui/input.tsx";
-import { DiscountType } from "@/types/product/product.type.ts";
+import { ChangeEvent } from "react";
+import { ProductColumnProp } from "@/components/dataTable/props/productColumn.prop.ts";
 
-export type ProductProp = ProductVariantsType & Pick<DiscountType, 'percent'> & Pick<ProductImageType, "src"> & {
-	onInputChange: (updater: (item: ProductProp, index: number) => ProductProp) => void;
-}
-
-export const productColumns: ColumnDef<ProductProp | unknown, string | unknown>[] = [
+export const productColumns: ColumnDef<ProductColumnProp | unknown, string | unknown>[] = [
 	{
 		id: "select",
 		header: ({ table }) => (
@@ -38,7 +33,7 @@ export const productColumns: ColumnDef<ProductProp | unknown, string | unknown>[
 	{
 		header: "Product",
 		cell: ({ row }) => {
-			const product = row.original as ProductProp;
+			const product = row.original as ProductColumnProp;
 			return (
 				<div className=" flex items-center space-x-2">
 					<img className={"size-10 border border-neutral-500 rounded-lg object-cover"} src={product.src} alt={product.title} />
@@ -52,10 +47,10 @@ export const productColumns: ColumnDef<ProductProp | unknown, string | unknown>[
 	},
 	{
 		accessorKey: "quantity",
-		header: <p className={"text-end"}>Quantity</p>,
+		header: 'Quantity',
 		cell: ({ row }) => {
 			const rowIndex = row.index;
-			const data = row.original as ProductProp;
+			const data = row.original as ProductColumnProp;
 			const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 				const value = Math.max(Number(e.target.value), 1);
 				data.onInputChange((item, index) =>
@@ -66,7 +61,7 @@ export const productColumns: ColumnDef<ProductProp | unknown, string | unknown>[
 			return (
 				<Input onChange={handleChange}
 							 value={data.quantity}
-							 className={"w-full sm:w-1/2 rounded-2xl text-center float-end"}
+							 className={"w-full sm:w-1/2 rounded-2xl text-center float-start"}
 							 type={"number"}
 							 min={1}
 							 max={9999999}
@@ -76,16 +71,17 @@ export const productColumns: ColumnDef<ProductProp | unknown, string | unknown>[
 	},
 	{
 		id: "amount",
-		header: <p className={"text-end"}>Amount</p>,
+		header: 'Amount',
 		cell: ({ row }) => {
-			const product = row.original as ProductProp;
-			return <div className=" font-medium text-balance break-words w-25 float-end text-end">{formatCurrency(product.regular_price * product.quantity)}</div>;
+			const product = row.original as ProductColumnProp;
+			return <div className=" font-medium text-balance break-words w-25 float-start text-start">{formatCurrency(product.regular_price * product.quantity)}</div>;
 		},
 	},
 	{
 		id: "actions",
 		cell: ({ row }) => {
 			//TODO: implement some action
+			console.log(row);
 
 			return (
 				<Button variant="ghost" className="size-8 cursor-pointer p-0 float-end">
