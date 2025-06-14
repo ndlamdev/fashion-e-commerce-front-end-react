@@ -18,6 +18,7 @@ type UserDto = {
 	height: number;
 	weight: number;
 	country_code: string;
+	create_at: number[];
 };
 
 export default UserDto;

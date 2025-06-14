@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ApiResponse } from "@/domain/ApiResponse.ts";
-import ProductResponseType from "@/types/product/productResponse.type.ts";
+import ProductResponseType from "@/domain/response/product.response";
 import { ApiPageResponse } from "@/domain/ApiPageResponse.ts";
 import { CollectionEnum } from "@/utils/enums/collection.enum.ts";
 import { CollectionType } from "@/types/collection/category.type.ts";

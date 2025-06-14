@@ -1,7 +1,7 @@
 import AccordionCustom from "@/components/accordion/AccordionCustom.tsx";
 import { TabNavProps } from "@/components/profile/props/tabNav.props.ts";
 import { TabNav } from "@/components/profile/TabNav.tsx";
-import { BadgePercent, CornerDownRight, HouseIcon, LucideShoppingBag, TagIcon, UserRoundIcon } from "lucide-react";
+import { BadgePercent, CornerDownRight, LayoutDashboardIcon, LucideShoppingBag, TagIcon, UserRoundIcon } from "lucide-react";
 import { useLocation } from "react-router";
 
 export function VerticalMenu() {
@@ -52,7 +52,7 @@ export function VerticalMenu() {
 }
 
 const MenuValues: (TabNavProps & { subMenu?: TabNavProps[] })[] = [
-	{ title: "Dashboard", to: "/", iconLeft: <HouseIcon /> },
+	{ title: "Dashboard", to: "/admin", iconLeft: <LayoutDashboardIcon /> },
 	{
 		title: "Orders",
 		to: "/admin/orders",

@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button.tsx";
 import { gender } from "@/components/profile/props/editInfoProfileDialog.props.ts";
 import "react-day-picker/style.css";
 import { DatePicker } from "@/components/DatePickerCustom.tsx";
-import { useSaveProfileMutation } from "@/services/profile.service.ts";
+import { useSaveProfileMutation } from "@/redux/api/profile.api";
 import { toast } from "sonner";
 import { formatDateFromArray } from "@/utils/helper/format-data.ts";
 import { ProfileRequest } from "@/domain/resquest/profile/profile.request.ts";

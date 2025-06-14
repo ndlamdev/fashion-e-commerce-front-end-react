@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import RecentActivity from "@/components/collection/RecentActivity.tsx";
 import { useSearchByImageMutation, useSearchByTextQuery } from "@/services/product.service.ts";
 import { useGetProductByCollectionIdQuery, useGetProductByCollectionTypeQuery } from "@/services/collection.service.ts";
-import ProductResponseType from "@/types/product/productResponse.type.ts";
+import ProductResponseType from "@/domain/response/product.response";
 import { ApiPageResponse } from "@/domain/ApiPageResponse.ts";
 import { CollectionValue } from "@/utils/enums/collection.enum.ts";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb.tsx";
@@ -172,17 +172,17 @@ export default function BoothPage() {
 					<div className='my-4 border-1 border-gray-300' />
 					{/*<ScrollArea className={"h-dvh"}>*/}
 					{isLoadingPOCI ||
-					isLoadingPOT ||
-					isLoadingImageSearch ||
-					isLoadingSearchByText ||
-					isErrorSearchByText ||
-					isErrorImageSearch ||
-					isErrorPOCI ||
-					isErrorPOOT ||
-					isFetchingPOT ||
-					isFetchingSearchByText ||
-					isFetchingPOT ||
-					isFetchingPOCI ? (
+						isLoadingPOT ||
+						isLoadingImageSearch ||
+						isLoadingSearchByText ||
+						isErrorSearchByText ||
+						isErrorImageSearch ||
+						isErrorPOCI ||
+						isErrorPOOT ||
+						isFetchingPOT ||
+						isFetchingSearchByText ||
+						isFetchingPOT ||
+						isFetchingPOCI ? (
 						<Skeleton className={"h-screen w-full place-content-center place-items-center items-center"}>
 							<LoaderIcon className={"size-10 text-gray-600"} />
 						</Skeleton>

@@ -1,17 +1,17 @@
-import { FC, memo, useCallback } from "react";
-import { StarIcon } from "lucide-react";
-import { Button } from "@/components/ui/button.tsx";
-import { toast } from "sonner";
 import { AddressProps } from "@/components/profile/props/address.props.ts";
-import { useSelector } from "react-redux";
-import { appDispatch, RootState } from "@/configs/store.config.ts";
-import { addressApi, useSetDefaultAddressMutation } from "@/redux/api/address.api.ts";
+import { Button } from "@/components/ui/button.tsx";
+import { appDispatch, useAppSelector } from "@/configs/store.config.ts";
+import { addressApi, adminAddressApi, useAdminSetDefaultAddressMutation, useSetDefaultAddressMutation } from "@/redux/api/address.api.ts";
+import { StarIcon } from "lucide-react";
+import { FC, memo, useCallback } from "react";
+import { toast } from "sonner";
 
 const AddressItem: FC<AddressProps> = memo((props) => {
-	const { defaultId } = useSelector((state: RootState) => state.address);
+	const { userIdAction } = useAppSelector(state => state.address)
 	const [setDefault] = useSetDefaultAddressMutation();
+	const [adminSetDefault] = useAdminSetDefaultAddressMutation();
 	const handleSetDefaultAddress = useCallback(() => {
-		setDefault({ old_id: defaultId, new_id: props.id })
+		setDefault(props.id)
 			.unwrap()
 			.then((result) => {
 				if (result.code >= 400) {
@@ -25,7 +25,24 @@ const AddressItem: FC<AddressProps> = memo((props) => {
 				console.log(error);
 				toast("đặt địa chỉ mặc định thất bại");
 			});
-	}, [props.id, setDefault, defaultId]);
+	}, [props.id, setDefault]);
+
+	const handleAdminSetDefaultAddress = useCallback(() => {
+		adminSetDefault({ userId: userIdAction ?? 0, addressId: props.id })
+			.unwrap()
+			.then((result) => {
+				if (result.code >= 400) {
+					toast("đặt địa chỉ mặc định thất bại");
+					return;
+				}
+				appDispatch(adminAddressApi.util.invalidateTags(["AdminAddress"]));
+				toast("đặt địa chỉ mặc định thành công");
+			})
+			.catch((error) => {
+				console.log(error);
+				toast("đặt địa chỉ mặc định thất bại");
+			});
+	}, [adminSetDefault, props.id, userIdAction]);
 
 	return (
 		<div className={"border-b py-5"}>
@@ -53,7 +70,7 @@ const AddressItem: FC<AddressProps> = memo((props) => {
 				</p>
 				{!props.active && (
 					<Button
-						onClick={handleSetDefaultAddress}
+						onClick={userIdAction ? handleAdminSetDefaultAddress : handleSetDefaultAddress}
 						className={"cursor-pointer rounded-full border-2 bg-white p-4 text-center text-black hover:bg-black hover:text-white"}>
 						Đặt làm mặc định
 					</Button>
@@ -73,3 +90,4 @@ const DefaultPlag = memo(() => {
 });
 
 export { AddressItem };
+

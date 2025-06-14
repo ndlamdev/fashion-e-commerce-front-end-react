@@ -1,28 +1,28 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type AddressProps = {
-	actionId: number | undefined,
-	defaultId: number | undefined,
-}
+	userIdAction: number | undefined;
+	addressIdAction: number | undefined;
+};
 
 const initialState: AddressProps = {
-	actionId: undefined,
-	defaultId: undefined,
-}
+	userIdAction: undefined,
+	addressIdAction: undefined,
+};
 
 const addressSlice = createSlice({
 	name: "address-slice",
 	initialState,
 	reducerPath: "address-slice",
 	reducers: {
-		setActionId: (state, action: PayloadAction<number | undefined>) => {
-			state.actionId = action.payload;
+		setAddressIdAction: (state, action: PayloadAction<number | undefined>) => {
+			state.addressIdAction = action.payload;
 		},
-		setDefaultId: (state, action: PayloadAction<number | undefined>) => {
-			state.defaultId = action.payload;
+		setUserIdAction: (state, action: PayloadAction<number | undefined>) => {
+			state.userIdAction = action.payload;
 		},
 	},
-})
+});
 
-export const { setActionId, setDefaultId } = addressSlice.actions;
+export const { setAddressIdAction, setUserIdAction } = addressSlice.actions;
 export default addressSlice.reducer;

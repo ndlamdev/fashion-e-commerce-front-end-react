@@ -1,27 +1,28 @@
-import { Button } from "@/components/ui/button.tsx";
 import { AddressItem } from "@/components/profile/AddressItem.tsx";
-import { toast } from "sonner";
-import { memo, useCallback, useEffect } from "react";
 import { SkeletonTab } from "@/components/profile/tab/SkeletonTab.tsx";
-import { useDispatch, useSelector } from "react-redux";
-import { setActionId, setDefaultId } from "@/redux/slice/address.slice.ts";
+import { Button } from "@/components/ui/button.tsx";
 import { appDispatch, RootState } from "@/configs/store.config.ts";
-import { addressApi, useDeleteAddressMutation, useGetAddressesQuery } from "@/redux/api/address.api.ts";
+import { addressApi, adminAddressApi, useAdminDeleteAddressMutation, useAdminGetAddressesQuery, useDeleteAddressMutation, useGetAddressesQuery } from "@/redux/api/address.api.ts";
+import { setAddressIdAction } from "@/redux/slice/address.slice.ts";
 import { showDialog } from "@/redux/slice/dialog.slice.ts";
+import { memo, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
 
 const AddressTab = memo(() => {
 	const dispatch = useDispatch();
-	const { data: addresses, isLoading: isLoadingAddresses, isError: isErrorAddresses } = useGetAddressesQuery();
-	const defaultId = addresses?.data.find((addr) => addr.active)?.id;
-	useEffect(() => {
-		dispatch(setDefaultId(defaultId));
-	}, [addresses, defaultId, dispatch]);
-	const { actionId } = useSelector((state: RootState) => state.address);
+	const { userIdAction } = useSelector((state: RootState) => state.address);
+
+	const { data: addresses, isLoading: isLoadingAddresses, isError: isErrorAddresses } = useGetAddressesQuery(undefined, { skip: !!userIdAction });
+	const { data: adminAddresses, isLoading: isLoadingAdminAddresses, isError: isErrorAdminAddresses } = useAdminGetAddressesQuery(userIdAction ?? 0, { skip: !userIdAction });
+
+
 	const [delAddress] = useDeleteAddressMutation();
+	const [adminDelAddress] = useAdminDeleteAddressMutation();
+
 	const handleDelAddress = useCallback(
-		(id: number | undefined) => {
-			dispatch(setActionId(id));
-			delAddress(actionId)
+		(addressId: number) => {
+			delAddress(addressId)
 				.unwrap()
 				.then((result) => {
 					if (result.code >= 400) {
@@ -36,16 +37,38 @@ const AddressTab = memo(() => {
 					toast("xóa địa chỉ thất bại");
 				});
 		},
-		[dispatch, delAddress, actionId],
+		[delAddress],
 	);
-	if (isLoadingAddresses) return <SkeletonTab />;
+
+	const handleAdminDelAddress = useCallback(
+		(addressId: number) => {
+			adminDelAddress({ userId: userIdAction ?? 0, addressId: addressId })
+				.unwrap()
+				.then((result) => {
+					if (result.code >= 400) {
+						toast("xóa địa chỉ thất bại");
+						return;
+					}
+					appDispatch(adminAddressApi.util.invalidateTags(["AdminAddress"]));
+					toast("xóa địa chỉ thành công");
+				})
+				.catch((error) => {
+					console.log(error);
+					toast("xóa địa chỉ thất bại");
+				});
+		},
+		[adminDelAddress, userIdAction],
+	);
+
+
+	if (isLoadingAddresses || isLoadingAdminAddresses) return <SkeletonTab />;
 	return (
 		<article className={"max-sm:mt-10"}>
 			<div className='flex flex-wrap items-center justify-between border-b pb-6 max-sm:space-y-2'>
-				<h1 className={"text-lg font-bold sm:text-2xl lg:text-4xl"}>Địa chỉ của tôi</h1>
+				<h1 className={"text-lg font-bold sm:text-2xl lg:text-4xl mb-3"}>Địa chỉ của tôi</h1>
 				<Button
 					onClick={() => {
-						dispatch(setActionId(undefined));
+						dispatch(setAddressIdAction(undefined));
 						dispatch(showDialog("save-address"));
 					}}
 					className={"cursor-pointer rounded-full bg-black p-2 text-center text-sm text-white uppercase hover:bg-sky-600 sm:p-6 sm:text-lg"}>
@@ -53,17 +76,29 @@ const AddressTab = memo(() => {
 				</Button>
 			</div>
 			<h1 className={"mt-4 text-base font-bold sm:text-xl"}>Sổ địa chỉ</h1>
-			{isErrorAddresses && <p>không tìm thấy địa chỉ</p>}
+			{(isErrorAddresses && isErrorAdminAddresses) && <p>không tìm thấy địa chỉ</p>}
 			{addresses &&
 				addresses.data.map((address) => (
 					<AddressItem
 						key={address.id}
 						{...address}
 						onEdit={() => {
-							dispatch(setActionId(address.id));
+							dispatch(setAddressIdAction(address.id));
 							dispatch(showDialog("save-address"));
 						}}
 						onDelete={() => handleDelAddress(address.id)}
+					/>
+				))}
+			{adminAddresses &&
+				adminAddresses.data.map((address) => (
+					<AddressItem
+						key={address.id}
+						{...address}
+						onEdit={() => {
+							dispatch(setAddressIdAction(address.id));
+							dispatch(showDialog("save-address"));
+						}}
+						onDelete={() => handleAdminDelAddress(address.id)}
 					/>
 				))}
 		</article>

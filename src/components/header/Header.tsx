@@ -12,7 +12,7 @@ import ShoppingBag from "@/components/cart/ShoppingBag.tsx";
 import { AnimatePresence, motion } from "motion/react";
 import { SolarArrowRightLinear } from "@/assets/images/icons/SolarArrowRightLinear";
 import useScrolled from "@/utils/helper/use-scrolled.ts";
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { Separator } from "@/components/ui/separator.tsx";
 import ShoppingBagItem from "@/components/cart/ShoppingBagItem.tsx";
 import dataShoppingBagItems from "@/assets/data/shopping-bag-items.ts";
@@ -33,6 +33,7 @@ import { debounce } from "lodash";
 import { useQuickSearchQuery } from "@/services/product.service.ts";
 import { useGetCartQuery } from "@/redux/api/cart.api.ts";
 import logo from "@/assets/images/icons/logo.jpg";
+import jwtHelper from "@/utils/helper/jwtHelper";
 
 function Header({ showMenu }: HeaderProps) {
 	const [, scrollY] = useScrolled();
@@ -65,16 +66,27 @@ function Header({ showMenu }: HeaderProps) {
 		},
 		[navigate],
 	);
+
+	const isRoleAdmin = useMemo(() => {
+		if (!access_token) return false;
+		const payload = jwtHelper.getPayload(access_token);
+		return payload && payload.roles.includes("ROLE_ADMIN")
+	}, [access_token])
+
 	return (
 		<div>
 			<motion.header className={"sticky top-0 z-2 bg-white"} initial={{ top: 0 }} animate={{ top: scrollY >= 100 ? -40 : 0 }} transition={{ duration: 0.75 }}>
 				<div className={`relative flex w-full items-center justify-center gap-3 bg-gray-500 text-gray-100`}>
-					<div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>Về KimiFashion</div>
 					<div className={"hidden items-center justify-center lg:flex"}>
+						<div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>Về KimiFashion</div>
 						<span className={"text-gray-400"}>|</span>
 						<div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>Blog</div>
 						<span className={"text-gray-400"}>|</span>
 						<div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>Trung tâm CSKH</div>
+						{isRoleAdmin && <>
+							<span className={"text-gray-400"}>|</span>
+							<div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"} onClick={() => navigate("/admin")}>Quản lý cửa hàng</div>
+						</>}
 						{(!access_token || !user) && (
 							<>
 								<span className={"text-gray-400"}>|</span>

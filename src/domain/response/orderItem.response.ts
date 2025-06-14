@@ -8,8 +8,8 @@
 
 type OrderItemResponse = {
   id: number;
-  productId: string;
-  variantId: string;
+  product_id: string;
+  variant_id: string;
   quantity: number;
   compare_price: number;
   regular_price: number;

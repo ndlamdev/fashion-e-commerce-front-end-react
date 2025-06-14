@@ -1,24 +1,31 @@
 import { InboxIcon } from "lucide-react";
 import { Button } from "@/components/ui/button.tsx";
-import { mockPayments } from "@/assets/data/admin/order/orders.data.ts";
 import DataTable from "@/components/dataTable/DataTable.tsx";
 import { columns } from "@/components/dataTable/dataColumns/order.column.tsx";
 import FilterColumnData from "@/components/admin/filterColumnData/FiterColumndata.tsx";
 import { OrderSortEnum } from "@/utils/enums/admin/sort/orderSort.enum.ts";
 import { SortDirection } from "@tanstack/react-table";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { useAdminOrderHistoriesQuery } from "@/redux/api/order.api";
+import { toast } from "sonner";
 
 export default function OrderManagementPage() {
-	const data = mockPayments
 	const navigate = useNavigate();
+	const { data, error } = useAdminOrderHistoriesQuery()
 	const handleWatchDetail = useCallback((id: number) => {
 		navigate(`/admin/orders/${id}`);
-	}, [])
+	}, [navigate])
 	const handleDelete = useCallback((id: number) => {
 		//TODO: implement delete here
 		console.log(id);
 	}, [])
+
+	useEffect(() => {
+		if (!error) return;
+		toast.error("Lỗi hệ thống")
+	}, [error])
+
 	return (
 		<main>
 			<header className={"my-3"}>
@@ -34,7 +41,7 @@ export default function OrderManagementPage() {
 				</div>
 			</header>
 			<FilterColumnData sortEnum={OrderSortEnum} placeholderInput={'Search Order'} DirectionSortBy={DirectionValues}/>
-			<DataTable columns={columns(handleWatchDetail, handleDelete)} data={data} />
+			<DataTable columns={columns(handleWatchDetail, handleDelete)} data={data?.data ?? []} />
 		</main>
 	)
 }

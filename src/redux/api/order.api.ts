@@ -67,10 +67,15 @@ export const adminOrderApi = createApi({
 				url: ``,
 			}),
 		}),
+		adminGetOrderHistoriesByUseId: build.query<ApiResponse<HistoryOrderType[]>, number>({
+			query: (userId: number) => ({
+				url: `/user/${userId}/history`,
+			}),
+		}),
 	}),
 });
 
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
 export const { useCreateOrderMutation, useCancelOrderMutation, useHistoryOrderQuery } = orderApi;
-export const { useAdminOrderHistoriesQuery } = adminOrderApi;
+export const { useAdminOrderHistoriesQuery, useAdminGetOrderHistoriesByUseIdQuery } = adminOrderApi;

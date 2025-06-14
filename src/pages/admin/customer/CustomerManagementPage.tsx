@@ -20,7 +20,7 @@ export function CustomerManagementPage() {
 	const navigate = useNavigate();
 	const handleWatchDetail = useCallback((id: number) => {
 		navigate(`/admin/customers/${id}`);
-	}, [])
+	}, [navigate])
 	const handleSaveLock = useCallback((id: number) => {
 		//TODO: implement lock or open lock here
 		console.log(id);

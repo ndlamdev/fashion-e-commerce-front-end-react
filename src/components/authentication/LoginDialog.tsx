@@ -5,23 +5,24 @@
  * Create at: 11:27AM - 24/03/2025
  *  User: lam-nguyen
  **/
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
-import { KeyboardEvent, useCallback, useEffect } from "react";
 import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentication.tsx";
 import InputAuthentication from "@/components/authentication/ui/InputAuthentication.tsx";
-import LoginRequest from "@/domain/resquest/login.request.ts";
-import { SubmitHandler, useForm } from "react-hook-form";
-import authenticationService from "@/services/authentication.service.ts";
-import { useLoginWithGoogleMutation } from "@/redux/api/auth.api.ts";
 import OtherLogin from "@/components/authentication/ui/OtherLogin.tsx";
-import { useDispatch, useSelector } from "react-redux";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
 import { RootState } from "@/configs/store.config.ts";
+import LoginRequest from "@/domain/resquest/login.request.ts";
 import { hiddenDialog, showDialog } from "@/redux/slice/dialog.slice";
-
+import authenticationService from "@/services/authentication.service.ts";
+import jwtHelper from "@/utils/helper/jwtHelper";
+import { KeyboardEvent, useCallback } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 function LoginDialog() {
-	const [, loginWithGoogleApiResult] = useLoginWithGoogleMutation();
 	const { dialog } = useSelector((state: RootState) => state.dialog);
 	const dispatch = useDispatch();
+	const navigate = useNavigate()
+
 	const {
 		register,
 		trigger,
@@ -31,25 +32,23 @@ function LoginDialog() {
 		formState: { errors },
 	} = useForm<LoginRequest>();
 
+	const naviagteToAdmin = useCallback((accessToken: string) => {
+		const payload = jwtHelper.getPayload(accessToken);
+		if (payload && payload.roles.includes("ROLE_ADMIN")) {
+			navigate("/admin");
+		}
+	}, [navigate])
+
 	const onSubmit: SubmitHandler<LoginRequest> = useCallback(
 		async (data) => {
-			await authenticationService.login(data).then(() => {
+			await authenticationService.login(data).then((data) => {
 				dispatch(hiddenDialog());
 				reset();
+				naviagteToAdmin(data.data.access_token)
 			});
 		},
-		[reset, dispatch],
+		[dispatch, reset, naviagteToAdmin],
 	);
-
-	useEffect(() => {
-		if (!loginWithGoogleApiResult.isError) return;
-		console.error("Error: ", loginWithGoogleApiResult.error);
-	}, [loginWithGoogleApiResult.error, loginWithGoogleApiResult.isError]);
-
-	useEffect(() => {
-		if (!loginWithGoogleApiResult.isSuccess) return;
-		dispatch(hiddenDialog());
-	}, [loginWithGoogleApiResult.data, loginWithGoogleApiResult.isSuccess, dispatch]);
 
 	const enterKeyHandler = useCallback(
 		(event: KeyboardEvent<HTMLInputElement>) => {

@@ -21,7 +21,7 @@ function AdminLayout() {
 			navigate("/");
 			return;
 		}
-		const payload = jwtHelper.decodedToken(access_token);
+		const payload = jwtHelper.getPayload(access_token);
 		if (!payload || !payload.roles.includes("ROLE_ADMIN")) {
 			navigate("/");
 		}

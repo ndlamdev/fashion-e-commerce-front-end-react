@@ -25,7 +25,7 @@ export default function CardProduct(props: ProductCardProp) {
 		setColorSelected(props.variants[0]?.options[OptionType.COLOR]);
 		setSizeSelected(props.variants[0]?.options[OptionType.SIZE]);
 		const colorValues = props.options.find((opt) => opt.type === OptionType.COLOR)?.values;
-		const colorOptions = props.options_value.find((opt) => opt.type === OptionType.COLOR);
+		const colorOptions = props.options_values.find((opt) => opt.type === OptionType.COLOR);
 		setImagesColor(
 			colorValues?.map((color: string) => {
 				return colorOptions?.options?.find((item) => item.title === color)?.images[0];
@@ -38,7 +38,7 @@ export default function CardProduct(props: ProductCardProp) {
 	}, [props, colorSelected, sizeSelected]);
 
 	const cardData = useMemo(() => {
-		const images = props.options_value.find((opt) => opt.type === OptionType.COLOR)?.options?.find((item) => item.title === colorSelected)?.images;
+		const images = props.options_values.find((opt) => opt.type === OptionType.COLOR)?.options?.find((item) => item.title === colorSelected)?.images;
 		return images?.map((item, index) => ({
 			id: index,
 			img: RESOURCE_IMAGE + item.src,

@@ -48,7 +48,18 @@ export const formatDateFromArray = (date: number[]) => {
 export const formatDateTimeFromArray = (date: number[]) => {
 	if (date.length !== 6) return formatDate(new Date());
 	const dateObj = new Date(date[0], date[1] - 1, date[2], date[3], date[4], date[5]);
-	return formatDate(dateObj);
+	return formatDateTime(dateObj);
 };
 
-export default { formatCurrency, formatDate, formatDateFromArray, formatDateFromString, formatDateTimeFromArray };
+export const parseDate = (date: number[]) => {
+	if (date.length !== 3) return new Date();
+	return new Date(date[0], date[1] - 1, date[2]);
+};
+
+export const parseDatetime = (date: number[]) => {
+	if (date.length !== 6) return new Date();
+	return new Date(date[0], date[1] - 1, date[2], date[3], date[4], date[5]);
+};
+
+
+export default { formatCurrency, formatDate, formatDateFromArray, formatDateFromString, formatDateTimeFromArray, parseDate, parseDatetime };

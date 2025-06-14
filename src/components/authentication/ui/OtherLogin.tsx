@@ -7,16 +7,28 @@ import { ApiResponseError } from "@/domain/ApiResponseError.ts";
 import SessionStorage from "@/utils/helper/SessionStorage.ts";
 import { useDispatch } from "react-redux";
 import { hiddenDialog, showDialog } from "@/redux/slice/dialog.slice.ts";
+import { useNavigate } from "react-router";
+import jwtHelper from "@/utils/helper/jwtHelper";
+import { useCallback } from "react";
 
 function OtherLogin() {
 	const dispatch = useDispatch();
+	const navigate = useNavigate()
+
+	const naviagteToAdmin = useCallback((accessToken: string) => {
+		const payload = jwtHelper.getPayload(accessToken);
+		if (payload && payload.roles.includes("ROLE_ADMIN")) {
+			navigate("/admin");
+		}
+	}, [navigate])
 
 	const googleLogin = useGoogleLogin({
 		onSuccess: async (tokenResponse) => {
 			await authenticationService
 				.loginWithGoogle({ "auth_code": tokenResponse.code })
-				.then(() => {
+				.then((data) => {
 					dispatch(hiddenDialog());
+					naviagteToAdmin(data.data.access_token)
 				})
 				.catch((error) => {
 					const response = error.data as ApiResponseError<{ "register-token": string }>;
@@ -35,8 +47,9 @@ function OtherLogin() {
 	const facebookLogin = async (accessToken: string) => {
 		await authenticationService
 			.loginWithFacebook({ access_token: accessToken })
-			.then(() => {
+			.then((data) => {
 				dispatch(hiddenDialog());
+				naviagteToAdmin(data.data.access_token)
 			})
 			.catch((error) => {
 				const response = error.data as ApiResponseError<any>;

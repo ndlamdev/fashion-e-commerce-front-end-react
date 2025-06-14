@@ -5,6 +5,7 @@ import { ApiResponse } from "@/domain/ApiResponse.ts";
 import LocalStorage from "@/utils/helper/LocalStorage.ts";
 import { AddressShippingType } from "@/types/profile/address.type.ts";
 import { SaveAddressRequest } from "@/domain/resquest/profile/saveAddress.request.ts";
+import { createBaseQueryWithDispatch } from "./baseQueryWithDispatch";
 
 export const BASE_PROFILE_URL = import.meta.env.VITE_BASE_URL + "/profile/v1";
 
@@ -79,6 +80,20 @@ export const profileApi = createApi({
 	}),
 });
 
+export const adminProfileApi = createApi({
+	reducerPath: "AdminProfileApi",
+	baseQuery: createBaseQueryWithDispatch(import.meta.env.VITE_BASE_URL + "/admin/profile/v1"),
+	tagTypes: ["AdminProfile"],
+	endpoints: (build) => ({
+		adminGetProfile: build.query<ApiResponse<ProfileResponse>, number>({
+			query: (id) => ({
+				url: `/${id}`,
+				credentials: "include",
+			}),
+		}),
+	}),
+});
+
 export const {
 	useGetProfileQuery,
 	useSaveProfileMutation,
@@ -88,3 +103,7 @@ export const {
 	useSaveAddressMutation,
 	useSetDefaultAddressMutation,
 } = profileApi;
+
+export const {
+	useAdminGetProfileQuery
+} = adminProfileApi;

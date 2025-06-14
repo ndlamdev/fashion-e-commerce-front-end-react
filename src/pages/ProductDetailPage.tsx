@@ -58,7 +58,7 @@ export default function ProductDetailPage() {
 		if (!data) return;
 		setColorSelected(data.data.variants[0].options[OptionType.COLOR]);
 		setSizeSelected(data.data.variants[0].options[OptionType.SIZE]);
-		const colorOptions = data?.data.options_value.find((opt) => opt.type === OptionType.COLOR);
+		const colorOptions = data?.data.options_values.find((opt) => opt.type === OptionType.COLOR);
 		const colorValues = data.data.options.find((opt) => opt.type === OptionType.COLOR)?.values;
 		setImagesColor(
 			colorValues?.map((color: string) => {
@@ -72,7 +72,7 @@ export default function ProductDetailPage() {
 	}, [data, colorSelected, sizeSelected]);
 
 	const cardData = useMemo(() => {
-		const images = data?.data.options_value.find((opt) => opt.type === OptionType.COLOR)?.options?.find((item) => item.title === colorSelected)?.images;
+		const images = data?.data.options_values.find((opt) => opt.type === OptionType.COLOR)?.options?.find((item) => item.title === colorSelected)?.images;
 
 		return images?.map((item, index) => ({
 			id: index,
