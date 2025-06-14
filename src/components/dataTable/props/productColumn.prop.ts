@@ -1,7 +1,5 @@
-import { ProductVariantsType } from "@/types/product/productVariants.type.ts";
-import { DiscountType } from "@/types/product/product.type.ts";
-import ProductImageType from "@/types/product/productImage.type.ts";
+import OrderItemResponse from "@/domain/response/orderItem.response";
 
-export type ProductColumnProp = ProductVariantsType & Pick<DiscountType, 'percent'> & Pick<ProductImageType, "src"> & {
-	onInputChange: (updater: (item: ProductColumnProp, index: number) => ProductColumnProp) => void;
-}
+export type ProductColumnProp = OrderItemResponse & {
+	onInputChange: (updater: (item: OrderItemResponse, index: number) => OrderItemResponse) => void;
+};

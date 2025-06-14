@@ -89,10 +89,6 @@ const SaveAddressDialog = () => {
 		reset();
 	}
 
-	useEffect(() => {
-		return console.log(cityValue, districtValue);
-	}, [cityValue, districtValue])
-
 	return (
 		<Dialog open={dialog === "save-address"} onOpenChange={(open) => {
 			if (open) return;

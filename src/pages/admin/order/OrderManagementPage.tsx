@@ -13,12 +13,16 @@ import { toast } from "sonner";
 export default function OrderManagementPage() {
 	const navigate = useNavigate();
 	const { data, error } = useAdminOrderHistoriesQuery()
-	const handleWatchDetail = useCallback((id: number) => {
-		navigate(`/admin/orders/${id}`);
+	const handleWatchDetail = useCallback((userId: number, orderId: number) => {
+		navigate(`/admin/orders/${orderId}`, {
+			state: {
+				userId: userId
+			}
+		});
 	}, [navigate])
-	const handleDelete = useCallback((id: number) => {
+	const handleDelete = useCallback((orderId: number) => {
 		//TODO: implement delete here
-		console.log(id);
+		console.log(orderId);
 	}, [])
 
 	useEffect(() => {

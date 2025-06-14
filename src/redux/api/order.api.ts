@@ -9,7 +9,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { ApiResponse } from "@/domain/ApiResponse.ts";
 import { createBaseQueryWithDispatch } from "@/redux/api/baseQueryWithDispatch.ts";
 import CreateOrderRequest from "@/domain/resquest/createOrder.request.ts";
-import CreateOrderResponse from "@/domain/response/createOrder.response.ts";
+import OrderDetailResponse from "@/domain/response/orderDetail.response";
 import { ApiPageResponse } from "@/domain/ApiPageResponse";
 import HistoryOrderType from "@/types/historyOrder.type";
 
@@ -23,7 +23,7 @@ export const orderApi = createApi({
 	baseQuery: createBaseQueryWithDispatch(BASE_URL),
 	tagTypes: ["order"],
 	endpoints: (build) => ({
-		createOrder: build.mutation<ApiResponse<CreateOrderResponse>, CreateOrderRequest>({
+		createOrder: build.mutation<ApiResponse<OrderDetailResponse>, CreateOrderRequest>({
 			query: (arg) => ({
 				url: "",
 				method: "POST",
@@ -38,7 +38,7 @@ export const orderApi = createApi({
 			}),
 			invalidatesTags: ["order"],
 		}),
-		cancelOrder: build.mutation<ApiResponse<CreateOrderResponse>, { orderId: number; orderCode: number }>({
+		cancelOrder: build.mutation<ApiResponse<OrderDetailResponse>, { orderId: number; orderCode: number }>({
 			query: ({ orderId, orderCode }) => ({
 				url: "/cancel",
 				method: "POST",
@@ -72,10 +72,15 @@ export const adminOrderApi = createApi({
 				url: `/user/${userId}/history`,
 			}),
 		}),
+		adminGetOrderDetai: build.query<ApiResponse<OrderDetailResponse>, number>({
+			query: (orderId: number) => ({
+				url: `/order-detail/${orderId}`,
+			}),
+		}),
 	}),
 });
 
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
 export const { useCreateOrderMutation, useCancelOrderMutation, useHistoryOrderQuery } = orderApi;
-export const { useAdminOrderHistoriesQuery, useAdminGetOrderHistoriesByUseIdQuery } = adminOrderApi;
+export const { useAdminOrderHistoriesQuery, useAdminGetOrderHistoriesByUseIdQuery, useAdminGetOrderDetaiQuery } = adminOrderApi;

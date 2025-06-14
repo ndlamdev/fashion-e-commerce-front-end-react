@@ -11,10 +11,10 @@ import { OptionType } from "@/types/product/productOption.type.ts";
 import { SameRadioGroup, SameRadioGroupItem } from "@/components/radio-group/SameRadioGroup.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import cartService from "@/services/cart.service.ts";
+const RESOURCE_IMAGE = import.meta.env.VITE_BASE_MEDIA_URL;
 
 export default function CardProduct(props: ProductCardProp) {
 	const navigate = useNavigate();
-	const RESOURCE_IMAGE = import.meta.env.VITE_BASE_MEDIA_URL;
 	const [colorSelected, setColorSelected] = useState<string | undefined>();
 	const [sizeSelected, setSizeSelected] = useState<string | undefined>();
 	const [imagesColor, setImagesColor] = useState<(ProductImageType | undefined)[]>();

@@ -1,14 +1,16 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { formatCurrency } from "@/utils/helper/format-data.ts";
-import { Button } from "@/components/ui/button.tsx";
-import { XIcon } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox.tsx";
-import { OptionType } from "@/types/product/productOption.type.ts";
-import { Input } from "@/components/ui/input.tsx";
-import { ChangeEvent } from "react";
 import { ProductColumnProp } from "@/components/dataTable/props/productColumn.prop.ts";
+import { Button } from "@/components/ui/button.tsx";
+import { Checkbox } from "@/components/ui/checkbox.tsx";
+import { Input } from "@/components/ui/input.tsx";
+import OrderItemResponse from "@/domain/response/orderItem.response";
+// import { OptionType } from "@/types/product/productOption.type.ts";
+import { formatCurrency } from "@/utils/helper/format-data.ts";
+import { ColumnDef } from "@tanstack/react-table";
+import { XIcon } from "lucide-react";
+import { ChangeEvent } from "react";
+const RESOURCE_IMAGE = import.meta.env.VITE_BASE_MEDIA_URL;
 
-export const productColumns: ColumnDef<ProductColumnProp | unknown, string | unknown>[] = [
+export const productColumns: ColumnDef<OrderItemResponse | unknown, string | unknown>[] = [
 	{
 		id: "select",
 		header: ({ table }) => (
@@ -33,13 +35,14 @@ export const productColumns: ColumnDef<ProductColumnProp | unknown, string | unk
 	{
 		header: "Product",
 		cell: ({ row }) => {
-			const product = row.original as ProductColumnProp;
+			const orderItem = row.original as ProductColumnProp;
 			return (
 				<div className=" flex items-center space-x-2">
-					<img className={"size-10 border border-neutral-500 rounded-lg object-cover"} src={product.src} alt={product.title} />
+					<img className={"size-10 border border-neutral-500 rounded-lg object-cover"} src={RESOURCE_IMAGE + orderItem.product.image.src} alt={orderItem.product.title} />
 					<div className="">
-						<p>{product.title}</p><p>{product.options[OptionType.COLOR]}/{product.options[OptionType.SIZE]}</p>
-						<p>{formatCurrency(product.regular_price)}</p>
+						<p>{orderItem.product.title}</p>
+						<p>{Object.values(orderItem.variant.options).join(" / ")}</p>
+						<p>{formatCurrency(orderItem.regular_price)}</p>
 					</div>
 				</div>
 			);
@@ -60,11 +63,11 @@ export const productColumns: ColumnDef<ProductColumnProp | unknown, string | unk
 
 			return (
 				<Input onChange={handleChange}
-							 value={data.quantity}
-							 className={"w-full sm:w-1/2 rounded-2xl text-center float-start"}
-							 type={"number"}
-							 min={1}
-							 max={9999999}
+					value={data.quantity}
+					className={"w-full sm:w-1/2 rounded-2xl text-center float-start"}
+					type={"number"}
+					min={1}
+					max={9999999}
 				/>
 			);
 		},
