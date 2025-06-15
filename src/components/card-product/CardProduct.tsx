@@ -11,6 +11,7 @@ import { OptionType } from "@/types/product/productOption.type.ts";
 import { SameRadioGroup, SameRadioGroupItem } from "@/components/radio-group/SameRadioGroup.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import cartService from "@/services/cart.service.ts";
+
 const RESOURCE_IMAGE = import.meta.env.VITE_BASE_MEDIA_URL;
 
 export default function CardProduct(props: ProductCardProp) {
@@ -43,12 +44,13 @@ export default function CardProduct(props: ProductCardProp) {
 			id: index,
 			img: RESOURCE_IMAGE + item.src,
 		}));
-	}, [props, colorSelected, RESOURCE_IMAGE]);
+	}, [props, colorSelected]);
 
 	const [bgImage, setBgImage] = useState<string | undefined>();
 	useEffect(() => {
-		setBgImage(cardData && cardData.length > 1 ? cardData[0].img : RESOURCE_IMAGE + props.images[0].src);
-	}, [RESOURCE_IMAGE, cardData, props.images]);
+		const images = props.images;
+		setBgImage(cardData && cardData.length > 0 ? cardData[0].img : RESOURCE_IMAGE + images.length > 0 ? images[0].src : "");
+	}, [cardData, props.images]);
 
 	const addCartItemFc = useCallback(
 		(size: string) => {
