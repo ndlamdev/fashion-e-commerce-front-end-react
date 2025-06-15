@@ -52,7 +52,6 @@ export function CustomerManagementPage() {
         </div>
       </header>
       <section className={"my-5"}>
-        <FilterColumnData sortEnum={CustomerSortEnum} infoData={`${data.length} khách hàng`} placeholderInput={'Tìm tên KH'} DirectionSortBy={DirectionValues} />
         <DataTable columns={customerColumns(handleWatchDetail, handleSaveLock)} data={data} />
       </section>
     </main>

@@ -44,7 +44,6 @@ export default function OrderManagementPage() {
           </div>
         </div>
       </header>
-      <FilterColumnData sortEnum={OrderSortEnum} infoData={(data?.data ?? 0) + " Đơn hàng"} placeholderInput={'Tìm kiếm ĐH'} DirectionSortBy={DirectionValues} />
       <DataTable columns={columns(handleWatchDetail, handleDelete)} data={data?.data ?? []} />
     </main>
   )
