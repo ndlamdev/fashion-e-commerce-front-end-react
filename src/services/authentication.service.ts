@@ -217,7 +217,7 @@ const registerWithGoogle = async (data: RegisterWithGoogleRequest) => {
 			detail: "Don't have any token",
 		} as ApiResponseError<string>);
 	}
-	data.register_token = token;
+	data.token = token;
 	return await appDispatch(authApi.endpoints.registerWithGoogle.initiate(data, { track: false })).then(({ error }) => {
 		if (error) {
 			const response = (error as any).data as ApiResponseError<string>;
@@ -239,7 +239,7 @@ const registerWithFacebook = async (data: RegisterWithFacebookRequest) => {
 			detail: "Don't have any token",
 		} as ApiResponseError<string>);
 	}
-	data.register_token = token;
+	data.token = token;
 	return await appDispatch(authApi.endpoints.registerWithFacebook.initiate(data, { track: false })).then(({ error }) => {
 		if (error) {
 			SessionStorage.deleteValue("REGISTER_TOKEN_USING_FACEBOOK");

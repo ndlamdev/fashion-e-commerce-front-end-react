@@ -74,5 +74,6 @@ export const customerColumns = (
 				</DropdownMenu>
 			);
 		},
+		enableHiding: false
 	},
 ];

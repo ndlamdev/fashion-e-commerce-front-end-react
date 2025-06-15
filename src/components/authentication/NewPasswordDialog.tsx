@@ -62,13 +62,13 @@ function ForgotPasswordDialog() {
 					<DialogHeader>
 						<DialogTitle className={"text-center text-4xl"}>Cấp lại mật khẩu</DialogTitle>
 					</DialogHeader>
-					<div className='grid gap-4'>
-						<form id='login-form' className={"flex flex-col gap-3"}>
+					<div className="grid gap-4">
+						<form id="login-form" className={"flex flex-col gap-3"}>
 							<InputAuthentication
-								type='password'
+								type="password"
 								onKeyDown={enterKeyHandler}
 								error={errors?.password?.message}
-								placeholder='Nhập mật khẩu của bạn'
+								placeholder="Nhập mật khẩu của bạn"
 								{...register("password", {
 									required: "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số, ký tự đặc biệt",
 									pattern: {
@@ -78,9 +78,9 @@ function ForgotPasswordDialog() {
 								})}
 							/>
 							<InputAuthentication
-								type='password'
+								type="password"
 								onKeyDown={enterKeyHandler}
-								placeholder='Nhập lại mật khẩu của bạn'
+								placeholder="Nhập lại mật khẩu của bạn"
 								error={errors?.confirm_password?.message}
 								{...register("confirm_password", {
 									required: "Vui lòng nhập lại mật khẩu  của bạn",

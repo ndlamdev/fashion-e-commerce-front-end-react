@@ -58,7 +58,11 @@ function ForgotPasswordDialog() {
 	};
 
 	return (
-		<Dialog open={dialog === "forgot-password"} onOpenChange={(value) => !value && dispatch(hiddenDialog())}>
+		<Dialog open={dialog === "forgot-password"} onOpenChange={(value) => {
+			if (value) return;
+			dispatch(hiddenDialog());
+			reset();
+		}}>
 			<DialogContent
 				aria-describedby={""}
 				className={"sm:max-w-[525px]"}
@@ -66,7 +70,7 @@ function ForgotPasswordDialog() {
 				<DialogHeader>
 					<DialogTitle className={"text-center text-4xl"}>Cấp lại mật khẩu</DialogTitle>
 				</DialogHeader>
-				<div className='grid gap-4'>
+				<div className="grid gap-4">
 					<form className={"flex flex-col gap-3"}>
 						<InputAuthentication
 							onKeyDown={enterKeyHandler}

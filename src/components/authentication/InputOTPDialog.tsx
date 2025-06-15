@@ -124,6 +124,7 @@ function InputOTPDialog() {
 				onClickSubmit={() => {
 					setOpenDialog("none");
 					dispatch(hiddenDialog());
+					reset();
 				}}
 			/>
 		</>

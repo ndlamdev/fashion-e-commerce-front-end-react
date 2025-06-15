@@ -8,7 +8,7 @@
 import RegisterRequest from "@/domain/resquest/register.request.ts";
 
 type RegisterWithGoogleRequest = Omit<RegisterRequest, "email" | "full_name"> & {
-	register_token: string;
+	token: string;
 };
 
 export default RegisterWithGoogleRequest;

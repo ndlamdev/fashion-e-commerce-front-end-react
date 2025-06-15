@@ -21,13 +21,13 @@ export const columns = (
 ): ColumnDef<OrderColumnProp | unknown, string | unknown>[] => [
 		{
 			accessorKey: "id",
-			header: 'Order',
+			header: 'Đơn hàng',
 			cell: ({ row }) => (<div className="font-bold">#{(row.getValue("id"))}</div>),
 		},
 		{
 			accessorKey: "status",
 			header: ({ column }) => (
-				<DataTableColumnHeader column={column} title="Status" />
+				<DataTableColumnHeader column={column} title="Trạng thái" />
 			),
 			cell: ({ row }) => (
 				<div>
@@ -46,13 +46,13 @@ export const columns = (
 		{
 			accessorKey: "full_name",
 			header: ({ column }) => (
-				<DataTableColumnHeader className={'cursor-pointer'} column={column} title="Customer" />
+				<DataTableColumnHeader className={'cursor-pointer'} column={column} title="Họ Tên" />
 			),
 		},
 		{
 			accessorKey: "amount",
 			header: ({ column }) => (
-				<DataTableColumnHeader className={'cursor-pointer'} column={column} title="Total" />
+				<DataTableColumnHeader className={'cursor-pointer'} column={column} title="Tổng tiền" />
 			),
 			cell: ({ row }) => {
 				return <div className=" font-medium text-center">{formatCurrency(row.getValue("amount"))}</div>;
@@ -61,7 +61,7 @@ export const columns = (
 		{
 			accessorKey: "date",
 			header: ({ column }) => (
-				<DataTableColumnHeader column={column} title="Date" />
+				<DataTableColumnHeader column={column} title="Ngày đặt" />
 			),
 			cell: ({ row }) => (<div className="font-medium">{formatDateFromArray(row.getValue("date"))}</div>),
 		},
@@ -86,5 +86,6 @@ export const columns = (
 					</DropdownMenu>
 				)
 			},
+			enableHiding: false,
 		},
 	];

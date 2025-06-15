@@ -2,7 +2,6 @@
 
 import {
 	ColumnDef,
-	ColumnFiltersState,
 	flexRender,
 	getCoreRowModel,
 	getFilteredRowModel,
@@ -17,6 +16,14 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { memo, useState } from "react";
 import { DataTablePagination } from "@/components/dataTable/DataTablePagination.tsx";
 import { Input } from "@/components/ui/input";
+import {
+	DropdownMenu,
+	DropdownMenuCheckboxItem,
+	DropdownMenuContent,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button.tsx";
+import { columnNameConcealmentRecord } from "@/utils/enums/admin/columnNameConcealment.record.ts";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -25,20 +32,18 @@ interface DataTableProps<TData, TValue> {
 
 function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
-	// const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-	const [globalFilter, setGlobalFilter] = useState("")
+	const [globalFilter, setGlobalFilter] = useState("");
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 	const [rowSelection, setRowSelection] = useState({});
 
 	const table = useReactTable({
 		data,
 		columns,
-		
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 		onSortingChange: setSorting,
 		getSortedRowModel: getSortedRowModel(),
-		 onGlobalFilterChange: setGlobalFilter,
+		onGlobalFilterChange: setGlobalFilter,
 		getFilteredRowModel: getFilteredRowModel(),
 		onColumnVisibilityChange: setColumnVisibility,
 		onRowSelectionChange: setRowSelection,
@@ -49,16 +54,44 @@ function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValu
 			rowSelection,
 		},
 	});
-		
+
 	return (
-		<div className='my-4 rounded-md text-neutral-600'>
-			<div className='flex items-center py-4'>
+		<div className="my-4 rounded-md text-neutral-600">
+			<div className="flex items-center py-4">
 				<Input
-					placeholder='Search'
+					placeholder="Tìm kiếm"
 					value={globalFilter ?? ""}
-  					onChange={(event) => setGlobalFilter(event.target.value)}
-					className='max-w-sm'
+					onChange={(event) => setGlobalFilter(event.target.value)}
+					className="max-w-sm"
 				/>
+				<DropdownMenu>
+					<DropdownMenuTrigger asChild>
+						<Button variant="outline" className="ml-auto">
+							Cột
+						</Button>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent align="end">
+						{table
+							.getAllColumns()
+							.filter(
+								(column) => column.getCanHide()
+							)
+							.map((column) => {
+								return (
+									<DropdownMenuCheckboxItem
+										key={column.id}
+										className="capitalize"
+										checked={column.getIsVisible()}
+										onCheckedChange={(value) =>
+											column.toggleVisibility(value)
+										}
+									>
+										{columnNameConcealmentRecord[column.id]}
+									</DropdownMenuCheckboxItem>
+								)
+							})}
+					</DropdownMenuContent>
+				</DropdownMenu>
 			</div>
 			<Table>
 				<TableHeader>
@@ -85,18 +118,20 @@ function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValu
 						))
 					) : (
 						<TableRow>
-							<TableCell colSpan={columns.length} className='h-24 text-center'>
+							<TableCell colSpan={columns.length} className="h-24 text-center">
 								No results.
 							</TableCell>
 						</TableRow>
 					)}
 				</TableBody>
 			</Table>
-			<div className='text-muted-foreground flex-1 p-2 text-sm'>
+			<div className="text-muted-foreground flex-1 p-2 text-sm">
 				<DataTablePagination table={table} />
 			</div>
 		</div>
 	);
 }
+
+
 export default memo(DataTable);
 

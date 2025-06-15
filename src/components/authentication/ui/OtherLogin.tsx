@@ -31,10 +31,10 @@ function OtherLogin() {
 					naviagteToAdmin(data.data.access_token)
 				})
 				.catch((error) => {
-					const response = error.data as ApiResponseError<{ "register-token": string }>;
+					const response = error.data as ApiResponseError<{ "register_token": string }>;
 					switch (response.code) {
 						case 90014:
-							SessionStorage.setValue("REGISTER_TOKEN_USING_GOOGLE", response.detail["register-token"]);
+							SessionStorage.setValue("REGISTER_TOKEN_USING_GOOGLE", response.detail.register_token);
 							dispatch(showDialog("register-with-google"));
 							break;
 					}
@@ -55,7 +55,7 @@ function OtherLogin() {
 				const response = error.data as ApiResponseError<any>;
 				switch (response.code) {
 					case 90014:
-						SessionStorage.setValue("REGISTER_TOKEN_USING_FACEBOOK", response?.detail?.["register-token"] || "");
+						SessionStorage.setValue("REGISTER_TOKEN_USING_FACEBOOK", response?.detail?.["register_token"] || "");
 						dispatch(showDialog("register-with-facebook"));
 						break;
 				}

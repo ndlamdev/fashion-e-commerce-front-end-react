@@ -29,9 +29,10 @@ export const orderItemColumns: ColumnDef<OrderItemColumnProp | unknown, string |
         className={"cursor-pointer"}
       />
     ),
+		enableHiding: false,
   },
   {
-    header: "Product",
+    header: "sản phẩm",
     cell: ({ row }) => {
       const orderItem = row.original as OrderItemColumnProp;
       return (
@@ -48,7 +49,7 @@ export const orderItemColumns: ColumnDef<OrderItemColumnProp | unknown, string |
   },
   {
     accessorKey: "quantity",
-    header: 'Quantity',
+    header: 'Số lượng',
     cell: ({ row }) => {
       const rowIndex = row.index;
       const data = row.original as OrderItemColumnProp;
@@ -72,7 +73,7 @@ export const orderItemColumns: ColumnDef<OrderItemColumnProp | unknown, string |
   },
   {
     id: "amount",
-    header: 'Amount',
+    header: 'Thành tiền',
     cell: ({ row }) => {
       const product = row.original as OrderItemColumnProp;
       return <div className=" font-medium text-balance break-words w-25 float-start text-start">{formatCurrency(product.regular_price * product.quantity)}</div>;
@@ -90,5 +91,6 @@ export const orderItemColumns: ColumnDef<OrderItemColumnProp | unknown, string |
         </Button>
       );
     },
+		enableHiding: false,
   },
 ];

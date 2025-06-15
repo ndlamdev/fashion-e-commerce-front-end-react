@@ -1,19 +1,12 @@
 import { EllipsisIcon, UserRoundIcon } from "lucide-react";
 import { Button } from "@/components/ui/button.tsx";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover.tsx";
-import { SortDirection } from "@tanstack/react-table";
-import FilterColumnData from "@/components/admin/filterColumnData/FiterColumndata.tsx";
-import { CustomerSortEnum } from "@/utils/enums/admin/sort/customerSort.enum.ts";
 import DataTable from "@/components/dataTable/DataTable.tsx";
 import { customerColumns } from "@/components/dataTable/dataColumns/customer.column.tsx";
 import { customers } from "@/assets/data/admin/customer/customerDataColumn.data.ts";
 import { useCallback } from "react";
 import { useNavigate } from "react-router";
 
-const DirectionValues: Record<SortDirection, string> = {
-	asc: 'Tăng dần',
-	desc: 'Giảm dần',
-}
 
 export function CustomerManagementPage() {
 	const data = customers
