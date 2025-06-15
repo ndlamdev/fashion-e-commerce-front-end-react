@@ -54,24 +54,24 @@ export function VerticalMenu() {
 const MenuValues: (TabNavProps & { subMenu?: TabNavProps[] })[] = [
 	{ title: "Dashboard", to: "/admin", iconLeft: <LayoutDashboardIcon /> },
 	{
-		title: "Orders",
+		title: "Đơn hàng",
 		to: "/admin/orders",
 		iconLeft: <LucideShoppingBag />,
 		subMenu: [
-			{ title: "Drafts", to: "/admin/orders/drafts" },
-			{ title: "Abandoned checkouts", to: "/admin/orders/abandoned-checkouts" },
+			{ title: "Bản nháp", to: "/admin/orders/drafts" },
+			{ title: "Chưa thanh toán", to: "/admin/orders/abandoned-checkouts" },
 		],
 	},
 	{
-		title: "Products",
+		title: "Sản phẩm",
 		to: "/admin/products",
 		iconLeft: <TagIcon />,
 		subMenu: [
-			{ title: "Collections", to: "/admin/products/collections" },
-			{ title: "Inventory", to: "/admin/products/inventories" },
-			{ title: "Purchase order", to: "/admin/products/purchase-order" },
+			{ title: "Danh mục", to: "/admin/products/collections" },
+			{ title: "Tồn kho", to: "/admin/products/inventories" },
+			{ title: "Đơn mua hàng", to: "/admin/products/purchase-order" },
 		],
 	},
-	{ title: "Customers", to: "/admin/customers", iconLeft: <UserRoundIcon />, subMenu: [{ title: "Segments", to: "/admin/customers/segments" }] },
-	{ title: "Discounts", to: "/admin/discount", iconLeft: <BadgePercent /> },
+	{ title: "Khách hàng", to: "/admin/customers", iconLeft: <UserRoundIcon />, subMenu: [{ title: "Segments", to: "/admin/customers/segments" }] },
+	{ title: "Khuyến mãi", to: "/admin/discount", iconLeft: <BadgePercent /> },
 ];

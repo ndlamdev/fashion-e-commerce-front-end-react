@@ -14,7 +14,7 @@ import QuillEditorConfig from "@/components/editor/QuillEditorConfig.ts";
 import VariantManager from "@/components/admin/product/VariantManager.tsx";
 import PriceManager from "@/components/admin/product/PriceManager.tsx";
 import BaseInfo from "@/components/admin/product/BaseInfo.tsx";
-import CreateProductPageContext from "@/context/CreateProductPageContext";
+import CreateProductPageContext from "@/context/CreateProductPageContext.tsx";
 import { SolarArrowLeftLinear } from "@/assets/images/icons/SolarArrowLeftLinear.tsx";
 import OrganizationManager from "@/components/admin/product/OrganizationManager.tsx";
 import { SolarInfoCircleLinear } from "@/assets/images/icons/SolarInfoCircleLinear.tsx";
@@ -24,7 +24,11 @@ import ShippingManager from "@/components/admin/product/ShippingManager.tsx";
 
 function CreateProductPage({ titlePage = "Add product" }: { titlePage?: string }) {
 	return (
-		<CreateProductPageContext.Provider value={{ borderStyle: "border-1 border-gray-400", sectionStyle: "rounded-xl border-1 border-gray-300 bg-white p-5" }}>
+		<CreateProductPageContext.Provider
+			value={{
+				borderStyle: "border-1 border-gray-400",
+				sectionStyle: "rounded-xl border-1 border-gray-300 bg-white p-5",
+			}}>
 			<CreateProductMainPage titlePage={titlePage} />
 		</CreateProductPageContext.Provider>
 	);

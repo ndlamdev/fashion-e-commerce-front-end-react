@@ -8,7 +8,7 @@
 
 import { useParams } from "react-router";
 import { useEffect } from "react";
-import CreateProductPage from "@/pages/admin/CreateProductPage.tsx";
+import CreateProductPage from "@/pages/admin/product/CreateProductPage.tsx";
 
 function UpdateProductPage() {
 	const { id } = useParams();

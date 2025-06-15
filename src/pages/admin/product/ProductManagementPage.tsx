@@ -1,37 +1,40 @@
-import { EllipsisIcon, UserRoundIcon } from "lucide-react";
+/**
+ * Author: Nguyen Dinh Lam
+ * Email: kiminonawa1305@gmail.com
+ * Phone number: +84 855354919
+ * Create at: 10:10 AM - 15/06/2025
+ *  User: kimin
+ **/
+
+import FilterColumnData from "@/components/admin/filterColumnData/FiterColumndata.tsx";
+import DataTable from "@/components/dataTable/DataTable.tsx";
+import { productColumns } from "@/components/dataTable/dataColumns/product.column.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover.tsx";
+import { ProductSortEnum } from "@/utils/enums/admin/sort/productSort.enum";
 import { SortDirection } from "@tanstack/react-table";
-import FilterColumnData from "@/components/admin/filterColumnData/FiterColumndata.tsx";
-import { CustomerSortEnum } from "@/utils/enums/admin/sort/customerSort.enum.ts";
-import DataTable from "@/components/dataTable/DataTable.tsx";
-import { customerColumns } from "@/components/dataTable/dataColumns/customer.column.tsx";
-import { customers } from "@/assets/data/admin/customer/customerDataColumn.data.ts";
+import { EllipsisIcon, TagIcon } from "lucide-react";
 import { useCallback } from "react";
 import { useNavigate } from "react-router";
 
-const DirectionValues: Record<SortDirection, string> = {
-	asc: 'Tăng dần',
-	desc: 'Giảm dần',
-}
+function ProductManagementPage() {
+  const navigate = useNavigate();
 
-export function CustomerManagementPage() {
-	const data = customers
-	const navigate = useNavigate();
-	const handleWatchDetail = useCallback((id: number) => {
-		navigate(`/admin/customers/${id}`);
-	}, [navigate])
-	const handleSaveLock = useCallback((id: number) => {
-		//TODO: implement lock or open lock here
-		console.log(id);
-	}, [])
+  const handleWatchDetail = useCallback((id: string) => {
+    console.log(id);
+  }, [])
+  const handleSaveLock = useCallback((id: string) => {
+    console.log(id);
+
+  }, [])
+
   return (
     <main>
       <header className={""}>
         <div className="flex justify-between items-end">
           <p className="flex justify-end items-center space-x-2 text-sm sm:text-lg lg:text-2xl">
-            <UserRoundIcon className={'size-4 sm:size-6 lg:size-8'} />
-            <span className={"font-bold "}>Khách hàng</span>
+            <TagIcon className={'size-4 sm:size-6 lg:size-8'} />
+            <span className={"font-bold "}>Sản phẩm</span>
           </p>
           <div className="flex items-center space-x-2 text-center">
             <Popover>
@@ -47,14 +50,20 @@ export function CustomerManagementPage() {
             </Popover>
             <Button variant={"outline"} className={"cursor-pointer max-sm:hidden"}>Nhập</Button>
             <Button variant={"outline"} className={"cursor-pointer max-sm:hidden"}>Xuất</Button>
-            <Button className={"cursor-pointer text-xs sm:text-md max-sm:h-8"}>Thêm Khách hàng</Button>
+            <Button className={"cursor-pointer text-xs sm:text-md max-sm:h-8"}>Thêm Sản phẩm</Button>
           </div>
         </div>
       </header>
       <section className={"my-5"}>
-        <FilterColumnData sortEnum={CustomerSortEnum} infoData={`${data.length} khách hàng`} placeholderInput={'Tìm tên KH'} DirectionSortBy={DirectionValues} />
-        <DataTable columns={customerColumns(handleWatchDetail, handleSaveLock)} data={data} />
+        <FilterColumnData sortEnum={ProductSortEnum} infoData={'0 sản phẩm'} placeholderInput={'Tìm tên SP'} DirectionSortBy={DirectionValues} />
+        <DataTable columns={productColumns(handleWatchDetail, handleSaveLock)} data={[]} />
       </section>
     </main>
-	);
+  )
 }
+
+const DirectionValues: Record<SortDirection, string> = {
+  asc: 'Cũ đến mới',
+  desc: 'Mới đến cũ',
+}
+export default ProductManagementPage;

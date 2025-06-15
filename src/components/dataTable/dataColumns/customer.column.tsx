@@ -24,13 +24,6 @@ export const customerColumns = (
 		cell: ({ row }) => (<div className="font-bold">{(row.getValue("name"))}</div>),
 	},
 	{
-		accessorKey: "create_at",
-		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title="Ngày tạo" />
-		),
-		cell: ({ row }) => (<div className="font-bold">{formatDateFromArray(row.getValue("create_at"))}</div>),
-	},
-	{
 		accessorKey: "location",
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title="Địa chỉ" />
@@ -51,6 +44,13 @@ export const customerColumns = (
 		cell: ({ row }) => {
 			return <div className=" font-medium">{formatCurrency(row.getValue("amount_spent"))}</div>;
 		},
+	},
+	{
+		accessorKey: "create_at",
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title="Ngày tạo" />
+		),
+		cell: ({ row }) => (<div className="font-bold">{formatDateFromArray(row.getValue("create_at"))}</div>),
 	},
 	{
 		id: "actions",

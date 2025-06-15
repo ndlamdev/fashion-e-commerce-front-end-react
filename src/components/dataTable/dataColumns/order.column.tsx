@@ -2,23 +2,23 @@ import { DataTableColumnHeader } from "@/components/dataTable/DataTableColumnHea
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button.tsx";
 import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
-	DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
-import HistoryOrderType from "@/types/historyOrder.type";
 import OrderStatusEnum, { OrderStatusColors } from "@/utils/enums/orderStatus.enum.ts";
 import { formatCurrency, formatDateFromArray } from "@/utils/helper/format-data.ts";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, TrashIcon } from "lucide-react";
+import { OrderColumnProp } from "../props/orderColumn.prop";
 
 export const columns = (
 	watchDetail: (orderId: number, userId: number) => void,
 	onDelete: (orderId: number) => void,
-): ColumnDef<HistoryOrderType | unknown, string | unknown>[] => [
+): ColumnDef<OrderColumnProp | unknown, string | unknown>[] => [
 		{
 			accessorKey: "id",
 			header: 'Order',
@@ -69,7 +69,7 @@ export const columns = (
 			id: "actions",
 			cell: ({ row }) => {
 				//TODO: implement some action
-				const data = row.original as HistoryOrderType
+				const data = row.original as OrderColumnProp
 				return (
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
