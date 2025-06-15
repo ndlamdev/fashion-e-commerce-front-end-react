@@ -6,6 +6,7 @@ import { formatCurrency } from "@/utils/helper/format-data.ts";
 import { ColumnDef } from "@tanstack/react-table";
 import { XIcon } from "lucide-react";
 import { ChangeEvent } from "react";
+import { DataTableColumnHeader } from "@/components/dataTable/DataTableColumnHeader.tsx";
 const RESOURCE_IMAGE = import.meta.env.VITE_BASE_MEDIA_URL;
 
 export const orderItemColumns: ColumnDef<OrderItemColumnProp | unknown, string | unknown>[] = [
@@ -32,7 +33,8 @@ export const orderItemColumns: ColumnDef<OrderItemColumnProp | unknown, string |
 		enableHiding: false,
   },
   {
-    header: "sản phẩm",
+		id: "product",
+    header: ({column}) => <DataTableColumnHeader title={'Sản phẩm'} column={column}/>,
     cell: ({ row }) => {
       const orderItem = row.original as OrderItemColumnProp;
       return (
@@ -46,10 +48,11 @@ export const orderItemColumns: ColumnDef<OrderItemColumnProp | unknown, string |
         </div>
       );
     },
+		enableHiding: false,
   },
   {
     accessorKey: "quantity",
-    header: 'Số lượng',
+		header: ({column}) => <DataTableColumnHeader title={'Số lượng'} column={column}/>,
     cell: ({ row }) => {
       const rowIndex = row.index;
       const data = row.original as OrderItemColumnProp;

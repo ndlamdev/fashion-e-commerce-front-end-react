@@ -3,9 +3,9 @@ import { CustomerSortEnum } from "./sort/customerSort.enum";
 import { ProductSortEnum } from "./sort/productSort.enum";
 import { CustomerColumnProp } from "../../../components/dataTable/props/customerColumn.prop";
 import { OrderColumnProp } from "../../../components/dataTable/props/orderColumn.prop";
-import { ProductColumnProp } from "../../../components/dataTable/props/productColumn.prop";
+import { ProductVariantsType } from "../../../types/product/productVariants.type";
 
-export const columnNameConcealmentRecord: Record<keyof CustomerColumnProp | keyof OrderColumnProp | keyof ProductColumnProp | string, OrderSortEnum | CustomerSortEnum | ProductSortEnum> = {
+export const columnNameConcealmentRecord: Record<keyof CustomerColumnProp | keyof OrderColumnProp | keyof Pick<ProductVariantsType, 'quantity' | 'regular_price'> | string, OrderSortEnum | CustomerSortEnum | ProductSortEnum> = {
 	 name: CustomerSortEnum.CUSTOMER_NAME,
 	location: CustomerSortEnum.LOCATION,
 	no_orders: CustomerSortEnum.NO_ORDERS,
@@ -17,4 +17,6 @@ export const columnNameConcealmentRecord: Record<keyof CustomerColumnProp | keyo
 	email: OrderSortEnum.EMAIL,
 	amount: OrderSortEnum.TOTAL_PRICE,
 	date: OrderSortEnum.DATE,
+	quantity: ProductSortEnum.QUANTITY,
+	regular_price: ProductSortEnum.PRICE
 }

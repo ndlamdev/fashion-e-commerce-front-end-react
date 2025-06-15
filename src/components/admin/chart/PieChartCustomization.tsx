@@ -11,17 +11,17 @@ type PieChartProp = {
 }
 
 const pieData: PieChartProp[] = [
-	{ name: "REST", value: 75, fill: "var(--chart-5)" },
-	{ name: "CANCEL", value: 25, fill: "var(--chart-3)" },
+	{ name: "Còn lại", value: 75, fill: "var(--chart-5)" },
+	{ name: "Bị hủy", value: 25, fill: "var(--chart-3)" },
 ];
 
 const pieChartConfig = {
 	REST: {
-		label: "REST",
+		label: "Còn lại",
 		color: "var(--chart-1)",
 	},
 	CANCEL: {
-		label: "CANCEL",
+		label: "Bị hủy",
 		color: "var(--chart-2)",
 	},
 } satisfies ChartConfig;

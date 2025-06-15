@@ -10,7 +10,7 @@ const BestSaleTop: FC<BestSaleProp[]> = memo((props) => {
 	return (
 		<article>
 			<p className={"flex justify-between items-center"}>
-				<span>Top {props.length} Collection best sale</span><span><ScrollTextIcon className={"flex-none"} /></span></p>
+				<span>Top {props.length} danh mục bán chạy</span><span><ScrollTextIcon className={"flex-none"} /></span></p>
 			{props.length > 0 && props.map((item, index) => (
 				<div key={index} className={"flex items-center justify-between p-2 bg-neutral-100 my-2 rounded-lg"}>
 					<div className={'text-neutral-500 font-bold'}>{item.title}</div>
