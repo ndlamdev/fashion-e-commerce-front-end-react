@@ -4,6 +4,8 @@ import ProductResponseType from "@/domain/response/product.response";
 import { ApiPageResponse } from "@/domain/ApiPageResponse.ts";
 import { QueryType } from "@/types/collection/query.type.ts";
 import QuickSearchProductType from "@/types/product/quickSearchProduct.type.ts";
+import { createBaseQueryWithDispatch } from "./baseQueryWithDispatch";
+import AdminSubProductResponse from "@/domain/response/adminSubProduct.response";
 
 export const BASE_PRODUCT_URL = import.meta.env.VITE_BASE_URL + "/product/v1";
 
@@ -42,5 +44,17 @@ export const productApi = createApi({
 		}),
 	}),
 });
+export const adminProductApi = createApi({
+	reducerPath: "AdminProductApi",
+	baseQuery: createBaseQueryWithDispatch(import.meta.env.VITE_BASE_URL + "/admin/product/v1"),
+	endpoints: (build) => ({
+		getAllProduct: build.query<ApiResponse<AdminSubProductResponse[]>, void>({
+			query: () => ({
+				url: ``,
+			}),
+		}),
+	}),
+});
 
 export const { useGetProductQuery, useSearchByImageMutation, useVoiceSearchQuery, useSearchByTextQuery, useQuickSearchQuery } = productApi;
+export const { useGetAllProductQuery } = adminProductApi;

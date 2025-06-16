@@ -7,7 +7,7 @@ import { categoryDescriptionSamples } from "@/assets/data/collection/categoryDes
 import { useLocation, useNavigate, useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
 import RecentActivity from "@/components/collection/RecentActivity.tsx";
-import { useSearchByImageMutation, useSearchByTextQuery } from "@/services/product.service.ts";
+import { useSearchByImageMutation, useSearchByTextQuery } from "@/redux/api/product.api";
 import { useGetProductByCollectionIdQuery, useGetProductByCollectionTypeQuery } from "@/services/collection.service.ts";
 import ProductResponseType from "@/domain/response/product.response";
 import { ApiPageResponse } from "@/domain/ApiPageResponse.ts";

@@ -30,7 +30,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import QuickSearchProduct from "@/components/product/QuickSearchProduct.tsx";
 import { debounce } from "lodash";
-import { useQuickSearchQuery } from "@/services/product.service.ts";
+import { useQuickSearchQuery } from "@/redux/api/product.api";
 import { useGetCartQuery } from "@/redux/api/cart.api.ts";
 import logo from "@/assets/images/icons/logo.jpg";
 import jwtHelper from "@/utils/helper/jwtHelper";

@@ -16,12 +16,13 @@ import { addressCoolMateApi } from "@/redux/api/addressCoolMate.api.ts";
 import { addressApi, adminAddressApi } from "@/redux/api/address.api.ts";
 import { cartApi } from "@/redux/api/cart.api.ts";
 import { cartSlice } from "@/redux/slice/cart.slice.ts";
-import { productApi } from "@/services/product.service.ts";
+import { adminProductApi, productApi } from "@/redux/api/product.api";
 import { dialogSlice } from "@/redux/slice/dialog.slice.ts";
 import { sheetSlice } from "@/redux/slice/sheet.slice.ts";
 import { collectionApi } from "@/services/collection.service.ts";
 import { adminOrderApi, orderApi } from "@/redux/api/order.api.ts";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
+import { adminCollectionApi } from "@/redux/api/collection.api";
 
 const store = configureStore({
 	reducer: {
@@ -44,6 +45,8 @@ const store = configureStore({
 		[adminOrderApi.reducerPath]: adminOrderApi.reducer,
 		[adminProfileApi.reducerPath]: adminProfileApi.reducer,
 		[adminAddressApi.reducerPath]: adminAddressApi.reducer,
+		[adminProductApi.reducerPath]: adminProductApi.reducer,
+		[adminCollectionApi.reducerPath]: adminCollectionApi.reducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware()
@@ -59,7 +62,9 @@ const store = configureStore({
 			.concat(adminOrderApi.middleware)
 			.concat(adminProfileApi.middleware)
 			.concat(adminAddressApi.middleware)
-			,
+			.concat(adminProductApi.middleware)
+			.concat(adminCollectionApi.middleware)
+      ,
 });
 
 // Get the type of our slice variable

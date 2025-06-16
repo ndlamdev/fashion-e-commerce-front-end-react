@@ -12,33 +12,34 @@ import { formatDateFromArray } from "@/utils/helper/format-data.ts";
 import { ColumnDef } from "@tanstack/react-table";
 import { LockIcon, LockOpenIcon, MoreHorizontal } from "lucide-react";
 import { ProductColumnProp } from "../props/productColumn.prop";
+import { CollectionColumnProp } from "../props/collcetionColumn.prop";
 
 
-export const productColumns = (
+export const collectionColumns = (
   watchDetail: (id: string) => void,
   saveLock: (id: string) => void,
-): ColumnDef<ProductColumnProp | unknown, string | unknown>[] => [
+): ColumnDef<CollectionColumnProp | unknown, string | unknown>[] => [
     {
       accessorKey: "id",
-      header: "Mã sản phẩm",
+      header: "Mã danh mục",
       cell: ({ row }) => (<div className="font-bold">#{(row.getValue("id"))}</div>),
     },
     {
       accessorKey: "title",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Tên sản phẩm" />
+        <DataTableColumnHeader column={column} title="Tên danh mục" />
       ),
     },
     {
-      accessorKey: "total_variants",
+      accessorKey: "type",
       header: ({ column }) => (
-        <DataTableColumnHeader className={"cursor-pointer "} column={column} title="Tổng biến thể" />
+        <DataTableColumnHeader column={column} title="Loại danh mục" />
       ),
     },
     {
-      accessorKey: "total_inventories",
+      accessorKey: "total_products",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Tổng tồn kho" />
+        <DataTableColumnHeader column={column} title="Tổng sản phẩm" />
       ),
     },
     {

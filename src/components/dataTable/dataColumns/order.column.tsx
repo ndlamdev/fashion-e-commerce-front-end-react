@@ -80,8 +80,13 @@ export const columns = (
 						<DropdownMenuContent align="end">
 							<DropdownMenuLabel>Hành động</DropdownMenuLabel>
 							<DropdownMenuSeparator />
-							<DropdownMenuItem className={'cursor-pointer'} onClick={() => watchDetail(data.user_id, data.id)}>Xem chi tiết</DropdownMenuItem>
-							<DropdownMenuItem className={'cursor-pointer text-red-500'} onClick={() => onDelete(data.id)}><span>Xóa đơn hàng</span> <TrashIcon className={'text-red-500'} /></DropdownMenuItem>
+              <DropdownMenuItem className={'cursor-pointer'}
+                onClick={() => watchDetail(data.user_id, data.id)}>Xem chi tiết</DropdownMenuItem>
+              <DropdownMenuItem className={'cursor-pointer text-red-500'}
+                onClick={() => onDelete(data.id)}>
+                <span>Xóa đơn hàng</span>
+                <TrashIcon className={'text-red-500'} />
+              </DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
 				)

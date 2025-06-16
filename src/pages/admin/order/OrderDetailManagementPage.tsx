@@ -1,5 +1,4 @@
 import InfoCustomer from "@/components/admin/customer/InfoCustomer.tsx";
-import FilterColumnData from "@/components/admin/filterColumnData/FiterColumndata.tsx";
 import OrderPaymentInfo from "@/components/admin/order/OrderPaymentInfo.tsx";
 import DataTable from "@/components/dataTable/DataTable.tsx";
 import { orderItemColumns } from "@/components/dataTable/dataColumns/orderItem.column";
@@ -17,8 +16,6 @@ import OrderItemResponse from "@/domain/response/orderItem.response";
 import { useAdminGetOrderDetaiQuery } from "@/redux/api/order.api";
 import { showDialog } from "@/redux/slice/dialog.slice.ts";
 import { AddressShippingType } from "@/types/profile/address.type";
-import { ProductSortEnum } from "@/utils/enums/admin/sort/productSort.enum";
-import { SortDirection } from "@tanstack/react-table";
 import { EllipsisIcon, InboxIcon } from "lucide-react";
 import { useCallback, useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
@@ -119,8 +116,6 @@ const OrderDetailManagementPage = () => {
       <section
         className={"flex justify-between max-sm:flex-wrap max-sm:space-y-2 my-4 space-x-3 items-start"}>
         <div className="rounded-lg shadow-sm shadow-accent-foreground  w-full sm:w-7/10 p-3 bg-white text-xs sm:text-sm text-neutral-600">
-          <span className={'text-base'}>Products</span>
-          <FilterColumnData sortEnum={ProductSortEnum} placeholderInput={'Search product'} DirectionSortBy={DirectionValues} />
           <DataTable columns={orderItemColumns} data={dataWithHandler} />
         </div>
         <InfoCustomer
@@ -162,9 +157,5 @@ const OrderDetailManagementPage = () => {
       </div>
     </main>
   )
-}
-const DirectionValues: Record<SortDirection, string> = {
-  asc: 'Oldest to newest',
-  desc: 'Newest to oldest',
 }
 export default OrderDetailManagementPage

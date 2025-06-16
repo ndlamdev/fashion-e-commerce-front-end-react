@@ -30,7 +30,7 @@ import { toast } from "sonner";
 import { useNavigate, useParams } from "react-router";
 import { formatCurrency } from "@/utils/helper/format-data.ts";
 import { getSizeSuggestion } from "@/utils/sizeModelManage.ts";
-import { useGetProductQuery } from "@/services/product.service.ts";
+import { useGetProductQuery } from "@/redux/api/product.api";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { OptionType } from "@/types/product/productOption.type.ts";
 import ProductImageType from "@/types/product/productImage.type.ts";

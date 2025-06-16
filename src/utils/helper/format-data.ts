@@ -40,24 +40,24 @@ export const formatDateFromString = (date: string) => {
 };
 
 export const formatDateFromArray = (date: number[]) => {
-	if (date.length !== 3) return formatDate(new Date());
+	if (!date || date.length !== 3) return formatDate(new Date());
 	const dateObj = new Date(date[0], date[1] - 1, date[2]);
 	return formatDate(dateObj);
 };
 
 export const formatDateTimeFromArray = (date: number[]) => {
-	if (date.length !== 6) return formatDate(new Date());
+	if (!date || date.length !== 6) return formatDate(new Date());
 	const dateObj = new Date(date[0], date[1] - 1, date[2], date[3], date[4], date[5]);
 	return formatDateTime(dateObj);
 };
 
 export const parseDate = (date: number[]) => {
-	if (date.length !== 3) return new Date();
+	if (!date || date.length !== 3) return new Date();
 	return new Date(date[0], date[1] - 1, date[2]);
 };
 
 export const parseDatetime = (date: number[]) => {
-	if (date.length !== 6) return new Date();
+	if (!date || date.length !== 6) return new Date();
 	return new Date(date[0], date[1] - 1, date[2], date[3], date[4], date[5]);
 };
 

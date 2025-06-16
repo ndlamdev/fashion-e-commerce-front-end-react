@@ -7,16 +7,16 @@
  **/
 
 import DataTable from "@/components/dataTable/DataTable.tsx";
-import { productColumns } from "@/components/dataTable/dataColumns/product.column.tsx";
+import { collectionColumns } from "@/components/dataTable/dataColumns/collection.column.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover.tsx";
-import { useGetAllProductQuery } from "@/redux/api/product.api";
+import { useGetAllCollectionQuery } from "@/redux/api/collection.api";
 import { EllipsisIcon, TagIcon } from "lucide-react";
 import { useCallback, useEffect } from "react";
 import { toast } from "sonner";
 
-function ProductManagementPage() {
-  const { data, isError } = useGetAllProductQuery();
+function CollectionManagementPage() {
+  const { data, isError } = useGetAllCollectionQuery();
 
   const handleWatchDetail = useCallback((id: string) => {
     console.log(id);
@@ -28,8 +28,9 @@ function ProductManagementPage() {
 
   useEffect(() => {
     if (!isError) return;
-    toast.error("Lỗi tải thông tin sản phẩm!");
+    toast.error("Lỗi tải thông tin danh mục!");
   }, [isError]);
+
 
   return (
     <main>
@@ -37,7 +38,7 @@ function ProductManagementPage() {
         <div className="flex justify-between items-end">
           <p className="flex justify-end items-center space-x-2 text-sm sm:text-lg lg:text-2xl">
             <TagIcon className={'size-4 sm:size-6 lg:size-8'} />
-            <span className={"font-bold "}>Sản phẩm</span>
+            <span className={"font-bold "}>Danh mục</span>
           </p>
           <div className="flex items-center space-x-2 text-center">
             <Popover>
@@ -53,15 +54,15 @@ function ProductManagementPage() {
             </Popover>
             <Button variant={"outline"} className={"cursor-pointer max-sm:hidden"}>Nhập</Button>
             <Button variant={"outline"} className={"cursor-pointer max-sm:hidden"}>Xuất</Button>
-            <Button className={"cursor-pointer text-xs sm:text-md max-sm:h-8"}>Thêm Sản phẩm</Button>
+            <Button className={"cursor-pointer text-xs sm:text-md max-sm:h-8"}>Thêm Danh mục</Button>
           </div>
         </div>
       </header>
       <section className={"my-5"}>
-        <DataTable columns={productColumns(handleWatchDetail, handleSaveLock)} data={data?.data ?? []} />
+        <DataTable columns={collectionColumns(handleWatchDetail, handleSaveLock)} data={data?.data ?? []} />
       </section>
     </main>
   )
 }
 
-export default ProductManagementPage;
+export default CollectionManagementPage;

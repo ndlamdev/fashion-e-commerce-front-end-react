@@ -98,7 +98,7 @@ function CartLayoutFooter() {
     if (emptyField) return;
 
     callApi(infoCustomerCreateOrder, items);
-  }, [callApi, infoCustomerCreateOrder, items]);
+  }, [callApi, infoCustomerCreateOrder]);
 
   return (
     <>

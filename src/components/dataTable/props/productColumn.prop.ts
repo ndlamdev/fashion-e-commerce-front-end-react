@@ -1,5 +1,3 @@
-import ProductCardProp from "@/components/card-product/props/productCard.prop";
+import AdminSubProductResponse from "@/domain/response/adminSubProduct.response";
 
-export type ProductColumnProp = ProductCardProp & {
-	onInputChange: (updater: (item: ProductCardProp, index: number) => ProductCardProp) => void;
-};
+export type ProductColumnProp = AdminSubProductResponse;

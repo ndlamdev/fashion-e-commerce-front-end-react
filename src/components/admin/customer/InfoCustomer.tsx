@@ -40,9 +40,9 @@ const InfoCustomer: FC<InfoCustomerProp> = memo((props) => {
               </Button>
             </PopoverTrigger>
             <PopoverContent className={"w-auto -translate-1/14 translate-y-2 p-2 text-xs sm:text-sm"}>
-              <p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>Edit contact information</p>
-              <p onClick={() => dispatch(showDialog('manage-addresses'))} className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>Manage address</p>
-              <p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>Edit marketing settings</p>
+              <p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>Chỉnh sửa thông tin liên hệ</p>
+              <p onClick={() => dispatch(showDialog('manage-addresses'))} className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>Quản lý địa chỉ</p>
+              <p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>Chỉnh sửa cài đặt tiếp thị</p>
             </PopoverContent>
           </Popover>
         </div>

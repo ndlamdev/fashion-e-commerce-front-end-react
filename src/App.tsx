@@ -35,6 +35,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import { Toaster } from "sonner";
 import store, { useAppSelector } from "./configs/store.config";
 import jwtHelper from "./utils/helper/jwtHelper";
+import CollectionManagementPage from "./pages/admin/collection/ProductManagementPage";
 
 function App() {
   return (
@@ -95,6 +96,7 @@ function MainRouter() {
               <Route path={"orders"} element={<OrderManagementPage />} />
               <Route path={"orders/:id"} element={<OrderDetailManagementPage />} />
               <Route path={""} element={<DashBoardPage />} />
+              <Route path={"product/collections"} element={<CollectionManagementPage />} />
             </Route>}
             <Route path={"*"} element={<NotFoundPage />} />
           </Routes>

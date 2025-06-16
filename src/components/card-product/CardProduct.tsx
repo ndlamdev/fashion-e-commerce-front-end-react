@@ -1,7 +1,7 @@
 import { Card, CardContent, CardFooter } from "@/components/ui/card.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import ProductCardProp from "@/components/card-product/props/productCard.prop.ts";
+import ProductResponseProp from "@/components/card-product/props/productCard.prop.ts";
 import { Star } from "lucide-react";
 import { useNavigate } from "react-router";
 import { formatCurrency } from "@/utils/helper/format-data.ts";
@@ -14,7 +14,7 @@ import cartService from "@/services/cart.service.ts";
 
 const RESOURCE_IMAGE = import.meta.env.VITE_BASE_MEDIA_URL;
 
-export default function CardProduct(props: ProductCardProp) {
+export default function CardProduct(props: ProductResponseProp) {
 	const navigate = useNavigate();
 	const [colorSelected, setColorSelected] = useState<string | undefined>();
 	const [sizeSelected, setSizeSelected] = useState<string | undefined>();

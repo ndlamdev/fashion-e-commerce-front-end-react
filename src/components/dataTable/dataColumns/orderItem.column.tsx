@@ -39,7 +39,8 @@ export const orderItemColumns: ColumnDef<OrderItemColumnProp | unknown, string |
       const orderItem = row.original as OrderItemColumnProp;
       return (
         <div className=" flex items-center space-x-2">
-          <img className={"size-10 border border-neutral-500 rounded-lg object-cover"} src={RESOURCE_IMAGE + orderItem.product.image.src} alt={orderItem.product.title} />
+          <img className={"size-10 border border-neutral-500 rounded-lg object-cover"}
+            src={RESOURCE_IMAGE + orderItem.product.image.src} alt={orderItem.product.title} />
           <div className="">
             <p>{orderItem.product.title}</p>
             <p>{Object.values(orderItem.variant.options).join(" / ")}</p>
@@ -79,7 +80,9 @@ export const orderItemColumns: ColumnDef<OrderItemColumnProp | unknown, string |
     header: 'Thành tiền',
     cell: ({ row }) => {
       const product = row.original as OrderItemColumnProp;
-      return <div className=" font-medium text-balance break-words w-25 float-start text-start">{formatCurrency(product.regular_price * product.quantity)}</div>;
+      return <div className=" font-medium text-balance break-words w-25 float-start text-start">
+        {formatCurrency(product.regular_price * product.quantity)}
+      </div>;
     },
   },
   {

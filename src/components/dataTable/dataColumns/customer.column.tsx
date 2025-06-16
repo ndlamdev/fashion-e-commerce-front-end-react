@@ -68,8 +68,16 @@ export const customerColumns = (
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Hành động</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className={"cursor-pointer"} onClick={() => watchDetail(data.id)}>Xem chi tiết</DropdownMenuItem>
-              <DropdownMenuItem className={"cursor-pointer text-red-500 flex justify-between"} onClick={() => saveLock(data.id)}><span>Tình trạng</span> {data.is_locked ? <LockOpenIcon className={'flex-none text-red-500'} /> : <LockIcon className={'flex-none text-red-500'} />}</DropdownMenuItem>
+              <DropdownMenuItem className={"cursor-pointer"}
+                onClick={() => watchDetail(data.id)}>
+                Xem chi tiết
+              </DropdownMenuItem>
+              <DropdownMenuItem className={"cursor-pointer text-red-500 flex justify-between"}
+                onClick={() => saveLock(data.id)}>
+                <span>Tình trạng</span>
+                {!data.is_locked
+                  ? <LockOpenIcon className={'flex-none text-red-500'} />
+                  : <LockIcon className={'flex-none text-red-500'} />}</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         );
