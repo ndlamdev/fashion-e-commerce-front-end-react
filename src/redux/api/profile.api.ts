@@ -91,6 +91,12 @@ export const adminProfileApi = createApi({
 				credentials: "include",
 			}),
 		}),
+		adminGetProfiles: build.query<ApiResponse<(ProfileResponse & { total_orders: number; total_spent: number })[]>, void>({
+			query: () => ({
+				url: ``,
+				credentials: "include",
+			}),
+		}),
 	}),
 });
 
@@ -104,6 +110,4 @@ export const {
 	useSetDefaultAddressMutation,
 } = profileApi;
 
-export const {
-	useAdminGetProfileQuery
-} = adminProfileApi;
+export const { useAdminGetProfileQuery, useAdminGetProfilesQuery } = adminProfileApi;

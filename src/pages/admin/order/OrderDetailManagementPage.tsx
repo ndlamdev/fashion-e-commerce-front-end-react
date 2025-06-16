@@ -14,25 +14,21 @@ import { Button } from "@/components/ui/button.tsx";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover.tsx";
 import { Skeleton } from "@/components/ui/skeleton";
 import OrderItemResponse from "@/domain/response/orderItem.response";
-import { useAdminGetAddressesQuery } from "@/redux/api/address.api";
 import { useAdminGetOrderDetaiQuery } from "@/redux/api/order.api";
 import { showDialog } from "@/redux/slice/dialog.slice.ts";
+import { AddressShippingType } from "@/types/profile/address.type";
 import { ProductSortEnum } from "@/utils/enums/admin/sort/productSort.enum";
 import { SortDirection } from "@tanstack/react-table";
 import { EllipsisIcon, InboxIcon } from "lucide-react";
 import { useCallback, useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
-
 const OrderDetailManagementPage = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const location = useLocation();
-  const { userId } = location.state;
   const navigate = useNavigate()
-  const { data, isError } = useAdminGetOrderDetaiQuery(parseInt(id ?? "0"), { skip: !userId || !id })
-  const { data: dataAddresses, error: errorAddresses } = useAdminGetAddressesQuery(parseInt(userId ?? "0"));
+  const { data, isError } = useAdminGetOrderDetaiQuery(parseInt(id ?? "0"), { skip: !id })
 
   const handleInputChange = useCallback((updater: (item: OrderItemResponse, index: number) => OrderItemResponse) => {
     return updater({
@@ -83,17 +79,13 @@ const OrderDetailManagementPage = () => {
 
 
   useEffect(() => {
-    if (!userId || !id) navigate("/admin/orders")
-  }, [id, navigate, userId])
+    if (!id) navigate("/admin/orders")
+  }, [id, navigate])
 
   useEffect(() => {
     if (!isError) return;
     toast.error("Lỗi tải chi tiết đơn hàng")
   }, [isError])
-  useEffect(() => {
-    if (!errorAddresses) return;
-    toast.error("Lỗi tải địa giả giao hàng khách hàng")
-  }, [errorAddresses])
 
   return (
     <main>
@@ -140,12 +132,25 @@ const OrderDetailManagementPage = () => {
           location={data?.data.address_detail ?? ""}
           orders={0}
           amount_spent={0}
-          customer_since={1} // thời gian tạo tài khoản cho đến hiện tại
+          customer_since={0} // thời gian tạo tài khoản cho đến hiện tại
           rfm_group={""}
-          address_default={dataAddresses?.data.filter(it => it.active)[0]} //AddressShippingType
+          address_default={{
+            id: 0,
+            full_name: data?.data.name,
+            phone: data?.data.phone,
+            country_code: "",
+            active: false,
+            street: data?.data.address_detail,
+            city: data?.data.province,
+            city_code: "",
+            district: data?.data.district,
+            district_id: "",
+            ward: data?.data.ward,
+            ward_id: "",
+          } as AddressShippingType} //AddressShippingType
           order_list={[]} // OrderManagementType[] //TODO: chỉnh lại
-          addresses_shipping={dataAddresses?.data} //AddressShippingType[]
-          no_order={0}
+          addresses_shipping={[]} //AddressShippingType[]
+          hidden_no_order={true}
         />
       </section>
 

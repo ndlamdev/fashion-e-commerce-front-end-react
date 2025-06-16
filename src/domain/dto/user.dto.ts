@@ -9,6 +9,7 @@ import { GenderType } from "@/types/profile/profile.type.ts";
 
 type UserDto = {
 	id: number;
+	user_id: number;
 	full_name: string;
 	email: string;
 	avatar: string;
@@ -19,6 +20,7 @@ type UserDto = {
 	weight: number;
 	country_code: string;
 	create_at: number[];
+	lock: boolean;
 };
 
 export default UserDto;
