@@ -1,0 +1,179 @@
+{
+  "language": {
+    "vi": "Vietnamese",
+    "en": "English",
+    "title": "Language"
+  },
+  "header": {
+    "product_types": {
+      "male": "Male",
+      "female": "Female",
+      "sport": "Sport"
+    },
+    "customer_care_center": "Customer care center",
+    "about": "About KimiFashion",
+    "blog": "Blog",
+    "admin": "Store management",
+    "login": "Login",
+    "outstanding": "Outstanding",
+    "explore": {
+      "men": "Explore Men's Fashion",
+      "women": "Explore Women's Fashion",
+      "sport": "Explore Sports Fashion"
+    },
+    "search": {
+      "placeholder": "Search for products...",
+      "no_results": "No results found",
+      "error": "An error occurred while searching",
+      "hint": "Enter the product you want to find."
+    },
+    "cart": {
+        "view_all": "View all",
+        "empty": "Your cart is empty :( please choose some items to buy"
+    },
+    "freeshipping": "Free shipping on orders over 1,000,000 VND"
+  },
+  "footer": {
+    "shopping": {
+      "title": "Shopping",
+      "shipping": "Shipping",
+      "payment": "Payment",
+      "return": "Return",
+      "store_locator": "Store Locator",
+      "magazine": "Magazine"
+    },
+    "company_info": {
+      "title": "Company Information",
+      "careers": "Career Opportunities at KimiFashion",
+      "about": "About KimiFashion",
+      "sustainability": "Sustainable Fashion - KimiFashion",
+      "press": "Press",
+      "investor_relations": "Investor Relations",
+      "corporate_governance": "Corporate Governance"
+    },
+    "help": {
+      "title": "Help",
+      "customer_service": "Customer Service",
+      "my_account": "My Account",
+      "terms_conditions": "Terms & Conditions",
+      "contact": "Contact",
+      "cookie_info": "Cookie Information",
+      "payment_info": "Payment Information",
+      "order_success": "Order Success",
+      "cookie_settings": "Cookie Settings"
+    },
+    "join_now": {
+      "title": "Join Now",
+      "text": "Join KimiFashion and enjoy a 10% discount on your next purchase!",
+      "read_more": "Read more"
+    },
+    "social_media": "Follow us on social media",
+    "copyright": "Content on this page is copyrighted and is the property of KimiFashion."
+  },
+  "page": {
+    "home": {
+      "title": "KimiFashion - Home Page",
+      "description": "Discover the latest trends in fashion at KimiFashion.",
+      "product_types": {
+        "male": {
+          "title": "Men's Fashion",
+          "items": {
+            "shirts": "Shirts",
+            "tshirts": "T-Shirts",
+            "jeans": "Jeans",
+            "jackets": "Jackets",
+            "shoes": "Shoes",
+            "pants": "Pants",
+            "shorts": "Shorts",
+            "boxers": "Boxers",
+            "accessories": "Accessories"
+          }
+        },
+        "female": {
+          "title": "Women's Fashion",
+          "items": {
+            "bra_&_leggings": "Bra & Leggings",
+            "sports_top": "Sports Top",
+            "sports_pants": "Sports Pants",
+            "accessories": "Accessories"
+          }
+        }
+      },
+     "collections": {
+        "male": {
+            "title": "Men's Collection",
+            "code": "Enter CM10 Get 10% off up to 100k",
+            "buy_now": "Buy Now"
+        },
+        "female": {
+            "title": "Women's Collection",
+            "code": "Enter CM10 Get 10% off up to 100k",
+            "buy_now": "Buy Now"
+        }
+      },
+     "discover": {
+        "title": "Everyday Wear",
+        "description": "Comfortable, elegant | Enter CM10 to get 10% off orders from 600",
+        "button": "Explore Now",
+        "sub_title": "EVERYDAY WEAR PRODUCTS"
+      },
+      "running": {
+        "title": "Running Gear",
+        "description": "Stretchy, breathable | Buy combo packs and save up to 30%",
+        "button": "Explore Now",
+        "sub_title": "RUNNING PRODUCTS"
+      }
+    },
+    "product_details": {
+      "breadcrumb": {
+        "home": "Home",
+        "product_details": "Product Details"
+      },
+      "share": "Share",
+      "free_ship": "Freeship",
+      "discount_code": "Discount Code",
+      "no_available_discount_code": "No available discount code",
+      "to_get_discount": "to get discount",
+      "save_discount_code_success": "Save discount code successfully",
+      "size_guide": "Size Choice Guide",
+      "warning_max_bought": "The maximum number of products you can buy is {{max}} products",
+      "be_refunded": "Be refunded",
+      "coolcash_refund_info": "This is the estimated CoolCash you will receive when purchasing this product today, corresponding to the membership level",
+      "new_member": "New Member",
+      "chat_support": "Chat for KimiFashion support now (8:30 AM - 10:00 PM)",
+      "add_to_cart": "Add to Cart",
+      "choose_size": "Choose Size",
+      "exchange_policy": "Easy exchange with just a phone number",
+      "return_policy": "60-day return for any reason",
+      "hotline_info": "Hotline 0855.354.919 support from 8:30 AM - 10:00 PM daily",
+      "delivery_info": "Delivery to your location, refund within 24 hours",
+      "read_more": "Read More",
+      "product_description": "Product Description",
+      "suggested_products": "Suggested Products",
+      "product_reviews": "Product Reviews",
+      "based_on": "Based on",
+      "from_customer": "from customers",
+      "search_review_placeholder": "Search reviews",
+      "rating_classification": "Rating classification",
+      "rating_classification_description": "All reviews come from customers who have actually purchased from Coolmate",
+      "all_reviews": "All reviews",
+      "filter_feedback": "Filter feedback",
+      "feedback_received": "Feedback received",
+      "feedback_has_image_only": "Image only",
+      "show_reviews": "Show reivews",
+      "rating_high_to_low": "Rating: High to Low",
+      "rating_low_to_high": "Rating: Low to High",
+      "products_you_viewed": "Products you viewed",
+      "color": "Color",
+      "size": "Size"
+    }
+  },
+  "recent_activities": {
+    "title": "EXCLUSIVE FOR 363,688 KIMICLUB MEMBERS",
+    "viewed_products": "Recently Viewed Products",
+    "sub_title": "RECENT ACTIVITIES",
+    "join_now": {
+      "text": "JOIN KIMICLUB NOW"
+    }
+  }
+}

@@ -13,9 +13,11 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { useGetAllProductQuery } from "@/redux/api/product.api";
 import { EllipsisIcon, TagIcon } from "lucide-react";
 import { useCallback, useEffect } from "react";
+import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
 function ProductManagementPage() {
+  const navigate = useNavigate();
   const { data, isError } = useGetAllProductQuery();
 
   const handleWatchDetail = useCallback((id: string) => {
@@ -30,6 +32,10 @@ function ProductManagementPage() {
     if (!isError) return;
     toast.error("Lỗi tải thông tin sản phẩm!");
   }, [isError]);
+
+   useEffect(() => {
+    document.title = "KimiFashion - Quản lý sản phẩm";
+  }, []);
 
   return (
     <main>
@@ -53,12 +59,19 @@ function ProductManagementPage() {
             </Popover>
             <Button variant={"outline"} className={"cursor-pointer max-sm:hidden"}>Nhập</Button>
             <Button variant={"outline"} className={"cursor-pointer max-sm:hidden"}>Xuất</Button>
-            <Button className={"cursor-pointer text-xs sm:text-md max-sm:h-8"}>Thêm Sản phẩm</Button>
+            <Button
+              className={"cursor-pointer text-xs sm:text-md max-sm:h-8"}
+              onClick={() => {
+                navigate("/admin/product/create");
+              }}
+            >Thêm Sản phẩm</Button>
           </div>
         </div>
       </header>
       <section className={"my-5"}>
-        <DataTable columns={productColumns(handleWatchDetail, handleSaveLock)} data={data?.data ?? []} />
+        <DataTable
+          columns={productColumns(handleWatchDetail, handleSaveLock)}
+          data={data?.data ?? []} />
       </section>
     </main>
   )

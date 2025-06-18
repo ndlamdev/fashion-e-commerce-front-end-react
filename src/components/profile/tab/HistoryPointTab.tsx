@@ -1,4 +1,5 @@
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table.tsx";
+import { useEffect } from "react";
 
 const HistoryPointTab = () => {
 	return (
@@ -18,5 +19,9 @@ const HistoryPointTab = () => {
 };
 
 export default function HistoryPoint() {
+ useEffect(() => {
+    document.title = "KimiFashion - Lịch sử điểm";
+  }, []);
+
 	return <HistoryPointTab />;
 }

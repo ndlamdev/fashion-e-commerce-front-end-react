@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 const VoucherWalletTab = () =>{
 	return (
 		<article className={'max-sm:mt-10'}>
@@ -8,5 +10,9 @@ const VoucherWalletTab = () =>{
 	);
 }
 export default function VoucherWallet() {
+ useEffect(() => {
+    document.title = "KimiFashion - Ví voucher";
+  }, []);
+
 	return <VoucherWalletTab />;
 }

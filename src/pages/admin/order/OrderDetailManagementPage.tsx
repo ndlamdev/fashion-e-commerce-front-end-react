@@ -84,6 +84,10 @@ const OrderDetailManagementPage = () => {
     toast.error("Lỗi tải chi tiết đơn hàng")
   }, [isError])
 
+  useEffect(() => {
+    document.title = "KimiFashion - Chi tiết đơn hàng";
+  }, []);
+
   return (
     <main>
       <header>

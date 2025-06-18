@@ -35,7 +35,10 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import { Toaster } from "sonner";
 import store, { useAppSelector } from "./configs/store.config";
 import jwtHelper from "./utils/helper/jwtHelper";
-import CollectionManagementPage from "./pages/admin/collection/ProductManagementPage";
+import CollectionManagementPage from "./pages/admin/collection/CollectionManagementPage";
+import InventoryManagementPage from "./pages/admin/inventory/InventoryManagementPage";
+import MediaManagementPage from "./pages/admin/media/MediaManagementPage";
+import "@/configs/i18n.config.ts";
 
 function App() {
   return (
@@ -96,7 +99,9 @@ function MainRouter() {
               <Route path={"orders"} element={<OrderManagementPage />} />
               <Route path={"orders/:id"} element={<OrderDetailManagementPage />} />
               <Route path={""} element={<DashBoardPage />} />
-              <Route path={"product/collections"} element={<CollectionManagementPage />} />
+              <Route path={"collections"} element={<CollectionManagementPage />} />
+              <Route path={"inventories"} element={<InventoryManagementPage />} />
+              <Route path={"medias"} element={<MediaManagementPage />} />
             </Route>}
             <Route path={"*"} element={<NotFoundPage />} />
           </Routes>

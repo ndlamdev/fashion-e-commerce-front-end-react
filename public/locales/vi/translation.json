@@ -1,0 +1,179 @@
+{
+  "language": {
+    "vi": "Tiếng Việt",
+    "en": "Tiếng Anh",
+    "title": "Ngôn ngữ"
+  },
+  "header": {
+    "product_types": {
+      "male": "Nam",
+      "female": "Nữ",
+      "sport": "Thể thao"
+    },
+    "customer_care_center": "Trung tâm chăm sóc khách hàng",
+    "about": "Về KimiFashion",
+    "blog": "Blog",
+    "admin": "Quản lý cửa hàng",
+    "login": "Đăng nhập",
+    "outstanding": "Nổi bật",
+    "explore": {
+      "men": "Khám phá đồ nam",
+      "women": "Khám phá đồ nữ",
+      "sport": "Khám phá đồ thể thao"
+    },
+    "search": {
+      "placeholder": "Tìm kiếm sản phẩm...",
+      "no_results": "Không tìm thấy kết quả",
+      "error": "Đã xảy ra lỗi khi tìm kiếm",
+      "hint": "Nhập sản phẩm bạn muốn tìm."
+    },
+    "cart": {
+      "view_all": "Xem tất cả",
+      "empty": "Giỏ hàng chưa có gì :( chọn mua đồ bạn nhé"
+    },
+    "freeshipping": "Miễn phí vận chuyển cho đơn hàng trên 1.000.000 VND"
+  },
+  "footer": {
+    "shopping": {
+      "title": "Mua sắm",
+      "shipping": "Giao hàng",
+      "payment": "Thanh toán",
+      "return": "Trả hàng",
+      "store_locator": "Tìm cửa hàng",
+      "magazine": "Magazine"
+    },
+    "company_info": {
+      "title": "Thông tin doanh nghiệp",
+      "careers": "Cơ hội nghề nghiệp tại KimiFashion",
+      "about": "Giới thiệu về KimiFashion",
+      "sustainability": "Thời trang bền vững - KimiFashion",
+      "press": "Báo trí",
+      "investor_relations": "Quan hệ với nhà đầu tư",
+      "corporate_governance": "Quản trị Doanh nghiệp"
+    },
+    "help": {
+      "title": "Trợ giúp",
+      "customer_service": "Dịch vụ khách hàng",
+      "my_account": "Tài khoản của tôi",
+      "terms_conditions": "Các điều khoản & điều kiện",
+      "contact": "Liên hệ",
+      "cookie_info": "Thông tin về cookie",
+      "payment_info": "Thông tin thanh toán",
+      "order_success": "Mua hàng thành công",
+      "cookie_settings": "Cài đặt cookie"
+    },
+    "join_now": {
+      "title": "Tham gia ngay",
+      "text": "Tham gia KimiFashion và tận hưởng ưu đãi 10% cho lần mua hàng tiếp theo!",
+      "read_more": "Đọc thêm"
+    },
+    "social_media": "Mạng xã hội",
+    "copyright": "Nội dung trên trang này được bảo vệ bản quyền và là tài sản của KimiFashion."
+  },
+  "page": {
+    "home": {
+      "title": "KimiFashion- Trang chủ",
+      "description": "Chào mừng bạn đến với KimiFashion - Nơi thời trang và phong cách gặp nhau.",
+      "product_types": {
+        "male": {
+          "title": "Đồ nam",
+          "items": {
+            "shirts": "Áo sơ mi",
+            "tshirts": "Áo thun",
+            "jeans": "Quần jean",
+            "jackets": "Áo khoác",
+            "shoes": "Giày dép",
+            "pants": "Quần dài",
+            "shorts": "Quần short",
+            "boxers": "Quần lót",
+            "accessories": "Phụ kiện"
+          }
+        },
+        "female": {
+          "title": "Đồ nữ",
+          "items": {
+            "bra_&_leggings": "Áo ngực & Quần legging",
+            "sports_top": "Áo thể thao",
+            "sports_pants": "Quần thể thao",
+            "accessories": "Phụ kiện"
+          }
+        }
+      },
+      "collections": {
+        "male": {
+            "title": "Bộ sưu tập đồ nam",
+            "code": "Nhập CM10 Giảm thểm 10% tối đa 100k",
+            "buy_now": "Mua ngay"
+        },
+        "female": {
+            "title": "Bộ sưu tập đồ nữ",
+            "code": "Nhập CM10 Giảm thểm 10% tối đa 100k",
+            "buy_now": "Mua ngay"
+        }
+      },
+      "discover": {
+        "title": "Mặc hằng ngày",
+        "description": "Thoải mái, thanh lịch | Nhập CM10 giảm 10% đơn từ 600",
+        "button": "khám phá ngay",
+        "sub_title": "SẢN PHẨM MẶC HẰNG NGÀY"
+      },
+      "running": {
+        "title": "Đồ chạy bộ",
+        "description": "Co giãn, thoáng khí | Mua combo tiết kiệm đến 30%",
+        "button": "khám phá ngay",
+        "sub_title": "SẢN PHẨM CHẠY BỘ"
+      }
+    },
+    "product_details": {
+        "breadcrumb": {
+          "home": "Trang chủ",
+          "product_details": "Chi tiết sản phẩm"
+        },
+        "share": "Chia sẻ",
+        "free_ship": "Miễn phí vận chuyển",
+        "discount_code": "Mã giảm giá",
+        "no_available_discount_code": "Không còn mã giảm giá nào khả dụng",
+        "to_get_discount": "để nhận ưu đãi",
+        "save_discount_code_success": "Lưu mã giảm giá thành công",
+        "size_guide": "Hướng dẫn chọn kích cỡ",
+        "warning_max_bought": "Số lượng mua vượt mức cho phép (từ {{max}} sản phẩm trở lại)",
+        "be_refunded": "Được hoàn",
+        "coolcash_refund_info": "Đây là số CoolCash ước tính bạn sẽ được hoàn lại khi mua sản phẩm hôm nay, tương ứng với quyền lợi hạng",
+        "new_member": "Thành viên mới",
+        "chat_support": "Chat để KimiFashion tư vấn ngay (8:30 - 22:00)",
+        "add_to_cart": "Thêm vào giỏ hàng",
+        "choose_size": "Chọn kích cỡ",
+        "exchange_policy": "Đổi trả cực dễ chỉ cần số điện thoại",
+        "return_policy": "60 ngày đổi trả vì bất kỳ lý do gì",
+        "hotline_info": "Hotline 0855.354.919 hỗ trợ từ 8h30 - 22h mỗi ngày",
+        "delivery_info": "Đến tận nơi nhận hàng trả, hoàn tiền trong 24h",
+        "product_description": "Mô tả sản phẩm",
+        "read_more": "Xem thêm",
+        "suggested_products": "Gợi ý sản phẩm",
+        "product_reviews": "Đánh giá sản phẩm",
+        "based_on": "Dựa trên",
+        "from_customer": "đánh giá đến từ khách hàng",
+        "search_review_placeholder": "Tìm kiếm đánh giá",
+        "rating_classification": "Phân loại xếp hạng",
+        "rating_classification_description": "Các review đều đến từ khách hàng đã thực sự mua hàng của Coolmate",
+        "all_reviews": "Tất cả đánh giá",
+        "filter_feedback": "Lọc phản hồi",
+        "feedback_received": "Đã phản hồi",
+        "feedback_has_image_only": "Chỉ có hình ảnh",
+        "show_reviews": "Hiển thị đánh giá",
+        "rating_high_to_low": "Đánh giá: Cao đến Thấp",
+        "rating_low_to_high": "Rating: Thấp đến cao",
+        "products_you_viewed": "Sản phẩm bạn đã xem",
+        "color": "Màu sắc",
+        "size": "Kích thước"
+      }
+    },
+  "recent_activities": {
+      "title": "ĐẶC QUYỀN DÀNH CHO 363,688 THÀNH VIÊN KIMICLUB",
+      "viewed_products": "Sản phẩm đã xem gần đây",
+      "sub_title": "HOẠT ĐỘNG GẦN ĐÂY",
+      "join_now": {
+        "text": "GIA NHẬP KIMICLUB NGAY"
+      }
+    }
+}

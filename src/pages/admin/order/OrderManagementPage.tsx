@@ -27,6 +27,10 @@ export default function OrderManagementPage() {
     toast.error("Lỗi hệ thống")
   }, [error])
 
+ useEffect(() => {
+    document.title = "KimiFashion - Đơn hàng";
+  }, []);
+
   return (
     <main>
       <header className={"my-3"}>

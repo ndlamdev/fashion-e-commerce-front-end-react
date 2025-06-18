@@ -11,9 +11,7 @@ import {
 import { formatDateFromArray } from "@/utils/helper/format-data.ts";
 import { ColumnDef } from "@tanstack/react-table";
 import { LockIcon, LockOpenIcon, MoreHorizontal } from "lucide-react";
-import { ProductColumnProp } from "../props/productColumn.prop";
 import { CollectionColumnProp } from "../props/collcetionColumn.prop";
-
 
 export const collectionColumns = (
   watchDetail: (id: string) => void,
@@ -57,7 +55,7 @@ export const collectionColumns = (
       id: "actions",
       cell: ({ row }) => {
         //TODO: implement some action
-        const data = row.original as ProductColumnProp;
+        const data = row.original as CollectionColumnProp;
 
         return (
           <DropdownMenu>

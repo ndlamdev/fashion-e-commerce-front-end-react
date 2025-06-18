@@ -23,6 +23,8 @@ import { collectionApi } from "@/services/collection.service.ts";
 import { adminOrderApi, orderApi } from "@/redux/api/order.api.ts";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 import { adminCollectionApi } from "@/redux/api/collection.api";
+import { adminInventoryApi } from "@/redux/api/inventory.api";
+import { adminMediaApi } from "@/redux/api/media.api";
 
 const store = configureStore({
 	reducer: {
@@ -47,6 +49,8 @@ const store = configureStore({
 		[adminAddressApi.reducerPath]: adminAddressApi.reducer,
 		[adminProductApi.reducerPath]: adminProductApi.reducer,
 		[adminCollectionApi.reducerPath]: adminCollectionApi.reducer,
+		[adminInventoryApi.reducerPath]: adminInventoryApi.reducer,
+		[adminMediaApi.reducerPath]: adminMediaApi.reducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware()
@@ -64,7 +68,8 @@ const store = configureStore({
 			.concat(adminAddressApi.middleware)
 			.concat(adminProductApi.middleware)
 			.concat(adminCollectionApi.middleware)
-      ,
+			.concat(adminInventoryApi.middleware)
+			.concat(adminMediaApi.middleware),
 });
 
 // Get the type of our slice variable

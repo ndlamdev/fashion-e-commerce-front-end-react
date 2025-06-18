@@ -37,6 +37,10 @@ export default function CustomerDetailManagementPage() {
     navigate("/admin")
   }, [id, navigate])
 
+   useEffect(() => {
+    document.title = "KimiFashion - Quản lý khách hàng";
+  }, []);
+
   const customer = CustomerManagementData;
   const data = HoverCardValues[hoverCard];
   const { data: dataOrders, error: errorOrders } = useAdminGetOrderHistoriesByUseIdQuery(parseInt(id ?? "0"))

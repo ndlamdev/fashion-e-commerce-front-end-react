@@ -20,7 +20,7 @@ function PriceManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, H
 		<div {...props}>
 			<div className={"grid grid-cols-3 grid-rows-1 gap-3"}>
 				<label className={"text-sm"}>
-					<span>Price</span>
+          <span>Giá</span>
 					<div className={`mt-1 flex items-center gap-1 rounded-md px-3 py-2 text-sm ${createProductPageContext.borderStyle}`}>
 						<span className={"text-decoration-underline"}>₫</span>
 						<input
@@ -35,7 +35,7 @@ function PriceManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, H
 					</div>
 				</label>
 				<label className={"text-sm"}>
-					<span>Compare-at price</span>
+          <span>Giá so sánh</span>
 					<div className={`mt-1 flex items-center gap-1 rounded-md px-3 py-2 text-sm ${createProductPageContext.borderStyle}`}>
 						<span className={"text-decoration-underline"}>₫</span>
 						<input
@@ -53,7 +53,7 @@ function PriceManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, H
 			<Separator className={"my-5"} />
 			<div className={"grid grid-cols-3 grid-rows-1 gap-3"}>
 				<label className={"text-sm"}>
-					<span>Cost per item</span>
+          <span>Giá gốc trên mỗi mẫu</span>
 					<div className={`mt-1 flex items-center gap-1 rounded-md px-3 py-2 text-sm ${createProductPageContext.borderStyle}`}>
 						<span className={"text-decoration-underline"}>₫</span>
 						<input
@@ -69,7 +69,7 @@ function PriceManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, H
 				</label>
 				<div>
 					<label className={"text-sm"}>
-						<span>Profit</span>
+            <span>Lợi nhuận</span>
 						<div className={`mt-1 flex items-center gap-1 rounded-md px-3 py-2 text-sm ${createProductPageContext.borderStyle}`}>
 							<span className={"text-decoration-underline"}>₫</span>
 							<input
@@ -85,7 +85,7 @@ function PriceManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, H
 					</label>
 				</div>
 				<label className={"text-sm"}>
-					<span>Margin</span>
+          <span>Lề</span>
 					<div className={`mt-1 flex items-center gap-1 rounded-md px-3 py-2 text-sm ${createProductPageContext.borderStyle}`}>
 						<span className={"text-decoration-underline"}>₫</span>
 						<input

@@ -5,35 +5,38 @@
  * Create at: 9:46AM - 05/03/2025
  * User: lam-nguyen
  **/
-import { SolarHamburgerMenuLinear } from "@/assets/images/icons/SolarHamburgerMenuLinear.tsx";
+import { FaSolidUserAlt } from "@/assets/images/icons/FaSolidUserAlt.tsx";
+import logo from "@/assets/images/icons/logo.jpg";
 import { LucideSearch } from "@/assets/images/icons/LucideSearch.tsx";
+import { SolarArrowRightLinear } from "@/assets/images/icons/SolarArrowRightLinear";
+import { SolarHamburgerMenuLinear } from "@/assets/images/icons/SolarHamburgerMenuLinear.tsx";
 import { SolarHeartBold } from "@/assets/images/icons/SolarHeartBold.tsx";
 import ShoppingBag from "@/components/cart/ShoppingBag.tsx";
-import { AnimatePresence, motion } from "motion/react";
-import { SolarArrowRightLinear } from "@/assets/images/icons/SolarArrowRightLinear";
-import useScrolled from "@/utils/helper/use-scrolled.ts";
-import { memo, useCallback, useMemo, useState } from "react";
-import { Separator } from "@/components/ui/separator.tsx";
 import ShoppingBagItem from "@/components/cart/ShoppingBagItem.tsx";
-import dataShoppingBagItems from "@/assets/data/shopping-bag-items.ts";
-import { useNavigate } from "react-router";
 import HeaderProps from "@/components/header/props/header-prop.ts";
-import { FaSolidUserAlt } from "@/assets/images/icons/FaSolidUserAlt.tsx";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar.tsx";
-import { RootState } from "@/configs/store.config.ts";
-import { useDispatch, useSelector } from "react-redux";
 import Searcher from "@/components/header/Searcher.tsx";
+import QuickSearchProduct from "@/components/product/QuickSearchProduct.tsx";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar.tsx";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card.tsx";
+import { Separator } from "@/components/ui/separator.tsx";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
+import { Languages } from "@/configs/i18n.config";
+import { RootState } from "@/configs/store.config.ts";
+import { useGetCartQuery } from "@/redux/api/cart.api.ts";
+import { useQuickSearchQuery } from "@/redux/api/product.api";
 import { showDialog } from "@/redux/slice/dialog.slice.ts";
 import { useGetCollectionsQuery } from "@/services/collection.service.ts";
 import { CollectionEnum, CollectionValue } from "@/utils/enums/collection.enum.ts";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card.tsx";
-import { Skeleton } from "@/components/ui/skeleton.tsx";
-import QuickSearchProduct from "@/components/product/QuickSearchProduct.tsx";
-import { debounce } from "lodash";
-import { useQuickSearchQuery } from "@/redux/api/product.api";
-import { useGetCartQuery } from "@/redux/api/cart.api.ts";
-import logo from "@/assets/images/icons/logo.jpg";
 import jwtHelper from "@/utils/helper/jwtHelper";
+import useScrolled from "@/utils/helper/use-scrolled.ts";
+import { debounce } from "lodash";
+import { AnimatePresence, motion } from "motion/react";
+import { memo, useCallback, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import LocalStorage from "@/utils/helper/LocalStorage";
 
 function Header({ showMenu }: HeaderProps) {
   const [, scrollY] = useScrolled();
@@ -45,6 +48,7 @@ function Header({ showMenu }: HeaderProps) {
   const { data, isLoading } = useGetCollectionsQuery();
   const [type, setType] = useState<CollectionEnum>(CollectionEnum.MALE);
   const { data: cartData } = useGetCartQuery();
+  const { t, i18n } = useTranslation();
 
   const [title, setTitle] = useState<string>();
   const { data: dataQuickSearch, isLoading: isLoadingQuickSearch, isError: isErrorQuickSearch } = useQuickSearchQuery(title, { skip: !title });
@@ -78,23 +82,41 @@ function Header({ showMenu }: HeaderProps) {
       <motion.header className={"sticky top-0 z-2 bg-white"} initial={{ top: 0 }} animate={{ top: scrollY >= 100 ? -40 : 0 }} transition={{ duration: 0.75 }}>
         <div className={`relative flex w-full items-center justify-center gap-3 bg-gray-500 text-gray-100`}>
           <div className={"hidden items-center justify-center lg:flex"}>
-            <div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>Về KimiFashion</div>
+            <div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>{t("header.about")}</div>
             <span className={"text-gray-400"}>|</span>
-            <div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>Blog</div>
+            <div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>{t("header.blog")}</div>
             <span className={"text-gray-400"}>|</span>
-            <div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>Trung tâm CSKH</div>
+            <div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>{t("header.customer_care_center")}</div>
             {isRoleAdmin && <>
               <span className={"text-gray-400"}>|</span>
-              <div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"} onClick={() => navigate("/admin")}>Quản lý cửa hàng</div>
+              <div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"} onClick={() => navigate("/admin")}>{t("header.admin")}</div>
             </>}
             {(!access_token || !user) && (
               <>
                 <span className={"text-gray-400"}>|</span>
                 <div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"} onClick={() => dispatch(showDialog("login"))}>
-                  Đăng nhập
+                  {t("header.login")}
                 </div>
               </>
             )}
+            <span className={"text-gray-400"}>|</span>
+            <div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>
+              <Select defaultValue={LocalStorage.getValue("LANGUAGE") ?? "vi"} onValueChange={(value) => {
+                i18n.changeLanguage(value);
+                LocalStorage.setValue("LANGUAGE", value);
+              }}>
+                <SelectTrigger className='h-5 px-1'>
+                  <SelectValue placeholder={t("language.title")} />
+                </SelectTrigger>
+                <SelectContent className={"z-70"}>
+                  {Object.keys(Languages).map((lang) => (
+                    <SelectItem key={lang} value={lang}>
+                      {t(`language.${lang}`)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
         <div className={"align-items-center grid grid-cols-7 grid-rows-1 px-4 py-1 lg:mx-8"}>
@@ -155,7 +177,7 @@ function Header({ showMenu }: HeaderProps) {
                       })
                     }
                     className={"cursor-pointer text-lg font-bold uppercase hover:border-b-2"}>
-                    {CollectionValue[collection]}
+                    {t(`header.product_types.${collection.toLowerCase()}`)}
                   </HoverCardTrigger>
                 ))}
                 <HoverCardContent
@@ -229,9 +251,9 @@ function Header({ showMenu }: HeaderProps) {
                   {cartData?.data.cart_items.length ? (
                     <div className={"h-full overflow-auto"}>
                       <div className={"flex justify-between"}>
-                        <p>{dataShoppingBagItems.length} sản phẩm</p>
+                        <p>{cartData?.data.cart_items.length} sản phẩm</p>
                         <a href={"/cart"} className={"text-blue-500"}>
-                          Xem tất cả
+                          {t("header.cart.view_all")}
                         </a>
                       </div>
                       <Separator className={"my-2"} />
@@ -242,7 +264,7 @@ function Header({ showMenu }: HeaderProps) {
                       </ul>
                     </div>
                   ) : (
-                    <p className={"text-center"}>Giỏ hàng chưa có gì :(, chọn mua đồ bạn nhé</p>
+                    <p className={"text-center"}>{t("header.cart.empty")}</p>
                   )}
                 </div>
               </div>
@@ -263,7 +285,7 @@ function Header({ showMenu }: HeaderProps) {
               className='w-[400px] overflow-hidden text-nowrap text-white'
               animate={{ x: ["100%", "-100%"] }}
               transition={{ repeat: 2, duration: 10, ease: "linear" }}>
-              Freeship mọi đơn hàng trong tháng 3 - duy nhất tại website
+              {t("freeshipping")}
             </motion.div>
           </div>
           <div className={"text-start"}>
@@ -277,9 +299,8 @@ function Header({ showMenu }: HeaderProps) {
             "border-gray absolute top-[115px] left-0 z-3 flex max-h-screen w-full flex-col gap-y-5 overflow-x-hidden overflow-y-auto border-t-5 border-b-5 border-black bg-white p-5 sm:max-h-100"
           }>
           {isLoadingQuickSearch && <Skeleton className={"min-h-5 w-full bg-blue-500"} />}
-          {isErrorQuickSearch && <p className={"text-red-500 normal-case"}>lỗi tìm thấy sản phẩm</p>}
           {!title || !title.length || !dataQuickSearch ? (
-            <div className={"min-h-5 w-full text-center font-bold"}>Nhập sản phẩm bạn muốn tìm.</div>
+            <div className={`min-h-5 w-full text-center font-bold ${isErrorQuickSearch ? "text-red-500" : ""}`}>{isErrorQuickSearch ? t("header.search.error") : t("header.search.hint")}</div>
           ) : (
             dataQuickSearch &&
             (dataQuickSearch.data.length ? (
@@ -296,7 +317,7 @@ function Header({ showMenu }: HeaderProps) {
                 />
               ))
             ) : (
-              <div className={"min-h-5 w-full text-center font-bold"}>Không tìm thấy sản phẩm.</div>
+              <div className={"min-h-5 w-full text-center font-bold"}>{t("header.search.no_results")}</div>
             ))
           )}
         </div>

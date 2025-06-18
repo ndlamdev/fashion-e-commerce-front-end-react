@@ -26,6 +26,10 @@ export function CustomerManagementPage() {
     toast.error("Lỗi tải thông tin khách hàng!")
   }, [isError])
 
+  useEffect(() => {
+    document.title = "KimiFashion - Quản lý khách hàng";
+  }, []);
+
   return (
     <main>
       <header className={""}>

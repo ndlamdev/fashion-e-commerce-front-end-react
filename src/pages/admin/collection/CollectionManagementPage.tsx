@@ -31,6 +31,10 @@ function CollectionManagementPage() {
     toast.error("Lỗi tải thông tin danh mục!");
   }, [isError]);
 
+  useEffect(() => {
+    document.title = "KimiFashion - Quản lý danh mục";
+  }, []);
+
 
   return (
     <main>

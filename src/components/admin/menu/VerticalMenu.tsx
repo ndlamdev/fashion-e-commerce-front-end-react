@@ -1,7 +1,7 @@
 import AccordionCustom from "@/components/accordion/AccordionCustom.tsx";
 import { TabNavProps } from "@/components/profile/props/tabNav.props.ts";
 import { TabNav } from "@/components/profile/TabNav.tsx";
-import { BadgePercent, CornerDownRight, LayoutDashboardIcon, LucideShoppingBag, TagIcon, UserRoundIcon } from "lucide-react";
+import { BadgePercent, CornerDownRight, FolderIcon, LayoutDashboardIcon, LucideShoppingBag, TagIcon, UserRoundIcon } from "lucide-react";
 import { useLocation } from "react-router";
 
 export function VerticalMenu() {
@@ -67,11 +67,16 @@ const MenuValues: (TabNavProps & { subMenu?: TabNavProps[] })[] = [
     to: "/admin/products",
     iconLeft: <TagIcon />,
     subMenu: [
-      { title: "Danh mục", to: "/admin/product/collections" },
-      { title: "Tồn kho", to: "/admin/products/inventories" },
+      { title: "Danh mục", to: "/admin/collections" },
+      { title: "Tồn kho", to: "/admin/inventories" },
       { title: "Đơn mua hàng", to: "/admin/products/purchase-order" },
     ],
   },
-  { title: "Khách hàng", to: "/admin/customers", iconLeft: <UserRoundIcon />, subMenu: [{ title: "Segments", to: "/admin/customers/segments" }] },
+  {
+    title: "Đa phương tiện",
+    to: "/admin/medias",
+    iconLeft: <FolderIcon />
+  },
+  { title: "Khách hàng", to: "/admin/customers", iconLeft: <UserRoundIcon />, subMenu: [{ title: "Mảnh", to: "/admin/customers/segments" }] },
   { title: "Khuyến mãi", to: "/admin/discount", iconLeft: <BadgePercent /> },
 ];

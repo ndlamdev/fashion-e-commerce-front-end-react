@@ -23,6 +23,10 @@ function OrderResultPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [navigate, success]);
 
+  useEffect(() => {
+    document.title = "KimiFashion - Kết quả đặt hàng";
+  }, []);
+
 
   return (
     <div className='flex items-center justify-center bg-gray-100 px-4 py-10'>

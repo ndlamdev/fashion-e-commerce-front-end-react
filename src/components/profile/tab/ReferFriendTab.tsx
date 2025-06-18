@@ -2,7 +2,7 @@ import { toast } from "sonner";
 import { Copy } from "lucide-react";
 import { Input } from "@/components/ui/input.tsx";
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table.tsx";
-import { memo } from "react";
+import { memo, useEffect } from "react";
 
 const ReferFriendTab = memo(() => {
 	// handle save text to clipboard
@@ -127,5 +127,9 @@ const ReferFriendTab = memo(() => {
 });
 
 export default function ReferFriend() {
+ useEffect(() => {
+    document.title = "KimiFashion - Giới thiệu bạn bè";
+  }, []);
+
 	return <ReferFriendTab />;
 }

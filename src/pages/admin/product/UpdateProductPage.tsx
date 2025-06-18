@@ -11,13 +11,13 @@ import { useEffect } from "react";
 import CreateProductPage from "@/pages/admin/product/CreateProductPage.tsx";
 
 function UpdateProductPage() {
-	const { id } = useParams();
+  const { id } = useParams();
 
-	useEffect(() => {
-		console.log(id);
-	}, [id]);
+  useEffect(() => {
+    console.log(id);
+  }, [id]);
 
-	return <CreateProductPage titlePage={"Update product"} />;
+  return <CreateProductPage titlePage={"Cập nhật thông tin sản phẩm"} />;
 }
 
 export default UpdateProductPage;
