@@ -35,11 +35,11 @@ function ProductManagementPage() {
   useEffect(() => {
     if (!isError) return;
     toast.error(t('error_loading_product'));
-  }, [isError]);
+  }, [isError, t]);
 
    useEffect(() => {
     document.title = "KimiFashion - "+t('management');
-  }, []);
+  }, [t]);
 
   return (
     <main>

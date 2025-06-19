@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { adminInventoryApi, useUpdateInventoryMutation } from "@/redux/api/inventory.api";
 import { ArrowRight } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 
@@ -20,6 +21,9 @@ export default function DialogUpdateQuantity({ variantId, oldQuantity, onHidden 
   const dispatch = useDispatch()
   const [updateInventory] = useUpdateInventoryMutation();
   const [newQuantity, setNewQuantity] = useState<number>(0);
+  const { t } = useTranslation(undefined, {
+    keyPrefix: "page.admin.inventory.dialog.update_status"
+  });
 
 
   const onClickCancel = useCallback(() => { setShowDialog("confirm-cancel") }, [setShowDialog])
@@ -34,15 +38,15 @@ export default function DialogUpdateQuantity({ variantId, oldQuantity, onHidden 
     updateInventory({ variantId: variantId, quantity: newQuantity })
       .unwrap()
       .then(() => {
-        toast.success("Cập nhật số lượng biến thể thành công.")
-        onHidden?.()
+        toast.success(t("update_success"));
+        onHidden?.();
         setShowDialog("none");
         dispatch(adminInventoryApi.util.invalidateTags(["inventory"]));
       }).catch((error) => {
         console.error(error)
-        toast.error("Cập nhật số lượng biến thể thất bại.")
+        toast.error(t("update_failure"));
       })
-  }, [variantId, updateInventory, newQuantity, onHidden, dispatch])
+  }, [variantId, updateInventory, newQuantity, onHidden, dispatch, t])
 
   useEffect(() => {
     setShowDialog(variantId ? "dialog" : "none");
@@ -56,7 +60,7 @@ export default function DialogUpdateQuantity({ variantId, oldQuantity, onHidden 
           classIcon={"bg-black p-4 border-2 border-gray-200 text-white !rounded-full top-[-20px] right-[-20px] !hidden"}
           onClosed={onClickCancel}>
           <DialogHeader>
-            <DialogTitle className={"text-4xl"}>Cập nhật số lượng biến thể</DialogTitle>
+            <DialogTitle className={"text-4xl"}>{t('title')}</DialogTitle>
           </DialogHeader>
           <DialogDescription />
           <div className={"flex items-center gap-2"}>
@@ -66,18 +70,18 @@ export default function DialogUpdateQuantity({ variantId, oldQuantity, onHidden 
           </div>
           <DialogFooter className={"flex gap-2"}>
             <ButtonAuthentication className={"border-1 border-black bg-white !text-black cursor-pointer"} onClick={onClickCancel}>
-              Hủy
+              {t('cancel')}
             </ButtonAuthentication>
             <ButtonAuthentication className={"bg-green-700 hover:bg-green-200 cursor-pointer"} onClick={() => {
               setShowDialog("confirm-submit");
             }}>
-              Xác nhận
+              {t('confirm')}
             </ButtonAuthentication>
           </DialogFooter>
         </DialogContent>
       </Dialog>
       <DialogConfirm
-        title={'Bạn có chắc muốn thoát khỏi bước cập nhật lố lượng biến thể không?'}
+        title={t('confirm_cancel')}
         open={showDialog === "confirm-cancel"}
         onOpenChange={(value) => {
           if (value) return;
@@ -93,7 +97,7 @@ export default function DialogUpdateQuantity({ variantId, oldQuantity, onHidden 
         }}
       />
       <DialogConfirm
-        title={'Bạn có chắc cập nhật lố lượng biến thể không?'}
+        title={t('confirm_submit')}
         open={showDialog === "confirm-submit"}
         onClickCancel={() => {
           setShowDialog("dialog")

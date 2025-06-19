@@ -24,6 +24,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button.tsx";
 import { columnNameConcealmentRecord } from "@/utils/enums/admin/columnNameConcealment.record.ts";
+import { translated } from "@/utils/helper/locale";
+
+const tDataTable = (key: string, option?: Record<string, any>) => translated(key, "data_table", option);
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -59,7 +62,7 @@ function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValu
     <div className="my-4 rounded-md text-neutral-600">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Tìm kiếm"
+          placeholder={tDataTable("search")}
           value={globalFilter ?? ""}
           onChange={(event) => setGlobalFilter(event.target.value)}
           className="max-w-sm"
@@ -67,7 +70,7 @@ function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValu
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              Cột
+              {tDataTable("column")}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -119,7 +122,7 @@ function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValu
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
+                {tDataTable("no_data")}
               </TableCell>
             </TableRow>
           )}

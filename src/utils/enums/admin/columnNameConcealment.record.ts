@@ -5,8 +5,11 @@ import { CustomerColumnProp } from "../../../components/dataTable/props/customer
 import { OrderColumnProp } from "../../../components/dataTable/props/orderColumn.prop";
 import { ProductVariantsType } from "../../../types/product/productVariants.type";
 
-export const columnNameConcealmentRecord: Record<keyof (CustomerColumnProp |  OrderColumnProp |  Pick<ProductVariantsType, 'quantity' | 'regular_price'>) | string, OrderSortEnum | CustomerSortEnum | ProductSortEnum> = {
-	 name: CustomerSortEnum.CUSTOMER_NAME,
+export const columnNameConcealmentRecord: Record<
+	keyof (CustomerColumnProp | OrderColumnProp | Pick<ProductVariantsType, "quantity" | "regular_price">) | string,
+	OrderSortEnum | CustomerSortEnum | ProductSortEnum
+> = {
+	name: CustomerSortEnum.CUSTOMER_NAME,
 	location: CustomerSortEnum.LOCATION,
 	no_orders: CustomerSortEnum.NO_ORDERS,
 	amount_spent: CustomerSortEnum.AMOUNT_SPENT,
@@ -18,5 +21,5 @@ export const columnNameConcealmentRecord: Record<keyof (CustomerColumnProp |  Or
 	amount: OrderSortEnum.TOTAL_PRICE,
 	date: OrderSortEnum.DATE,
 	quantity: ProductSortEnum.QUANTITY,
-	regular_price: ProductSortEnum.PRICE
-}
+	regular_price: ProductSortEnum.PRICE,
+};

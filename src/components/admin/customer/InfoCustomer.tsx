@@ -30,7 +30,7 @@ const InfoCustomer: FC<InfoCustomerProp & {className?: string}> = memo((props) =
       console.error(err);
       toast.info(t('copy_mail_failure'))
     }
-  }, [props.email])
+  }, [props.email, t])
 
   return (
     <>

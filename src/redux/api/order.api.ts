@@ -68,6 +68,11 @@ export const adminOrderApi = createApi({
 				url: ``,
 			}),
 		}),
+		adminOrderAbandonedCheckoutHistories: build.query<ApiResponse<HistoryOrderType[]>, void>({
+			query: () => ({
+				url: `/abandoned-checkout`,
+			}),
+		}),
 		adminGetOrderHistoriesByUserId: build.query<ApiResponse<HistoryOrderType[]>, number>({
 			query: (userId: number) => ({
 				url: `/user/${userId}/history`,
@@ -77,7 +82,7 @@ export const adminOrderApi = createApi({
 			query: (orderId: number) => ({
 				url: `/order-detail/${orderId}`,
 			}),
-      providesTags: ["order_detail"],
+			providesTags: ["order_detail"],
 		}),
 		adminUpdateOrderHistoriesByOrderId: build.mutation<ApiResponse<void>, { orderId: number; data: { status: OrderStatusEnum; note: string } }>({
 			query: ({ orderId, data }) => ({
@@ -98,4 +103,11 @@ export const adminOrderApi = createApi({
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
 export const { useCreateOrderMutation, useCancelOrderMutation, useHistoryOrderQuery } = orderApi;
-export const { useAdminOrderHistoriesQuery, useAdminGetOrderHistoriesByUserIdQuery, useAdminGetOrderDetailQuery, useAdminUpdateOrderHistoriesByOrderIdMutation, useAdminDeleteOrderHistoriesByOrderIdMutation } = adminOrderApi;
+export const {
+	useAdminOrderHistoriesQuery,
+	useAdminOrderAbandonedCheckoutHistoriesQuery,
+	useAdminGetOrderHistoriesByUserIdQuery,
+	useAdminGetOrderDetailQuery,
+	useAdminUpdateOrderHistoriesByOrderIdMutation,
+	useAdminDeleteOrderHistoriesByOrderIdMutation,
+} = adminOrderApi;

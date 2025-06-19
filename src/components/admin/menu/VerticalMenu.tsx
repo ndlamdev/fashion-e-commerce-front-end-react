@@ -2,10 +2,49 @@ import AccordionCustom from "@/components/accordion/AccordionCustom.tsx";
 import { TabNavProps } from "@/components/profile/props/tabNav.props.ts";
 import { TabNav } from "@/components/profile/TabNav.tsx";
 import { BadgePercent, CornerDownRight, FolderIcon, LayoutDashboardIcon, LucideShoppingBag, TagIcon, UserRoundIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router";
+
+
+
 
 export function VerticalMenu() {
   const location = useLocation();
+  const { t } = useTranslation(undefined, { keyPrefix: "page.admin.vertical_menu" });
+
+  const MenuValues: (TabNavProps & { subMenu?: TabNavProps[] })[] = [
+    { title: t('dashboard'), to: "/admin", iconLeft: <LayoutDashboardIcon /> },
+    {
+      title: t('orders'),
+      to: "/admin/orders",
+      iconLeft: <LucideShoppingBag />,
+      subMenu: [
+        { title: t('drafts'), to: "/admin/orders/drafts" },
+        { title: t('abandoned_checkouts'), to: "/admin/orders/abandoned-checkouts" },
+      ],
+    },
+    {
+      title: t('products'),
+      to: "/admin/products",
+      iconLeft: <TagIcon />,
+      subMenu: [
+        { title: t('categories'), to: "/admin/collections" },
+        { title: t('inventories'), to: "/admin/inventories" },
+        { title: t('purchase_orders'), to: "/admin/products/purchase-order" },
+      ],
+    },
+    {
+      title: t('media'),
+      to: "/admin/medias",
+      iconLeft: <FolderIcon />
+    },
+    {
+      title: t('customers'), to: "/admin/customers", iconLeft: <UserRoundIcon />, subMenu: [
+        { title: t('segments'), to: "/admin/customers/segments" }
+      ]
+    },
+    { title: t('discounts'), to: "/admin/discount", iconLeft: <BadgePercent /> },
+  ];
 
   return (
     <nav className={"bg-neutral-200 p-3"}>
@@ -50,33 +89,3 @@ export function VerticalMenu() {
     </nav>
   );
 }
-
-const MenuValues: (TabNavProps & { subMenu?: TabNavProps[] })[] = [
-  { title: "Dashboard", to: "/admin", iconLeft: <LayoutDashboardIcon /> },
-  {
-    title: "Đơn hàng",
-    to: "/admin/orders",
-    iconLeft: <LucideShoppingBag />,
-    subMenu: [
-      { title: "Bản nháp", to: "/admin/orders/drafts" },
-      { title: "Chưa thanh toán", to: "/admin/orders/abandoned-checkouts" },
-    ],
-  },
-  {
-    title: "Sản phẩm",
-    to: "/admin/products",
-    iconLeft: <TagIcon />,
-    subMenu: [
-      { title: "Danh mục", to: "/admin/collections" },
-      { title: "Tồn kho", to: "/admin/inventories" },
-      { title: "Đơn mua hàng", to: "/admin/products/purchase-order" },
-    ],
-  },
-  {
-    title: "Đa phương tiện",
-    to: "/admin/medias",
-    iconLeft: <FolderIcon />
-  },
-  { title: "Khách hàng", to: "/admin/customers", iconLeft: <UserRoundIcon />, subMenu: [{ title: "Mảnh", to: "/admin/customers/segments" }] },
-  { title: "Khuyến mãi", to: "/admin/discount", iconLeft: <BadgePercent /> },
-];

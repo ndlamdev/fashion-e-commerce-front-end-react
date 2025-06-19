@@ -28,12 +28,12 @@ import { useTranslation } from "react-i18next";
 import { translated } from "@/utils/helper/locale.ts";
 
 export default function DashBoardPage() {
-	const { t } = useTranslation(undefined, {
-		keyPrefix: "page.admin.charts"
-	});
+  const { t } = useTranslation(undefined, {
+    keyPrefix: "page.admin.charts"
+  });
   useEffect(() => {
     document.title = "KimiFashion - " + t('management');
-  }, []);
+  }, [t]);
 
   return (
     <main className={'text-sm sm:text-base'}>
@@ -65,7 +65,7 @@ export default function DashBoardPage() {
         </Select>
         <Badge variant={"default"} className={""}>{t('today')}</Badge>
       </section>
-      <section className={"flex flex-wrap items-center justify-between xl:space-x-2 max-xl:space-y-2 my-4 gap-y-5"}>
+      <section className={"flex flex-wrap items-center justify-between my-4 gap-y-5"}>
         {Object.values(metricsValues).map((metrics, index) => (
           <Metrics className={"w-full sm:w-72 lg:w-95 xl:w-60"} key={index} {...metrics} />
         ))}

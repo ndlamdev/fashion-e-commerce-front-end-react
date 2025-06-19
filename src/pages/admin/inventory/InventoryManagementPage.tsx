@@ -58,12 +58,12 @@ function InventoryManagementPage() {
                 </Button>
               </PopoverTrigger>
               <PopoverContent className={"w-auto text-center -translate-1/14 translate-y-2 p-2 text-sm"}>
-                <p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>{t('Nhập')}</p>
-                <p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>{t('Xuất')}</p>
+                <p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>{t('import')}</p>
+                <p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>{t('export')}</p>
               </PopoverContent>
             </Popover>
-            <Button variant={"outline"} className={"cursor-pointer max-sm:hidden"}>{t('Nhập')}</Button>
-            <Button variant={"outline"} className={"cursor-pointer max-sm:hidden"}>{t('Xuất')}</Button>
+            <Button variant={"outline"} className={"cursor-pointer max-sm:hidden"}>{t('import')}</Button>
+            <Button variant={"outline"} className={"cursor-pointer max-sm:hidden"}>{t('export')}</Button>
             <Button className={"cursor-pointer text-xs sm:text-md max-sm:h-8"}>{t('add')}</Button>
           </div>
         </div>

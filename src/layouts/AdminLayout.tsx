@@ -8,9 +8,13 @@
 
 import { VerticalMenu } from "@/components/admin/menu/VerticalMenu.tsx";
 import DialogConfirm from "@/components/dialog/DialogConfirm";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Languages } from "@/configs/i18n.config";
 import { cartApi } from "@/redux/api/cart.api";
 import authenticationService from "@/services/authentication.service";
+import LocalStorage from "@/utils/helper/LocalStorage";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { Outlet, useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -19,6 +23,7 @@ function AdminLayout() {
   const navigate = useNavigate();
   const dispatch = useDispatch()
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const { t, i18n } = useTranslation();
 
 
   const handleLogout = () => {
@@ -41,18 +46,36 @@ function AdminLayout() {
       <div className={"flex h-[100vh] flex-col bg-black"}>
         <div className={"flex h-10 items-center justify-center text-white"}>
           <div className={"hidden items-center justify-center lg:flex"}>
-            <div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>Về KimiFashion</div>
+            <div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>{t("header.about")}</div>
             <span className={"text-gray-400"}>|</span>
-            <div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>Blog</div>
+            <div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>{t("header.blog")}</div>
             <span className={"text-gray-400"}>|</span>
-            <div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>Trung tâm CSKH</div>
+            <div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>{t("header.customer_care_center")}</div>
             <span className={"text-gray-400"}>|</span>
             <div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"} onClick={() => navigate("/")}>
-              Quay về trang chủ
+              {t("header.return_home")}
             </div>
             <span className={"text-gray-400"}>|</span>
             <div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"} onClick={() => setOpenDialog(true)}>
-              Đăng Xuất
+              {t("header.logout")}
+            </div>
+            <div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>
+              <Select defaultValue={LocalStorage.getValue("LANGUAGE") ?? "vi"} onValueChange={(value) => {
+                i18n.changeLanguage(value);
+                LocalStorage.setValue("LANGUAGE", value);
+                window.location.reload()
+              }}>
+                <SelectTrigger className='h-5 px-1'>
+                  <SelectValue placeholder={t("language.title")} />
+                </SelectTrigger>
+                <SelectContent className={"z-70"}>
+                  {Object.keys(Languages).map((lang) => (
+                    <SelectItem key={lang} value={lang}>
+                      {t(`language.${lang}`)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </div>
@@ -66,6 +89,7 @@ function AdminLayout() {
         </div>
       </div>
       <DialogConfirm
+        title={t("header.dialog.confirm_logout")}
         open={openDialog}
         onClickCancel={() => {
           setOpenDialog(false);

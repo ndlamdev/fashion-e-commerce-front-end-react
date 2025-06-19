@@ -43,7 +43,7 @@ export const inventoryColumns = (
     {
       accessorKey: "options",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={ tInventoryColumns('option')} />
+        <DataTableColumnHeader column={column} title={tInventoryColumns('option')} />
       ),
       cell: ({ row }) => {
         const data = row.original as InventoryColumnProp;
@@ -54,25 +54,25 @@ export const inventoryColumns = (
     {
       accessorKey: "regular_price",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={ tInventoryColumns('price')} />
+        <DataTableColumnHeader column={column} title={tInventoryColumns('price')} />
       ),
     },
     {
       accessorKey: "compare_price",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={ tInventoryColumns('compare_price')}/>
+        <DataTableColumnHeader column={column} title={tInventoryColumns('compare_price')} />
       ),
     },
     {
       accessorKey: "quantity",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={ tInventoryColumns('quality')} />
+        <DataTableColumnHeader column={column} title={tInventoryColumns('quality')} />
       ),
     },
     {
       accessorKey: "create_at",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={ tInventoryColumns('create_at')} />
+        <DataTableColumnHeader column={column} title={tInventoryColumns('create_at')} />
       ),
       cell: ({ row }) => (
         <div className="font-bold">
@@ -94,20 +94,20 @@ export const inventoryColumns = (
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>{ tInventoryColumns('create_at')}</DropdownMenuLabel>
+              <DropdownMenuLabel>{tInventoryColumns('create_at')}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem className={"cursor-pointer"}
                 onClick={() => watchDetail(data.id)}>
-								{ tInventoryColumns('watch_detail')}
+                {tInventoryColumns('watch_detail')}
               </DropdownMenuItem>
               <DropdownMenuItem className={"cursor-pointer"}
                 onClick={() => onUpdateQuantity(data.id, data.quantity)}>
-                Cập nhật số lượng
+                {tInventoryColumns('update_quantity')}
               </DropdownMenuItem>
               <DropdownMenuItem
                 className={"cursor-pointer text-red-500 flex justify-between"}
                 onClick={() => saveLock(data.id)}>
-                <span>{ tInventoryColumns('status')}</span>
+                <span>{tInventoryColumns('status')}</span>
                 {!data.lock
                   ? <LockOpenIcon className={'flex-none text-red-500'} />
                   : <LockIcon className={'flex-none text-red-500'} />}

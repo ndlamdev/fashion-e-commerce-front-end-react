@@ -28,11 +28,11 @@ export function CustomerManagementPage() {
   useEffect(() => {
     if (!isError) return;
     toast.error(t('error_loading_list'))
-  }, [isError])
+  }, [isError, t])
 
   useEffect(() => {
     document.title = "KimiFashion - " + t('management');
-  }, []);
+  }, [t]);
 
   return (
     <main>
