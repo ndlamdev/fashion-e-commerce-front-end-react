@@ -21,6 +21,8 @@ import "katex/dist/katex.min.css";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import { useContext, useEffect, useRef, useState } from "react";
+import DialogChooseMedia from "./dialogs/DialogChooseMedia";
+import MediaResponse from "@/domain/response/media.response";
 
 function CreateProductPage({ titlePage = "Thêm sản phẩm" }: { titlePage?: string }) {
   useEffect(() => {
@@ -42,6 +44,7 @@ const CreateProductMainPage = ({ titlePage }: { titlePage: string }) => {
   const refQuill = useRef<Quill | undefined>(undefined);
   const createProductPageContext = useContext(CreateProductPageContext);
   const [options, setOptions] = useState<Record<string, string[]>>({});
+  const [mediaChoose, setMediaChoose] = useState<MediaResponse[]>([]);
 
   useEffect(() => {
     document.title = titlePage;
@@ -62,68 +65,71 @@ const CreateProductMainPage = ({ titlePage }: { titlePage: string }) => {
   }, []);
 
   return (
-    <div>
-      <h1 className={"mb-5 flex items-center gap-2 text-xl font-bold"}>
-        <SolarArrowLeftLinear width={28} height={28} className={"aspect-square rounded-sm p-0.5 hover:bg-gray-300"} />
-        {titlePage}
-      </h1>
-      <div className={"grid grid-cols-1 grid-rows-1 gap-3 lg:grid-cols-8"}>
-        <div className={"col-span-5 flex flex-col gap-3"}>
-          <section className={`${createProductPageContext.sectionStyle}`}>
-            <BaseInfo className={"flex flex-col gap-5"} />
-          </section>
-          <section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
-            <h3 className={"mb-2 pb-0 font-semibold"}>Giá</h3>
-            <PriceManager
-              onDataChange={(data) => {
-                console.log(data);
-              }}
-            />
-          </section>
-          <section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
-            <h3 className={"mb-2 pb-0 font-semibold"}>Vận chuyển</h3>
-            <ShippingManager />
-          </section>
-          <section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
-            <h3 className={"mb-2 pb-0 font-semibold"}>Biến thể</h3>
-            <VariantManager setOptions={setOptions} />
-          </section>
-        </div>
-        <div className={"col-span-3 flex flex-col gap-3"}>
-          <section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
-            <h3 className={"mb-2 pb-0 text-[15px] font-semibold"}>
-              <span>Trạng thái</span>
-            </h3>
-            <Select defaultValue={"Active"}>
-              <SelectTrigger className={`mt-1 w-full ${createProductPageContext.borderStyle}`}>
-                <SelectValue placeholder='Active' />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value='Active'>Kích hoạt</SelectItem>
-                <SelectItem value='Draft'>Nháp</SelectItem>
-              </SelectContent>
-            </Select>
-          </section>
-          <section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
-            <h3 className={"mb-2 pb-0 text-[15px] font-semibold"}>
-              <span>Công bố</span>
-            </h3>
-            <PublishManager
-              onDateOpenStoreChange={(value) => {
-                console.log(value);
-              }}
-            />
-          </section>
-          <section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
-            <h3 className={"mb-2 pb-0 text-[15px] font-semibold"}>
-              <span>Product organization</span>
-              <SolarInfoCircleLinear width={15} height={15} className={"ml-2 inline"} color={"gray"} strokeWidth={2.5} />
-            </h3>
-            <OrganizationManager className={"flex flex-col gap-3"} />
-          </section>
+    <>
+      <div>
+        <h1 className={"mb-5 flex items-center gap-2 text-xl font-bold"}>
+          <SolarArrowLeftLinear width={28} height={28} className={"aspect-square rounded-sm p-0.5 hover:bg-gray-300"} />
+          {titlePage}
+        </h1>
+        <div className={"grid grid-cols-1 grid-rows-1 gap-3 lg:grid-cols-8"}>
+          <div className={"col-span-5 flex flex-col gap-3"}>
+            <section className={`${createProductPageContext.sectionStyle}`}>
+              <BaseInfo className={"flex flex-col gap-5"} />
+            </section>
+            <section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
+              <h3 className={"mb-2 pb-0 font-semibold"}>Giá</h3>
+              <PriceManager
+                onDataChange={(data) => {
+                  console.log(data);
+                }}
+              />
+            </section>
+            <section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
+              <h3 className={"mb-2 pb-0 font-semibold"}>Vận chuyển</h3>
+              <ShippingManager />
+            </section>
+            <section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
+              <h3 className={"mb-2 pb-0 font-semibold"}>Biến thể</h3>
+              <VariantManager setOptions={setOptions} />
+            </section>
+          </div>
+          <div className={"col-span-3 flex flex-col gap-3"}>
+            <section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
+              <h3 className={"mb-2 pb-0 text-[15px] font-semibold"}>
+                <span>Trạng thái</span>
+              </h3>
+              <Select defaultValue={"Active"}>
+                <SelectTrigger className={`mt-1 w-full ${createProductPageContext.borderStyle}`}>
+                  <SelectValue placeholder='Active' />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value='Active'>Kích hoạt</SelectItem>
+                  <SelectItem value='Draft'>Nháp</SelectItem>
+                </SelectContent>
+              </Select>
+            </section>
+            <section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
+              <h3 className={"mb-2 pb-0 text-[15px] font-semibold"}>
+                <span>Công bố</span>
+              </h3>
+              <PublishManager
+                onDateOpenStoreChange={(value) => {
+                  console.log(value);
+                }}
+              />
+            </section>
+            <section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
+              <h3 className={"mb-2 pb-0 text-[15px] font-semibold"}>
+                <span>Product organization</span>
+                <SolarInfoCircleLinear width={15} height={15} className={"ml-2 inline"} color={"gray"} strokeWidth={2.5} />
+              </h3>
+              <OrganizationManager className={"flex flex-col gap-3"} />
+            </section>
+          </div>
         </div>
       </div>
-    </div>
+      <DialogChooseMedia mediaChoose={mediaChoose} setMediaChoose={setMediaChoose} />
+    </>
   );
 };
 

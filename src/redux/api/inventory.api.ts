@@ -15,10 +15,19 @@ const BASE_URL = import.meta.env.VITE_BASE_URL + "/admin/inventory/v1";
 export const adminInventoryApi = createApi({
 	reducerPath: "AdminInventoryApi",
 	baseQuery: createBaseQueryWithDispatch(BASE_URL),
+	tagTypes: ["inventory"],
 	endpoints: (build) => ({
 		getAllInventory: build.query<ApiResponse<InventoryResponse[]>, void>({
 			query: () => ({
 				url: "",
+			}),
+			providesTags: ["inventory"],
+		}),
+		updateInventory: build.mutation<ApiResponse<void>, { variantId: string; quantity: number }>({
+			query: ({ variantId, quantity }) => ({
+				url: `/${variantId}`,
+				method: "PUT",
+				body: { quantity: quantity },
 			}),
 		}),
 	}),
@@ -26,4 +35,4 @@ export const adminInventoryApi = createApi({
 
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAllInventoryQuery } = adminInventoryApi;
+export const { useGetAllInventoryQuery, useUpdateInventoryMutation } = adminInventoryApi;

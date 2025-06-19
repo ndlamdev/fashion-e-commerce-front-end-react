@@ -12,11 +12,13 @@ import { Button } from "@/components/ui/button.tsx";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover.tsx";
 import { useGetAllInventoryQuery } from "@/redux/api/inventory.api";
 import { EllipsisIcon, TagIcon } from "lucide-react";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
+import DialogUpdateQuantity from "./dialogs/DialogUpdateQuantity";
 
 function InventoryManagementPage() {
   const { data, isError } = useGetAllInventoryQuery();
+  const [variantUpdating, setVariantUpdating] = useState<{ id: string, oldQuantity: number } | undefined>();
 
   const handleWatchDetail = useCallback((id: string) => {
     console.log(id);
@@ -37,7 +39,8 @@ function InventoryManagementPage() {
 
 
   return (
-    <main>
+
+    <>
       <header className={""}>
         <div className="flex justify-between items-end">
           <p className="flex justify-end items-center space-x-2 text-sm sm:text-lg lg:text-2xl">
@@ -62,10 +65,13 @@ function InventoryManagementPage() {
           </div>
         </div>
       </header>
-      <section className={"my-5"}>
-        <DataTable columns={inventoryColumns(handleWatchDetail, handleSaveLock)} data={data?.data ?? []} />
-      </section>
-    </main>
+      <main>
+        <section className={"my-5"}>
+          <DataTable columns={inventoryColumns(handleWatchDetail, handleSaveLock, (id, quantity) => setVariantUpdating({ id, oldQuantity: quantity }))} data={data?.data ?? []} />
+        </section>
+      </main>
+      <DialogUpdateQuantity variantId={variantUpdating?.id} oldQuantity={variantUpdating?.oldQuantity ?? 0} onHidden={() => setVariantUpdating(undefined)} />
+    </>
   )
 }
 

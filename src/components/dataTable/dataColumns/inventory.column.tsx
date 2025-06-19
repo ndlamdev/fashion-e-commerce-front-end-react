@@ -17,6 +17,7 @@ import { InventoryColumnProp } from "../props/inventoryColumn.prop";
 export const inventoryColumns = (
   watchDetail: (id: string) => void,
   saveLock: (id: string) => void,
+  onUpdateQuantity: (id: string, quantity: number) => void,
 ): ColumnDef<InventoryColumnProp | unknown, string | unknown>[] => [
     {
       accessorKey: "id",
@@ -96,6 +97,10 @@ export const inventoryColumns = (
               <DropdownMenuItem className={"cursor-pointer"}
                 onClick={() => watchDetail(data.id)}>
                 Xem chi tiết
+              </DropdownMenuItem>
+              <DropdownMenuItem className={"cursor-pointer"}
+                onClick={() => onUpdateQuantity(data.id, data.quantity)}>
+                Cập nhật số lượng
               </DropdownMenuItem>
               <DropdownMenuItem
                 className={"cursor-pointer text-red-500 flex justify-between"}

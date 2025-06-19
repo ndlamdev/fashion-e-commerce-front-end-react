@@ -20,7 +20,6 @@ import ReferFriendDialog from "@/components/product-detail/dialog/ReferFriendDia
 import ChangePasswordDialog from "@/components/profile/dialog/ChangePasswordDialog.tsx";
 import EditInfoProfileDialog from "@/components/profile/dialog/EditInfoProfileDialog.tsx";
 import SaveAddressDialog from "@/components/profile/dialog/SaveAddressDialog.tsx";
-import DialogChooseMedia from "@/pages/admin/product/dialogs/DialogChooseMedia";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 function DialogProvider() {
   return (
@@ -42,7 +41,6 @@ function DialogProvider() {
       <SaveAddressDialog />
       <ChangePasswordDialog />
       <AddressManagementDialog />
-      <DialogChooseMedia />
     </>
   );
 }
