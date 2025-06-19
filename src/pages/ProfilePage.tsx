@@ -25,44 +25,48 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useLocation, useNavigate } from "react-router";
 import { toast } from "sonner";
+import { translated } from "@/utils/helper/locale.ts";
+
+const tTabNav = (key: string) => translated(key, 'page.profile')
+
 const tabNavValues: TabNavProps[] = [
   {
-    title: "Thông tin tài khoản",
+    title: tTabNav('info_tab.title'),
     to: "info",
     iconLeft: <SquareUserRoundIcon className={"flex-none hover:text-white"} />,
   },
   {
-    title: "Giới thiệu bạn bè",
+    title: tTabNav('refer_friend_tab.title'),
     to: "refer-friend",
     iconLeft: <UserRoundPlusIcon className={"flex-none hover:text-white"} />,
   },
   {
-    title: "Lịch sử đơn hàng",
+    title: tTabNav('orders_history_tab.title'),
     to: "orders",
     iconLeft: <BaggageClaimIcon className={"flex-none hover:text-white"} />,
   },
   {
-    title: "Lịch sử Point",
+    title: tTabNav('points_tab.title'),
     to: "points",
     iconLeft: <ReceiptIcon className={"flex-none hover:text-white"} />,
   },
   {
-    title: "Ví voucher",
+    title: tTabNav('voucher_wallet_tab.title'),
     to: "voucher-wallet",
     iconLeft: <TicketPercentIcon className={"flex-none hover:text-white"} />,
   },
   {
-    title: "Sổ địa chỉ",
+    title: tTabNav('addresses_tab.title'),
     to: "addresses",
     iconLeft: <MapPinHouseIcon className={"flex-none hover:text-white"} />,
   },
   {
-    title: "Đánh giá và phản hồi",
+    title: tTabNav('reviews_tab.title'),
     to: "reviews",
     iconLeft: <StarIcon className={"flex-none hover:text-white"} />,
   },
   {
-    title: "Chính sách và câu hỏi thường gặp",
+    title: tTabNav('faq_tab.title'),
     to: "faq",
     iconLeft: <MessageCircleQuestionIcon className={"flex-none hover:text-white"} />,
   },
@@ -130,7 +134,7 @@ export default function ProfilePage() {
                 onClick={() => setOpenDialog(true)}
                 tailwindStyle={`hover:bg-black hover:text-white `}
                 iconLeft={<LogOutIcon className={"flex-none hover:text-white"} />}
-                title={"Đăng xuất"}
+                title={tTabNav('logout_tab.title')}
                 iconRight={<ArrowRightIcon className={"hover:text-white"} />}
               />
             </div>
@@ -153,6 +157,7 @@ export default function ProfilePage() {
         )}
       </section>
       <DialogConfirm
+				title={tTabNav('info_tab.title.confirm')}
         open={openDialog}
         onClickCancel={() => {
           setOpenDialog(false);

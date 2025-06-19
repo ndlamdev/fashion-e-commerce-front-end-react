@@ -1,4 +1,4 @@
 export enum ProductSortEnum {
-	PRICE = "Giá",
+	PRICE = "Thành tiền",
 	QUANTITY = "Số lượng",
 }

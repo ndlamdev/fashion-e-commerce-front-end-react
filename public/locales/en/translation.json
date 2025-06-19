@@ -129,6 +129,33 @@
         "home": "Home",
         "product_details": "Product Details"
       },
+      "dialog": {
+        "refer_friend": {
+          "title": "Refer friends and get 10% KimiCash instantly",
+          "description": "You will receive 10% of your friend's first order value, paid in KimiCash, when they become a CoolClub member and purchase any Kimi product.",
+          "send_refer_code_to_your_friend": "Send referral code to your friends",
+          "send_refer_link_to_your_friend": "Send referral link to your friends",
+          "copy": "Copy",
+          "copied": "Referral code copied",
+          "share": "Share",
+          "to_given_cash": "You will receive CoolCash when:",
+          "to_given_cash_tick_1": "Your friend joins KimiClub",
+          "to_given_cash_tick_2": "Your friend completes their first order on the website",
+          "to_given_cash_tick_3": "Your friend completes their first order on the website",
+          "terms_and_policies": "Terms and Policies"
+        },
+        "guide_choose_size": {
+          "guide_choose_size_tab": "Size Guide",
+          "table_size_tab": "Size Chart",
+          "height": "Height",
+          "weight": "Weight",
+          "suggest": "Kimi Suggests",
+          "long_shirt": "Shirt Length",
+          "wide_chest": "Chest Width",
+          "long_sleeves": "Sleeve Length",
+          "description": "If your measurements fall between two sizes: For t-shirts, prioritize your height. For example, if your height corresponds to size L and your weight corresponds to size M, choose size L. 97% of our customers chose the right size this way."
+        }
+      },
       "share": "Share",
       "free_ship": "Freeship",
       "discount_code": "Discount Code",
@@ -165,7 +192,176 @@
       "rating_low_to_high": "Rating: Low to High",
       "products_you_viewed": "Products you viewed",
       "color": "Color",
-      "size": "Size"
+      "size": "Size",
+      "enter": "Enter",
+      "review_product": "Review product"
+    },
+    "collection": {
+      "breadcrumb": {
+        "home": "Home",
+        "collection": "Collection"
+      },
+      "size": "Size",
+      "color": "Color",
+      "colors": {
+        "mix": "Mix",
+        "black": "Black",
+        "gray": "Gray",
+        "white": "White",
+        "beige": "Beige",
+        "blue": "Blue",
+        "green": "Green",
+        "red": "Red",
+        "orange": "Orange",
+        "pink": "Pink",
+        "dark_blue": "Dark Blue",
+        "turquoise": "Turquoise",
+        "gray_black": "Gray Black"
+      },
+      "search": "Search",
+      "see_more": "see more"
+    },
+    "profile": {
+      "info_tab": {
+        "title": "Account Information",
+        "full_name": "Full Name",
+        "phone": "Phone Number",
+        "not_updated_yet": "Not updated yet",
+        "gender": "Gender",
+        "birthday": "Birthday",
+        "update_birthday": "Update your birthday to receive a special gift from Kimi",
+        "height": "Height",
+        "weight": "Weight",
+        "update": "Update",
+        "sign_in_info": "Sign-in Information",
+        "email": "Email",
+        "password": "Password"
+      },
+      "refer_friend_tab": {
+        "title": "Refer Friends",
+        "given_cash": "Receive 10% KimiCash",
+        "simple_refer": "Referring Kimi to your friends and family is super easy",
+        "get_code_or_link": "Get referral code or link",
+        "club": "Choose products or visit the KimiClub page to get your referral code or link.",
+        "share_with_friend": "Share with friends",
+        "gift": "Your friends will get 50k off their first order of 200k or more when using your referral code or link",
+        "receiver_cash": "Receive KimiCash",
+        "give_cash_by_percent_order": "You will receive 10% CoolCash of their order value after 7 days from successful delivery.",
+        "refer_code": "Your referral code",
+        "copy": "Copy",
+        "refer_link": "Your referral link",
+        "copied_code": "Referral code copied",
+        "share_description": "Share your referral code or link by copying and sending it to your friends or sharing it on social media.",
+        "given_point": "Points received",
+        "finished": "completed",
+        "processing": "processing",
+        "joined": "Friend joined",
+        "friend": "Friend",
+        "status": "Status",
+        "value": "Value"
+      },
+      "orders_history_tab": {
+        "title": "Order History",
+        "your_orders": "Your Orders",
+        "total": "Total",
+        "booking_date": "Order Date",
+        "status": "Status",
+        "order": "order",
+        "sum_of": "out of total",
+        "display": "Show",
+        "not_have_order": "You haven't made any purchases on the website yet",
+        "error": "error system!"
+      },
+      "points_tab": {
+        "title": "Point History",
+        "your_points": "Your Points",
+        "awarded_point": "Points Awarded",
+        "expired": "Expired"
+      },
+      "voucher_wallet_tab": {
+        "title": "Voucher Wallet",
+        "not_have": "You haven't saved any discount codes!"
+      },
+      "addresses_tab": {
+        "title": "Address Book",
+        "my_addresses": "My Addresses",
+        "add_address": "Add New Address",
+        "not_found": "Address not found",
+        "item": {
+          "failure": "Failure",
+          "success": "Success",
+          "update": "Update",
+          "delete": "Delete",
+          "default": "Default",
+          "set_default": "Set default"
+        }
+      },
+      "reviews_tab": {
+        "title": "Reviews and Feedback",
+        "not_have": "You have no reviews..."
+      },
+      "faq_tab": {
+        "title": "Policies & FAQs",
+        "heading": "FAQ - Frequently Asked Questions",
+        "faq": {
+          "faq_1": {
+            "title": "Why should I join CoolClub?",
+            "content": "CoolClub is a membership program for all Coolmate customers, offering many benefits. Members can accumulate spending to rank up, enjoy exclusive gifts and promotions, earn CoolCash on every order, redeem rewards, and much more."
+          },
+          "faq_2": {
+            "title": "Is there a fee to join CoolClub? How to register?",
+            "content": "You can register for CoolClub completely free by creating an account on Coolmate.me. Once registered, you’ll receive all benefits of the New Member tier and an instant 15% shopping voucher (up to 50,000 VND)."
+          },
+          "faq_3": {
+            "title": "When did the old CoolClub end? What’s new?",
+            "content": "The old CoolClub program ended on 25/09/2023 for an upgrade. In the new version, you’ll enjoy better experiences with more tiered privileges, CoolCash rebates, reward redemption, and many exclusive offers."
+          },
+          "faq_4": {
+            "title": "Does CoolCash expire? If yes, when?",
+            "content": "CoolCash accumulates after each valid order during 4 quarters and gets its expiry date on the 1st day of each quarter: 01/01, 01/04, 01/07, and 01/10."
+          },
+          "faq_5": {
+            "title": "Can I combine membership and other promotions?",
+            "content": "Yes. CoolClub benefits will be applied automatically on top of other available promotions. However, some benefits may vary depending on the campaign policy."
+          },
+          "faq_6": {
+            "title": "When does my membership level get updated?",
+            "content": "Membership levels update as soon as you reach the required spending. Levels are reviewed quarterly on 01/01, 01/04, 01/07, and 01/10."
+          },
+          "faq_7": {
+            "title": "How do I earn CoolCash?",
+            "content": "After registering for CoolClub, you'll earn CoolCash from every order depending on your membership level. 1 CoolCash = 1 VND in payment value."
+          },
+          "faq_8": {
+            "title": "Can I use CoolCash as a discount?",
+            "content": "Yes. You can deduct CoolCash directly from your order value:\n- If you have less than 50% of order value in CoolCash: all will be used.\n- If you have more than 50%: only up to 50% will be used and the rest saved for next time."
+          },
+          "faq_9": {
+            "title": "Do returns affect CoolCash and membership level?",
+            "content": "Yes. CoolCash and level are based on successful order values. Returns may reduce the final value."
+          },
+          "faq_10": {
+            "title": "Do orders from e-commerce platforms count toward CoolClub?",
+            "content": "Currently, CoolClub is only for purchases made on the Coolmate website. Orders from third-party platforms are not counted."
+          }
+        }
+      },
+      "logout_tab": {
+        "title": "Logout",
+        "confirm": "Are you sure you want to log out?",
+        "cancel": "Cancel",
+        "ok": "Confirm"
+      },
+      "ranking": {
+        "hi": "Hi",
+        "spend_extra": "Spend more",
+        "to_up_rank": "to rank up",
+        "update_rank_at": "Membership rank was last reviewed on",
+        "update_rank_next": "Next rank review date",
+        "pending": "Pending",
+        "having": "You currently have",
+        "will_have_point": "These are the points you will receive once the pending orders are completed"
+      }
     }
   },
   "recent_activities": {

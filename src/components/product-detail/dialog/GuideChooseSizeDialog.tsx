@@ -7,8 +7,12 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/configs/store.config.ts";
 import { hiddenDialog } from "@/redux/slice/dialog.slice.ts";
+import { useTranslation } from "react-i18next";
 
 const GuideChooseSizeDialog = () => {
+	const { t } = useTranslation(undefined, {
+		keyPrefix: "page.product_details.dialog.guide_choose_size"
+	});
 	const dispatch = useDispatch();
 	const { dialog } = useSelector((state: RootState) => state.dialog);
 	// handle data height range Slider component
@@ -36,19 +40,19 @@ const GuideChooseSizeDialog = () => {
 									"h-12 cursor-pointer rounded-xl border-none bg-white font-bold data-[state=active]:bg-gray-200 data-[state=active]:shadow-none"
 								}
 								value='choose-size'>
-								Hướng dẫn chọn size
+								{t('guide_choose_size_tab')}
 							</TabsTrigger>
 							<TabsTrigger
 								className={
 									"h-12 cursor-pointer rounded-xl border-none bg-white font-bold data-[state=active]:bg-gray-200 data-[state=active]:shadow-none"
 								}
 								value='size-table'>
-								Bảng size
+								{t('table_size_tab')}
 							</TabsTrigger>
 						</TabsList>
 						<TabsContent className={"py-5 lg:px-20"} value='choose-size'>
 							<div className='flex w-full'>
-								<span className='flex-none px-4 text-gray-500'>Chiều cao</span>
+								<span className='flex-none px-4 text-gray-500'>{t('height')}</span>
 								<Slider
 									className={"shrink"}
 									onValueChange={handleHeightChange}
@@ -61,7 +65,7 @@ const GuideChooseSizeDialog = () => {
 							</div>
 
 							<div className='my-5 flex w-full'>
-								<span className='flex-none px-4 text-gray-500'>Cân nặng</span>
+								<span className='flex-none px-4 text-gray-500'>{t('weight')}</span>
 								<Slider
 									className={"shrink"}
 									onValueChange={handleWeightChange}
@@ -90,7 +94,7 @@ const GuideChooseSizeDialog = () => {
 									</SameRadioGroupItem>
 								</div>
 							</SameRadioGroup>
-							<p className='my-3 font-bold'>Coolmate gợi ý bạn:</p>
+							<p className='my-3 font-bold'>{t('suggest')}:</p>
 							<div className='flex flex-wrap space-y-2 space-x-4'>
 								<div className='flex rounded-full bg-black p-1 text-center text-white'>Lorem ipsum.</div>
 								<div className='flex rounded-full bg-black p-1 text-center text-white'>Lorem ipsum.</div>
@@ -101,9 +105,7 @@ const GuideChooseSizeDialog = () => {
 						<TabsContent value='size-table'>
 							<Table>
 								<TableCaption className={"break-all"}>
-									Trường hợp số đo của bạn nằm trong khoảng giữa các size với nhau: Với áo thun, bạn hãy lựa chọn ưu tiên theo chiều cao Ví dụ chiều
-									cao của bạn theo size L nhưng cân nặng của bạn theo size M, Hãy chọn L. 97% khách hàng của chúng tôi đã chọn đúng size theo cách
-									này.
+									{t('description')}
 								</TableCaption>
 								<TableHeader className={"bg-blue-700"}>
 									<TableRow>
@@ -117,7 +119,7 @@ const GuideChooseSizeDialog = () => {
 								</TableHeader>
 								<TableBody>
 									<TableRow className='text-sm font-bold break-all'>
-										<TableCell>Chiều cao</TableCell>
+										<TableCell>{t('height')}</TableCell>
 										<TableCell>1m60 - 1m65</TableCell>
 										<TableCell>1m66 - 1m72</TableCell>
 										<TableCell>1m72 - 1m77</TableCell>
@@ -128,7 +130,7 @@ const GuideChooseSizeDialog = () => {
 									</TableRow>
 
 									<TableRow className='text-sm font-bold'>
-										<TableCell>Cân nặng</TableCell>
+										<TableCell>{t('weight')}</TableCell>
 										<TableCell> 55kg - 61kg</TableCell>
 										<TableCell>62kg - 68kg</TableCell>
 										<TableCell>69kg - 75kg</TableCell>
@@ -137,7 +139,7 @@ const GuideChooseSizeDialog = () => {
 									</TableRow>
 
 									<TableRow className='text-sm font-bold'>
-										<TableCell>Dài áo</TableCell>
+										<TableCell>{t('long_shirt')}</TableCell>
 										<TableCell>68.5</TableCell>
 										<TableCell>70.5</TableCell>
 										<TableCell>72.5</TableCell>
@@ -146,7 +148,7 @@ const GuideChooseSizeDialog = () => {
 									</TableRow>
 
 									<TableRow className='text-sm font-bold'>
-										<TableCell>Rộng ngực</TableCell>
+										<TableCell>{t('wide_chest')}</TableCell>
 										<TableCell>52.7</TableCell>
 										<TableCell>54.7</TableCell>
 										<TableCell>56.7</TableCell>
@@ -155,7 +157,7 @@ const GuideChooseSizeDialog = () => {
 									</TableRow>
 
 									<TableRow className='text-sm font-bold'>
-										<TableCell>Dài tay</TableCell>
+										<TableCell>{t('long_sleeves')}</TableCell>
 										<TableCell>58.5</TableCell>
 										<TableCell>60.5</TableCell>
 										<TableCell>62.5</TableCell>

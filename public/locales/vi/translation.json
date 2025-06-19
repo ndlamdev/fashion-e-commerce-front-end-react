@@ -101,14 +101,14 @@
       },
       "collections": {
         "male": {
-            "title": "Bộ sưu tập đồ nam",
-            "code": "Nhập CM10 Giảm thểm 10% tối đa 100k",
-            "buy_now": "Mua ngay"
+          "title": "Bộ sưu tập đồ nam",
+          "code": "Nhập CM10 Giảm thểm 10% tối đa 100k",
+          "buy_now": "Mua ngay"
         },
         "female": {
-            "title": "Bộ sưu tập đồ nữ",
-            "code": "Nhập CM10 Giảm thểm 10% tối đa 100k",
-            "buy_now": "Mua ngay"
+          "title": "Bộ sưu tập đồ nữ",
+          "code": "Nhập CM10 Giảm thểm 10% tối đa 100k",
+          "buy_now": "Mua ngay"
         }
       },
       "discover": {
@@ -125,55 +125,225 @@
       }
     },
     "product_details": {
-        "breadcrumb": {
-          "home": "Trang chủ",
-          "product_details": "Chi tiết sản phẩm"
+      "breadcrumb": {
+        "home": "Trang chủ",
+        "product_details": "Chi tiết sản phẩm"
+      },
+      "dialog": {
+        "refer_friend": {
+          "title": "Giới thiệu bạn bè Nhận ngay 10% KimiCash",
+          "description": "Bạn sẽ nhận được 10% giá trị đơn hàng đầu tiên của bạn bè và được trả bằng KimiCash khi họ là thành viên CoolClub và mua sản phẩm Kimi bất kỳ.",
+          "send_refer_code_to_your_friend": "Gửi mã giới thiệu đến với bạn bè",
+          "send_refer_link_to_your_friend": "Gửi link giới thiệu đến với bạn bè",
+          "copy": "Sao chép",
+          "copied": "Đã copy mã giới thiệu",
+          "share": "Chia sẻ",
+          "to_given_cash": "Bạn sẽ nhận được CoolCash khi:",
+          "to_given_cash_tick_1": "Bạn bè của bạn tham gia KimiClub",
+          "to_given_cash_tick_2": "Bạn bè của bạn hoàn thành đơn hàng đầu tiên trên website",
+          "to_given_cash_tick_3": "Bạn bè của bạn hoàn thành đơn hàng đầu tiên trên website",
+          "terms_and_policies": "Chính sách và điều khoản"
         },
-        "share": "Chia sẻ",
-        "free_ship": "Miễn phí vận chuyển",
-        "discount_code": "Mã giảm giá",
-        "no_available_discount_code": "Không còn mã giảm giá nào khả dụng",
-        "to_get_discount": "để nhận ưu đãi",
-        "save_discount_code_success": "Lưu mã giảm giá thành công",
-        "size_guide": "Hướng dẫn chọn kích cỡ",
-        "warning_max_bought": "Số lượng mua vượt mức cho phép (từ {{max}} sản phẩm trở lại)",
-        "be_refunded": "Được hoàn",
-        "coolcash_refund_info": "Đây là số CoolCash ước tính bạn sẽ được hoàn lại khi mua sản phẩm hôm nay, tương ứng với quyền lợi hạng",
-        "new_member": "Thành viên mới",
-        "chat_support": "Chat để KimiFashion tư vấn ngay (8:30 - 22:00)",
-        "add_to_cart": "Thêm vào giỏ hàng",
-        "choose_size": "Chọn kích cỡ",
-        "exchange_policy": "Đổi trả cực dễ chỉ cần số điện thoại",
-        "return_policy": "60 ngày đổi trả vì bất kỳ lý do gì",
-        "hotline_info": "Hotline 0855.354.919 hỗ trợ từ 8h30 - 22h mỗi ngày",
-        "delivery_info": "Đến tận nơi nhận hàng trả, hoàn tiền trong 24h",
-        "product_description": "Mô tả sản phẩm",
-        "read_more": "Xem thêm",
-        "suggested_products": "Gợi ý sản phẩm",
-        "product_reviews": "Đánh giá sản phẩm",
-        "based_on": "Dựa trên",
-        "from_customer": "đánh giá đến từ khách hàng",
-        "search_review_placeholder": "Tìm kiếm đánh giá",
-        "rating_classification": "Phân loại xếp hạng",
-        "rating_classification_description": "Các review đều đến từ khách hàng đã thực sự mua hàng của Coolmate",
-        "all_reviews": "Tất cả đánh giá",
-        "filter_feedback": "Lọc phản hồi",
-        "feedback_received": "Đã phản hồi",
-        "feedback_has_image_only": "Chỉ có hình ảnh",
-        "show_reviews": "Hiển thị đánh giá",
-        "rating_high_to_low": "Đánh giá: Cao đến Thấp",
-        "rating_low_to_high": "Rating: Thấp đến cao",
-        "products_you_viewed": "Sản phẩm bạn đã xem",
-        "color": "Màu sắc",
-        "size": "Kích thước"
+        "guide_choose_size": {
+          "guide_choose_size_tab": "Hướng dẫn chọn kích thước",
+          "table_size_tab": "Bảng kích thước",
+          "height": "Chiều cao",
+          "weight": "Cân nặng",
+          "suggest": "Kimi gợi ý",
+          "long_shirt": "Dài áo",
+          "wide_chest": "Rộng ngực",
+          "long_sleeves": "Dài tay",
+          "description": "Trường hợp số đo của bạn nằm trong khoảng giữa các size với nhau: Với áo thun, bạn hãy lựa chọn ưu tiên theo chiều cao Ví dụ chiều cao của bạn theo size L nhưng cân nặng của bạn theo size M, Hãy chọn L. 97% khách hàng của chúng tôi đã chọn đúng size theo cách này."
+        }
+      },
+      "share": "Chia sẻ",
+      "free_ship": "Miễn phí vận chuyển",
+      "discount_code": "Mã giảm giá",
+      "no_available_discount_code": "Không còn mã giảm giá nào khả dụng",
+      "to_get_discount": "để nhận ưu đãi",
+      "save_discount_code_success": "Lưu mã giảm giá thành công",
+      "size_guide": "Hướng dẫn chọn kích cỡ",
+      "warning_max_bought": "Số lượng mua vượt mức cho phép (từ {{max}} sản phẩm trở lại)",
+      "be_refunded": "Được hoàn",
+      "coolcash_refund_info": "Đây là số CoolCash ước tính bạn sẽ được hoàn lại khi mua sản phẩm hôm nay, tương ứng với quyền lợi hạng",
+      "new_member": "Thành viên mới",
+      "chat_support": "Chat để KimiFashion tư vấn ngay (8:30 - 22:00)",
+      "add_to_cart": "Thêm vào giỏ hàng",
+      "choose_size": "Chọn kích cỡ",
+      "exchange_policy": "Đổi trả cực dễ chỉ cần số điện thoại",
+      "return_policy": "60 ngày đổi trả vì bất kỳ lý do gì",
+      "hotline_info": "Hotline 0855.354.919 hỗ trợ từ 8h30 - 22h mỗi ngày",
+      "delivery_info": "Đến tận nơi nhận hàng trả, hoàn tiền trong 24h",
+      "product_description": "Mô tả sản phẩm",
+      "read_more": "Xem thêm",
+      "suggested_products": "Gợi ý sản phẩm",
+      "product_reviews": "Đánh giá sản phẩm",
+      "based_on": "Dựa trên",
+      "from_customer": "đánh giá đến từ khách hàng",
+      "search_review_placeholder": "Tìm kiếm đánh giá",
+      "rating_classification": "Phân loại xếp hạng",
+      "rating_classification_description": "Các review đều đến từ khách hàng đã thực sự mua hàng của Coolmate",
+      "all_reviews": "Tất cả đánh giá",
+      "filter_feedback": "Lọc phản hồi",
+      "feedback_received": "Đã phản hồi",
+      "feedback_has_image_only": "Chỉ có hình ảnh",
+      "show_reviews": "Hiển thị đánh giá",
+      "rating_high_to_low": "Đánh giá: Cao đến Thấp",
+      "rating_low_to_high": "Rating: Thấp đến cao",
+      "products_you_viewed": "Sản phẩm bạn đã xem",
+      "color": "Màu sắc",
+      "size": "Kích thước",
+      "enter": "Nhập",
+      "review_product": "Đánh giá sản phẩm"
+    },
+    "collection": {
+      "breadcrumb": {
+        "home": "Trang chủ",
+        "collection": "Bộ sưu tập"
+      },
+      "size": "kích thước",
+      "color": "Màu sắc",
+      "colors": {
+        "mix": "Đa sắc",
+        "black": "Đen",
+        "gray": "Xám",
+        "white": "Trắng",
+        "beige": "Be",
+        "blue": "Xanh lam",
+        "green": "xanh rêu",
+        "red": "Đỏ",
+        "orange": "Cam",
+        "pink": "Hồng",
+        "turquoise": "Xanh ngọc",
+        "dark_blue": "Xanh đậm",
+        "gray_black": "Đen xám"
+      },
+      "search": "Tìm kiếm",
+      "see_more": "Xem thêm"
+    },
+    "profile":{
+      "ranking": {
+        "spend_extra": "Chi tiêu thêm",
+        "hi": "Chào",
+        "to_up_rank": "để lên hạng",
+        "update_rank_at": "Hạng thành viên được vừa được xét lại vào",
+        "update_rank_next": "ngày xét hạng tiếp",
+        "having": "Bạn đang có",
+        "pending": "Chờ",
+        "will_have_point": "Đây là số point bạn sẽ nhận được khi nhận các đơn hàng đang chờ thành công"
+      },
+      "info_tab": {
+        "title": "Thông tin tài khoản",
+        "full_name": "Họ và tên",
+        "phone": "Số điện thoại",
+        "not_updated_yet": "Chưa cập nhật",
+        "gender": "Giới tính",
+        "birthday": "Ngày sinh",
+        "update_birthday": "Hãy cập nhật ngày sinh để Kimi gửi cho bạn 1 phần quà đặc biệt nhé",
+        "height": "Chiều cao",
+        "weight": "Cân nặng",
+        "update": "Cập nhật",
+        "sign_in_info": "Thông tin đăng nhập",
+        "email": "Email",
+        "password": "Mật khẩu"
+      },
+      "refer_friend_tab": {
+        "title": "Giới thiệu bạn bè",
+        "given_cash": "Nhận 10% KimiCash",
+        "simple_refer": "Giới thiệu Kimi đến bạn bè và gia đình của bạn vô cùng đơn giản",
+        "get_code_or_link": "Lấy mã hoặc link",
+        "club": "Chọn sản phẩm hoặc truy cập trang KimiClub để lấy mã hoặc link giới thiệu.",
+        "share_with_friend": "Chia sẻ đến bạn bè",
+        "gift": "Bạn bè mua sắm với mã hoặc link của bạn sẽ được giảm 50k cho đơn hàng đầu tiên từ 200k",
+        "receiver_cash": "Nhận KimiCash",
+        "give_cash_by_percent_order": "Bạn sẽ nhận 10% CoolCash theo giá trị đơn hàng sau 7 ngày từ khi đơn giao thành công.",
+        "refer_code": "Mã giới thiệu của bạn",
+        "copy": "Sao chép",
+        "refer_link": "Link giới thiệu của bạn",
+        "copied_code": "Đã copy mã giới thiệu",
+        "share_description": "Chia sẻ mã hoặc link giới thiệu của bạn bằng cách copy và gửi cho bạn bè hoặc chia sẻ trên mạng xã hội nhé.",
+        "given_point": "Point nhận được",
+        "finished": "đã hoàn thành",
+        "processing": "đang xử lý",
+        "joined": "Bạn bè đã tham gia",
+        "friend": "Bạn bè",
+        "status": "Tình trạng",
+        "value": "Giá trị"
+      },
+      "orders_history_tab": {
+        "title": "Lịch sử đơn hàng",
+        "your_orders": "Đơn hàng của bạn",
+        "total": "Tổng tiền",
+        "booking_date": "Ngày đặt",
+        "status": "Trạng thái",
+        "order": "đơn hàng",
+        "sum_of": "trên tổng số",
+        "display": "Hiện",
+        "not_have_order": "Bạn chưa có đơn hàng nào mua tại website",
+        "error": "Lỗi hệ thống!"
+      },
+      "points_tab": {
+        "title": "Lịch sử Point",
+        "your_points": "Point của bạn",
+        "awarded_point": "Point được tặng",
+        "expired": "Hết hạn"
+      },
+      "voucher_wallet_tab": {
+        "title": "Ví voucher",
+        "not_have": "Bạn chưa lưu mã giảm giá nào!"
+      },
+      "addresses_tab": {
+        "title": "Sổ địa chỉ",
+        "my_addresses": "Địa chỉ của tôi",
+        "add_address": "Thêm địa chỉ mới",
+        "not_found": "không tìm thấy địa chỉ",
+        "item": {
+          "failure": "đặt địa chỉ mặc định thất bại",
+          "success": "đặt địa chỉ mặc định thành công",
+          "update": "Cập nhật",
+          "delete": "Xóa",
+          "default": "Mặc định",
+          "set_default": "Đặt làm mặc định"
+        }
+      },
+      "reviews_tab": {
+        "title": "Đánh giá và phản hồi",
+        "not_have": "Bạn chưa có đánh giá nào..."
+      },
+      "faq_tab": {
+        "title": "Chính sách và câu hỏi thường gặp",
+        "heading": "FAQ - Câu hỏi thường gặp",
+        "q&a": {
+          "faq_1": {"title": "Tại sao tôi nên tham gia CoolClub?", "content": "CoolClub là chương trình Hội viên dành cho tất cả khách hàng Coolmate, mang đến nhiều quyền lợi cho người tham gia. Hội viên CoolClub sẽ được: Tích lũy chi tiêu để thăng hạng; Hưởng các quyền lợi theo hạng Hội viên: nhận quà tặng định kỳ, ưu đãi độc quyền; Hoàn tiền CoolCash cho mỗi đơn hàng; Đổi thưởng và rất nhiều quyền lợi khác sẽ được Coolmate cập nhật thường xuyên."},
+          "faq_2": {"title": "Đăng ký làm Hội viên CoolClub có mất phí không? Cách đăng ký như thế nào?", "content": "Bạn có thể đăng ký CoolClub hoàn toàn miễn phí bằng cách tạo Tài khoản tại website Coolmate.me. Khi đăng ký thành công, bạn đã được nhận các quyền lợi của hạng Thành viên mới, đồng thời nhận ngay voucher mua sắm 15% (tối đa 50.000 VND) để bắt đầu mua sắm."},
+          "faq_3": {"title": "Chương trình CoolClub cũ ngừng áp dụng khi nào? CoolClub mới có nâng cấp gì khác?", "content": "Chương trình CoolClub cũ ngừng áp dụng vào ngày 25/09/2023 để nâng cấp. Ở chương  trình CoolClub phiên bản mới, bạn sẽ có trải nghiệm mua sắm thú vị hơn với nhiều đặc quyền theo hạng Hội viên, tích luỹ chi tiêu để thăng hạng, hoàn tiền CoolCash cho mỗi đơn hàng, đổi thưởng, nhận quà tặng định kỳ và vô vàn ưu đãi, chương trình, quyền lợi độc quyền khác sẽ được Coolmate cập nhật thêm trong tương lai."},
+          "faq_4": {"title": "CoolCash có thời hạn không? Nếu có, thời hạn là bao lâu?", "content": "CoolCash được tích luỹ sau mỗi đơn hàng có giá trị trong 4 Quý và sẽ được cập nhật hạn dùng vào ngày đầu tiên của mỗi Quý, diễn ra 4 lần mỗi năm vào các ngày 01/01, 01/04, 01/07 và 01/10."},
+          "faq_5": {"title": "Tôi có thể kết hợp ưu đãi theo Hạng Hội viên và ưu đãi khác không?", "content": "Khi mua sắm trên website Coolmate, bên cạnh các ưu đãi hiện có, bạn sẽ được tự động áp dụng ưu đãi theo hạng Hội viên tương ứng. Tuy nhiên, việc áp dụng một số quyền lợi CoolClub có thể thay đổi tuỳ vào chính sách và quy định của từng chương trình ưu đãi."},
+          "faq_6": {"title": "Hạng Hội viên khi nào sẽ được cập nhật? Bao lâu sẽ được cập nhật lại?", "content": "Hội viên sẽ thăng hạng ngay khi đạt mức chi tiêu của hạng tiếp theo. Hạng Hội viên sẽ được cập nhật vào ngày đầu tiên của mỗi Quý, diễn ra 4 lần mỗi năm vào các ngày 01/01, 01/04, 01/07 và 01/10."},
+          "faq_7": {"title": "Làm sao để tích luỹ CoolCash?", "content": "Sau khi đăng ký Hội viên CoolClub, bạn sẽ nhận được hoàn tiền CoolCash từ mỗi giao dịch mua hàngtrên website Coolmate theo hạng Hội viên tương ứng và dựa trên chi tiêu mỗi đơn hàng. Mỗi 1 đơn vị CoolCash có giá trị hỗ trợ thanh toán tương đương 1 VND (1 CoolCash = 1 VND). "},
+          "faq_8": {"title": "Tôi có thể dùng CoolCash để giảm giá trực tiếp không?", "content": "Có, bạn có thể sử dụng CoolCash trừ trực tiếp vào giá trị đơn hàng khi mua sắm. Tuy nhiên, bạn cần lưu ý:\nNếu số CoolCash bạn có ít hơn 50% giá trị đơn hàng: Tất cả CoolCash sẽ bị trừ ngay khi sử dụng.\nNếu số CoolCash bạn có nhiều hơn 50% giá trị đơn hàng: Số CoolCash bị trừ tối đa bằng 50% giá trị đơn hàng ngay khi sử dụng, số còn lại sẽ được bảo lưu cho lần mua hàng tiếp theo."},
+          "faq_9": {"title": "Đổi/trả hàng có ảnh hưởng đến CoolCash và hạng Hội viên không?", "content": "Có, CoolCash và hạng Hội viên chỉ được tính trên giá trị của đơn hàng thành công. Việc đổi/trả hàng có thể ảnh hưởng đến giá trị cuối cùng khi hoàn tất đơn hàng."},
+          "faq_10": {"title": "Tôi mua hàng trên các sàn thương mại điện tử có được tích lũy chi tiêu CoolClub không?", "content": "Trong thời điểm hiện tại, chương trình CoolClub chỉ dành cho các khách hàng mua hàng tại Website Coolmate, chưa áp dụng với các khách hàng mua hàng tại các sàn thương mại điện tử."}
+        }
+      },
+      "logout_tab": {
+        "title": "Đăng xuất",
+        "confirm": "Bạn có chắc muốn thoát khỏi ?"
       }
     },
+    "auth":"",
+    "admin":""
+  },
   "recent_activities": {
-      "title": "ĐẶC QUYỀN DÀNH CHO 363,688 THÀNH VIÊN KIMICLUB",
-      "viewed_products": "Sản phẩm đã xem gần đây",
-      "sub_title": "HOẠT ĐỘNG GẦN ĐÂY",
-      "join_now": {
-        "text": "GIA NHẬP KIMICLUB NGAY"
-      }
+    "title": "ĐẶC QUYỀN DÀNH CHO 363,688 THÀNH VIÊN KIMICLUB",
+    "viewed_products": "Sản phẩm đã xem gần đây",
+    "sub_title": "HOẠT ĐỘNG GẦN ĐÂY",
+    "join_now": {
+      "text": "GIA NHẬP KIMICLUB NGAY"
     }
+  },
+  "button": {
+    "cancel": "Hủy",
+    "ok": "Xác nhận"
+  }
 }

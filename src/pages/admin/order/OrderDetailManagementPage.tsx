@@ -3,11 +3,11 @@ import OrderPaymentInfo from "@/components/admin/order/OrderPaymentInfo.tsx";
 import DataTable from "@/components/dataTable/DataTable.tsx";
 import { orderItemColumns } from "@/components/dataTable/dataColumns/orderItem.column";
 import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
+	Breadcrumb,
+	BreadcrumbItem,
+	BreadcrumbLink,
+	BreadcrumbList,
+	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover.tsx";
@@ -120,6 +120,7 @@ const OrderDetailManagementPage = () => {
       <section
         className={"flex justify-between max-sm:flex-wrap max-sm:space-y-2 my-4 space-x-3 items-start"}>
         <div className="rounded-lg shadow-sm shadow-accent-foreground  w-full sm:w-7/10 p-3 bg-white text-xs sm:text-sm text-neutral-600">
+          <span className={'text-base'}>Products</span>
           <DataTable columns={orderItemColumns} data={dataWithHandler} />
         </div>
         <InfoCustomer
@@ -162,4 +163,5 @@ const OrderDetailManagementPage = () => {
     </main>
   )
 }
+
 export default OrderDetailManagementPage

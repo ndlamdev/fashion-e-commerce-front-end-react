@@ -199,7 +199,7 @@ export default function ProductDetailPage() {
                 <HoverCardContent className={"w-100! p-1"}>
                   <div className={"text-center"}>
                     <p className={"m-0"}>
-                      Nhập <span className={"font-bold"}>code</span> ({t("no_available_discount_code")}) {t("to_get_discount")}.
+											{t('enter')} <span className={"font-bold"}>code</span> ({t("no_available_discount_code")}) {t("to_get_discount")}.
                     </p>
                     <p className={"m-0"}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, autem!</p>
                   </div>
@@ -239,7 +239,7 @@ export default function ProductDetailPage() {
             <div className=''>
               <p className='m-0 flex items-center justify-between'>
                 <span className={"text-xs md:text-sm lg:text-lg"}>
-                  {t("size")} áo: <span className={"mx-1 font-bold"}>{sizeSelected ?? ""}</span>
+                  {t("size")}: <span className={"mx-1 font-bold"}>{sizeSelected ?? ""}</span>
                   <span>
                     {sizeSelected && (
                       <span>
@@ -327,7 +327,7 @@ export default function ProductDetailPage() {
                 <AccordionTrigger className={"p-0"}>
                   <p className='flex flex-wrap items-center space-x-2 text-xs sm:text-sm'>
                     <Crown className={"size-4 text-blue-600 sm:size-6"} />{t("be_refunded")}
-                    <span className='mx-1 font-bold'>1000</span> name' Cash.
+                    <span className='mx-1 font-bold'>1000</span> kimi' Cash.
                   </p>
                 </AccordionTrigger>
                 <AccordionContent className={"p-2 pb-0 text-xs sm:text-sm"}>
@@ -403,7 +403,7 @@ export default function ProductDetailPage() {
       </Carousel>
 
       <section className='mt-10 bg-neutral-100 px-4 sm:flex-none sm:ps-5 md:flex md:p-5'>
-        <p className='pr-10 text-xl font-bold uppercase md:w-1/4 md:content-center md:text-4xl lg:px-12'>Đánh giá sản phẩm</p>
+        <p className='pr-10 text-xl font-bold uppercase md:w-1/4 md:content-center md:text-4xl lg:px-12'>{t('review_product')}</p>
         <div className='content-center md:w-3/4'>
           <span className='mb-0 flex items-center text-3xl font-bold md:text-8xl'>
             <span className={"mr-2"}>{data?.data.review.ratingValue}</span>

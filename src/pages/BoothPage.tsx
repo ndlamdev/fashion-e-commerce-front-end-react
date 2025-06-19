@@ -15,8 +15,12 @@ import { CollectionValue } from "@/utils/enums/collection.enum.ts";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb.tsx";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LoaderIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function BoothPage() {
+	const { t } = useTranslation(undefined, {
+		keyPrefix: "page.collection"
+	});
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const queryObj = Object.fromEntries(searchParams.entries()); // get all key-value
@@ -149,7 +153,7 @@ export default function BoothPage() {
           <Breadcrumb className={"text-xs lg:text-sm"}>
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink href='/'>Trang chủ</BreadcrumbLink>
+                <BreadcrumbLink href='/'>{t('breadcrumb.home')}</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
@@ -172,8 +176,8 @@ export default function BoothPage() {
           </Breadcrumb>
 
           {(title?.name || title?.type) && <p className='my-3 font-bold uppercase lg:text-2xl'>{title.name ?? title.type}</p>}
-          {title?.prompt && <p className='my-3 font-bold uppercase lg:text-2xl'>Tìm kiếm: {title?.prompt}</p>}
-          {title?.fileName && <p className='my-3 font-bold uppercase lg:text-2xl'>Tìm kiếm: {title?.fileName}</p>}
+          {title?.prompt && <p className='my-3 font-bold uppercase lg:text-2xl'>{t('search')}: {title?.prompt}</p>}
+          {title?.fileName && <p className='my-3 font-bold uppercase lg:text-2xl'>{t('search')}: {title?.fileName}</p>}
           <div className='my-4 border-1 border-gray-300' />
           {/*<ScrollArea className={"h-dvh"}>*/}
           {isLoadingPOCI ||
