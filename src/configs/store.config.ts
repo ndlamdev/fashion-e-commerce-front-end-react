@@ -12,7 +12,6 @@ import { authApi } from "@/redux/api/auth.api.ts";
 import { authSlice } from "@/redux/slice/auth.slice.ts";
 import { adminProfileApi, profileApi } from "@/redux/api/profile.api";
 import addressSlice from "@/redux/slice/address.slice.ts";
-import { addressCoolMateApi } from "@/redux/api/addressCoolMate.api.ts";
 import { addressApi, adminAddressApi } from "@/redux/api/address.api.ts";
 import { cartApi } from "@/redux/api/cart.api.ts";
 import { cartSlice } from "@/redux/slice/cart.slice.ts";
@@ -38,7 +37,6 @@ const store = configureStore({
 		/*===========================for api======================*/
 		[authApi.reducerPath]: authApi.reducer,
 		[profileApi.reducerPath]: profileApi.reducer,
-		[addressCoolMateApi.reducerPath]: addressCoolMateApi.reducer,
 		[collectionApi.reducerPath]: collectionApi.reducer,
 		[productApi.reducerPath]: productApi.reducer,
 		[cartApi.reducerPath]: cartApi.reducer,
@@ -57,7 +55,6 @@ const store = configureStore({
 			.concat(logger)
 			.concat(authApi.middleware)
 			.concat(profileApi.middleware)
-			.concat(addressCoolMateApi.middleware)
 			.concat(addressApi.middleware)
 			.concat(cartApi.middleware)
 			.concat(productApi.middleware)

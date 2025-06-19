@@ -21,6 +21,7 @@ import EditInfoProfileDialog from "@/components/profile/dialog/EditInfoProfileDi
 import SaveAddressDialog from "@/components/profile/dialog/SaveAddressDialog.tsx";
 import ChangePasswordDialog from "@/components/profile/dialog/ChangePasswordDialog.tsx";
 import AddressManagementDialog from "@/components/dialog/AddressManagementDialog.tsx";
+import DialogUpdateStatus from "@/pages/admin/order/dialogs/DialogUpdateStatus";
 
 function DialogProvider() {
 	return (
@@ -42,6 +43,7 @@ function DialogProvider() {
 			<SaveAddressDialog />
 			<ChangePasswordDialog />
 			<AddressManagementDialog />
+      <DialogUpdateStatus />
 		</>
 	);
 }

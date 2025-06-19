@@ -111,6 +111,7 @@ const OrderDetailManagementPage = () => {
               </Button>
             </PopoverTrigger>
             <PopoverContent className={"w-auto -translate-1/14 translate-y-2 p-2 text-xs sm:text-sm"}>
+              <p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"} onClick={() => dispatch(showDialog("update-status"))}>Update status</p>
               <p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>Duplicate</p>
               <p onClick={() => dispatch(showDialog('show-confirm'))} className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer text-red-500"}>Delete order</p>
             </PopoverContent>

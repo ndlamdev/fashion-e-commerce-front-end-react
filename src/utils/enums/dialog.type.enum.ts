@@ -22,6 +22,7 @@ type DialogTypeEnum =
 	| "guide-choose-size"
 	| "show-confirm"
 	| "manage-addresses"
-	| "voice-search";
+	| "voice-search"
+  | "update-status";
 
 export default DialogTypeEnum;

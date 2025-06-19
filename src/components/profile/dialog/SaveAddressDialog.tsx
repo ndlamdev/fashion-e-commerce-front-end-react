@@ -4,24 +4,22 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/compone
 import { Input } from "@/components/ui/input.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select.tsx";
-import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { appDispatch, RootState } from "@/configs/store.config.ts";
 import { SaveAddressRequest } from "@/domain/resquest/saveAddress.request.ts";
 import { addressApi, adminAddressApi, useAdminGetAddressQuery, useAdminSaveAddressMutation, useGetAddressQuery, useSaveAddressMutation } from "@/redux/api/address.api.ts";
-import { useGetInfoAddressesQuery } from "@/redux/api/addressCoolMate.api";
 import { setAddressIdAction } from "@/redux/slice/address.slice";
 import { hiddenDialog } from "@/redux/slice/dialog.slice.ts";
-import { getAllCities, getCityCode, getDistrictId, getDistrictsByCity, getWardId, getWardsByCityAndDistrict } from "@/utils/helper/AddressFilter.ts";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
+import AddressData, { getDistrict, getWard } from "@/assets/data/address/tree"
+
 const SaveAddressDialog = () => {
   const dispatch = useDispatch();
   const { dialog } = useSelector((state: RootState) => state.dialog);
   const { user } = useSelector((state: RootState) => state.auth);
   const { addressIdAction, userIdAction } = useSelector((state: RootState) => state.address);
-  const { data: infoAddresses, isError: isErrorInfoAddresses, isLoading: isLoadingInfoAddresses } = useGetInfoAddressesQuery();
 
   const { data: address } = useGetAddressQuery(addressIdAction, { skip: !addressIdAction || !!userIdAction });
   const { data: adminAddress } = useAdminGetAddressQuery({ userId: userIdAction ?? 0, addressId: addressIdAction ?? 0 }, { skip: !addressIdAction || !userIdAction });
@@ -46,7 +44,7 @@ const SaveAddressDialog = () => {
     }
   }, [address, adminAddress, reset]);
 
-  const [cityValue, districtValue] = watch(["city", "district"]);
+  const [cityCodeValue, districtCodeValue] = watch(["city_code", "district_code"]);
 
   const onSubmit = async (formValues: SaveAddressRequest) => {
     try {
@@ -54,9 +52,9 @@ const SaveAddressDialog = () => {
         ...formValues,
         id: addressIdAction,
         country_code: user?.country_code,
-        city_code: getCityCode(infoAddresses, formValues.city),
-        district_id: getDistrictId(infoAddresses, formValues.city, formValues.district),
-        ward_id: getWardId(infoAddresses, formValues.city, formValues.district, formValues.ward),
+        city: AddressData[formValues.city_code].name_with_type,
+        district: getDistrict(formValues.city_code)[formValues.district_code].name_with_type,
+        ward: getWard(formValues.city_code, formValues.district_code)[formValues.ward_code].name_with_type,
         active: formValues.active ?? false,
       } as SaveAddressRequest;
 
@@ -135,26 +133,23 @@ const SaveAddressDialog = () => {
                   <Select
                     value={field.value}
                     onValueChange={(value) => {
-                      if (value) field.onChange(value)
+                      if (!value) return;
+                      field.onChange(value)
                     }}
                   >
                     <SelectTrigger className={"max-sm:w-full"}>
                       <SelectValue placeholder='Thành phố/tỉnh' />
                     </SelectTrigger>
                     <SelectContent className={"z-52"}>
-                      {isLoadingInfoAddresses && <Skeleton className={"w-full"} />}
-                      {isErrorInfoAddresses && <p className='text-sm text-red-500'>không tìm thấy dữ liệu</p>}
-                      {infoAddresses &&
-                        infoAddresses.length > 0 &&
-                        getAllCities(infoAddresses).map((item) => (
-                          <SelectItem key={item} value={item}>
-                            {item}{" "}
-                          </SelectItem>
-                        ))}
+                      {Object.entries(AddressData).map(([key, city]) => (
+                        <SelectItem key={"city-" + key} value={key}>
+                          {city.name_with_type}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 )}
-                name={"city"}
+                name={"city_code"}
                 control={control}
                 rules={{ required: "Không được bỏ trống" }}
               />
@@ -165,25 +160,23 @@ const SaveAddressDialog = () => {
                 render={({ field }) => (
                   <Select value={field.value}
                     onValueChange={(value) => {
-                      if (value) field.onChange(value)
+                      if (!value) return;
+                      field.onChange(value)
                     }}
                   >
-                    <SelectTrigger disabled={!cityValue} className={"max-sm:w-full"}>
+                    <SelectTrigger disabled={!cityCodeValue} className={"max-sm:w-full"}>
                       <SelectValue placeholder='Quận/huyện' />
                     </SelectTrigger>
-                    {cityValue && (
-                      <SelectContent className={"z-52"}>
-                        {infoAddresses &&
-                          getDistrictsByCity(infoAddresses, cityValue).map((item) => (
-                            <SelectItem key={item} data-district-code={item} value={item}>
-                              {item}
-                            </SelectItem>
-                          ))}
-                      </SelectContent>
-                    )}
+                    <SelectContent className={"z-52"}>
+                      {Object.entries(getDistrict(cityCodeValue)).map(([key, district]) => (
+                        <SelectItem key={"district-" + key} data-district-code={district.code} value={key}>
+                          {district.name_with_type}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
                   </Select>
                 )}
-                name={"district"}
+                name={"district_code"}
                 control={control}
                 rules={{ required: "Không được bỏ trống" }}
               />
@@ -197,22 +190,19 @@ const SaveAddressDialog = () => {
                       if (value) field.onChange(value)
                     }}
                   >
-                    <SelectTrigger disabled={!districtValue} className={"max-sm:w-full"}>
+                    <SelectTrigger disabled={!cityCodeValue || !districtCodeValue} className={"max-sm:w-full"}>
                       <SelectValue placeholder='Phường/xã' />
                     </SelectTrigger>
-                    {districtValue && (
-                      <SelectContent className={"z-52"}>
-                        {infoAddresses &&
-                          getWardsByCityAndDistrict(infoAddresses, cityValue, districtValue).map((item) => (
-                            <SelectItem key={item} value={item}>
-                              {item}
-                            </SelectItem>
-                          ))}
-                      </SelectContent>
-                    )}
+                    <SelectContent className={"z-52"}>
+                      {Object.entries(getWard(cityCodeValue, districtCodeValue)).map(([key, ward]) => (
+                        <SelectItem key={"ward-" + key} value={key}>
+                          {ward.name_with_type}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
                   </Select>
                 )}
-                name={"ward"}
+                name={"ward_code"}
                 control={control}
                 rules={{ required: "Không được bỏ trống" }}
               />
