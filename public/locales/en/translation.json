@@ -417,7 +417,210 @@
         "your_email": "Your email",
         "invalid_email": "Please enter a valid email address"
       }
+    },
+    "admin": {
+      "charts": {
+        "day": "Day",
+        "week": "Week",
+        "month": "Month",
+        "year": "Year",
+        "today": "Today",
+        "total_revenue": "Total Revenue",
+        "return_customer_rate": "Return Customer Rate",
+        "no_finish_order": "Number of Completed Orders",
+        "no_order": "Number of Orders",
+        "total_revenue_over_time": "Total Revenue Over Time",
+        "return_order_rate": "Return Order Rate",
+        "average_order_value": "Average Order Value",
+        "cart_abandonment_rate": "Cart Abandonment Rate",
+        "management": "Dashboard"
+      },
+      "customers": {
+        "customer": "Customer",
+        "import": "Import",
+        "export": "Export",
+        "add": "Add Customer",
+        "error_loading_list": "Failed to load customer list!",
+        "error_loading_history": "Failed to load purchase history!",
+        "error_loading_info": "Failed to load customer info!",
+        "error_loading_display_list": "Failed to load shipping addresses!",
+        "more_actions": "Actions",
+        "merge": "Merge Customers",
+        "request_data": "Request Customer Data",
+        "erase_data": "Erase Customer Data",
+        "management": "Customer Management",
+        "amount_spent": "Amount spent",
+        "orders": "Orders",
+        "customer_since": "Customer since",
+        "days": "days",
+        "rfm_group": "RFM Group",
+        "no_orders_yet": "This customer hasn’t placed any orders yet",
+        "create_order": "Create Order",
+        "column": {
+          "name": "Name",
+          "email": "Email",
+          "no_order": "Number of Orders",
+          "amount_spend": "Amount Spent",
+          "create_at": "Created At",
+          "actions": "Actions",
+          "watch_detail": "View Details",
+          "status": "Status"
+        },
+        "customer_info": {
+          "copy_mail_success": "Email copied successfully",
+          "copy_mail_failure": "Failed to copy email",
+          "customer": "Customer",
+          "edit_contact_info": "Edit Contact Info",
+          "edit_marketing_info": "Edit marketing information",
+          "contact_info": "Contact Info",
+          "default_address": "Default Address",
+          "marketing": "Marketing",
+          "email_subscribed": "Email Subscribed",
+          "sms_subscribed": "SMS Subscribed",
+          "title_question": "Do you want to delete this?",
+          "orders": "Orders"
+        }
+      },
+      "collections": {
+        "collection": "Collection",
+        "error": "Failed to load collection info!",
+        "import": "Import",
+        "export": "Export",
+        "add": "Add Collection",
+        "management": "Collection Management",
+        "column": {
+          "id": "Collection ID",
+          "name": "Collection Name",
+          "type": "Collection Type",
+          "total": "Total Products",
+          "create_at": "Created At",
+          "actions": "Actions",
+          "watch_detail": "View Details",
+          "status": "Status"
+        }
+      },
+      "inventory": {
+        "error": "Failed to load inventory info!",
+        "available": "Inventory",
+        "import": "Import",
+        "export": "Export",
+        "add": "Add Inventory",
+        "management": "Inventory Management",
+        "column": {
+          "id": "Inventory ID",
+          "product_id": "Product ID",
+          "sku": "SKU",
+          "variant_name": "Variant Name",
+          "option": "Option",
+          "price": "Selling Price",
+          "compare_price": "Compare Price",
+          "quality": "Quantity",
+          "create_at": "Created At",
+          "actions": "Actions",
+          "watch_detail": "View Details",
+          "status": "Status"
+        }
+      },
+      "media": {
+        "error": "Failed to load media info!",
+        "available": "Media",
+        "import": "Import",
+        "export": "Export",
+        "add": "Add Image",
+        "management": "Media Management",
+        "column": {
+          "id": "ID",
+          "title": "Title",
+          "path": "Image",
+          "option": "Extension",
+          "create_at": "Created At",
+          "actions": "Actions",
+          "watch_detail": "View Details",
+          "status": "Status"
+        },
+        "orders": {
+          "error": "System Error",
+          "error_detail_order": "Failed to load order details",
+          "more_actions": "Actions",
+          "order": "Order",
+          "delete": "Delete Order",
+          "product": "Product",
+          "payment": "Payment",
+          "management": "Order Management",
+          "export": "Export",
+          "add": "Create order",
+          "column": {
+            "id": "Order ID",
+            "status": "Status",
+            "email": "Email",
+            "full_name": "Full Name",
+            "total": "Total Amount",
+            "create_at": "Created At",
+            "actions": "Actions",
+            "watch_detail": "View Details",
+            "delete_order": "Delete Order"
+          },
+          "customer_info": {
+            "copy_mail_success": "Email copied successfully",
+            "copy_mail_failure": "Failed to copy email",
+            "customer": "Customer",
+            "edit_contact_info": "Edit Contact Info",
+            "contact_info": "Contact Info",
+            "default_address": "Default Address",
+            "marketing": "Marketing",
+            "email_subscribed": "Email Subscribed",
+            "sms_subscribed": "SMS Subscribed",
+            "title_question": "Do you want to delete this?"
+          },
+          "payment_info": {
+            "subtotal": "Subtotal",
+            "total": "Total",
+            "item": "item",
+            "discount": "Discount",
+            "shipping_fee": "Shipping fee",
+            "method": "Method"
+          }
+        },
+        "products": {
+          "price": "Price",
+          "inventory": "Inventory",
+          "transport": "Shipping",
+          "variant": "Variant",
+          "status": "Status",
+          "active": "Active",
+          "draft": "Draft",
+          "publish": "Publish",
+          "product_org": "Product Organization",
+          "error_loading_product": "Failed to load product info!",
+          "management": "Product Management",
+          "product": "Product",
+          "import": "Import",
+          "export": "Export",
+          "add_product": "Add Product",
+          "update_info_product": "Update Product Info",
+          "column": {
+            "id": "Product ID",
+            "name": "Product Name",
+            "variant_total": "Total Variants",
+            "inventory_total": "Total Inventory",
+            "create_at": "Created At",
+            "actions": "Actions",
+            "watch_detail": "View Details",
+            "status": "Status"
+          },
+          "variant_management": {
+            "add_option_note": "Add options like color, size",
+            "option_type": "Option type",
+            "color": "Color",
+            "size": "Size",
+            "option_value": "Option value",
+            "done": "Done",
+            "add_another_option": "Add another option"
+          }
+        }
+      }
     }
+
   },
   "recent_activities": {
     "title": "EXCLUSIVE FOR 363,688 KIMICLUB MEMBERS",

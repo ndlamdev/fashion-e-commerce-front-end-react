@@ -14,6 +14,8 @@ import { formatCurrency, formatDateFromArray } from "@/utils/helper/format-data.
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, TrashIcon } from "lucide-react";
 import { OrderColumnProp } from "../props/orderColumn.prop";
+import { translated } from "@/utils/helper/locale.ts";
+const tOrderColumns = (key: string) => translated(key, "page.admin.orders.column");
 
 export const columns = (
 	watchDetail: (orderId: number, userId: number) => void,
@@ -21,13 +23,13 @@ export const columns = (
 ): ColumnDef<OrderColumnProp | unknown, string | unknown>[] => [
 		{
 			accessorKey: "id",
-			header: 'Đơn hàng',
+			header: tOrderColumns('id'),
 			cell: ({ row }) => (<div className="font-bold">#{(row.getValue("id"))}</div>),
 		},
 		{
 			accessorKey: "status",
 			header: ({ column }) => (
-				<DataTableColumnHeader column={column} title="Trạng thái" />
+				<DataTableColumnHeader column={column} title={tOrderColumns('status')} />
 			),
 			cell: ({ row }) => (
 				<div>
@@ -40,19 +42,19 @@ export const columns = (
 		{
 			accessorKey: "email",
 			header: ({ column }) => (
-				<DataTableColumnHeader column={column} title="Email" />
+				<DataTableColumnHeader column={column} title={tOrderColumns('email')} />
 			),
 		},
 		{
 			accessorKey: "full_name",
 			header: ({ column }) => (
-				<DataTableColumnHeader className={'cursor-pointer'} column={column} title="Họ Tên" />
+				<DataTableColumnHeader className={'cursor-pointer'} column={column} title={tOrderColumns('full_name')} />
 			),
 		},
 		{
 			accessorKey: "amount",
 			header: ({ column }) => (
-				<DataTableColumnHeader className={'cursor-pointer'} column={column} title="Tổng tiền" />
+				<DataTableColumnHeader className={'cursor-pointer'} column={column} title={tOrderColumns('total')}/>
 			),
 			cell: ({ row }) => {
 				return <div className=" font-medium text-center">{formatCurrency(row.getValue("amount"))}</div>;
@@ -61,7 +63,7 @@ export const columns = (
 		{
 			accessorKey: "date",
 			header: ({ column }) => (
-				<DataTableColumnHeader column={column} title="Ngày đặt" />
+				<DataTableColumnHeader column={column} title={tOrderColumns('create_at')} />
 			),
 			cell: ({ row }) => (<div className="font-medium">{formatDateFromArray(row.getValue("date"))}</div>),
 		},
@@ -78,13 +80,13 @@ export const columns = (
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end">
-							<DropdownMenuLabel>Hành động</DropdownMenuLabel>
+							<DropdownMenuLabel>{tOrderColumns('actions')}</DropdownMenuLabel>
 							<DropdownMenuSeparator />
               <DropdownMenuItem className={'cursor-pointer'}
-                onClick={() => watchDetail(data.user_id, data.id)}>Xem chi tiết</DropdownMenuItem>
+                onClick={() => watchDetail(data.user_id, data.id)}>{tOrderColumns('watch_detail')}</DropdownMenuItem>
               <DropdownMenuItem className={'cursor-pointer text-red-500'}
                 onClick={() => onDelete(data.id)}>
-                <span>Xóa đơn hàng</span>
+                <span>{tOrderColumns('delete_order')}</span>
                 <TrashIcon className={'text-red-500'} />
               </DropdownMenuItem>
 						</DropdownMenuContent>

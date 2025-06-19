@@ -6,8 +6,12 @@ import { InboxIcon } from "lucide-react";
 import { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 export default function OrderManagementPage() {
+	const { t } = useTranslation(undefined, {
+		keyPrefix: "page.admin.orders"
+	});
   const navigate = useNavigate();
   const { data, error } = useAdminOrderHistoriesQuery()
   const handleWatchDetail = useCallback((userId: number, orderId: number) => {
@@ -24,11 +28,11 @@ export default function OrderManagementPage() {
 
   useEffect(() => {
     if (!error) return;
-    toast.error("Lỗi hệ thống")
+    toast.error(t('error'))
   }, [error])
 
  useEffect(() => {
-    document.title = "KimiFashion - Đơn hàng";
+    document.title = "KimiFashion - "+t('management');
   }, []);
 
   return (
@@ -37,11 +41,11 @@ export default function OrderManagementPage() {
         <div className="flex justify-between items-end">
           <p className="flex justify-end items-center space-x-2 text-sm sm:text-lg lg:text-2xl">
             <InboxIcon className={'size-4 sm:size-6 lg:size-8'} />
-            <span className={"font-bold "}>Đơn hàng </span>
+            <span className={"font-bold "}>{t('order')}</span>
           </p>
           <div className="flex items-center space-x-2 text-center">
-            <Button variant={"outline"} className={"cursor-pointer text-xs sm:text-md max-sm:h-8"}>Xuất</Button>
-            <Button className={"cursor-pointer text-xs sm:text-md max-sm:h-8"}>Tạo đơn</Button>
+            <Button variant={"outline"} className={"cursor-pointer text-xs sm:text-md max-sm:h-8"}>{t('export')}</Button>
+            <Button className={"cursor-pointer text-xs sm:text-md max-sm:h-8"}>{t('add')}</Button>
           </div>
         </div>
       </header>

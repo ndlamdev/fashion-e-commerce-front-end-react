@@ -21,7 +21,11 @@ import { useCallback, useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 const OrderDetailManagementPage = () => {
+	const { t } = useTranslation(undefined, {
+		keyPrefix: "page.admin.orders"
+	});
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate()
@@ -81,11 +85,11 @@ const OrderDetailManagementPage = () => {
 
   useEffect(() => {
     if (!isError) return;
-    toast.error("Lỗi tải chi tiết đơn hàng")
+    toast.error(t('error_detail_order'))
   }, [isError])
 
   useEffect(() => {
-    document.title = "KimiFashion - Chi tiết đơn hàng";
+    document.title = "KimiFashion - "+t('management');
   }, []);
 
   return (
@@ -106,13 +110,13 @@ const OrderDetailManagementPage = () => {
           <Popover>
             <PopoverTrigger className={"cursor-pointer"} asChild>
               <Button variant={"outline"} className={" max-sm:size-8"}>
-                <span className={'max-sm:hidden'}>More actions</span>
+                <span className={'max-sm:hidden'}>{t('more_actions')}</span>
                 <EllipsisIcon className={"sm:hidden"} />
               </Button>
             </PopoverTrigger>
             <PopoverContent className={"w-auto -translate-1/14 translate-y-2 p-2 text-xs sm:text-sm"}>
-              <p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>Duplicate</p>
-              <p onClick={() => dispatch(showDialog('show-confirm'))} className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer text-red-500"}>Delete order</p>
+              <p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>{t('more_actions')}</p>
+              <p onClick={() => dispatch(showDialog('show-confirm'))} className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer text-red-500"}>{t('delete')}</p>
             </PopoverContent>
           </Popover>
         </div>
@@ -120,7 +124,7 @@ const OrderDetailManagementPage = () => {
       <section
         className={"flex justify-between max-sm:flex-wrap max-sm:space-y-2 my-4 space-x-3 items-start"}>
         <div className="rounded-lg shadow-sm shadow-accent-foreground  w-full sm:w-7/10 p-3 bg-white text-xs sm:text-sm text-neutral-600">
-          <span className={'text-base'}>Products</span>
+          <span className={'text-base'}>{t('product')}</span>
           <DataTable columns={orderItemColumns} data={dataWithHandler} />
         </div>
         <InfoCustomer
@@ -156,7 +160,7 @@ const OrderDetailManagementPage = () => {
 
       <div className="flex items-start max-sm:flex-wrap my-5 sm:space-x-6 max-sm:space-y-4">
         <section className={"rounded-lg shadow-sm shadow-accent-foreground w-full sm:w-7/10 p-3 bg-white text-neutral-600"}>
-          <span>Payment</span>
+          <span>{t('payment')}</span>
           {!data ? <Skeleton /> : <OrderPaymentInfo {...data.data} />}
         </section>
       </div>

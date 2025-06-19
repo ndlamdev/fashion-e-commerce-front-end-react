@@ -14,8 +14,12 @@ import { useGetAllInventoryQuery } from "@/redux/api/inventory.api";
 import { EllipsisIcon, TagIcon } from "lucide-react";
 import { useCallback, useEffect } from "react";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 function InventoryManagementPage() {
+	const { t } = useTranslation(undefined, {
+		keyPrefix: "page.admin.inventory"
+	});
   const { data, isError } = useGetAllInventoryQuery();
 
   const handleWatchDetail = useCallback((id: string) => {
@@ -28,11 +32,11 @@ function InventoryManagementPage() {
 
   useEffect(() => {
     if (!isError) return;
-    toast.error("Lỗi tải thông tin tồn kho!");
+    toast.error(t('error'));
   }, [isError]);
 
   useEffect(() => {
-    document.title = "KimiFashion - Quản lý tồn kho";
+    document.title = "KimiFashion - "+t('management');
   }, []);
 
 
@@ -42,7 +46,7 @@ function InventoryManagementPage() {
         <div className="flex justify-between items-end">
           <p className="flex justify-end items-center space-x-2 text-sm sm:text-lg lg:text-2xl">
             <TagIcon className={'size-4 sm:size-6 lg:size-8'} />
-            <span className={"font-bold "}>Tồn kho</span>
+            <span className={"font-bold "}>{t('available')}</span>
           </p>
           <div className="flex items-center space-x-2 text-center">
             <Popover>
@@ -52,13 +56,13 @@ function InventoryManagementPage() {
                 </Button>
               </PopoverTrigger>
               <PopoverContent className={"w-auto text-center -translate-1/14 translate-y-2 p-2 text-sm"}>
-                <p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>Nhập</p>
-                <p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>Xuất</p>
+                <p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>{t('Nhập')}</p>
+                <p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>{t('Xuất')}</p>
               </PopoverContent>
             </Popover>
-            <Button variant={"outline"} className={"cursor-pointer max-sm:hidden"}>Nhập</Button>
-            <Button variant={"outline"} className={"cursor-pointer max-sm:hidden"}>Xuất</Button>
-            <Button className={"cursor-pointer text-xs sm:text-md max-sm:h-8"}>Thêm Tồn kho</Button>
+            <Button variant={"outline"} className={"cursor-pointer max-sm:hidden"}>{t('Nhập')}</Button>
+            <Button variant={"outline"} className={"cursor-pointer max-sm:hidden"}>{t('Xuất')}</Button>
+            <Button className={"cursor-pointer text-xs sm:text-md max-sm:h-8"}>{t('add')}</Button>
           </div>
         </div>
       </header>

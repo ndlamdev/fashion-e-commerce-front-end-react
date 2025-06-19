@@ -221,7 +221,7 @@
       "search": "Tìm kiếm",
       "see_more": "Xem thêm"
     },
-    "profile":{
+    "profile": {
       "ranking": {
         "spend_extra": "Chi tiêu thêm",
         "hi": "Chào",
@@ -314,16 +314,46 @@
         "title": "Chính sách và câu hỏi thường gặp",
         "heading": "FAQ - Câu hỏi thường gặp",
         "faq": {
-          "faq_1": {"title": "Tại sao tôi nên tham gia CoolClub?", "content": "CoolClub là chương trình Hội viên dành cho tất cả khách hàng Coolmate, mang đến nhiều quyền lợi cho người tham gia. Hội viên CoolClub sẽ được: Tích lũy chi tiêu để thăng hạng; Hưởng các quyền lợi theo hạng Hội viên: nhận quà tặng định kỳ, ưu đãi độc quyền; Hoàn tiền CoolCash cho mỗi đơn hàng; Đổi thưởng và rất nhiều quyền lợi khác sẽ được Coolmate cập nhật thường xuyên."},
-          "faq_2": {"title": "Đăng ký làm Hội viên CoolClub có mất phí không? Cách đăng ký như thế nào?", "content": "Bạn có thể đăng ký CoolClub hoàn toàn miễn phí bằng cách tạo Tài khoản tại website Coolmate.me. Khi đăng ký thành công, bạn đã được nhận các quyền lợi của hạng Thành viên mới, đồng thời nhận ngay voucher mua sắm 15% (tối đa 50.000 VND) để bắt đầu mua sắm."},
-          "faq_3": {"title": "Chương trình CoolClub cũ ngừng áp dụng khi nào? CoolClub mới có nâng cấp gì khác?", "content": "Chương trình CoolClub cũ ngừng áp dụng vào ngày 25/09/2023 để nâng cấp. Ở chương  trình CoolClub phiên bản mới, bạn sẽ có trải nghiệm mua sắm thú vị hơn với nhiều đặc quyền theo hạng Hội viên, tích luỹ chi tiêu để thăng hạng, hoàn tiền CoolCash cho mỗi đơn hàng, đổi thưởng, nhận quà tặng định kỳ và vô vàn ưu đãi, chương trình, quyền lợi độc quyền khác sẽ được Coolmate cập nhật thêm trong tương lai."},
-          "faq_4": {"title": "CoolCash có thời hạn không? Nếu có, thời hạn là bao lâu?", "content": "CoolCash được tích luỹ sau mỗi đơn hàng có giá trị trong 4 Quý và sẽ được cập nhật hạn dùng vào ngày đầu tiên của mỗi Quý, diễn ra 4 lần mỗi năm vào các ngày 01/01, 01/04, 01/07 và 01/10."},
-          "faq_5": {"title": "Tôi có thể kết hợp ưu đãi theo Hạng Hội viên và ưu đãi khác không?", "content": "Khi mua sắm trên website Coolmate, bên cạnh các ưu đãi hiện có, bạn sẽ được tự động áp dụng ưu đãi theo hạng Hội viên tương ứng. Tuy nhiên, việc áp dụng một số quyền lợi CoolClub có thể thay đổi tuỳ vào chính sách và quy định của từng chương trình ưu đãi."},
-          "faq_6": {"title": "Hạng Hội viên khi nào sẽ được cập nhật? Bao lâu sẽ được cập nhật lại?", "content": "Hội viên sẽ thăng hạng ngay khi đạt mức chi tiêu của hạng tiếp theo. Hạng Hội viên sẽ được cập nhật vào ngày đầu tiên của mỗi Quý, diễn ra 4 lần mỗi năm vào các ngày 01/01, 01/04, 01/07 và 01/10."},
-          "faq_7": {"title": "Làm sao để tích luỹ CoolCash?", "content": "Sau khi đăng ký Hội viên CoolClub, bạn sẽ nhận được hoàn tiền CoolCash từ mỗi giao dịch mua hàngtrên website Coolmate theo hạng Hội viên tương ứng và dựa trên chi tiêu mỗi đơn hàng. Mỗi 1 đơn vị CoolCash có giá trị hỗ trợ thanh toán tương đương 1 VND (1 CoolCash = 1 VND). "},
-          "faq_8": {"title": "Tôi có thể dùng CoolCash để giảm giá trực tiếp không?", "content": "Có, bạn có thể sử dụng CoolCash trừ trực tiếp vào giá trị đơn hàng khi mua sắm. Tuy nhiên, bạn cần lưu ý:\nNếu số CoolCash bạn có ít hơn 50% giá trị đơn hàng: Tất cả CoolCash sẽ bị trừ ngay khi sử dụng.\nNếu số CoolCash bạn có nhiều hơn 50% giá trị đơn hàng: Số CoolCash bị trừ tối đa bằng 50% giá trị đơn hàng ngay khi sử dụng, số còn lại sẽ được bảo lưu cho lần mua hàng tiếp theo."},
-          "faq_9": {"title": "Đổi/trả hàng có ảnh hưởng đến CoolCash và hạng Hội viên không?", "content": "Có, CoolCash và hạng Hội viên chỉ được tính trên giá trị của đơn hàng thành công. Việc đổi/trả hàng có thể ảnh hưởng đến giá trị cuối cùng khi hoàn tất đơn hàng."},
-          "faq_10": {"title": "Tôi mua hàng trên các sàn thương mại điện tử có được tích lũy chi tiêu CoolClub không?", "content": "Trong thời điểm hiện tại, chương trình CoolClub chỉ dành cho các khách hàng mua hàng tại Website Coolmate, chưa áp dụng với các khách hàng mua hàng tại các sàn thương mại điện tử."}
+          "faq_1": {
+            "title": "Tại sao tôi nên tham gia CoolClub?",
+            "content": "CoolClub là chương trình Hội viên dành cho tất cả khách hàng Coolmate, mang đến nhiều quyền lợi cho người tham gia. Hội viên CoolClub sẽ được: Tích lũy chi tiêu để thăng hạng; Hưởng các quyền lợi theo hạng Hội viên: nhận quà tặng định kỳ, ưu đãi độc quyền; Hoàn tiền CoolCash cho mỗi đơn hàng; Đổi thưởng và rất nhiều quyền lợi khác sẽ được Coolmate cập nhật thường xuyên."
+          },
+          "faq_2": {
+            "title": "Đăng ký làm Hội viên CoolClub có mất phí không? Cách đăng ký như thế nào?",
+            "content": "Bạn có thể đăng ký CoolClub hoàn toàn miễn phí bằng cách tạo Tài khoản tại website Coolmate.me. Khi đăng ký thành công, bạn đã được nhận các quyền lợi của hạng Thành viên mới, đồng thời nhận ngay voucher mua sắm 15% (tối đa 50.000 VND) để bắt đầu mua sắm."
+          },
+          "faq_3": {
+            "title": "Chương trình CoolClub cũ ngừng áp dụng khi nào? CoolClub mới có nâng cấp gì khác?",
+            "content": "Chương trình CoolClub cũ ngừng áp dụng vào ngày 25/09/2023 để nâng cấp. Ở chương  trình CoolClub phiên bản mới, bạn sẽ có trải nghiệm mua sắm thú vị hơn với nhiều đặc quyền theo hạng Hội viên, tích luỹ chi tiêu để thăng hạng, hoàn tiền CoolCash cho mỗi đơn hàng, đổi thưởng, nhận quà tặng định kỳ và vô vàn ưu đãi, chương trình, quyền lợi độc quyền khác sẽ được Coolmate cập nhật thêm trong tương lai."
+          },
+          "faq_4": {
+            "title": "CoolCash có thời hạn không? Nếu có, thời hạn là bao lâu?",
+            "content": "CoolCash được tích luỹ sau mỗi đơn hàng có giá trị trong 4 Quý và sẽ được cập nhật hạn dùng vào ngày đầu tiên của mỗi Quý, diễn ra 4 lần mỗi năm vào các ngày 01/01, 01/04, 01/07 và 01/10."
+          },
+          "faq_5": {
+            "title": "Tôi có thể kết hợp ưu đãi theo Hạng Hội viên và ưu đãi khác không?",
+            "content": "Khi mua sắm trên website Coolmate, bên cạnh các ưu đãi hiện có, bạn sẽ được tự động áp dụng ưu đãi theo hạng Hội viên tương ứng. Tuy nhiên, việc áp dụng một số quyền lợi CoolClub có thể thay đổi tuỳ vào chính sách và quy định của từng chương trình ưu đãi."
+          },
+          "faq_6": {
+            "title": "Hạng Hội viên khi nào sẽ được cập nhật? Bao lâu sẽ được cập nhật lại?",
+            "content": "Hội viên sẽ thăng hạng ngay khi đạt mức chi tiêu của hạng tiếp theo. Hạng Hội viên sẽ được cập nhật vào ngày đầu tiên của mỗi Quý, diễn ra 4 lần mỗi năm vào các ngày 01/01, 01/04, 01/07 và 01/10."
+          },
+          "faq_7": {
+            "title": "Làm sao để tích luỹ CoolCash?",
+            "content": "Sau khi đăng ký Hội viên CoolClub, bạn sẽ nhận được hoàn tiền CoolCash từ mỗi giao dịch mua hàngtrên website Coolmate theo hạng Hội viên tương ứng và dựa trên chi tiêu mỗi đơn hàng. Mỗi 1 đơn vị CoolCash có giá trị hỗ trợ thanh toán tương đương 1 VND (1 CoolCash = 1 VND). "
+          },
+          "faq_8": {
+            "title": "Tôi có thể dùng CoolCash để giảm giá trực tiếp không?",
+            "content": "Có, bạn có thể sử dụng CoolCash trừ trực tiếp vào giá trị đơn hàng khi mua sắm. Tuy nhiên, bạn cần lưu ý:\nNếu số CoolCash bạn có ít hơn 50% giá trị đơn hàng: Tất cả CoolCash sẽ bị trừ ngay khi sử dụng.\nNếu số CoolCash bạn có nhiều hơn 50% giá trị đơn hàng: Số CoolCash bị trừ tối đa bằng 50% giá trị đơn hàng ngay khi sử dụng, số còn lại sẽ được bảo lưu cho lần mua hàng tiếp theo."
+          },
+          "faq_9": {
+            "title": "Đổi/trả hàng có ảnh hưởng đến CoolCash và hạng Hội viên không?",
+            "content": "Có, CoolCash và hạng Hội viên chỉ được tính trên giá trị của đơn hàng thành công. Việc đổi/trả hàng có thể ảnh hưởng đến giá trị cuối cùng khi hoàn tất đơn hàng."
+          },
+          "faq_10": {
+            "title": "Tôi mua hàng trên các sàn thương mại điện tử có được tích lũy chi tiêu CoolClub không?",
+            "content": "Trong thời điểm hiện tại, chương trình CoolClub chỉ dành cho các khách hàng mua hàng tại Website Coolmate, chưa áp dụng với các khách hàng mua hàng tại các sàn thương mại điện tử."
+          }
         }
       },
       "logout_tab": {
@@ -345,7 +375,6 @@
         "forget_password": "Quên mật khẩu",
         "invalid_email": "Vui lòng nhập email hợp lệ"
       },
-
       "register": {
         "register_now": "Đăng ký ngay",
         "description": "Rất nhiều đặc quyền và quyền lợi mua sắm đang chờ bạn",
@@ -386,18 +415,219 @@
         "invalid_email": "Vui lòng nhập email hợp lệ"
       }
     },
-    "admin":""
-  },
-  "recent_activities": {
-    "title": "ĐẶC QUYỀN DÀNH CHO 363,688 THÀNH VIÊN KIMICLUB",
-    "viewed_products": "Sản phẩm đã xem gần đây",
-    "sub_title": "HOẠT ĐỘNG GẦN ĐÂY",
-    "join_now": {
-      "text": "GIA NHẬP KIMICLUB NGAY"
+    "admin": {
+      "charts": {
+        "day": "Ngày",
+        "week": "Tuần",
+        "month": "Tháng",
+        "year": "Năm",
+        "today": "Hôm nay",
+        "total_revenue": "Tổng doanh thu",
+        "return_customer_rate": "Tỷ lệ khách hàng trở lại",
+        "no_finish_order": "Số đơn hàng hoàn thành",
+        "no_order": "Số đơn hàng",
+        "total_revenue_over_time": "Tổng doanh thu theo thời gian",
+        "return_order_rate": "Tỷ lệ đơn hàng bị trả về",
+        "average_order_value": "Giá trị đơn hàng trung bình",
+        "cart_abandonment_rate": "Tỷ lệ bỏ giỏ hàng",
+        "management": "Dashboard"
+      },
+      "customers": {
+        "customer": "Khách hàng",
+        "import": "Nhập",
+        "export": "Xuất",
+        "add": "Thêm Khách hàng",
+        "error_loading_list": "Lỗi tải thông tin khách hàng!",
+        "error_loading_history": "Lỗi tải lịch sử mua hàng!",
+        "error_loading_info": "Lỗi tải thông tin cá nhân!",
+        "error_loading_display_list": "Lỗi tải thông tin địa chỉ giao hàng người dùng!",
+        "more_actions": "Hành động",
+        "merge": "Gộp khách hàng",
+        "request_data": "Yêu cầu dữ liệu khách hàng",
+        "erase_data": "Xóa dữ liệu khách hàng",
+        "management": "Quản lý khách hàng",
+        "amount_spent": "Tổng chi tiêu",
+        "orders": "Đơn hàng",
+        "customer_since": "Khách hàng từ",
+        "days": "ngày",
+        "rfm_group": "Nhóm RFM",
+        "no_orders_yet": "Khách hàng này chưa có đơn hàng nào",
+        "create_order": "Tạo đơn hàng",
+        "column": {
+          "name": "Tên",
+          "email": "Email",
+          "no_order": "Số đơn hàng",
+          "amount_spend": "Đã chi tiêu",
+          "create_at": "Ngày tạo",
+          "actions": "Hành động",
+          "watch_detail": " Xem chi tiết",
+          "status": " Tình trạng"
+        },
+        "customer_info": {
+          "copy_mail_success": "Copy email thành công",
+          "copy_mail_failure": "Copy email thất bại",
+          "customer": "Khách hàng",
+          "edit_contact_info": "Chỉnh sửa thông tin liên hệ",
+          "edit_marketing_info": "Chỉnh sửa cài đặt tiếp thị",
+          "contact_info": "Thông tin liên hệ",
+          "default_address": "Địa chỉ mặc định",
+          "marketing": "Marketing",
+          "email_subscribed": "Email subscribed",
+          "sms_subscribed": "SMS  subscribed",
+          "title_question": "Do you want to delete this?",
+          "orders": "Đơn hàng"
+        }
+      },
+      "collections": {
+        "collection": "Danh mục",
+        "error": "Lỗi tải thông tin danh mục!",
+        "import": "Nhập",
+        "export": "Xuất",
+        "add": "Thêm Danh mục",
+        "management": "Quản lý danh mục",
+        "column": {
+          "id": "Mã danh mục",
+          "name": "Tên danh mục",
+          "type": "Loại danh mục",
+          "total": "Tổng sản phẩm",
+          "create_at": "Ngày tạo",
+          "actions": "Hành động",
+          "watch_detail": " Xem chi tiết",
+          "status": " Tình trạng"
+        }
+      },
+      "inventory": {
+        "error": "Lỗi tải thông tin tồn kho!",
+        "available": "Tồn kho",
+        "import": "Nhập",
+        "export": "Xuất",
+        "add": "Thêm Tồn kho",
+        "management": "Quản lý Tồn kho",
+        "column": {
+          "id": "Mã tồn kho",
+          "product_id": "Mã sản phẩm",
+          "sku": "Mã SKU",
+          "variant_name": "Tên biến thể",
+          "option": "Tùy chọn",
+          "price": "Giá bán",
+          "compare_price": "Giá so sánh",
+          "quality": "Số lượng",
+          "create_at": "Ngày tạo",
+          "actions": "Hành động",
+          "watch_detail": " Xem chi tiết",
+          "status": " Tình trạng"
+        }
+      },
+      "media": {
+        "error": "Lỗi tải thông tin đa phương tiện!",
+        "available": "Đa phương tiện",
+        "import": "Nhập",
+        "export": "Xuất",
+        "add": "Thêm Hình ảnh",
+        "management": "Quản lý đa phương tiện",
+        "column": {
+          "id": "Mã",
+          "title": "Tiêu đề",
+          "path": "Hình ảnh",
+          "option": "Phần mở rộng",
+          "create_at": "Ngày tạo",
+          "actions": "Hành động",
+          "watch_detail": " Xem chi tiết",
+          "status": " Tình trạng"
+        },
+        "orders": {
+          "error": "Lỗi hệ thống",
+          "error_detail_order": "Lỗi tải chi tiết đơn hàng",
+          "more_actions": "Hành động",
+          "order": "Đơn hàng",
+          "delete": "Xóa đơn hàng",
+          "product": "Sản phẩm",
+          "payment": "Thanh toán",
+          "management": "Quản lý Đơn hàng",
+          "export": "Xuất",
+          "add": "Tạo đơn",
+          "column": {
+            "id": "Mã Đơn hàng",
+            "status": "Trạng thái",
+            "email": "Email",
+            "full_name": "Họ Tên",
+            "total": "Tổng tiền",
+            "create_at": "Ngày tạo",
+            "actions": "Hành động",
+            "watch_detail": " Xem chi tiết",
+            "delete_order": " Xóa đơn hàng"
+          },
+          "customer_info": {
+            "copy_mail_success": "Copy email thành công",
+            "copy_mail_failure": "Copy email thất bại",
+            "customer": "Khách hàng",
+            "edit_contact_info": "Chỉnh sửa thông tin liên hệ",
+            "contact_info": "Thông tin liên hệ",
+            "default_address": "Địa chỉ mặc định",
+            "marketing": "Marketing",
+            "email_subscribed": "Emai subscribed",
+            "sms_subscribed": "SMS  subscribed",
+            "title_question": "Do you want to delete this?"
+          },
+          "payment_info": {
+            "subtotal": "Tổng tạm",
+            "total": "Tổng cộng",
+            "item": "mặt hàng",
+            "discount": "Giảm giá",
+            "shipping_fee": "Phí vận chuyển",
+            "method": "Phương thức"
+          }
+        },
+        "products": {
+          "price": "Giá",
+          "inventory": "Tồn kho",
+          "transport": "Vận chuyển",
+          "variant": "Biến thể",
+          "status": "Trạng thái",
+          "active": "Kích hoạt",
+          "draft": "Nháp",
+          "publish": "Công bố",
+          "product_org": "Tổ chức sản phẩm",
+          "error_loading_product": "Lỗi tải thông tin sản phẩm!",
+          "management": "Quản lý sản phẩm",
+          "product": "Sản phẩm",
+          "import": "Nhập",
+          "export": "Xuất",
+          "add_product": "Thêm Sản phẩm",
+          "update_info_product": "Cập nhật thông tin sản phẩm",
+          "column": {
+            "id": "Mã sản phẩm",
+            "name": "Tên sản phẩm",
+            "variant_total": "Tổng biến thể",
+            "inventory_total": "Tổng tồn kho",
+            "create_at": "Ngày tạo",
+            "actions": "Hành động",
+            "watch_detail": " Xem chi tiết",
+            "status": " Tình trạng"
+          },
+          "variant_management": {
+            "add_option_note": "Thêm tùy chọn như màu sắc, kích thước",
+            "option_type": "Loại tùy chọn",
+            "color": "Màu sắc",
+            "size": "Kích thước",
+            "option_value": "Giá trị tùy chọn",
+            "done": "Xong",
+            "add_another_option": "Thêm tùy chọn khác"
+          }
+        }
+      }
+    },
+    "recent_activities": {
+      "title": "ĐẶC QUYỀN DÀNH CHO 363,688 THÀNH VIÊN KIMICLUB",
+      "viewed_products": "Sản phẩm đã xem gần đây",
+      "sub_title": "HOẠT ĐỘNG GẦN ĐÂY",
+      "join_now": {
+        "text": "GIA NHẬP KIMICLUB NGAY"
+      }
+    },
+    "button": {
+      "cancel": "Hủy",
+      "ok": "Xác nhận"
     }
-  },
-  "button": {
-    "cancel": "Hủy",
-    "ok": "Xác nhận"
   }
 }

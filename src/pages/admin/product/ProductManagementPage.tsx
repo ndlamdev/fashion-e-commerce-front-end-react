@@ -15,8 +15,12 @@ import { EllipsisIcon, TagIcon } from "lucide-react";
 import { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 function ProductManagementPage() {
+	const { t } = useTranslation(undefined, {
+		keyPrefix: "page.admin.products"
+	});
   const navigate = useNavigate();
   const { data, isError } = useGetAllProductQuery();
 
@@ -30,11 +34,11 @@ function ProductManagementPage() {
 
   useEffect(() => {
     if (!isError) return;
-    toast.error("Lỗi tải thông tin sản phẩm!");
+    toast.error(t('error_loading_product'));
   }, [isError]);
 
    useEffect(() => {
-    document.title = "KimiFashion - Quản lý sản phẩm";
+    document.title = "KimiFashion - "+t('management');
   }, []);
 
   return (
@@ -43,7 +47,7 @@ function ProductManagementPage() {
         <div className="flex justify-between items-end">
           <p className="flex justify-end items-center space-x-2 text-sm sm:text-lg lg:text-2xl">
             <TagIcon className={'size-4 sm:size-6 lg:size-8'} />
-            <span className={"font-bold "}>Sản phẩm</span>
+            <span className={"font-bold "}>{t('product')}</span>
           </p>
           <div className="flex items-center space-x-2 text-center">
             <Popover>
@@ -53,18 +57,18 @@ function ProductManagementPage() {
                 </Button>
               </PopoverTrigger>
               <PopoverContent className={"w-auto text-center -translate-1/14 translate-y-2 p-2 text-sm"}>
-                <p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>Nhập</p>
-                <p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>Xuất</p>
+                <p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>{t('import')}</p>
+                <p className={'p-1 hover:bg-neutral-200 rounded-lg cursor-pointer'}>{t('export')}</p>
               </PopoverContent>
             </Popover>
-            <Button variant={"outline"} className={"cursor-pointer max-sm:hidden"}>Nhập</Button>
-            <Button variant={"outline"} className={"cursor-pointer max-sm:hidden"}>Xuất</Button>
+            <Button variant={"outline"} className={"cursor-pointer max-sm:hidden"}>{t('import')}</Button>
+            <Button variant={"outline"} className={"cursor-pointer max-sm:hidden"}>{t('export')}</Button>
             <Button
               className={"cursor-pointer text-xs sm:text-md max-sm:h-8"}
               onClick={() => {
                 navigate("/admin/product/create");
               }}
-            >Thêm Sản phẩm</Button>
+            >{t('add_product')}</Button>
           </div>
         </div>
       </header>
