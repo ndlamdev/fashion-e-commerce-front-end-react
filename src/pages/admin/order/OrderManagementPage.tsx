@@ -1,19 +1,22 @@
 import DataTable from "@/components/dataTable/DataTable.tsx";
 import { columns } from "@/components/dataTable/dataColumns/order.column.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { useAdminOrderHistoriesQuery } from "@/redux/api/order.api";
+import { useAdminOrderHistoriesQuery, useAdminOrderAbandonedCheckoutHistoriesQuery } from "@/redux/api/order.api";
 import { InboxIcon } from "lucide-react";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
+import HistoryOrderType from "@/types/historyOrder.type";
 
-export default function OrderManagementPage() {
-	const { t } = useTranslation(undefined, {
-		keyPrefix: "page.admin.orders"
-	});
+export default function OrderManagementPage({ abandonedCheckout }: { abandonedCheckout?: boolean }) {
+  const { t } = useTranslation(undefined, {
+    keyPrefix: "page.admin.orders"
+  });
   const navigate = useNavigate();
-  const { data, error } = useAdminOrderHistoriesQuery()
+  const { data: orderHistories, isError: isErrorOrderHistories } = useAdminOrderHistoriesQuery(undefined, { skip: abandonedCheckout })
+  const { data: abandonedCheckoutHistories, isError: isErrorAbandonedCheckoutHistories } = useAdminOrderAbandonedCheckoutHistoriesQuery(undefined, { skip: !abandonedCheckout })
+  const [data, setData] = useState<HistoryOrderType[]>([]);
   const handleWatchDetail = useCallback((userId: number, orderId: number) => {
     navigate(`/admin/orders/${orderId}`, {
       state: {
@@ -27,13 +30,17 @@ export default function OrderManagementPage() {
   }, [])
 
   useEffect(() => {
-    if (!error) return;
+    if (!isErrorOrderHistories && !isErrorAbandonedCheckoutHistories) return;
     toast.error(t('error'))
-  }, [error])
+  }, [isErrorOrderHistories, isErrorAbandonedCheckoutHistories, t])
 
- useEffect(() => {
-    document.title = "KimiFashion - "+t('management');
-  }, []);
+  useEffect(() => {
+    document.title = "KimiFashion - " + t('management');
+  }, [t]);
+
+  useEffect(() => {
+    setData(orderHistories?.data ?? (abandonedCheckoutHistories?.data ?? []));
+  }, [orderHistories, abandonedCheckoutHistories]);
 
   return (
     <main>
@@ -49,7 +56,7 @@ export default function OrderManagementPage() {
           </div>
         </div>
       </header>
-      <DataTable columns={columns(handleWatchDetail, handleDelete)} data={data?.data ?? []} />
+      <DataTable columns={columns(handleWatchDetail, handleDelete)} data={data} />
     </main>
   )
 }

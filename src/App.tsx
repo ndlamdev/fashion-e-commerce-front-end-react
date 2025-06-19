@@ -95,8 +95,10 @@ function MainRouter() {
               <Route path={"product/create"} element={<CreateProductPage />} />
               <Route path={"product/update/:id"} element={<UpdateProductPage />} />
               <Route path={"customers"} element={<CustomerManagementPage />} />
+              <Route path={"customers/segments"} element={<NotFoundPage />} />
               <Route path={"customers/:id"} element={<CustomerDetailManagementPage />} />
               <Route path={"orders"} element={<OrderManagementPage />} />
+              <Route path={"orders/abandoned-checkouts"} element={<OrderManagementPage abandonedCheckout={true} />} />
               <Route path={"orders/:id"} element={<OrderDetailManagementPage />} />
               <Route path={""} element={<DashBoardPage />} />
               <Route path={"collections"} element={<CollectionManagementPage />} />
