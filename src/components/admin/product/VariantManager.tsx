@@ -7,13 +7,13 @@
  **/
 import { HumbleiconsPlusCircle } from "@/assets/images/icons/HumbleiconsPlusCircle.tsx";
 import { CodexMenu } from "@/assets/images/icons/CodexMenu.tsx";
-import { DetailedHTMLProps, HTMLAttributes, useCallback, useState } from "react";
+import { DetailedHTMLProps, HTMLAttributes, useCallback, useEffect, useState } from "react";
 import OptionVariantType from "@/types/admin/option-variant.type.ts";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Input from "@/components/form/Input";
 import { Trash } from "lucide-react";
 
-function VariantManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>) {
+function VariantManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & { setOptions?: (options: Record<string, string[]>) => void }) {
   const [optionVariants, setOptionVariants] = useState<OptionVariantType[]>([]);
 
   const createNewOption = () => {
@@ -99,6 +99,16 @@ function VariantManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>,
       ),
     );
   };
+
+  useEffect(() => {
+    const options: Record<string, string[]> = {}
+    optionVariants.forEach((optionVariant) => {
+      if (!options[optionVariant.name]) {
+        options[optionVariant.name] = [];
+      }
+      optionVariant.values.forEach(value => options[optionVariant.name].push(value.newValue));
+    });
+  }, [optionVariants])
 
   return (
     <div {...props}>

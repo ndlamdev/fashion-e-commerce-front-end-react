@@ -15,7 +15,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { HoverCardContext } from "@/context/HoverCardContext.ts";
 import { HoverCardValues } from "@/context/provider/HoverCardProvider.tsx";
 import { useAdminGetAddressesQuery } from "@/redux/api/address.api";
-import { useAdminGetOrderHistoriesByUseIdQuery } from "@/redux/api/order.api";
+import { useAdminGetOrderHistoriesByUserIdQuery } from "@/redux/api/order.api";
 import { useAdminGetProfileQuery } from "@/redux/api/profile.api";
 import { setUserIdAction } from "@/redux/slice/address.slice";
 import { showDialog } from "@/redux/slice/dialog.slice.ts";
@@ -37,13 +37,13 @@ export default function CustomerDetailManagementPage() {
     navigate("/admin")
   }, [id, navigate])
 
-   useEffect(() => {
+  useEffect(() => {
     document.title = "KimiFashion - Quản lý khách hàng";
   }, []);
 
   const customer = CustomerManagementData;
   const data = HoverCardValues[hoverCard];
-  const { data: dataOrders, error: errorOrders } = useAdminGetOrderHistoriesByUseIdQuery(parseInt(id ?? "0"))
+  const { data: dataOrders, error: errorOrders } = useAdminGetOrderHistoriesByUserIdQuery(parseInt(id ?? "0"))
   const { data: dataProfile, error: errorProfle } = useAdminGetProfileQuery(parseInt(id ?? "0"));
   const { data: dataAddresses, error: errorAddresses } = useAdminGetAddressesQuery(parseInt(id ?? "0"));
 

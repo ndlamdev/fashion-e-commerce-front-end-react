@@ -12,7 +12,7 @@ import DialogConfirm from "@/components/dialog/DialogConfirm.tsx";
 import { useLocation, Link } from "react-router";
 import { toast } from "sonner";
 
-const InfoCustomer: FC<InfoCustomerProp> = memo((props) => {
+const InfoCustomer: FC<InfoCustomerProp & {className?: string}> = memo((props) => {
   const dispatch = useDispatch();
   const { dialog } = useSelector((state: RootState) => state.dialog);
   const { pathname } = useLocation()
@@ -30,7 +30,7 @@ const InfoCustomer: FC<InfoCustomerProp> = memo((props) => {
 
   return (
     <>
-      <section className={"rounded-lg shadow-sm shadow-accent-foreground w-full sm:w-3/10 p-3 bg-white text-xs sm:text-sm text-neutral-600"}>
+      <section className={"rounded-lg shadow-sm shadow-accent-foreground w-full sm:w-3/10 p-3 bg-white text-xs sm:text-sm text-neutral-600" + (props.className ? ` ${props.className}` : "")}>
         <div className="flex justify-between items-center">
           <span className={'font-bold'}>Customer</span>
           <Popover>

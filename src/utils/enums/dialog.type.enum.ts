@@ -23,6 +23,7 @@ type DialogTypeEnum =
 	| "show-confirm"
 	| "manage-addresses"
 	| "voice-search"
-  | "update-status";
+	| "update-status"
+	| "choose-media";
 
 export default DialogTypeEnum;

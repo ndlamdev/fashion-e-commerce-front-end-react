@@ -6,21 +6,21 @@
  *  User: Lam Nguyen
  **/
 
-import { useContext, useEffect, useRef } from "react";
-import Quill from "quill";
-import "quill/dist/quill.snow.css";
-import "katex/dist/katex.min.css";
-import QuillEditorConfig from "@/components/editor/QuillEditorConfig.ts";
-import VariantManager from "@/components/admin/product/VariantManager.tsx";
-import PriceManager from "@/components/admin/product/PriceManager.tsx";
-import BaseInfo from "@/components/admin/product/BaseInfo.tsx";
-import CreateProductPageContext from "@/context/CreateProductPageContext.tsx";
 import { SolarArrowLeftLinear } from "@/assets/images/icons/SolarArrowLeftLinear.tsx";
-import OrganizationManager from "@/components/admin/product/OrganizationManager.tsx";
 import { SolarInfoCircleLinear } from "@/assets/images/icons/SolarInfoCircleLinear.tsx";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select.tsx";
+import BaseInfo from "@/components/admin/product/BaseInfo.tsx";
+import OrganizationManager from "@/components/admin/product/OrganizationManager.tsx";
+import PriceManager from "@/components/admin/product/PriceManager.tsx";
 import PublishManager from "@/components/admin/product/PublishManager.tsx";
 import ShippingManager from "@/components/admin/product/ShippingManager.tsx";
+import VariantManager from "@/components/admin/product/VariantManager.tsx";
+import QuillEditorConfig from "@/components/editor/QuillEditorConfig.ts";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select.tsx";
+import CreateProductPageContext from "@/context/CreateProductPageContext.tsx";
+import "katex/dist/katex.min.css";
+import Quill from "quill";
+import "quill/dist/quill.snow.css";
+import { useContext, useEffect, useRef, useState } from "react";
 
 function CreateProductPage({ titlePage = "Thêm sản phẩm" }: { titlePage?: string }) {
   useEffect(() => {
@@ -41,6 +41,7 @@ function CreateProductPage({ titlePage = "Thêm sản phẩm" }: { titlePage?: s
 const CreateProductMainPage = ({ titlePage }: { titlePage: string }) => {
   const refQuill = useRef<Quill | undefined>(undefined);
   const createProductPageContext = useContext(CreateProductPageContext);
+  const [options, setOptions] = useState<Record<string, string[]>>({});
 
   useEffect(() => {
     document.title = titlePage;
@@ -51,6 +52,14 @@ const CreateProductMainPage = ({ titlePage }: { titlePage: string }) => {
       },
     });
   });
+
+  useEffect(() => {
+    const html = document.getElementsByTagName("html")[0];
+    html.style.overflowY = "hidden";
+    return () => {
+      html.style.overflowY = "";
+    };
+  }, []);
 
   return (
     <div>
@@ -71,16 +80,13 @@ const CreateProductMainPage = ({ titlePage }: { titlePage: string }) => {
               }}
             />
           </section>
-          <section className={`${createProductPageContext.sectionStyle}`}>
-            <h3 className={"mb-2 pb-0 font-semibold"}>Tồn kho</h3>
-          </section>
           <section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
             <h3 className={"mb-2 pb-0 font-semibold"}>Vận chuyển</h3>
             <ShippingManager />
           </section>
           <section className={`flex flex-col ${createProductPageContext.sectionStyle}`}>
             <h3 className={"mb-2 pb-0 font-semibold"}>Biến thể</h3>
-            <VariantManager />
+            <VariantManager setOptions={setOptions} />
           </section>
         </div>
         <div className={"col-span-3 flex flex-col gap-3"}>

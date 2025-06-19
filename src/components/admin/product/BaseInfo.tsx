@@ -13,10 +13,13 @@ import { DetailedHTMLProps, HTMLAttributes, useContext, useEffect } from "react"
 import CreateProductPageContext from "@/context/CreateProductPageContext.tsx";
 import { useGetAllCollectionQuery } from "@/redux/api/collection.api";
 import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { showDialog } from "@/redux/slice/dialog.slice";
 
 function BaseInfo(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>) {
   const createProductPageContext = useContext(CreateProductPageContext);
   const { data, isError } = useGetAllCollectionQuery()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!isError) return;
@@ -42,7 +45,7 @@ function BaseInfo(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLD
             <button className={"rounded-sm border-1 border-gray-600 bg-white p-1 text-sm text-black hover:bg-gray-100"} onClick={() => { }}>
               Tải lên mới
             </button>
-            <p className={"text-sm"}>Chọn từ hiện có</p>
+            <p className={"text-sm cursor-pointer hover:bg-gray-200 p-1 rounded-sm"} onClick={() => dispatch(showDialog("choose-media"))}>Chọn từ hiện có</p>
           </div>
         </div>
       </div>
