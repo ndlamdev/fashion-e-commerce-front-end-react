@@ -31,7 +31,7 @@
         "view_all": "View all",
         "empty": "Your cart is empty :( please choose some items to buy"
     },
-    "freeshipping": "Free shipping on orders over 1,000,000 VND"
+    "free_shipping": "Free shipping on orders over 1,000,000 VND"
   },
   "footer": {
     "shopping": {
@@ -362,6 +362,61 @@
         "having": "You currently have",
         "will_have_point": "These are the points you will receive once the pending orders are completed"
       }
+    },
+    "auth": {
+      "login": {
+        "login_now": "Log in now",
+        "login_by": "Login by",
+        "description": "Many privileges and shopping benefits await you",
+        "login_method": "Or log in with your account",
+        "login": "Log in",
+        "register": "Register",
+        "password": "Password",
+        "forget_password": "Forgot password",
+        "invalid_email": "Please enter a valid email address"
+      },
+      "register": {
+        "register_now": "Register now",
+        "description": "Many privileges and shopping benefits await you",
+        "invalid_phone": "Please enter your phone number",
+        "invalid_email": "Please enter a valid email address",
+        "login": "Log in",
+        "another_register": "Or register an account",
+        "your_name": "Your name",
+        "invalid_full_name": "Please enter your name",
+        "your_phone": "Your phone number",
+        "your_email": "Your email",
+        "password": "Password",
+        "invalid_password": "Password must be at least 8 characters, including uppercase, lowercase, numbers, special characters",
+        "renter_password": "Re-enter password",
+        "invalid_renter_password": "Please re-enter your password",
+        "invalid_correct_password": "Password re-enter incorrect",
+        "register": "Register"
+      },
+      "new_password": {
+        "title": "Reset password",
+        "invalid_password": "Password must be at least 8 characters, including uppercase, lowercase, numbers, and special characters",
+        "enter_password": "Enter your password",
+        "renter_password": "Re-enter your password",
+        "invalid_renter_password": "Please re-enter your password",
+        "incorrect_password": "Re-entered password does not match",
+        "submit": "Confirm",
+        "watch": "Check",
+        "your_email": "Your email",
+        "invalid_email": "Please enter a valid email address"
+      },
+      "otp": {
+        "invalid_opt": "Please enter the complete code",
+        "enter_otp": "Enter verification code",
+        "submit": "Confirm",
+        "resend_opt": "Resend new code"
+      },
+       "forgot_password": {
+        "title": "Reset password",
+        "watch": "Watch",
+        "your_email": "Your email",
+        "invalid_email": "Please enter a valid email address"
+      }
     }
   },
   "recent_activities": {
@@ -371,5 +426,9 @@
     "join_now": {
       "text": "JOIN KIMICLUB NOW"
     }
+  },
+  "button": {
+    "cancel": "Cancel",
+    "ok": "Submit"
   }
 }

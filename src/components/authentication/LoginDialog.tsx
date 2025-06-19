@@ -18,8 +18,12 @@ import { KeyboardEvent, useCallback } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
 
 function LoginDialog() {
+	const { t } = useTranslation(undefined, {
+		keyPrefix: "page.auth.login"
+	});
 	const { dialog } = useSelector((state: RootState) => state.dialog);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -72,9 +76,8 @@ function LoginDialog() {
 			<DialogContent className={"sm:max-w-[525px]"}
 										 classIcon={"bg-black p-4 border-2 border-gray-200 text-white !rounded-full top-[-20px] right-[-20px]"}>
 				<DialogHeader>
-					<DialogTitle className={"text-4xl"}>Đăng nhập ngay</DialogTitle>
-					<DialogDescription className={"text-2xl font-bold text-black"}>Rất nhiều đặc quyền và quyền lợi mua sắm đang
-						chờ bạn</DialogDescription>
+					<DialogTitle className={"text-4xl"}>{t('login_now')}</DialogTitle>
+					<DialogDescription className={"text-2xl font-bold text-black"}>{t('description')}</DialogDescription>
 					<div className="flex gap-2">
 						<div className="coolcash-x2-style-login-item">
 							<img src="https://mcdn.coolmate.me/image/March2024/mceclip3_52.jpg" alt="" />
@@ -91,35 +94,35 @@ function LoginDialog() {
 					<OtherLogin />
 					<form id="login-form">
 						<div className="tw-my-4 mb-5">
-							<span className="tw-text-base tw-text-cm-gray text-gray-500">Hoặc đăng nhập tài khoản:</span>
+							<span className="tw-text-base tw-text-cm-gray text-gray-500">{t('login_method')}</span>
 						</div>
 						<div className={"flex flex-col gap-3"}>
 							<div>
 								<InputAuthentication
 									onKeyDown={enterKeyHandler}
 									type={"email"}
-									placeholder={"Email của bạn"}
+									placeholder={"Email"}
 									error={errors.email?.message}
 									{...register("email", {
 										pattern: {
 											value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-											message: "Vui lòng nhập email hợp lệ",
+											message: t('invalid_email'),
 										},
-										required: "Vui lòng nhập email hợp lệ",
+										required: t('invalid_email'),
 									})}
 								/>
 							</div>
 							<InputAuthentication onKeyDown={enterKeyHandler} type={"password"}
-																	 placeholder={"Mật khẩu"} {...register("password")} />
-							<ButtonAuthentication onClick={handleSubmit(onSubmit)}>Đăng nhập</ButtonAuthentication>
+																	 placeholder={t('password')} {...register("password")} />
+							<ButtonAuthentication onClick={handleSubmit(onSubmit)}>{t('login')}</ButtonAuthentication>
 						</div>
 						<div className="auth-actions mt-2 flex w-full justify-between text-blue-800">
 							<a href="#" className="!tw-text-base !tw-text-cm-blue" onClick={() => dispatch(showDialog("register"))}>
-								Đăng ký
+								{t('register')}
 							</a>
 							<a href="#" className="!tw-text-base !tw-text-cm-blue"
 								 onClick={() => dispatch(showDialog("forgot-password"))}>
-								Quên mật khẩu
+								{t('forget_password')}
 							</a>
 						</div>
 					</form>

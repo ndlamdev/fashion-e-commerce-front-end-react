@@ -10,8 +10,12 @@ import { hiddenDialog, showDialog } from "@/redux/slice/dialog.slice.ts";
 import { useNavigate } from "react-router";
 import jwtHelper from "@/utils/helper/jwtHelper";
 import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 
 function OtherLogin() {
+	const { t } = useTranslation(undefined, {
+		keyPrefix: "page.auth.login"
+	});
 	const dispatch = useDispatch();
 	const navigate = useNavigate()
 
@@ -64,7 +68,7 @@ function OtherLogin() {
 
 	return (
 		<div className={"flex items-center gap-2"}>
-			<p className={"font-bold text-gray-500"}>Đăng nhập bằng:</p>
+			<p className={"font-bold text-gray-500"}>{t('login_by')}:</p>
 			<button className={"rounded-lg border-1 border-black p-2"} onClick={() => googleLogin()}>
 				<LogosGoogleIcon width={35} height={35} />
 			</button>

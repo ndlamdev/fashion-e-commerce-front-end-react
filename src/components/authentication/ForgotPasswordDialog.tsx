@@ -17,8 +17,12 @@ import AxiosErrorCustom from "@/domain/ApiResponseError.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { hiddenDialog, showDialogWithCallback } from "@/redux/slice/dialog.slice";
 import { RootState } from "@/configs/store.config.ts";
+import { useTranslation } from "react-i18next";
 
 function ForgotPasswordDialog() {
+	const { t } = useTranslation(undefined, {
+		keyPrefix: "page.auth.new_password"
+	});
 	const dispatch = useDispatch();
 	const { dialog } = useSelector((state: RootState) => state.dialog);
 	const {
@@ -68,24 +72,24 @@ function ForgotPasswordDialog() {
 				className={"sm:max-w-[525px]"}
 				classIcon={"bg-black p-4 border-2 border-gray-200 text-white !rounded-full top-[-20px] right-[-20px]"}>
 				<DialogHeader>
-					<DialogTitle className={"text-center text-4xl"}>Cấp lại mật khẩu</DialogTitle>
+					<DialogTitle className={"text-center text-4xl"}>{t('title')}</DialogTitle>
 				</DialogHeader>
 				<div className="grid gap-4">
 					<form className={"flex flex-col gap-3"}>
 						<InputAuthentication
 							onKeyDown={enterKeyHandler}
 							type={"email"}
-							placeholder={"Email của bạn"}
+							placeholder={t('your_email')}
 							error={errors.email?.message}
 							{...register("email", {
-								required: "Vui lòng nhập email hợp lệ",
+								required: t('invalid_email'),
 								pattern: {
 									value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-									message: "Vui lòng nhập email hợp lệ",
+									message: t('invalid_email'),
 								},
 							})}
 						/>
-						<ButtonAuthentication onClick={handleSubmit(onSubmit)}>Kiểm tra</ButtonAuthentication>
+						<ButtonAuthentication onClick={handleSubmit(onSubmit)}>{t('watch')}</ButtonAuthentication>
 					</form>
 				</div>
 			</DialogContent>

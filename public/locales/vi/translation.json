@@ -31,7 +31,7 @@
       "view_all": "Xem tất cả",
       "empty": "Giỏ hàng chưa có gì :( chọn mua đồ bạn nhé"
     },
-    "freeshipping": "Miễn phí vận chuyển cho đơn hàng trên 1.000.000 VND"
+    "free_shipping": "Miễn phí vận chuyển cho đơn hàng trên 1.000.000 VND"
   },
   "footer": {
     "shopping": {
@@ -313,7 +313,7 @@
       "faq_tab": {
         "title": "Chính sách và câu hỏi thường gặp",
         "heading": "FAQ - Câu hỏi thường gặp",
-        "q&a": {
+        "faq": {
           "faq_1": {"title": "Tại sao tôi nên tham gia CoolClub?", "content": "CoolClub là chương trình Hội viên dành cho tất cả khách hàng Coolmate, mang đến nhiều quyền lợi cho người tham gia. Hội viên CoolClub sẽ được: Tích lũy chi tiêu để thăng hạng; Hưởng các quyền lợi theo hạng Hội viên: nhận quà tặng định kỳ, ưu đãi độc quyền; Hoàn tiền CoolCash cho mỗi đơn hàng; Đổi thưởng và rất nhiều quyền lợi khác sẽ được Coolmate cập nhật thường xuyên."},
           "faq_2": {"title": "Đăng ký làm Hội viên CoolClub có mất phí không? Cách đăng ký như thế nào?", "content": "Bạn có thể đăng ký CoolClub hoàn toàn miễn phí bằng cách tạo Tài khoản tại website Coolmate.me. Khi đăng ký thành công, bạn đã được nhận các quyền lợi của hạng Thành viên mới, đồng thời nhận ngay voucher mua sắm 15% (tối đa 50.000 VND) để bắt đầu mua sắm."},
           "faq_3": {"title": "Chương trình CoolClub cũ ngừng áp dụng khi nào? CoolClub mới có nâng cấp gì khác?", "content": "Chương trình CoolClub cũ ngừng áp dụng vào ngày 25/09/2023 để nâng cấp. Ở chương  trình CoolClub phiên bản mới, bạn sẽ có trải nghiệm mua sắm thú vị hơn với nhiều đặc quyền theo hạng Hội viên, tích luỹ chi tiêu để thăng hạng, hoàn tiền CoolCash cho mỗi đơn hàng, đổi thưởng, nhận quà tặng định kỳ và vô vàn ưu đãi, chương trình, quyền lợi độc quyền khác sẽ được Coolmate cập nhật thêm trong tương lai."},
@@ -328,10 +328,64 @@
       },
       "logout_tab": {
         "title": "Đăng xuất",
-        "confirm": "Bạn có chắc muốn thoát khỏi ?"
+        "confirm": "Bạn có chắc muốn thoát khỏi ?",
+        "cancel": "Hủy",
+        "ok": "Xác nhận"
       }
     },
-    "auth":"",
+    "auth": {
+      "login": {
+        "login_now": "Đăng nhập ngay",
+        "login_by": "Đăng nhập bằng",
+        "description": "Rất nhiều đặc quyền và quyền lợi mua sắm đang chờ bạn",
+        "login_method": "Hoặc đăng nhập tài khoản",
+        "login": "Đăng nhập",
+        "register": "Đăng ký",
+        "password": "Mật khẩu",
+        "forget_password": "Quên mật khẩu",
+        "invalid_email": "Vui lòng nhập email hợp lệ"
+      },
+
+      "register": {
+        "register_now": "Đăng ký ngay",
+        "description": "Rất nhiều đặc quyền và quyền lợi mua sắm đang chờ bạn",
+        "invalid_phone": "Vui lòng nhập số điện thoại của bạn",
+        "invalid_email": "Vui lòng nhập email hợp lệ",
+        "login": "Đăng nhập",
+        "another_register": "Hoặc đăng ký tài khoản",
+        "your_name": "Tên của bạn",
+        "invalid_full_name": "Vui lòng nhập họ tên của bạn",
+        "your_phone": "SĐT của bạn",
+        "your_email": "Email của bạn",
+        "password": "Mật khẩu",
+        "invalid_password": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số, ký tự đặc biệt",
+        "renter_password": "Nhập lại mật khẩu",
+        "invalid_renter_password": "Vui lòng nhập lại mật khẩu",
+        "invalid_correct_password": "Mật khẩu nhập lại không chính xác",
+        "register": "Đăng ký"
+      },
+      "new_password": {
+        "title": "Cấp lại mật khẩu",
+        "invalid_password": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số, ký tự đặc biệt",
+        "enter_password": "Nhập mật khẩu của bạn",
+        "renter_password": "Nhập lại mật khẩu của bạn",
+        "invalid_renter_password": "Vui lòng nhập lại mật khẩu  của bạn",
+        "incorrect_password": "Mật khẩu nhập lại không chính xác",
+        "submit": "Xác nhận"
+      },
+      "otp": {
+        "invalid_opt": "Vui lòng điền đẩy đủ mã",
+        "enter_otp": "Nhập mã xác thực",
+        "submit": "Xác nhận",
+        "resend_opt": "Gửi lại mã mới"
+      },
+      "forgot_password": {
+        "title": "Cấp lại mật khẩu",
+        "watch": "Kiểm tra",
+        "your_email": "Email của bạn",
+        "invalid_email": "Vui lòng nhập email hợp lệ"
+      }
+    },
     "admin":""
   },
   "recent_activities": {

@@ -157,7 +157,7 @@ export default function ProfilePage() {
         )}
       </section>
       <DialogConfirm
-				title={tTabNav('info_tab.title.confirm')}
+				title={tTabNav('logout_tab.confirm')}
         open={openDialog}
         onClickCancel={() => {
           setOpenDialog(false);

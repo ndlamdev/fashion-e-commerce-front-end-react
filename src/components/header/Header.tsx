@@ -287,7 +287,7 @@ function Header({ showMenu }: HeaderProps) {
               className='w-[400px] overflow-hidden text-nowrap text-white'
               animate={{ x: ["100%", "-100%"] }}
               transition={{ repeat: 2, duration: 10, ease: "linear" }}>
-              {t("freeshipping")}
+              {t("header.free_shipping")}
             </motion.div>
           </div>
           <div className={"text-start"}>

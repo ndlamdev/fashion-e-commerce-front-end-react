@@ -1,5 +1,4 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion.tsx";
-import { faqValues } from "@/components/profile/props/faq.props.ts";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -11,11 +10,11 @@ const FAQTab = () => {
     <article className={"max-sm:mt-10"}>
       <h1 className={"text-lg font-bold sm:text-2xl lg:text-4xl"}>{t("heading")}</h1>
       <Accordion type='single' collapsible>
-        {Object.keys(faqValues).map((key, index) => {
+        {Array.from({length: 10}).map((_, index) => {
           return (
-            <AccordionItem value={key} key={`FAG-${key}`}>
-              <AccordionTrigger className={"font-bold"}>{faqValues[index].title}</AccordionTrigger>
-              <AccordionContent>{faqValues[index].content}</AccordionContent>
+            <AccordionItem value={index+''} key={`FAG-${index}`}>
+              <AccordionTrigger className={"font-bold"}>{t(`faq.faq_${index+1}.title`)}</AccordionTrigger>
+              <AccordionContent>{t(`faq.faq_${index+1}.content`)}</AccordionContent>
             </AccordionItem>
           );
         })}
