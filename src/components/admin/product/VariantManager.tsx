@@ -12,6 +12,7 @@ import OptionVariantType from "@/types/admin/option-variant.type.ts";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Input from "@/components/form/Input";
 import { Trash } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 function VariantManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & { setOptions?: (options: Record<string, string[]>) => void }) {
   const [optionVariants, setOptionVariants] = useState<OptionVariantType[]>([]);
@@ -99,6 +100,9 @@ function VariantManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>,
       ),
     );
   };
+	const { t } = useTranslation(undefined, {
+		keyPrefix: "page.admin.products.variant_management"
+	});
 
   useEffect(() => {
     const options: Record<string, string[]> = {}
@@ -115,7 +119,7 @@ function VariantManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>,
       {!optionVariants.length ? (
         <button className={"flex w-[280px] items-center gap-2 rounded-md p-1 text-sm hover:bg-gray-100"} onClick={createNewOption}>
           <HumbleiconsPlusCircle width={15} height={15} />
-          Thêm tùy chọn như màu sắc, kích thước
+					{t('add_option_note')}
         </button>
       ) : (
         <div className={"rounded-md border-1 border-gray-200"}>
@@ -126,19 +130,19 @@ function VariantManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>,
               </div>
               <div className={"flex flex-1 flex-col gap-1"}>
                 <label className={"text-sm"}>
-                  <span>Loại tùy chọn</span>
+                  <span>{t('option_type')}</span>
                   <Select defaultValue={"COLOR"} onValueChange={(value) => onChangeOptionVariantName(indexOptionVariant, value)}>
                     <SelectTrigger className={`mt-1 w-full`}>
                       <SelectValue placeholder='Chọn loại tùy chọn' />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value='COLOR'>Màu sắc</SelectItem>
-                      <SelectItem value='SIZE'>Kích thước</SelectItem>
+                      <SelectItem value='COLOR'>{t('color')}</SelectItem>
+                      <SelectItem value='SIZE'>{t('size')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </label>
                 <div>
-                  <label className={"text-sm"}>Giá trị tùy chọn</label>
+                  <label className={"text-sm"}>{t('option_value')}</label>
                   {optionVariant.values.map((valueOptionVariant, indexValueOptionVariant) => (
                     <Input
                       placeholder={"Giá trị tùy chọn"}
@@ -158,7 +162,7 @@ function VariantManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>,
                       setOptionVariants((prevState) => prevState.filter((_, i) => i !== indexOptionVariant));
                     }}
                   >Xóa</button>
-                  <button className={"rounded-md border-1 border-gray-300 bg-[rgba(0,0,0,0.8)] px-2 py-0.5 text-sm text-white hover:bg-black"}>Xong</button>
+                  <button className={"rounded-md border-1 border-gray-300 bg-[rgba(0,0,0,0.8)] px-2 py-0.5 text-sm text-white hover:bg-black"}>{t('done')}</button>
                 </div>
               </div>
             </div>
@@ -166,7 +170,7 @@ function VariantManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>,
             <div className={"p-1 hover:bg-gray-100"}>
               <button className={"flex w-full items-center gap-2 p-1 text-sm"} onClick={createNewOption}>
                 <HumbleiconsPlusCircle width={15} height={15} />
-              Thêm tùy chọn khác
+								{t('add_another_option')}
             </button>
           </div>
         </div>

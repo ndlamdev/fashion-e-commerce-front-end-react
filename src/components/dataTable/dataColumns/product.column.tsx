@@ -12,7 +12,9 @@ import { formatDateFromArray } from "@/utils/helper/format-data.ts";
 import { ColumnDef } from "@tanstack/react-table";
 import { LockIcon, LockOpenIcon, MoreHorizontal } from "lucide-react";
 import { ProductColumnProp } from "../props/productColumn.prop";
+import { translated } from "@/utils/helper/locale.ts";
 
+const tProductColumns = (key: string) => translated(key, "page.admin.products.column");
 
 export const productColumns = (
   watchDetail: (id: string) => void,
@@ -20,31 +22,31 @@ export const productColumns = (
 ): ColumnDef<ProductColumnProp | unknown, string | unknown>[] => [
     {
       accessorKey: "id",
-      header: "Mã sản phẩm",
+      header: tProductColumns("id"),
       cell: ({ row }) => (<div className="font-bold">#{(row.getValue("id"))}</div>),
     },
     {
       accessorKey: "title",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Tên sản phẩm" />
+        <DataTableColumnHeader column={column} title={tProductColumns("name")} />
       ),
     },
     {
       accessorKey: "total_variants",
       header: ({ column }) => (
-        <DataTableColumnHeader className={"cursor-pointer "} column={column} title="Tổng biến thể" />
+        <DataTableColumnHeader className={"cursor-pointer "} column={column} title={tProductColumns("variant_total")} />
       ),
     },
     {
       accessorKey: "total_inventories",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Tổng tồn kho" />
+        <DataTableColumnHeader column={column} title={tProductColumns("inventory_total")}/>
       ),
     },
     {
       accessorKey: "create_at",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Ngày tạo" />
+        <DataTableColumnHeader column={column} title={tProductColumns("create_at")} />
       ),
       cell: ({ row }) => (
         <div className="font-bold">
@@ -66,16 +68,16 @@ export const productColumns = (
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Hành động</DropdownMenuLabel>
+              <DropdownMenuLabel>{tProductColumns("actions")}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem className={"cursor-pointer"}
                 onClick={() => watchDetail(data.id)}>
-                Xem chi tiết
+								{tProductColumns("watch_detail")}
               </DropdownMenuItem>
               <DropdownMenuItem
                 className={"cursor-pointer text-red-500 flex justify-between"}
                 onClick={() => saveLock(data.id)}>
-                <span>Tình trạng</span>
+                <span>{tProductColumns("status")}</span>
                 {!data.lock
                   ? <LockOpenIcon className={'flex-none text-red-500'} />
                   : <LockIcon className={'flex-none text-red-500'} />}

@@ -11,8 +11,12 @@ import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { memo, useCallback, useEffect, useState } from "react";
 import { cn } from "@/lib/utils.ts";
 import { useSearchParams } from "react-router";
+import { useTranslation } from "react-i18next";
 
 function CollectionFilter(props: CollectionFilterProps) {
+	const { t } = useTranslation(undefined, {
+		keyPrefix: "page.collection"
+	});
 	const isDesktop = useMediaQuery("(min-width: 640px)");
 	const [searchParams, setSearchParams] = useSearchParams();
 	const [sizeValues, setSizeValues] = useState<string[]>(searchParams.getAll("sizes"));
@@ -44,7 +48,7 @@ function CollectionFilter(props: CollectionFilterProps) {
 					<AccordionCustom
 						isDown={true}
 						className={"w-full"}
-						trigger={<span className={"cursor-pointer"}>Kích cỡ</span>}
+						trigger={<span className={"cursor-pointer"}>{t('size')}</span>}
 						content={
 							<div className={"flex flex-wrap items-center gap-2"}>
 								{props.size.map((item: string, index: number) => (
@@ -70,7 +74,7 @@ function CollectionFilter(props: CollectionFilterProps) {
 
 					<AccordionCustom
 						className={"w-full"}
-						trigger={<span className={"cursor-pointer"}>Màu sắc</span>}
+						trigger={<span className={"cursor-pointer"}>{t('color')}</span>}
 						content={
 							<SameRadioGroup className={"flex flex-wrap items-center space-y-2 space-x-5"} onValueChange={setColorValue}>
 								{props.color.map((item, index) => (
@@ -104,7 +108,7 @@ function CollectionFilter(props: CollectionFilterProps) {
 			</DrawerTrigger>
 			<DrawerContent>
 				<DrawerHeader>
-					<DrawerTitle>Tìm kiếm sản phẩm?</DrawerTitle>
+					<DrawerTitle>{t('search')} ?</DrawerTitle>
 					<DrawerDescription></DrawerDescription>
 				</DrawerHeader>
 				<DrawerFooter className={"p-0"}>
@@ -113,7 +117,7 @@ function CollectionFilter(props: CollectionFilterProps) {
 							<AccordionCustom
 								isDown={true}
 								className={"w-full"}
-								trigger={<span className={"cursor-pointer"}>Kích cỡ</span>}
+								trigger={<span className={"cursor-pointer"}>{t('size')}</span>}
 								content={
 									<div className={"flex items-center space-x-2"}>
 										{props.size.map((item: string, index: number) => (
@@ -132,7 +136,7 @@ function CollectionFilter(props: CollectionFilterProps) {
 
 							<AccordionCustom
 								className={"w-full"}
-								trigger={<span className={"cursor-pointer"}>Màu sắc</span>}
+								trigger={<span className={"cursor-pointer"}>{t('color')}</span>}
 								content={
 									<SameRadioGroup className={"flex flex-wrap items-center space-x-2"}>
 										{props.color.map((item, index) => (

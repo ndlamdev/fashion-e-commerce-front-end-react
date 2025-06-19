@@ -9,6 +9,7 @@
 import { useParams } from "react-router";
 import { useEffect } from "react";
 import CreateProductPage from "@/pages/admin/product/CreateProductPage.tsx";
+import { useTranslation } from "react-i18next";
 
 function UpdateProductPage() {
   const { id } = useParams();
@@ -16,8 +17,11 @@ function UpdateProductPage() {
   useEffect(() => {
     console.log(id);
   }, [id]);
+	const { t } = useTranslation(undefined, {
+		keyPrefix: "page.admin.products"
+	});
 
-  return <CreateProductPage titlePage={"Cập nhật thông tin sản phẩm"} />;
+  return <CreateProductPage titlePage={t('update_info_product')} />;
 }
 
 export default UpdateProductPage;

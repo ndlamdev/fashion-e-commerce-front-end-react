@@ -26,7 +26,11 @@ import { useCallback, useContext, useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 export default function CustomerDetailManagementPage() {
+	const { t } = useTranslation(undefined, {
+		keyPrefix: "page.admin.customers"
+	});
   const { showHoverCard, hoverCard } = useContext(HoverCardContext);
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -37,9 +41,9 @@ export default function CustomerDetailManagementPage() {
     navigate("/admin")
   }, [id, navigate])
 
-  useEffect(() => {
-    document.title = "KimiFashion - Quản lý khách hàng";
-  }, []);
+   useEffect(() => {
+    document.title = "KimiFashion - " + t('management');
+  }, [t]);
 
   const customer = CustomerManagementData;
   const data = HoverCardValues[hoverCard];
@@ -57,18 +61,18 @@ export default function CustomerDetailManagementPage() {
 
   useEffect(() => {
     if (!errorOrders) return;
-    toast.error("Lỗi tải lịch sử mua hàng!")
-  }, [errorOrders])
+    toast.error(t('error_loading_history'))
+  }, [errorOrders, t])
 
   useEffect(() => {
     if (!errorProfle) return;
-    toast.error("Lỗi tải thông tin cá nhân!")
-  }, [errorProfle])
+    toast.error(t('error_loading_info'))
+  }, [errorProfle, t])
 
   useEffect(() => {
     if (!errorAddresses) return;
-    toast.error("Lỗi tải thông tin địa chỉ giao hàng người dùng!")
-  }, [errorAddresses])
+    toast.error(t('error_loading_display_list'))
+  }, [errorAddresses, t])
 
   const dayRegisterSince = useMemo(() => {
     if (!dataProfile) return 0;
@@ -114,14 +118,14 @@ export default function CustomerDetailManagementPage() {
           <Popover>
             <PopoverTrigger className={"cursor-pointer"} asChild>
               <Button variant={"outline"} className={" max-sm:size-8"}>
-                <span className={'max-sm:hidden'}>More actions</span>
+                <span className={'max-sm:hidden'}>{t('more_actions')}</span>
                 <EllipsisIcon className={"sm:hidden"} />
               </Button>
             </PopoverTrigger>
             <PopoverContent className={"w-auto -translate-1/14 translate-y-2 p-2 text-xs sm:text-sm"}>
-              <p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>Merge Customer</p>
-              <p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>Request customer data</p>
-              <p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>Erase customer data</p>
+              <p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>{t('merge')}</p>
+              <p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>{t('request_data')}</p>
+              <p className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer"}>{t('erase_data')}</p>
               <p onClick={() => dispatch(showDialog('show-confirm'))} className={"p-1 hover:bg-neutral-200 rounded-lg cursor-pointer text-red-500"}>Delete customer</p>
             </PopoverContent>
           </Popover>
@@ -137,7 +141,7 @@ export default function CustomerDetailManagementPage() {
               <div className={"flex flex-col items-center"}>
                 <p
                   className="underline underline-offset-2 decoration-dashed cursor-pointer">
-                  Amount spent</p>
+									{t('amount_spent')}</p>
                 <p className="">{formatCurrency(dataOrders?.data.reduce((accumulator, currentValue) => accumulator + currentValue.amount, 0) ?? 0)}</p>
 
               </div>
@@ -147,7 +151,7 @@ export default function CustomerDetailManagementPage() {
             showHoverCard(HoverCardEnum.ORDERS);
           }} className="p-2 hover:bg-neutral-200 rounded-lg text-xs sm:text-sm flex">
             <div className={"flex flex-col items-center"}>
-              <p className="underline underline-offset-2 decoration-dashed cursor-pointer">Orders</p>
+              <p className="underline underline-offset-2 decoration-dashed cursor-pointer">{t('orders')}</p>
               <p className="">{dataOrders?.data.length ?? 0}</p>
             </div>
           </HoverCardTrigger>
@@ -155,15 +159,15 @@ export default function CustomerDetailManagementPage() {
             showHoverCard(HoverCardEnum.CUSTOMER_SINCE);
           }} className="p-2 hover:bg-neutral-200 rounded-lg text-xs sm:text-sm flex">
             <div className={"flex flex-col items-center"}>
-              <p className="underline underline-offset-2 decoration-dashed cursor-pointer ">Customer since </p>
-              <p className="">{dayRegisterSince} days</p>
+              <p className="underline underline-offset-2 decoration-dashed cursor-pointer ">{t('customer_since')}</p>
+              <p className="">{dayRegisterSince} {t('days')}</p>
             </div>
           </HoverCardTrigger>
           <HoverCardTrigger onMouseEnter={() => {
             showHoverCard(HoverCardEnum.RFM_GROUP);
           }} className="p-2 hover:bg-neutral-200 rounded-lg text-xs sm:text-sm flex">
             <div className={"flex flex-col items-center"}>
-              <p className="underline underline-offset-2 decoration-dashed cursor-pointer ">RFM Group</p>
+              <p className="underline underline-offset-2 decoration-dashed cursor-pointer ">{t('rfm_group')}</p>
               <p className="">{customer.rfm_group}</p>
             </div>
           </HoverCardTrigger>
@@ -188,8 +192,8 @@ export default function CustomerDetailManagementPage() {
             : (
               <div className={"flex justify-between items-center"}>
                 <div className="space-y-3">
-                  <p className="text-xs sm:text-sm text-neutral-600 italic">This customer hasn’t placed any orders yet</p>
-                  <Button variant={'outline'} className={'cursor-pointer'}>Create Order</Button>
+                  <p className="text-xs sm:text-sm text-neutral-600 italic">{t('no_orders_yet')}</p>
+                  <Button variant={'outline'} className={'cursor-pointer'}>{t('create_order')}</Button>
                 </div>
                 <img src={"https://cdn.shopify.com/shopifycloud/web/assets/v1/vite/client/en/assets/empty-state-orders-1-3vUe-nXUGWPA.svg"} alt={""} className={'max-sm:hidden'} />
               </div>

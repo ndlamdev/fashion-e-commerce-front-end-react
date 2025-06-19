@@ -12,8 +12,10 @@ import { formatDateFromArray } from "@/utils/helper/format-data.ts";
 import { ColumnDef } from "@tanstack/react-table";
 import { LockIcon, LockOpenIcon, MoreHorizontal } from "lucide-react";
 import { MediaColumnProp } from "../props/mediaColumn.prop";
+import { translated } from "@/utils/helper/locale.ts";
 const RESOURCE_IMAGE = import.meta.env.VITE_BASE_MEDIA_URL;
 
+const tMediaColumns = (key: string) => translated(key, "page.admin.media.column");
 
 export const mediaColumns = (
   watchDetail: (id: string) => void,
@@ -21,26 +23,26 @@ export const mediaColumns = (
 ): ColumnDef<MediaColumnProp | unknown, string | unknown>[] => [
     {
       accessorKey: "id",
-      header: "Mã",
+      header: tMediaColumns('id'),
       cell: ({ row }) => (<div className="font-bold">#{(row.getValue("id"))}</div>),
     },
     {
       accessorKey: "display_name",
-      header: "Tiêu đề",
+      header: tMediaColumns('title'),
     },
     {
       accessorKey: "path",
-      header: "Hình ảnh",
+      header: tMediaColumns('path'),
       cell: ({ row }) => (<img src={RESOURCE_IMAGE + row.getValue("path")} alt={row.getValue("display_name")} className="w-16 h-16 object-cover rounded-md" />),
     },
     {
       accessorKey: "extend",
-      header: "Phần mở rộng",
+      header: tMediaColumns('option'),
     },
     {
       accessorKey: "create_at",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Ngày tạo" />
+        <DataTableColumnHeader column={column} title={tMediaColumns('create_at')}/>
       ),
       cell: ({ row }) => (
         <div className="font-bold">
@@ -62,16 +64,16 @@ export const mediaColumns = (
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Hành động</DropdownMenuLabel>
+              <DropdownMenuLabel>{tMediaColumns('actions')}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem className={"cursor-pointer"}
                 onClick={() => watchDetail(data.id)}>
-                Xem chi tiết
+								{tMediaColumns('watch_detail')}
               </DropdownMenuItem>
               <DropdownMenuItem
                 className={"cursor-pointer text-red-500 flex justify-between"}
                 onClick={() => saveLock(data.id)}>
-                <span>Tình trạng</span>
+                <span>{tMediaColumns('status')}</span>
                 {!data.lock
                   ? <LockOpenIcon className={'flex-none text-red-500'} />
                   : <LockIcon className={'flex-none text-red-500'} />}

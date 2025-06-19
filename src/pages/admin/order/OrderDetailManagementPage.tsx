@@ -4,11 +4,11 @@ import DataTable from "@/components/dataTable/DataTable.tsx";
 import { orderItemColumns } from "@/components/dataTable/dataColumns/orderItem.column";
 import { Badge } from "@/components/ui/badge";
 import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
+	Breadcrumb,
+	BreadcrumbItem,
+	BreadcrumbLink,
+	BreadcrumbList,
+	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover.tsx";
@@ -24,10 +24,14 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 import DialogUpdateStatus from "./dialogs/DialogUpdateStatus";
 import DialogConfirm from "@/components/dialog/DialogConfirm";
 
 const OrderDetailManagementPage = () => {
+	const { t } = useTranslation(undefined, {
+		keyPrefix: "page.admin.orders"
+	});
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate()
@@ -90,12 +94,12 @@ const OrderDetailManagementPage = () => {
 
   useEffect(() => {
     if (!isError) return;
-    toast.error("Lỗi tải chi tiết đơn hàng")
-  }, [isError])
+    toast.error(t('error_detail_order'))
+  }, [isError, t])
 
   useEffect(() => {
-    document.title = "KimiFashion - Chi tiết đơn hàng";
-  }, []);
+    document.title = "KimiFashion - "+t('management');
+  }, [t]);
 
   const nextStatusWithData = useMemo(() => {
     if (!data) return "PENDING";
@@ -133,14 +137,13 @@ const OrderDetailManagementPage = () => {
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
-
           {(data?.data.statuses[data.data.statuses.length - 1]?.status !== "CANCEL"
             && data?.data.statuses[data.data.statuses.length - 1]?.status !== "COMPLETED")
             && (
               <Popover>
                 <PopoverTrigger className={"cursor-pointer"} asChild>
                   <Button variant={"outline"} className={" max-sm:size-8"}>
-                    <span className={'max-sm:hidden'}>More actions</span>
+                    <span className={'max-sm:hidden'}>{t('more_actions')}</span>
                     <EllipsisIcon className={"sm:hidden"} />
                   </Button>
                 </PopoverTrigger>
@@ -168,7 +171,7 @@ const OrderDetailManagementPage = () => {
             <DataTable columns={orderItemColumns} data={dataWithHandler} />
           </div>
           <div className={"rounded-lg shadow-sm shadow-accent-foreground w-full p-3 bg-white text-neutral-600"}>
-            <span className={'font-bold'}>Payment</span>
+            <span className={'font-bold'}>{t('payment')}</span>
             {!data ? <Skeleton /> : <OrderPaymentInfo {...data.data} />}
           </div>
         </section>

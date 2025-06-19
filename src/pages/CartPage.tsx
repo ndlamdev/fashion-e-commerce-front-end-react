@@ -35,8 +35,12 @@ import {
   updateCartItemSelected,
 } from "@/redux/slice/cart.slice.ts";
 import CartHelper from "@/utils/helper/CartHelper.ts";
+import { useTranslation } from "react-i18next";
 
 function CartPage() {
+	const { t } = useTranslation(undefined, {
+		keyPrefix: "page.cart"
+	});
   const [voucherRef, setVoucherRef] = useState<HTMLElement | null>(null);
   useHorizontalScroll(voucherRef);
   const [confirmDeleted, setConfirmDeleted] = useState(false);
@@ -57,7 +61,7 @@ function CartPage() {
 
   const deleteCartItem = useCallback((id: number) => {
     cartService.deleteCartItem(id).then();
-    document.title = "KimiFashion - Giỏ hàng";
+    document.title = "KimiFashion - "+t('cart');
   }, []);
 
   const checkboxAllHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -87,16 +91,16 @@ function CartPage() {
           className={`order-2 w-full bg-white transition-all duration-500 md:block lg:order-1 lg:col-span-4 ${showConfirm ? "block" : "hidden"}`}>
           <div className={"flex items-center justify-between border-b-1 border-gray-300 px-5 pb-10 md:hidden"}>
             <ArrowLeft width={30} height={30} color={"blue"} onClick={() => dispatch(setShowConfirm(false))} />
-            <p className={"text-bold text-2xl"}>Xác thực thanh toán</p>
+            <p className={"text-bold text-2xl"}>{t('checkout')}</p>
             <span />
           </div>
           <InformationCustomer />
         </div>
         <div id={"right"} className={`order-1 px-5 md:block lg:order-2 lg:col-span-3 lg:px-0 ${!showConfirm ? "block" : "hidden"}`}>
-          <h1 className={"mb-5 text-3xl font-[600]"}>Giỏ hàng</h1>
+          <h1 className={"mb-5 text-3xl font-[600]"}>{t('cart')}</h1>
           <div className={"mt-5"}>
             {!data?.data.cart_items.length ? (
-              <p className={"text-center"}>Giỏ hàng của bạn hiện đang trống.</p>
+              <p className={"text-center"}>{t('empty_cart_message')}</p>
             ) : (
               <>
                 <div className={"flex border-b-1 border-gray-300 pb-5 text-[0.8rem] text-gray-400 uppercase"}>
@@ -108,13 +112,13 @@ function CartPage() {
                         onChange={checkboxAllHandler}
                         checked={cartItemsSelected.length === data?.data.cart_items.length}
                       />
-                      <p>tất cả sản phẩm</p>
+                      <p>{t('all_products')}</p>
                     </div>
                     <p>|</p>
-                    <DialogTrigger className={"m-0 cursor-pointer p-0 uppercase"}>Xóa tất cả</DialogTrigger>
+                    <DialogTrigger className={"m-0 cursor-pointer p-0 uppercase"}>{t('remove_all')}</DialogTrigger>
                   </div>
-                  <div className={"hidden basis-3/12 sm:block"}>số lượng</div>
-                  <div className={"hidden basis-1/12 sm:block"}>giá</div>
+                  <div className={"hidden basis-3/12 sm:block"}>{t('quantity')}</div>
+                  <div className={"hidden basis-1/12 sm:block"}>{t('price')}</div>
                 </div>
                 <ul>
                   {data?.data.cart_items.map((it) => (
@@ -149,49 +153,49 @@ function CartPage() {
             <div className={"mt-4 w-full"}>
               {voucher && (
                 <p className={"cursor-pointer text-[0.9rem] hover:text-red-600"} onClick={() => dispatch(setVoucher(undefined))}>
-                  Xóa mã giảm giá <strong>{voucher.code}</strong>
+									{t('remove_voucher')} <strong>{voucher.code}</strong>
                 </p>
               )}
               <div className={"flex flex-col gap-x-5 gap-y-2 sm:flex-row sm:items-center"}>
                 <input
                   className={"grow rounded-full border-1 bg-gray-200 px-4 py-2 outline-none"}
-                  placeholder={"Nhập mã giảm giá"}
+                  placeholder={t('enter_voucher')}
                   value={voucher ? voucher.code : ""}
                   onChange={() => { }}
                 />
-                <button className={"rounded-4xl bg-black px-5 py-2 text-white hover:bg-gray-300 hover:text-black"}>Áp dụng voucher</button>
+                <button className={"rounded-4xl bg-black px-5 py-2 text-white hover:bg-gray-300 hover:text-black"}>{t('apply_voucher')}</button>
               </div>
-              {voucher && <p className={"text-[0.9rem] text-green-600"}>Mã giảm giá đã được áp dụng</p>}
+              {voucher && <p className={"text-[0.9rem] text-green-600"}>{t('voucher_applied')}</p>}
             </div>
           </div>
           <Separator className={"my-5"} />
           <div className={"flex flex-col gap-4 text-[0.9rem]"}>
             <div className={"flex w-full justify-between"}>
-              <p>Tạm tính</p>
+              <p>{t('subTotal')}</p>
               <p>{formatCurrency(CartHelper.totalComparePrice(cartItemsSelected))}</p>
             </div>
             <div className={"flex w-full justify-between"}>
-              <p>Giảm giá</p>
+              <p>{t('discount')}</p>
               <p>{formatCurrency(CartHelper.totalComparePrice(cartItemsSelected) - CartHelper.totalRegularPrice(cartItemsSelected))}</p>
             </div>
             <div className={"flex w-full justify-between"}>
-              <p>Phí giao hàng</p>
+              <p>{t('shipping_fee')}</p>
               <p>{formatCurrency(0)}</p>
             </div>
           </div>
           <Separator className={"my-5"} />
           <div className={"flex w-full justify-between text-[1.1rem]"}>
-            <p>Tổng</p>
+            <p>{t('total')}</p>
             <strong>{formatCurrency(CartHelper.totalRegularPrice(cartItemsSelected))}</strong>
           </div>
         </div>
       </div>
       <DialogContent classIcon={"hidden"}>
         <DialogHeader>
-          <DialogTitle className={"text-center text-xl"}>Bạn muốn xóa toàn bộ sản phẩm trong giỏ hàng không?</DialogTitle>
+          <DialogTitle className={"text-center text-xl"}>{t('confirm_clear_cart')}</DialogTitle>
           <DialogDescription className={"mt-5 flex w-full gap-5 px-10"}>
             <button className={"w-full rounded-full border-2 border-black py-2 text-lg text-black"} onClick={() => setConfirmDeleted(false)}>
-              Không
+							{t('no')}
             </button>
             <button
               className={"w-full rounded-full bg-black py-2 text-lg text-white"}
@@ -199,7 +203,7 @@ function CartPage() {
                 setConfirmDeleted(false);
                 deleteAllProduct();
               }}>
-              Đồng ký
+							{t('yes')}
             </button>
           </DialogDescription>
         </DialogHeader>

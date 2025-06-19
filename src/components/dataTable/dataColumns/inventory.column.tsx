@@ -12,7 +12,9 @@ import { formatDateFromArray } from "@/utils/helper/format-data.ts";
 import { ColumnDef } from "@tanstack/react-table";
 import { LockIcon, LockOpenIcon, MoreHorizontal } from "lucide-react";
 import { InventoryColumnProp } from "../props/inventoryColumn.prop";
+import { translated } from "@/utils/helper/locale.ts";
 
+const tInventoryColumns = (key: string) => translated(key, "page.admin.inventory.column");
 
 export const inventoryColumns = (
   watchDetail: (id: string) => void,
@@ -21,27 +23,27 @@ export const inventoryColumns = (
 ): ColumnDef<InventoryColumnProp | unknown, string | unknown>[] => [
     {
       accessorKey: "id",
-      header: "Mã tồn kho",
+      header: tInventoryColumns('id'),
       cell: ({ row }) => (<div className="font-bold">#{(row.getValue("id"))}</div>),
     },
     {
       accessorKey: "product_id",
-      header: "Mã sản phẩm",
+      header: tInventoryColumns('product_id'),
       cell: ({ row }) => (<div className="font-bold">#{(row.getValue("product_id"))}</div>),
     },
     {
       accessorKey: "sku",
-      header: "Mã SKU",
+      header: tInventoryColumns('sku'),
       cell: ({ row }) => (<div className="font-bold">#{(row.getValue("sku"))}</div>),
     },
     {
       accessorKey: "title",
-      header: "Tên biến thể",
+      header: tInventoryColumns('variant_name'),
     },
     {
       accessorKey: "options",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Tùy chọn" />
+        <DataTableColumnHeader column={column} title={ tInventoryColumns('option')} />
       ),
       cell: ({ row }) => {
         const data = row.original as InventoryColumnProp;
@@ -52,25 +54,25 @@ export const inventoryColumns = (
     {
       accessorKey: "regular_price",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Giá bán" />
+        <DataTableColumnHeader column={column} title={ tInventoryColumns('price')} />
       ),
     },
     {
       accessorKey: "compare_price",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Giá so sánh" />
+        <DataTableColumnHeader column={column} title={ tInventoryColumns('compare_price')}/>
       ),
     },
     {
       accessorKey: "quantity",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Số lượng" />
+        <DataTableColumnHeader column={column} title={ tInventoryColumns('quality')} />
       ),
     },
     {
       accessorKey: "create_at",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Ngày tạo" />
+        <DataTableColumnHeader column={column} title={ tInventoryColumns('create_at')} />
       ),
       cell: ({ row }) => (
         <div className="font-bold">
@@ -92,11 +94,11 @@ export const inventoryColumns = (
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Hành động</DropdownMenuLabel>
+              <DropdownMenuLabel>{ tInventoryColumns('create_at')}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem className={"cursor-pointer"}
                 onClick={() => watchDetail(data.id)}>
-                Xem chi tiết
+								{ tInventoryColumns('watch_detail')}
               </DropdownMenuItem>
               <DropdownMenuItem className={"cursor-pointer"}
                 onClick={() => onUpdateQuantity(data.id, data.quantity)}>
@@ -105,7 +107,7 @@ export const inventoryColumns = (
               <DropdownMenuItem
                 className={"cursor-pointer text-red-500 flex justify-between"}
                 onClick={() => saveLock(data.id)}>
-                <span>Tình trạng</span>
+                <span>{ tInventoryColumns('status')}</span>
                 {!data.lock
                   ? <LockOpenIcon className={'flex-none text-red-500'} />
                   : <LockIcon className={'flex-none text-red-500'} />}

@@ -5,7 +5,7 @@ import { CustomerColumnProp } from "../../../components/dataTable/props/customer
 import { OrderColumnProp } from "../../../components/dataTable/props/orderColumn.prop";
 import { ProductVariantsType } from "../../../types/product/productVariants.type";
 
-export const columnNameConcealmentRecord: Record<keyof CustomerColumnProp | keyof OrderColumnProp | keyof Pick<ProductVariantsType, 'quantity' | 'regular_price'> | string, OrderSortEnum | CustomerSortEnum | ProductSortEnum> = {
+export const columnNameConcealmentRecord: Record<keyof (CustomerColumnProp |  OrderColumnProp |  Pick<ProductVariantsType, 'quantity' | 'regular_price'>) | string, OrderSortEnum | CustomerSortEnum | ProductSortEnum> = {
 	 name: CustomerSortEnum.CUSTOMER_NAME,
 	location: CustomerSortEnum.LOCATION,
 	no_orders: CustomerSortEnum.NO_ORDERS,

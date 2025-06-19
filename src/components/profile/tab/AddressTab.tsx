@@ -8,8 +8,12 @@ import { showDialog } from "@/redux/slice/dialog.slice.ts";
 import { memo, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 const AddressTab = memo(() => {
+	const { t } = useTranslation(undefined, {
+		keyPrefix: "page.profile.addresses_tab",
+	});
   const dispatch = useDispatch();
   const { userIdAction } = useSelector((state: RootState) => state.address);
 
@@ -65,18 +69,18 @@ const AddressTab = memo(() => {
   return (
     <article className={"max-sm:mt-10"}>
       <div className='flex flex-wrap items-center justify-between border-b pb-6 max-sm:space-y-2'>
-        <h1 className={"text-lg font-bold sm:text-2xl lg:text-4xl mb-3"}>Địa chỉ của tôi</h1>
+        <h1 className={"text-lg font-bold sm:text-2xl lg:text-4xl mb-3"}>{t('my_addresses')}</h1>
         <Button
           onClick={() => {
             dispatch(setAddressIdAction(undefined));
             dispatch(showDialog("save-address"));
           }}
           className={"cursor-pointer rounded-full bg-black p-2 text-center text-sm text-white uppercase hover:bg-sky-600 sm:p-6 sm:text-lg"}>
-          Thêm địa chỉ mới
+					{t('add_address')}
         </Button>
       </div>
-      <h1 className={"mt-4 text-base font-bold sm:text-xl"}>Sổ địa chỉ</h1>
-      {(isErrorAddresses && isErrorAdminAddresses) && <p>không tìm thấy địa chỉ</p>}
+      <h1 className={"mt-4 text-base font-bold sm:text-xl"}>{t('title')}</h1>
+      {(isErrorAddresses && isErrorAdminAddresses) && <p>{t('not_found')}</p>}
       {addresses &&
         addresses.data.map((address) => (
           <AddressItem
@@ -106,8 +110,11 @@ const AddressTab = memo(() => {
 });
 
 export default function Address() {
+	const { t } = useTranslation(undefined, {
+		keyPrefix: "page.profile.addresses_tab",
+	});
   useEffect(() => {
-    document.title = "KimiFashion - Địa chỉ";
+    document.title = "KimiFashion - " + t('title');
   }, []);
 
   return <AddressTab />;

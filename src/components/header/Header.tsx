@@ -77,6 +77,7 @@ function Header({ showMenu }: HeaderProps) {
     return payload && payload.roles.includes("ROLE_ADMIN")
   }, [access_token])
 
+
   return (
     <div>
       <motion.header className={"sticky top-0 z-2 bg-white"} initial={{ top: 0 }} animate={{ top: scrollY >= 100 ? -40 : 0 }} transition={{ duration: 0.75 }}>
@@ -102,9 +103,10 @@ function Header({ showMenu }: HeaderProps) {
             <span className={"text-gray-400"}>|</span>
             <div className={"cursor-pointer px-3 py-2 text-sm hover:bg-gray-800"}>
               <Select defaultValue={LocalStorage.getValue("LANGUAGE") ?? "vi"} onValueChange={(value) => {
-                i18n.changeLanguage(value);
-                LocalStorage.setValue("LANGUAGE", value);
-              }}>
+								i18n.changeLanguage(value);
+								LocalStorage.setValue("LANGUAGE", value);
+								window.location.reload()
+							}}>
                 <SelectTrigger className='h-5 px-1'>
                   <SelectValue placeholder={t("language.title")} />
                 </SelectTrigger>
@@ -285,7 +287,7 @@ function Header({ showMenu }: HeaderProps) {
               className='w-[400px] overflow-hidden text-nowrap text-white'
               animate={{ x: ["100%", "-100%"] }}
               transition={{ repeat: 2, duration: 10, ease: "linear" }}>
-              {t("freeshipping")}
+              {t("header.free_shipping")}
             </motion.div>
           </div>
           <div className={"text-start"}>
