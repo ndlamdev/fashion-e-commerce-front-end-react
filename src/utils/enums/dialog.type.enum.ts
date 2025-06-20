@@ -6,6 +6,25 @@
  * User: lam-nguyen
  **/
 
-type DialogTypeEnum = "login" | "register" | "forgot-password" | "input-otp" | "new-password" | "none" | "register-with-google" | "register-with-facebook" | "edit-info-profile" | "reset-password" | "save-address";
+type DialogTypeEnum =
+	| "login"
+	| "register"
+	| "forgot-password"
+	| "input-otp"
+	| "new-password"
+	| "none"
+	| "register-with-google"
+	| "register-with-facebook"
+	| "edit-info-profile"
+	| "change-password"
+	| "save-address"
+	| "refer-friend"
+	| "guide-choose-size"
+	| "show-confirm"
+	| "manage-addresses"
+	| "voice-search"
+	| "update-status"
+	| "choose-media"
+	| "update-quantity-variant";
 
 export default DialogTypeEnum;

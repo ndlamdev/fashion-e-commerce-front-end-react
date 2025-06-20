@@ -1,21 +1,34 @@
-import { TableHead, TableHeader, TableRow } from "@/components/ui/table.tsx";
+import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table.tsx";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
-const HistoryPointTab =() => {
+const HistoryPointTab = () => {
+	const { t } = useTranslation(undefined, {
+		keyPrefix: "page.profile.points_tab",
+	});
 	return (
-		<article className={'max-sm:mt-10'}>
-			<h1 className={'text-lg lg:text-4xl sm:text-2xl font-bold'}>Lịch sử Point</h1>
-			<h2 className={'text-neutral-500 text-sm sm:text-lg mt-3'}>Point của bạn</h2>
-			<TableHeader>
-				<TableRow className="text-xs sm:text-sm uppercase">
-					<TableHead className="">Point được tặng</TableHead>
-					<TableHead>Hết hạn</TableHead>
-				</TableRow>
-			</TableHeader>
-
+		<article className={"max-sm:mt-10"}>
+			<h1 className={"text-lg font-bold sm:text-2xl lg:text-4xl"}>{t('title')}</h1>
+			<h2 className={"mt-3 text-sm text-neutral-500 sm:text-lg"}>{t('your_points')}</h2>
+			<Table>
+				<TableHeader>
+					<TableRow className='text-xs uppercase sm:text-sm'>
+						<TableHead className=''>{t('awarded_point')}</TableHead>
+						<TableHead>{t('expired')}</TableHead>
+					</TableRow>
+				</TableHeader>
+			</Table>
 		</article>
 	);
-}
+};
 
 export default function HistoryPoint() {
+	const { t } = useTranslation(undefined, {
+		keyPrefix: "page.profile.points_tab",
+	});
+ useEffect(() => {
+    document.title = "KimiFashion - " + t('title');
+  }, []);
+
 	return <HistoryPointTab />;
 }

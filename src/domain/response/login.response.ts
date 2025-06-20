@@ -8,7 +8,7 @@
 import UserDto from "@/domain/dto/user.dto.ts";
 
 type LoginResponse = {
-	"access-token": string;
+	access_token: string;
 	user: UserDto;
 };
 

@@ -1,0 +1,1 @@
+export type BestSaleProp = { title: string; quantity: number };

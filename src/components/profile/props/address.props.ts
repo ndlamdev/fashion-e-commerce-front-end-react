@@ -1,6 +1,6 @@
-import { AddressType } from "@/types/profile/address.type.ts";
+import { AddressShippingType } from "@/types/profile/address.type.ts";
 
-export type AddressProps = AddressType & {
+export type AddressProps = AddressShippingType & {
 	onEdit?: () => void;
 	onDelete?: () => void;
 }

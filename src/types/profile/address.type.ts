@@ -1,18 +1,20 @@
+export type AddressShippingType = AddressType & {
+	id: number;
+	full_name: string;
+	phone: string;
+	country_code: string;
+	active: boolean;
+	street?: string;
+};
+
 export type AddressType = {
-	id: number
-	fullName: string
-	phone: string
-	// country: string
-	// countryCode: string
-	city: string
-	cityCode: string
-	district: string
-	districtCode: string
-	ward: string
-	wardCode: string
-	active: boolean
-	street?: string
-}
+	city: string;
+	city_code: string;
+	district: string;
+	district_code: string;
+	ward: string;
+	ward_code: string;
+};
 
 // api address
 // https://www.coolmate.me/json/treeVN.min.json

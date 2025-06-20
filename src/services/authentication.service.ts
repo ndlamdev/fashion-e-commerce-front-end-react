@@ -21,12 +21,13 @@ import LoginResponse from "@/domain/response/login.response.ts";
 import LocalStorage from "@/utils/helper/LocalStorage.ts";
 import LoginRequest from "@/domain/resquest/login.request.ts";
 import LoginWithGoogleRequest from "@/domain/resquest/loginWithGoogle.request.ts";
-import { authenticationApi } from "@/redux/query/authentication.query";
+import { authApi } from "@/redux/api/auth.api.ts";
 import { appDispatch } from "@/configs/store.config.ts";
-import { loginSuccess } from "@/redux/slice/auth.slice.ts";
+import { authSlice, loginSuccess } from "@/redux/slice/auth.slice.ts";
 import RegisterWithGoogleRequest from "@/domain/resquest/registerWithGoogle.request.ts";
 import RegisterWithFacebookRequest from "@/domain/resquest/registerWithFacebook.request";
-import AccesTokenRequest from "@/domain/resquest/accesToken.request.ts";
+import AccessTokenRequest from "@/domain/resquest/accessToken.request.ts";
+import ChangePasswordRequest from "@/domain/resquest/changePassword.request.ts";
 
 const PATH_BASE_URL = "/auth/v1";
 
@@ -101,12 +102,13 @@ async function login(data: LoginRequest) {
 	return await api
 		.post<any, AxiosResponseCustom<LoginResponse>, LoginRequest>(PATH_BASE_URL + "/login", data, { withCredentials: true })
 		.then((result) => {
-			const token = result.data.data["access-token"];
+			const token = result.data.data.access_token;
 			const user = result.data.data.user;
 			appDispatch(loginSuccess({ access_token: token, user: user }));
 			LocalStorage.setValue("ACCESS_TOKEN", token);
 			LocalStorage.setObjectValue("USER", user);
 			toast.message(result.data.message);
+			return result.data;
 		})
 		.catch((error) => {
 			return showError(error);
@@ -119,7 +121,7 @@ async function logout() {
 			headers: { Authorization: getAuthorizationToken() },
 		})
 		.then(() => {
-			LocalStorage.deleteValue("ACCESS_TOKEN");
+			appDispatch(authSlice.actions.logout());
 		});
 }
 
@@ -174,7 +176,7 @@ async function verifyResetPassword(otp: string) {
 async function setNewPassword(request: Omit<NewPasswordRequest, "token">) {
 	const token = SessionStorage.getValue("TOKEN_RESET_PASSWORD");
 	if (!token) {
-		toast.message("Token noi found!");
+		toast.message("Token not found!");
 		return Promise.reject();
 	}
 	return await api
@@ -192,15 +194,16 @@ async function setNewPassword(request: Omit<NewPasswordRequest, "token">) {
 }
 
 const loginWithGoogle = async (data: LoginWithGoogleRequest) => {
-	return await appDispatch(authenticationApi.endpoints.loginWithGoogle.initiate(data, { track: false })).then(({ data, error }) => {
+	return await appDispatch(authApi.endpoints.loginWithGoogle.initiate(data, { track: false })).then(({ data, error }) => {
 		if (error) {
 			return Promise.reject(error);
 		}
 
-		const token = data.data["access-token"];
+		const token = data.data.access_token;
 		appDispatch(loginSuccess({ access_token: token, user: data.data.user }));
 		LocalStorage.setValue("ACCESS_TOKEN", token);
 		LocalStorage.setObjectValue("USER", data.data.user);
+		return data;
 	});
 };
 
@@ -214,8 +217,8 @@ const registerWithGoogle = async (data: RegisterWithGoogleRequest) => {
 			detail: "Don't have any token",
 		} as ApiResponseError<string>);
 	}
-	data["register-token"] = token;
-	return await appDispatch(authenticationApi.endpoints.registerWithGoogle.initiate(data, { track: false })).then(({ error }) => {
+	data.token = token;
+	return await appDispatch(authApi.endpoints.registerWithGoogle.initiate(data, { track: false })).then(({ error }) => {
 		if (error) {
 			const response = (error as any).data as ApiResponseError<string>;
 			toast.message(response.detail);
@@ -236,8 +239,8 @@ const registerWithFacebook = async (data: RegisterWithFacebookRequest) => {
 			detail: "Don't have any token",
 		} as ApiResponseError<string>);
 	}
-	data["register-token"] = token;
-	return await appDispatch(authenticationApi.endpoints.registerWithFacebook.initiate(data, { track: false })).then(({ error }) => {
+	data.token = token;
+	return await appDispatch(authApi.endpoints.registerWithFacebook.initiate(data, { track: false })).then(({ error }) => {
 		if (error) {
 			SessionStorage.deleteValue("REGISTER_TOKEN_USING_FACEBOOK");
 			const response = (error as any).data as ApiResponseError<string>;
@@ -249,16 +252,17 @@ const registerWithFacebook = async (data: RegisterWithFacebookRequest) => {
 	});
 };
 
-const loginWithFacebook = async (data: AccesTokenRequest) => {
-	return await appDispatch(authenticationApi.endpoints.loginWithFacebook.initiate(data, { track: false })).then(({ data, error }) => {
+const loginWithFacebook = async (data: AccessTokenRequest) => {
+	return await appDispatch(authApi.endpoints.loginWithFacebook.initiate(data, { track: false })).then(({ data, error }) => {
 		if (error) {
 			return Promise.reject(error);
 		}
 
-		const token = data.data["access-token"];
+		const token = data.data.access_token;
 		appDispatch(loginSuccess({ access_token: token, user: data.data.user }));
 		LocalStorage.setValue("ACCESS_TOKEN", token);
 		LocalStorage.setObjectValue("USER", data.data.user);
+		return data;
 	});
 };
 
@@ -276,6 +280,18 @@ const getAuthorizationToken = () => {
 	return "Bearer " + LocalStorage.getValue("ACCESS_TOKEN") || "";
 };
 
+async function changePassword(request: ChangePasswordRequest) {
+	return await api
+		.post<any, AxiosResponseCustom<void>, ChangePasswordRequest>(PATH_BASE_URL + "/change-password", request)
+		.then(async (result) => {
+			toast.message(result.data.message);
+			appDispatch(authSlice.actions.logout());
+		})
+		.catch(async (error) => {
+			return showError(error);
+		});
+}
+
 const authenticationService = {
 	register,
 	verifyRegister,
@@ -291,6 +307,7 @@ const authenticationService = {
 	registerWithGoogle,
 	loginWithFacebook,
 	registerWithFacebook,
+	changePassword,
 };
 
 export default authenticationService;

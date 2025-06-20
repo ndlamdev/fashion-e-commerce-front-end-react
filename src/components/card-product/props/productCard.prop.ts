@@ -1,7 +1,7 @@
-import ProductType from "@/types/product/product.type.ts";
+import ProductResponseType from "@/domain/response/product.response";
 
-type ProductCardProp = ProductType & {
+type ProductResponseProp = ProductResponseType & {
 	className?: string;
 };
 
-export default ProductCardProp;
+export default ProductResponseProp;

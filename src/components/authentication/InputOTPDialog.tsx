@@ -6,21 +6,55 @@
  *  User: lam-nguyen
  **/
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
-import { useContext, useEffect, useState } from "react";
-import { DialogAuthContext } from "@/context/DialogAuthContext.tsx";
+import { useEffect, useState } from "react";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp.tsx";
 import ButtonAuthentication from "@/components/authentication/ui/ButtonAuthentication.tsx";
 import { useForm } from "react-hook-form";
 import OTPRequest from "@/domain/resquest/otp.request.ts";
-import ConfirmDialog from "@/components/authentication/ConfirmDialog.tsx";
+import DialogConfirm from "@/components/dialog/DialogConfirm.tsx";
+import { useDispatch, useSelector } from "react-redux";
+import { appDispatch, RootState } from "@/configs/store.config.ts";
+import { hiddenDialog, showDialog } from "@/redux/slice/dialog.slice";
+import EventInputOTPDialog from "@/components/authentication/props/InputOTPDialog.props.ts";
+import authenticationService from "@/services/authentication.service.ts";
+import SessionStorage from "@/utils/helper/SessionStorage.ts";
+import { useTranslation } from "react-i18next";
+
+const mapCallbacks: Record<"register" | "forget-password", EventInputOTPDialog> = {
+	register: {
+		sendOtp: async (otp: string): Promise<void> => {
+			return authenticationService.verifyRegister(otp).then(() => {
+				appDispatch(showDialog("login"));
+			});
+		},
+		resendOtp: () => {
+			return authenticationService.resendCodeVerify();
+		},
+	},
+	"forget-password": {
+		sendOtp: async (otp: string): Promise<void> => {
+			return authenticationService.verifyResetPassword(otp).then(() => {
+				appDispatch(showDialog("new-password"));
+			});
+		},
+		resendOtp: () => {
+			return authenticationService.resetPassword(SessionStorage.getValue("EMAIL_FORGET_PASSWORD") || "");
+		},
+	},
+};
 
 function InputOTPDialog() {
-	const { showDialog, dialog, callBacksDialog } = useContext(DialogAuthContext);
+	const { t } = useTranslation(undefined, {
+		keyPrefix: "page.auth.otp"
+	});
+	const dispatch = useDispatch();
+	const { dialog, callBacksDialog } = useSelector((state: RootState) => state.dialog);
 	const [openDialog, setOpenDialog] = useState<"none" | "show-confirm" | "show-dialog">("none");
 	const {
 		setValue,
 		setError,
 		getValues,
+		reset,
 		formState: { errors },
 	} = useForm<Omit<OTPRequest, "email">>({
 		values: { code: "" },
@@ -33,11 +67,12 @@ function InputOTPDialog() {
 	const onSubmitHandler = async () => {
 		const otp = getValues("code");
 		if (!otp || otp.length < 6) {
-			setError("code", { type: "minLength", message: "Vui lòng điền đẩy đủ mã" });
+			setError("code", { type: "minLength", message: t('invalid_opt') });
 			return;
 		}
 
-		await callBacksDialog?.sendOtp?.(otp).then(() => {
+		if (!callBacksDialog) return;
+		await mapCallbacks[callBacksDialog]?.sendOtp?.(otp).then(() => {
 			setOpenDialog("none");
 		});
 	};
@@ -51,7 +86,7 @@ function InputOTPDialog() {
 					classIcon={"bg-black p-4 border-2 border-gray-200 text-white !rounded-full top-[-20px] right-[-20px]"}
 					onClosed={() => setOpenDialog("show-confirm")}>
 					<DialogHeader>
-						<DialogTitle className={"text-center text-4xl"}>Nhập mã xác thực</DialogTitle>
+						<DialogTitle className={"text-center text-4xl"}>{t('enter_otp')}</DialogTitle>
 					</DialogHeader>
 					<div className={"flex flex-col items-center"}>
 						<InputOTP
@@ -71,28 +106,30 @@ function InputOTPDialog() {
 						</InputOTP>
 						{errors.code && <small className={"mt-1 text-red-600"}>{errors.code.message}</small>}
 					</div>
-					<ButtonAuthentication onClick={onSubmitHandler}>Xác nhận</ButtonAuthentication>
+					<ButtonAuthentication onClick={onSubmitHandler}>{t('submit')}</ButtonAuthentication>
 					<div className={"flex items-center gap-3"}>
-						<p>Gửi lại mã mới:</p>
+						<p>{t('resend_opt')}:</p>
 						<button
 							className={"rounded-2xl border-1 border-black px-4 py-1 hover:border-white hover:bg-green-400 hover:text-white"}
 							onClick={async () => {
-								await callBacksDialog?.resendOtp?.().then();
+								if (!callBacksDialog) return;
+								await mapCallbacks[callBacksDialog]?.resendOtp?.().then();
 							}}>
 							Gửi
 						</button>
 					</div>
 				</DialogContent>
 			</Dialog>
-			<ConfirmDialog
+			<DialogConfirm
 				open={openDialog === "show-confirm"}
-				onOpenChange={(value) => !value && showDialog("none")}
+				onOpenChange={(value) => !value && dispatch(hiddenDialog())}
 				onClickCancel={() => {
 					setOpenDialog("show-dialog");
 				}}
 				onClickSubmit={() => {
 					setOpenDialog("none");
-					showDialog("none");
+					dispatch(hiddenDialog());
+					reset();
 				}}
 			/>
 		</>

@@ -5,17 +5,22 @@
  * Create at: 3:25 PM - 18/04/2025
  * User: kimin
  **/
+import { GenderType } from "@/types/profile/profile.type.ts";
 
 type UserDto = {
 	id: number;
+	user_id: number;
 	full_name: string;
+	email: string;
 	avatar: string;
 	phone: string;
-	gender: string;
-	birthday: Date;
+	gender: GenderType;
+	birthday: number[];
 	height: number;
 	weight: number;
 	country_code: string;
+	create_at: number[];
+	lock: boolean;
 };
 
 export default UserDto;

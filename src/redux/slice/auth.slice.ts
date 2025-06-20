@@ -28,13 +28,19 @@ export const authSlice = createSlice({
 			state.user = action.payload.user;
 			state.access_token = action.payload.access_token;
 		},
+		changeProfile: (state, action: PayloadAction<UserDto>) => {
+			state.user = action.payload;
+			LocalStorage.setObjectValue("USER", action.payload);
+		},
 		logout: (state: AuthSliceState) => {
 			state.user = null;
 			state.access_token = null;
+			LocalStorage.deleteValue("USER");
+			LocalStorage.deleteValue("ACCESS_TOKEN");
 		},
 	},
 });
 
-export const { loginSuccess } = authSlice.actions;
+export const { loginSuccess, changeProfile, logout } = authSlice.actions;
 
 export default authSlice.reducer;

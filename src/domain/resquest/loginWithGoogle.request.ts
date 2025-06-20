@@ -7,7 +7,7 @@
  **/
 
 type LoginWithGoogleRequest = {
-	"auth-code": string;
+	auth_code: string;
 };
 
 export default LoginWithGoogleRequest;
