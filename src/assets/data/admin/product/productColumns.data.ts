@@ -1,6 +1,6 @@
-import { ProductProp } from "@/components/dataTable/props/product.prop.tsx";
+import { ProductColumn } from "@/components/dataTable/dataColumns/orderItem.column";
 
-export const productColumnVariants: ProductProp[] = [
+export const productColumnVariants: ProductColumn[] = [
 	{
 		id: "v1",
 		title: "T-Shirt Red M",
@@ -15,7 +15,7 @@ export const productColumnVariants: ProductProp[] = [
 		product_allow_buy_when_hidden: false,
 		product_exclude_discount: false,
 		product_apply_allowance_inventory: true,
-		src: "src/assets/images/product/hover-t-shirt.webp"
+		src: "src/assets/images/product/hover-t-shirt.webp",
 	},
 	{
 		id: "v2",
@@ -31,7 +31,7 @@ export const productColumnVariants: ProductProp[] = [
 		product_allow_buy_when_hidden: false,
 		product_exclude_discount: false,
 		product_apply_allowance_inventory: true,
-		src: "src/assets/images/product/hover-t-shirt.webp"
+		src: "src/assets/images/product/hover-t-shirt.webp",
 	},
 	{
 		id: "v3",
@@ -47,7 +47,7 @@ export const productColumnVariants: ProductProp[] = [
 		product_allow_buy_when_hidden: true,
 		product_exclude_discount: false,
 		product_apply_allowance_inventory: true,
-		src: "src/assets/images/product/hover-t-shirt.webp"
+		src: "src/assets/images/product/hover-t-shirt.webp",
 	},
 	{
 		id: "v4",
@@ -63,7 +63,7 @@ export const productColumnVariants: ProductProp[] = [
 		product_allow_buy_when_hidden: true,
 		product_exclude_discount: false,
 		product_apply_allowance_inventory: false,
-		src: "src/assets/images/product/hover-t-shirt.webp"
+		src: "src/assets/images/product/hover-t-shirt.webp",
 	},
 	{
 		id: "v5",
@@ -79,7 +79,7 @@ export const productColumnVariants: ProductProp[] = [
 		product_allow_buy_when_hidden: false,
 		product_exclude_discount: true,
 		product_apply_allowance_inventory: true,
-		src: "src/assets/images/product/hover-t-shirt.webp"
+		src: "src/assets/images/product/hover-t-shirt.webp",
 	},
 	{
 		id: "v6",
@@ -95,7 +95,7 @@ export const productColumnVariants: ProductProp[] = [
 		product_allow_buy_when_hidden: true,
 		product_exclude_discount: true,
 		product_apply_allowance_inventory: false,
-		src: "src/assets/images/product/hover-t-shirt.webp"
+		src: "src/assets/images/product/hover-t-shirt.webp",
 	},
 	{
 		id: "v7",
@@ -111,7 +111,7 @@ export const productColumnVariants: ProductProp[] = [
 		product_allow_buy_when_hidden: false,
 		product_exclude_discount: false,
 		product_apply_allowance_inventory: true,
-		src: "src/assets/images/product/hover-t-shirt.webp"
+		src: "src/assets/images/product/hover-t-shirt.webp",
 	},
 	{
 		id: "v8",
@@ -127,7 +127,7 @@ export const productColumnVariants: ProductProp[] = [
 		product_allow_buy_when_hidden: true,
 		product_exclude_discount: true,
 		product_apply_allowance_inventory: false,
-		src: "src/assets/images/product/hover-t-shirt.webp"
+		src: "src/assets/images/product/hover-t-shirt.webp",
 	},
 	{
 		id: "v9",
@@ -143,7 +143,7 @@ export const productColumnVariants: ProductProp[] = [
 		product_allow_buy_when_hidden: false,
 		product_exclude_discount: false,
 		product_apply_allowance_inventory: true,
-		src: "src/assets/images/product/hover-t-shirt.webp"
+		src: "src/assets/images/product/hover-t-shirt.webp",
 	},
 	{
 		id: "v10",
@@ -159,6 +159,6 @@ export const productColumnVariants: ProductProp[] = [
 		product_allow_buy_when_hidden: false,
 		product_exclude_discount: false,
 		product_apply_allowance_inventory: true,
-		src: "src/assets/images/product/hover-t-shirt.webp"
-	}
+		src: "src/assets/images/product/hover-t-shirt.webp",
+	},
 ];

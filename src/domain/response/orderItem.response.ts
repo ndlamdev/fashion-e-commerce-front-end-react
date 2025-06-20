@@ -6,13 +6,16 @@
  * User: kimin
  **/
 
+import ProductInCartResponse from "./productInCart.response";
+import VariantResponse from "./variant.response";
+
 type OrderItemResponse = {
-  id: number;
-  productId: string;
-  variantId: string;
-  quantity: number;
-  compare_price: number;
-  regular_price: number;
-}
+	id: number;
+	variant: VariantResponse;
+	product: ProductInCartResponse;
+	quantity: number;
+	compare_price: number;
+	regular_price: number;
+};
 
 export default OrderItemResponse;

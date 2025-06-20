@@ -1,21 +1,11 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { AddressShippingType, AddressType } from "@/types/profile/address.type.ts";
 import { ApiResponse } from "@/domain/ApiResponse.ts";
 import { SaveAddressRequest } from "@/domain/resquest/profile/saveAddress.request.ts";
 import { createBaseQueryWithDispatch } from "@/redux/api/baseQueryWithDispatch.ts";
+import { AddressShippingType } from "@/types/profile/address.type.ts";
+import { createApi } from "@reduxjs/toolkit/query/react";
 
-export const addressCoolMateApi = createApi({
-	reducerPath: "address-coolmate-api",
-	baseQuery: fetchBaseQuery({ baseUrl: "/treeVN.json" }),
-	endpoints: (build) => ({
-		getInfoAddresses: build.query<AddressType[], void>({
-			query: () => ({
-				url: "",
-			}),
-		}),
-	}),
-});
 export const BASE_ADDRESS_URL = import.meta.env.VITE_BASE_URL + "/address/v1";
+export const BASE_ADDRESS_ADMIN_URL = import.meta.env.VITE_BASE_URL + "/admin/address/v1/user";
 
 export const addressApi = createApi({
 	reducerPath: "addressUserApi",
@@ -48,7 +38,6 @@ export const addressApi = createApi({
 				body: request,
 				credentials: "include",
 			}),
-			invalidatesTags: ["Address"],
 		}),
 		deleteAddress: build.mutation<ApiResponse<void>, number | undefined>({
 			query: (id) => ({
@@ -56,15 +45,62 @@ export const addressApi = createApi({
 				method: "DELETE",
 				credentials: "include",
 			}),
-			invalidatesTags: ["Address"],
 		}),
-		setDefaultAddress: build.mutation<ApiResponse<void>, { old_id: number | undefined; new_id: number | undefined }>({
-			query: ({ old_id, new_id }) => ({
-				url: `?old=${old_id}&new=${new_id}`,
+		setDefaultAddress: build.mutation<ApiResponse<void>, number>({
+			query: (addressId) => ({
+				url: `/set-default/${addressId}`,
 				method: "PATCH",
 				credentials: "include",
 			}),
-			invalidatesTags: ["Address"],
+		}),
+	}),
+});
+
+export const adminAddressApi = createApi({
+	reducerPath: "AdminAddressUserApi",
+	baseQuery: createBaseQueryWithDispatch(BASE_ADDRESS_ADMIN_URL),
+	tagTypes: ["AdminAddress"],
+	endpoints: (build) => ({
+		adminGetAddresses: build.query<ApiResponse<AddressShippingType[]>, number>({
+			query: (id) => ({
+				url: `/${id}`,
+				credentials: "include",
+			}),
+			providesTags: ["AdminAddress"],
+		}),
+		adminGetAddress: build.query<ApiResponse<AddressShippingType>, { userId: number; addressId: number }>({
+			query: ({ userId, addressId }) => ({
+				url: `/${userId}/address/${addressId}`,
+				credentials: "include",
+			}),
+		}),
+		adminGetDefaultAddress: build.query<ApiResponse<AddressShippingType>, number>({
+			query: (userId) => ({
+				url: `/${userId}/default`,
+				credentials: "include",
+			}),
+		}),
+		adminSaveAddress: build.mutation<ApiResponse<AddressShippingType>, { userId: number; address: SaveAddressRequest }>({
+			query: ({ userId, address }) => ({
+				url: address.id ? `/${userId}/address/${address.id}` : `/${userId}`,
+				method: address.id ? "PUT" : "POST",
+				body: address,
+				credentials: "include",
+			}),
+		}),
+		adminDeleteAddress: build.mutation<ApiResponse<void>, { userId: number; addressId: number }>({
+			query: ({ userId, addressId }) => ({
+				url: `/${userId}/address/${addressId}`,
+				method: "DELETE",
+				credentials: "include",
+			}),
+		}),
+		adminSetDefaultAddress: build.mutation<ApiResponse<void>, { userId: number; addressId: number }>({
+			query: ({ userId, addressId }) => ({
+				url: `/${userId}/set-default/${addressId}`,
+				method: "PATCH",
+				credentials: "include",
+			}),
 		}),
 	}),
 });
@@ -77,4 +113,12 @@ export const {
 	useSaveAddressMutation,
 	useGetDefaultAddressQuery,
 } = addressApi;
-export const { useGetInfoAddressesQuery } = addressCoolMateApi;
+
+export const {
+	useAdminGetAddressQuery,
+	useAdminGetAddressesQuery,
+	useAdminDeleteAddressMutation,
+	useAdminGetDefaultAddressQuery,
+	useAdminSaveAddressMutation,
+	useAdminSetDefaultAddressMutation,
+} = adminAddressApi;

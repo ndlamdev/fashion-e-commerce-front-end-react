@@ -1,0 +1,732 @@
+{
+	"language": {
+		"vi": "Tiếng Việt",
+		"en": "Tiếng Anh",
+		"title": "Ngôn ngữ"
+	},
+	"header": {
+		"product_types": {
+			"male": "Nam",
+			"female": "Nữ",
+			"sport": "Thể thao"
+		},
+		"customer_care_center": "Trung tâm chăm sóc khách hàng",
+		"about": "Về KimiFashion",
+		"blog": "Blog",
+		"admin": "Quản lý cửa hàng",
+		"logout": "Đăng xuất",
+		"return_home": "Quay về trang chủ",
+		"login": "Đăng nhập",
+		"outstanding": "Nổi bật",
+		"explore": {
+			"men": "Khám phá đồ nam",
+			"women": "Khám phá đồ nữ",
+			"sport": "Khám phá đồ thể thao"
+		},
+		"search": {
+			"placeholder": "Tìm kiếm sản phẩm...",
+			"no_results": "Không tìm thấy kết quả",
+			"error": "Đã xảy ra lỗi khi tìm kiếm",
+			"hint": "Nhập sản phẩm bạn muốn tìm."
+		},
+		"cart": {
+			"view_all": "Xem tất cả",
+			"empty": "Giỏ hàng chưa có gì :( chọn mua đồ bạn nhé"
+		},
+		"free_shipping": "Miễn phí vận chuyển cho đơn hàng trên 1.000.000 VND",
+		"dialog": {
+			"confirm_logout": "Bạn có chắc muốn đăng xuất không?"
+		}
+	},
+	"footer": {
+		"shopping": {
+			"title": "Mua sắm",
+			"shipping": "Giao hàng",
+			"payment": "Thanh toán",
+			"return": "Trả hàng",
+			"store_locator": "Tìm cửa hàng",
+			"magazine": "Magazine"
+		},
+		"company_info": {
+			"title": "Thông tin doanh nghiệp",
+			"careers": "Cơ hội nghề nghiệp tại KimiFashion",
+			"about": "Giới thiệu về KimiFashion",
+			"sustainability": "Thời trang bền vững - KimiFashion",
+			"press": "Báo trí",
+			"investor_relations": "Quan hệ với nhà đầu tư",
+			"corporate_governance": "Quản trị Doanh nghiệp"
+		},
+		"help": {
+			"title": "Trợ giúp",
+			"customer_service": "Dịch vụ khách hàng",
+			"my_account": "Tài khoản của tôi",
+			"terms_conditions": "Các điều khoản & điều kiện",
+			"contact": "Liên hệ",
+			"cookie_info": "Thông tin về cookie",
+			"payment_info": "Thông tin thanh toán",
+			"order_success": "Mua hàng thành công",
+			"cookie_settings": "Cài đặt cookie"
+		},
+		"join_now": {
+			"title": "Tham gia ngay",
+			"text": "Tham gia KimiFashion và tận hưởng ưu đãi 10% cho lần mua hàng tiếp theo!",
+			"read_more": "Đọc thêm"
+		},
+		"social_media": "Mạng xã hội",
+		"copyright": "Nội dung trên trang này được bảo vệ bản quyền và là tài sản của KimiFashion."
+	},
+	"page": {
+		"home": {
+			"title": "KimiFashion- Trang chủ",
+			"description": "Chào mừng bạn đến với KimiFashion - Nơi thời trang và phong cách gặp nhau.",
+			"product_types": {
+				"male": {
+					"title": "Đồ nam",
+					"items": {
+						"shirts": "Áo sơ mi",
+						"tshirts": "Áo thun",
+						"jeans": "Quần jean",
+						"jackets": "Áo khoác",
+						"shoes": "Giày dép",
+						"pants": "Quần dài",
+						"shorts": "Quần short",
+						"boxers": "Quần lót",
+						"accessories": "Phụ kiện"
+					}
+				},
+				"female": {
+					"title": "Đồ nữ",
+					"items": {
+						"bra_&_leggings": "Áo ngực & Quần legging",
+						"sports_top": "Áo thể thao",
+						"sports_pants": "Quần thể thao",
+						"accessories": "Phụ kiện"
+					}
+				}
+			},
+			"collections": {
+				"male": {
+					"title": "Bộ sưu tập đồ nam",
+					"code": "Nhập CM10 Giảm thểm 10% tối đa 100k",
+					"buy_now": "Mua ngay"
+				},
+				"female": {
+					"title": "Bộ sưu tập đồ nữ",
+					"code": "Nhập CM10 Giảm thểm 10% tối đa 100k",
+					"buy_now": "Mua ngay"
+				}
+			},
+			"discover": {
+				"title": "Mặc hằng ngày",
+				"description": "Thoải mái, thanh lịch | Nhập CM10 giảm 10% đơn từ 600",
+				"button": "khám phá ngay",
+				"sub_title": "SẢN PHẨM MẶC HẰNG NGÀY"
+			},
+			"running": {
+				"title": "Đồ chạy bộ",
+				"description": "Co giãn, thoáng khí | Mua combo tiết kiệm đến 30%",
+				"button": "khám phá ngay",
+				"sub_title": "SẢN PHẨM CHẠY BỘ"
+			}
+		},
+		"product_details": {
+			"breadcrumb": {
+				"home": "Trang chủ",
+				"product_details": "Chi tiết sản phẩm"
+			},
+			"dialog": {
+				"refer_friend": {
+					"title": "Giới thiệu bạn bè Nhận ngay 10% KimiCash",
+					"description": "Bạn sẽ nhận được 10% giá trị đơn hàng đầu tiên của bạn bè và được trả bằng KimiCash khi họ là thành viên CoolClub và mua sản phẩm Kimi bất kỳ.",
+					"send_refer_code_to_your_friend": "Gửi mã giới thiệu đến với bạn bè",
+					"send_refer_link_to_your_friend": "Gửi link giới thiệu đến với bạn bè",
+					"copy": "Sao chép",
+					"copied": "Đã copy mã giới thiệu",
+					"share": "Chia sẻ",
+					"to_given_cash": "Bạn sẽ nhận được CoolCash khi:",
+					"to_given_cash_tick_1": "Bạn bè của bạn tham gia KimiClub",
+					"to_given_cash_tick_2": "Bạn bè của bạn hoàn thành đơn hàng đầu tiên trên website",
+					"to_given_cash_tick_3": "Bạn bè của bạn hoàn thành đơn hàng đầu tiên trên website",
+					"terms_and_policies": "Chính sách và điều khoản"
+				},
+				"guide_choose_size": {
+					"guide_choose_size_tab": "Hướng dẫn chọn kích thước",
+					"table_size_tab": "Bảng kích thước",
+					"height": "Chiều cao",
+					"weight": "Cân nặng",
+					"suggest": "Kimi gợi ý",
+					"long_shirt": "Dài áo",
+					"wide_chest": "Rộng ngực",
+					"long_sleeves": "Dài tay",
+					"description": "Trường hợp số đo của bạn nằm trong khoảng giữa các size với nhau: Với áo thun, bạn hãy lựa chọn ưu tiên theo chiều cao Ví dụ chiều cao của bạn theo size L nhưng cân nặng của bạn theo size M, Hãy chọn L. 97% khách hàng của chúng tôi đã chọn đúng size theo cách này."
+				}
+			},
+			"share": "Chia sẻ",
+			"free_ship": "Miễn phí vận chuyển",
+			"discount_code": "Mã giảm giá",
+			"no_available_discount_code": "Không còn mã giảm giá nào khả dụng",
+			"to_get_discount": "để nhận ưu đãi",
+			"save_discount_code_success": "Lưu mã giảm giá thành công",
+			"size_guide": "Hướng dẫn chọn kích cỡ",
+			"warning_max_bought": "Số lượng mua vượt mức cho phép (từ {{max}} sản phẩm trở lại)",
+			"be_refunded": "Được hoàn",
+			"coolcash_refund_info": "Đây là số CoolCash ước tính bạn sẽ được hoàn lại khi mua sản phẩm hôm nay, tương ứng với quyền lợi hạng",
+			"new_member": "Thành viên mới",
+			"chat_support": "Chat để KimiFashion tư vấn ngay (8:30 - 22:00)",
+			"add_to_cart": "Thêm vào giỏ hàng",
+			"choose_size": "Chọn kích cỡ",
+			"exchange_policy": "Đổi trả cực dễ chỉ cần số điện thoại",
+			"return_policy": "60 ngày đổi trả vì bất kỳ lý do gì",
+			"hotline_info": "Hotline 0855.354.919 hỗ trợ từ 8h30 - 22h mỗi ngày",
+			"delivery_info": "Đến tận nơi nhận hàng trả, hoàn tiền trong 24h",
+			"product_description": "Mô tả sản phẩm",
+			"read_more": "Xem thêm",
+			"suggested_products": "Gợi ý sản phẩm",
+			"product_reviews": "Đánh giá sản phẩm",
+			"based_on": "Dựa trên",
+			"from_customer": "đánh giá đến từ khách hàng",
+			"search_review_placeholder": "Tìm kiếm đánh giá",
+			"rating_classification": "Phân loại xếp hạng",
+			"rating_classification_description": "Các review đều đến từ khách hàng đã thực sự mua hàng của Coolmate",
+			"all_reviews": "Tất cả đánh giá",
+			"filter_feedback": "Lọc phản hồi",
+			"feedback_received": "Đã phản hồi",
+			"feedback_has_image_only": "Chỉ có hình ảnh",
+			"show_reviews": "Hiển thị đánh giá",
+			"rating_high_to_low": "Đánh giá: Cao đến Thấp",
+			"rating_low_to_high": "Rating: Thấp đến cao",
+			"products_you_viewed": "Sản phẩm bạn đã xem",
+			"color": "Màu sắc",
+			"size": "Kích thước",
+			"enter": "Nhập",
+			"review_product": "Đánh giá sản phẩm"
+		},
+		"collection": {
+			"breadcrumb": {
+				"home": "Trang chủ",
+				"collection": "Bộ sưu tập"
+			},
+			"size": "kích thước",
+			"color": "Màu sắc",
+			"colors": {
+				"mix": "Đa sắc",
+				"black": "Đen",
+				"gray": "Xám",
+				"white": "Trắng",
+				"beige": "Be",
+				"blue": "Xanh lam",
+				"green": "xanh rêu",
+				"red": "Đỏ",
+				"orange": "Cam",
+				"pink": "Hồng",
+				"turquoise": "Xanh ngọc",
+				"dark_blue": "Xanh đậm",
+				"gray_black": "Đen xám"
+			},
+			"search": "Tìm kiếm",
+			"see_more": "Xem thêm"
+		},
+		"profile": {
+			"ranking": {
+				"spend_extra": "Chi tiêu thêm",
+				"hi": "Chào",
+				"to_up_rank": "để lên hạng",
+				"update_rank_at": "Hạng thành viên được vừa được xét lại vào",
+				"update_rank_next": "ngày xét hạng tiếp",
+				"having": "Bạn đang có",
+				"pending": "Chờ",
+				"will_have_point": "Đây là số point bạn sẽ nhận được khi nhận các đơn hàng đang chờ thành công"
+			},
+			"info_tab": {
+				"title": "Thông tin tài khoản",
+				"full_name": "Họ và tên",
+				"phone": "Số điện thoại",
+				"not_updated_yet": "Chưa cập nhật",
+				"gender": "Giới tính",
+				"birthday": "Ngày sinh",
+				"update_birthday": "Hãy cập nhật ngày sinh để Kimi gửi cho bạn 1 phần quà đặc biệt nhé",
+				"height": "Chiều cao",
+				"weight": "Cân nặng",
+				"update": "Cập nhật",
+				"sign_in_info": "Thông tin đăng nhập",
+				"email": "Email",
+				"password": "Mật khẩu"
+			},
+			"refer_friend_tab": {
+				"title": "Giới thiệu bạn bè",
+				"given_cash": "Nhận 10% KimiCash",
+				"simple_refer": "Giới thiệu Kimi đến bạn bè và gia đình của bạn vô cùng đơn giản",
+				"get_code_or_link": "Lấy mã hoặc link",
+				"club": "Chọn sản phẩm hoặc truy cập trang KimiClub để lấy mã hoặc link giới thiệu.",
+				"share_with_friend": "Chia sẻ đến bạn bè",
+				"gift": "Bạn bè mua sắm với mã hoặc link của bạn sẽ được giảm 50k cho đơn hàng đầu tiên từ 200k",
+				"receiver_cash": "Nhận KimiCash",
+				"give_cash_by_percent_order": "Bạn sẽ nhận 10% CoolCash theo giá trị đơn hàng sau 7 ngày từ khi đơn giao thành công.",
+				"refer_code": "Mã giới thiệu của bạn",
+				"copy": "Sao chép",
+				"refer_link": "Link giới thiệu của bạn",
+				"copied_code": "Đã copy mã giới thiệu",
+				"share_description": "Chia sẻ mã hoặc link giới thiệu của bạn bằng cách copy và gửi cho bạn bè hoặc chia sẻ trên mạng xã hội nhé.",
+				"given_point": "Point nhận được",
+				"finished": "đã hoàn thành",
+				"processing": "đang xử lý",
+				"joined": "Bạn bè đã tham gia",
+				"friend": "Bạn bè",
+				"status": "Tình trạng",
+				"value": "Giá trị"
+			},
+			"orders_history_tab": {
+				"title": "Lịch sử đơn hàng",
+				"your_orders": "Đơn hàng của bạn",
+				"total": "Tổng tiền",
+				"booking_date": "Ngày đặt",
+				"status": "Trạng thái",
+				"order": "đơn hàng",
+				"sum_of": "trên tổng số",
+				"display": "Hiện",
+				"not_have_order": "Bạn chưa có đơn hàng nào mua tại website",
+				"error": "Lỗi hệ thống!"
+			},
+			"points_tab": {
+				"title": "Lịch sử Point",
+				"your_points": "Point của bạn",
+				"awarded_point": "Point được tặng",
+				"expired": "Hết hạn"
+			},
+			"voucher_wallet_tab": {
+				"title": "Ví voucher",
+				"not_have": "Bạn chưa lưu mã giảm giá nào!"
+			},
+			"addresses_tab": {
+				"title": "Sổ địa chỉ",
+				"my_addresses": "Địa chỉ của tôi",
+				"add_address": "Thêm địa chỉ mới",
+				"not_found": "không tìm thấy địa chỉ",
+				"item": {
+					"failure": "đặt địa chỉ mặc định thất bại",
+					"success": "đặt địa chỉ mặc định thành công",
+					"update": "Cập nhật",
+					"delete": "Xóa",
+					"default": "Mặc định",
+					"set_default": "Đặt làm mặc định"
+				}
+			},
+			"reviews_tab": {
+				"title": "Đánh giá và phản hồi",
+				"not_have": "Bạn chưa có đánh giá nào..."
+			},
+			"faq_tab": {
+				"title": "Chính sách và câu hỏi thường gặp",
+				"heading": "FAQ - Câu hỏi thường gặp",
+				"faq": {
+					"faq_1": {
+						"title": "Tại sao tôi nên tham gia CoolClub?",
+						"content": "CoolClub là chương trình Hội viên dành cho tất cả khách hàng Coolmate, mang đến nhiều quyền lợi cho người tham gia. Hội viên CoolClub sẽ được: Tích lũy chi tiêu để thăng hạng; Hưởng các quyền lợi theo hạng Hội viên: nhận quà tặng định kỳ, ưu đãi độc quyền; Hoàn tiền CoolCash cho mỗi đơn hàng; Đổi thưởng và rất nhiều quyền lợi khác sẽ được Coolmate cập nhật thường xuyên."
+					},
+					"faq_2": {
+						"title": "Đăng ký làm Hội viên CoolClub có mất phí không? Cách đăng ký như thế nào?",
+						"content": "Bạn có thể đăng ký CoolClub hoàn toàn miễn phí bằng cách tạo Tài khoản tại website Coolmate.me. Khi đăng ký thành công, bạn đã được nhận các quyền lợi của hạng Thành viên mới, đồng thời nhận ngay voucher mua sắm 15% (tối đa 50.000 VND) để bắt đầu mua sắm."
+					},
+					"faq_3": {
+						"title": "Chương trình CoolClub cũ ngừng áp dụng khi nào? CoolClub mới có nâng cấp gì khác?",
+						"content": "Chương trình CoolClub cũ ngừng áp dụng vào ngày 25/09/2023 để nâng cấp. Ở chương  trình CoolClub phiên bản mới, bạn sẽ có trải nghiệm mua sắm thú vị hơn với nhiều đặc quyền theo hạng Hội viên, tích luỹ chi tiêu để thăng hạng, hoàn tiền CoolCash cho mỗi đơn hàng, đổi thưởng, nhận quà tặng định kỳ và vô vàn ưu đãi, chương trình, quyền lợi độc quyền khác sẽ được Coolmate cập nhật thêm trong tương lai."
+					},
+					"faq_4": {
+						"title": "CoolCash có thời hạn không? Nếu có, thời hạn là bao lâu?",
+						"content": "CoolCash được tích luỹ sau mỗi đơn hàng có giá trị trong 4 Quý và sẽ được cập nhật hạn dùng vào ngày đầu tiên của mỗi Quý, diễn ra 4 lần mỗi năm vào các ngày 01/01, 01/04, 01/07 và 01/10."
+					},
+					"faq_5": {
+						"title": "Tôi có thể kết hợp ưu đãi theo Hạng Hội viên và ưu đãi khác không?",
+						"content": "Khi mua sắm trên website Coolmate, bên cạnh các ưu đãi hiện có, bạn sẽ được tự động áp dụng ưu đãi theo hạng Hội viên tương ứng. Tuy nhiên, việc áp dụng một số quyền lợi CoolClub có thể thay đổi tuỳ vào chính sách và quy định của từng chương trình ưu đãi."
+					},
+					"faq_6": {
+						"title": "Hạng Hội viên khi nào sẽ được cập nhật? Bao lâu sẽ được cập nhật lại?",
+						"content": "Hội viên sẽ thăng hạng ngay khi đạt mức chi tiêu của hạng tiếp theo. Hạng Hội viên sẽ được cập nhật vào ngày đầu tiên của mỗi Quý, diễn ra 4 lần mỗi năm vào các ngày 01/01, 01/04, 01/07 và 01/10."
+					},
+					"faq_7": {
+						"title": "Làm sao để tích luỹ CoolCash?",
+						"content": "Sau khi đăng ký Hội viên CoolClub, bạn sẽ nhận được hoàn tiền CoolCash từ mỗi giao dịch mua hàngtrên website Coolmate theo hạng Hội viên tương ứng và dựa trên chi tiêu mỗi đơn hàng. Mỗi 1 đơn vị CoolCash có giá trị hỗ trợ thanh toán tương đương 1 VND (1 CoolCash = 1 VND). "
+					},
+					"faq_8": {
+						"title": "Tôi có thể dùng CoolCash để giảm giá trực tiếp không?",
+						"content": "Có, bạn có thể sử dụng CoolCash trừ trực tiếp vào giá trị đơn hàng khi mua sắm. Tuy nhiên, bạn cần lưu ý:\nNếu số CoolCash bạn có ít hơn 50% giá trị đơn hàng: Tất cả CoolCash sẽ bị trừ ngay khi sử dụng.\nNếu số CoolCash bạn có nhiều hơn 50% giá trị đơn hàng: Số CoolCash bị trừ tối đa bằng 50% giá trị đơn hàng ngay khi sử dụng, số còn lại sẽ được bảo lưu cho lần mua hàng tiếp theo."
+					},
+					"faq_9": {
+						"title": "Đổi/trả hàng có ảnh hưởng đến CoolCash và hạng Hội viên không?",
+						"content": "Có, CoolCash và hạng Hội viên chỉ được tính trên giá trị của đơn hàng thành công. Việc đổi/trả hàng có thể ảnh hưởng đến giá trị cuối cùng khi hoàn tất đơn hàng."
+					},
+					"faq_10": {
+						"title": "Tôi mua hàng trên các sàn thương mại điện tử có được tích lũy chi tiêu CoolClub không?",
+						"content": "Trong thời điểm hiện tại, chương trình CoolClub chỉ dành cho các khách hàng mua hàng tại Website Coolmate, chưa áp dụng với các khách hàng mua hàng tại các sàn thương mại điện tử."
+					}
+				}
+			},
+			"logout_tab": {
+				"title": "Đăng xuất",
+				"confirm": "Bạn có chắc muốn thoát khỏi ?",
+				"cancel": "Hủy",
+				"ok": "Xác nhận"
+			}
+		},
+		"auth": {
+			"login": {
+				"login_now": "Đăng nhập ngay",
+				"login_by": "Đăng nhập bằng",
+				"description": "Rất nhiều đặc quyền và quyền lợi mua sắm đang chờ bạn",
+				"login_method": "Hoặc đăng nhập tài khoản",
+				"login": "Đăng nhập",
+				"register": "Đăng ký",
+				"password": "Mật khẩu",
+				"forget_password": "Quên mật khẩu",
+				"invalid_email": "Vui lòng nhập email hợp lệ"
+			},
+			"register": {
+				"register_now": "Đăng ký ngay",
+				"description": "Rất nhiều đặc quyền và quyền lợi mua sắm đang chờ bạn",
+				"invalid_phone": "Vui lòng nhập số điện thoại của bạn",
+				"invalid_email": "Vui lòng nhập email hợp lệ",
+				"login": "Đăng nhập",
+				"another_register": "Hoặc đăng ký tài khoản",
+				"your_name": "Tên của bạn",
+				"invalid_full_name": "Vui lòng nhập họ tên của bạn",
+				"your_phone": "SĐT của bạn",
+				"your_email": "Email của bạn",
+				"password": "Mật khẩu",
+				"invalid_password": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số, ký tự đặc biệt",
+				"renter_password": "Nhập lại mật khẩu",
+				"invalid_renter_password": "Vui lòng nhập lại mật khẩu",
+				"invalid_correct_password": "Mật khẩu nhập lại không chính xác",
+				"register": "Đăng ký"
+			},
+			"new_password": {
+				"title": "Cấp lại mật khẩu",
+				"invalid_password": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số, ký tự đặc biệt",
+				"enter_password": "Nhập mật khẩu của bạn",
+				"renter_password": "Nhập lại mật khẩu của bạn",
+				"invalid_renter_password": "Vui lòng nhập lại mật khẩu  của bạn",
+				"incorrect_password": "Mật khẩu nhập lại không chính xác",
+				"submit": "Xác nhận"
+			},
+			"otp": {
+				"invalid_opt": "Vui lòng điền đẩy đủ mã",
+				"enter_otp": "Nhập mã xác thực",
+				"submit": "Xác nhận",
+				"resend_opt": "Gửi lại mã mới"
+			},
+			"forgot_password": {
+				"title": "Cấp lại mật khẩu",
+				"watch": "Kiểm tra",
+				"your_email": "Email của bạn",
+				"invalid_email": "Vui lòng nhập email hợp lệ"
+			}
+		},
+		"admin": {
+			"charts": {
+				"day": "Ngày",
+				"week": "Tuần",
+				"month": "Tháng",
+				"year": "Năm",
+				"today": "Hôm nay",
+				"total_revenue": "Tổng doanh thu",
+				"return_customer_rate": "Tỷ lệ khách hàng trở lại",
+				"no_finish_order": "Số đơn hàng hoàn thành",
+				"no_order": "Số đơn hàng",
+				"total_revenue_over_time": "Tổng doanh thu theo thời gian",
+				"return_order_rate": "Tỷ lệ đơn hàng bị trả về",
+				"average_order_value": "Giá trị đơn hàng trung bình",
+				"cart_abandonment_rate": "Tỷ lệ bỏ giỏ hàng",
+				"management": "Dashboard"
+			},
+			"customers": {
+				"customer": "Khách hàng",
+				"import": "Nhập",
+				"export": "Xuất",
+				"add": "Thêm Khách hàng",
+				"error_loading_list": "Lỗi tải thông tin khách hàng!",
+				"error_loading_history": "Lỗi tải lịch sử mua hàng!",
+				"error_loading_info": "Lỗi tải thông tin cá nhân!",
+				"error_loading_display_list": "Lỗi tải thông tin địa chỉ giao hàng người dùng!",
+				"more_actions": "Hành động",
+				"merge": "Gộp khách hàng",
+				"request_data": "Yêu cầu dữ liệu khách hàng",
+				"erase_data": "Xóa dữ liệu khách hàng",
+				"management": "Quản lý khách hàng",
+				"amount_spent": "Tổng chi tiêu",
+				"orders": "Đơn hàng",
+				"customer_since": "Khách hàng từ",
+				"days": "ngày",
+				"rfm_group": "Nhóm RFM",
+				"no_orders_yet": "Khách hàng này chưa có đơn hàng nào",
+				"create_order": "Tạo đơn hàng",
+				"column": {
+					"name": "Tên",
+					"email": "Email",
+					"no_order": "Số đơn hàng",
+					"amount_spend": "Đã chi tiêu",
+					"create_at": "Ngày tạo",
+					"actions": "Hành động",
+					"watch_detail": " Xem chi tiết",
+					"status": " Tình trạng"
+				},
+				"customer_info": {
+					"copy_mail_success": "Copy email thành công",
+					"copy_mail_failure": "Copy email thất bại",
+					"customer": "Khách hàng",
+					"edit_contact_info": "Chỉnh sửa thông tin liên hệ",
+					"edit_marketing_info": "Chỉnh sửa cài đặt tiếp thị",
+					"contact_info": "Thông tin liên hệ",
+					"default_address": "Địa chỉ mặc định",
+					"marketing": "Marketing",
+					"email_subscribed": "Email subscribed",
+					"sms_subscribed": "SMS  subscribed",
+					"title_question": "Do you want to delete this?",
+					"orders": "Đơn hàng"
+				}
+			},
+			"collections": {
+				"collection": "Danh mục",
+				"error": "Lỗi tải thông tin danh mục!",
+				"import": "Nhập",
+				"export": "Xuất",
+				"add": "Thêm Danh mục",
+				"management": "Quản lý danh mục",
+				"column": {
+					"id": "Mã danh mục",
+					"name": "Tên danh mục",
+					"type": "Loại danh mục",
+					"total": "Tổng sản phẩm",
+					"create_at": "Ngày tạo",
+					"actions": "Hành động",
+					"watch_detail": " Xem chi tiết",
+					"status": " Tình trạng"
+				}
+			},
+			"inventory": {
+				"error": "Lỗi tải thông tin tồn kho!",
+				"available": "Tồn kho",
+				"import": "Nhập",
+				"export": "Xuất",
+				"add": "Thêm Tồn kho",
+				"management": "Quản lý Tồn kho",
+				"dialog": {
+					"update_status": {
+						"title": "Cập nhật số lượng biến thể",
+						"confirm_cancel": "Bạn có chắc muốn hủy cập nhật không?",
+						"confirm_submit": "Bạn có chắc muốn cập nhật số lượng biến thể không?",
+						"update_success": "Cập nhật tồn kho thành công",
+						"update_failure": "Cập nhật tồn kho thất bại",
+						"confirm": "Xác nhận",
+						"cancel": "Hủy",
+						"submit": "Cập nhật"
+					}
+				},
+				"column": {
+					"id": "Mã tồn kho",
+					"product_id": "Mã sản phẩm",
+					"sku": "Mã SKU",
+					"variant_name": "Tên biến thể",
+					"option": "Tùy chọn",
+					"price": "Giá bán",
+					"compare_price": "Giá so sánh",
+					"quality": "Số lượng",
+					"create_at": "Ngày tạo",
+					"actions": "Hành động",
+					"watch_detail": " Xem chi tiết",
+					"status": " Tình trạng",
+					"update_quantity": "Cập nhật số lượng tồn kho"
+				}
+			},
+			"media": {
+				"error": "Lỗi tải thông tin đa phương tiện!",
+				"available": "Đa phương tiện",
+				"import": "Nhập",
+				"export": "Xuất",
+				"add": "Thêm Hình ảnh",
+				"management": "Quản lý đa phương tiện",
+				"column": {
+					"id": "Mã",
+					"title": "Tiêu đề",
+					"path": "Hình ảnh",
+					"option": "Phần mở rộng",
+					"create_at": "Ngày tạo",
+					"actions": "Hành động",
+					"watch_detail": " Xem chi tiết",
+					"status": " Tình trạng"
+				}
+			},
+			"orders": {
+				"error": "Lỗi hệ thống",
+				"error_detail_order": "Lỗi tải chi tiết đơn hàng",
+				"more_actions": "Hành động",
+				"order": "Đơn hàng",
+				"delete": "Xóa đơn hàng",
+				"product": "Sản phẩm",
+				"payment": "Thanh toán",
+				"management": "Quản lý Đơn hàng",
+				"export": "Xuất",
+				"add": "Tạo đơn",
+				"column": {
+					"id": "Mã Đơn hàng",
+					"status": "Trạng thái",
+					"email": "Email",
+					"full_name": "Họ Tên",
+					"total": "Tổng tiền",
+					"create_at": "Ngày tạo",
+					"actions": "Hành động",
+					"watch_detail": " Xem chi tiết",
+					"delete_order": " Xóa đơn hàng"
+				},
+				"customer_info": {
+					"copy_mail_success": "Copy email thành công",
+					"copy_mail_failure": "Copy email thất bại",
+					"customer": "Khách hàng",
+					"edit_contact_info": "Chỉnh sửa thông tin liên hệ",
+					"contact_info": "Thông tin liên hệ",
+					"default_address": "Địa chỉ mặc định",
+					"marketing": "Marketing",
+					"email_subscribed": "Emai subscribed",
+					"sms_subscribed": "SMS  subscribed",
+					"title_question": "Do you want to delete this?"
+				},
+				"payment_info": {
+					"subtotal": "Tổng tạm",
+					"total": "Tổng cộng",
+					"item": "mặt hàng",
+					"discount": "Giảm giá",
+					"shipping_fee": "Phí vận chuyển",
+					"method": "Phương thức"
+				}
+			},
+			"products": {
+				"price": "Giá",
+				"inventory": "Tồn kho",
+				"transport": "Vận chuyển",
+				"variant": "Biến thể",
+				"status": "Trạng thái",
+				"active": "Kích hoạt",
+				"draft": "Nháp",
+				"publish": "Công bố",
+				"product_org": "Tổ chức sản phẩm",
+				"error_loading_product": "Lỗi tải thông tin sản phẩm!",
+				"management": "Quản lý sản phẩm",
+				"product": "Sản phẩm",
+				"import": "Nhập",
+				"export": "Xuất",
+				"add_product": "Thêm Sản phẩm",
+				"update_info_product": "Cập nhật thông tin sản phẩm",
+				"column": {
+					"id": "Mã sản phẩm",
+					"name": "Tên sản phẩm",
+					"variant_total": "Tổng biến thể",
+					"inventory_total": "Tổng tồn kho",
+					"create_at": "Ngày tạo",
+					"actions": "Hành động",
+					"watch_detail": " Xem chi tiết",
+					"status": " Tình trạng"
+				},
+				"variant_management": {
+					"add_option_note": "Thêm tùy chọn như màu sắc, kích thước",
+					"option_type": "Loại tùy chọn",
+					"color": "Màu sắc",
+					"size": "Kích thước",
+					"option_value": "Giá trị tùy chọn",
+					"done": "Xong",
+					"add_another_option": "Thêm tùy chọn khác"
+				}
+			},
+			"vertical_menu": {
+				"dashboard": "Bảng điều khiển",
+				"orders": "Đơn hàng",
+				"customers": "Khách hàng",
+				"products": "Sản phẩm",
+				"categories": "Danh mục",
+				"inventories": "Tồn kho",
+				"media": "Đa phương tiện",
+				"drafts": "Nháp",
+				"abandoned_checkouts": "Chưa thanh toán",
+				"purchase_orders": "Đơn đặt hàng",
+				"segments": "Phân khúc",
+				"discounts": "Giảm giá"
+			}
+		},
+		"cart": {
+			"cart": "Giỏ hàng",
+			"checkout": "Xác thực thanh toán",
+			"empty_cart_message": "Giỏ hàng của bạn hiện đang trống.",
+			"all_products": "tất cả sản phẩm",
+			"remove_all": "Xóa tất cả",
+			"quantity": "số lượng",
+			"price": "giá",
+			"remove_voucher": "Xóa mã giảm giá",
+			"enter_voucher": "Nhập mã giảm giá",
+			"apply_voucher": "Áp dụng voucher",
+			"voucher_applied": "Mã giảm giá đã được áp dụng",
+			"discount": "Giảm giá",
+			"shipping_fee": "Phí giao hàng",
+			"total": "Tổng",
+			"subTotal": "Tạm tính",
+			"confirm_clear_cart": "Bạn muốn xóa toàn bộ sản phẩm trong giỏ hàng không?",
+			"no": "Không",
+			"yes": "Đồng ý",
+			"customer_info": {
+				"title": "Anh/Chị",
+				"select_province": "Vui lòng chọn tỉnh/thành phố",
+				"select_district": "Vui lòng chọn quận/huyện",
+				"select_ward": "Vui lòng chọn phường/xã",
+				"order_info": "Thông tin đặt hàng",
+				"full_name": "Họ và tên",
+				"male": "Anh",
+				"female": "Chị",
+				"secret": "Không tiết lộ",
+				"enter_full_name": "Nhập họ và tên của bạn",
+				"name_required": "Tên không được để trống",
+				"phone": "Số điện thoại",
+				"enter_phone": "Nhập số điện thoại của bạn",
+				"phone_required": "Số điện thoại không được để trống",
+				"please_enter_phone": "Vui lòng nhập số điện thoại của bạn",
+				"email": "Email",
+				"email_note": "Theo dõi đơn hàng sẽ được gửi email về ZNS",
+				"email_required": "Email không được để trống",
+				"invalid_email": "Vui lòng nhập email hợp lệ",
+				"address_ex": "Địa chỉ (ví dụ: 123 Vạn Phúc, phường Vạn Phúc)",
+				"address": "Địa chỉ",
+				"address_required": "Địa chỉ không được để trống",
+				"not_found_data": "không tìm thấy dữ liệu",
+				"select_ward_label": "Chọn Phường/Xã",
+				"note": "Thêm ghi chú (ví dụ: Giao giờ hành chính)",
+				"receiver_other": "Gọi cho người khác nhận hàng (nếu có)",
+				"gender_male": "Nam",
+				"gender_female": "Nữ",
+				"receiver_name": "Họ và tên người nhận",
+				"receiver_phone": "Số điện thoại người nhận",
+				"payment_cod": "Thanh toán khi nhận hàng",
+				"payment_momo": "Ví MoMo",
+				"payment_zalopay": "Thanh toán qua ZaloPay",
+				"payment_support_all": "Hỗ trợ mọi hình thức thanh toán",
+				"payment_payos": "Ví điện tử PayOs",
+				"payment_qr": "Quét QR để thanh toán",
+				"return_policy": "Nếu bạn không hài lòng với sản phẩm của chúng tôi? Bạn hoàn toàn có thể trả lại sản phẩm. Tìm hiểu thêm",
+				"learn_more": "tại đây"
+			}
+		}
+	},
+	"recent_activities": {
+		"title": "ĐẶC QUYỀN DÀNH CHO 363,688 THÀNH VIÊN KIMICLUB",
+		"viewed_products": "Sản phẩm đã xem gần đây",
+		"sub_title": "HOẠT ĐỘNG GẦN ĐÂY",
+		"join_now": {
+			"text": "GIA NHẬP KIMICLUB NGAY"
+		}
+	},
+	"button": {
+		"cancel": "Hủy",
+		"ok": "Xác nhận"
+	},
+	"data_table": {
+		"search": "Tìm kiếm",
+		"column": "Cột",
+		"no_data": "Không có dữ liệu",
+		"row_showing": "Hiển thị số dòng",
+		"page_info": "Trang {{currentPage}} trong {{totalPages}} trang"
+	}
+}

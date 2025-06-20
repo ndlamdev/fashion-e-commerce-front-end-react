@@ -1,7 +1,8 @@
 export enum OrderSortEnum {
-	ORDER_NUMBER = "Order number",
-	DATE = "Date",
-	STATUS = "Status",
-	TOTAL_PRICE = "Total price",
-	CUSTOMER_NAME = "Customer name"
+	ORDER_NUMBER = "Đơn hàng",
+	DATE = "Ngày đặt",
+	STATUS = "Trạng thái",
+	TOTAL_PRICE = "Tổng tiền",
+	CUSTOMER_NAME = "Họ tên",
+	EMAIL = "Email",
 }

@@ -16,7 +16,7 @@ type ProductType = {
 	images: ProductImageType[];
 	available: boolean;
 	variants: ProductVariantsType[];
-	options_value: ProductOptionType[];
+	options_values: ProductOptionType[];
 	discount: DiscountType;
 	review: ProductReviewType;
 	is_lock: boolean;

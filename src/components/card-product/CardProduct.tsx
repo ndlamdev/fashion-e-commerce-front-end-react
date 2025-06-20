@@ -1,7 +1,7 @@
 import { Card, CardContent, CardFooter } from "@/components/ui/card.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import ProductCardProp from "@/components/card-product/props/productCard.prop.ts";
+import ProductResponseProp from "@/components/card-product/props/productCard.prop.ts";
 import { Star } from "lucide-react";
 import { useNavigate } from "react-router";
 import { formatCurrency } from "@/utils/helper/format-data.ts";
@@ -12,9 +12,10 @@ import { SameRadioGroup, SameRadioGroupItem } from "@/components/radio-group/Sam
 import { Label } from "@/components/ui/label.tsx";
 import cartService from "@/services/cart.service.ts";
 
-export default function CardProduct(props: ProductCardProp) {
+const RESOURCE_IMAGE = import.meta.env.VITE_BASE_MEDIA_URL;
+
+export default function CardProduct(props: ProductResponseProp) {
 	const navigate = useNavigate();
-	const RESOURCE_IMAGE = import.meta.env.VITE_BASE_MEDIA_URL;
 	const [colorSelected, setColorSelected] = useState<string | undefined>();
 	const [sizeSelected, setSizeSelected] = useState<string | undefined>();
 	const [imagesColor, setImagesColor] = useState<(ProductImageType | undefined)[]>();
@@ -25,7 +26,7 @@ export default function CardProduct(props: ProductCardProp) {
 		setColorSelected(props.variants[0]?.options[OptionType.COLOR]);
 		setSizeSelected(props.variants[0]?.options[OptionType.SIZE]);
 		const colorValues = props.options.find((opt) => opt.type === OptionType.COLOR)?.values;
-		const colorOptions = props.options_value.find((opt) => opt.type === OptionType.COLOR);
+		const colorOptions = props.options_values.find((opt) => opt.type === OptionType.COLOR);
 		setImagesColor(
 			colorValues?.map((color: string) => {
 				return colorOptions?.options?.find((item) => item.title === color)?.images[0];
@@ -38,17 +39,18 @@ export default function CardProduct(props: ProductCardProp) {
 	}, [props, colorSelected, sizeSelected]);
 
 	const cardData = useMemo(() => {
-		const images = props.options_value.find((opt) => opt.type === OptionType.COLOR)?.options?.find((item) => item.title === colorSelected)?.images;
+		const images = props.options_values.find((opt) => opt.type === OptionType.COLOR)?.options?.find((item) => item.title === colorSelected)?.images;
 		return images?.map((item, index) => ({
 			id: index,
 			img: RESOURCE_IMAGE + item.src,
 		}));
-	}, [props, colorSelected, RESOURCE_IMAGE]);
+	}, [props, colorSelected]);
 
 	const [bgImage, setBgImage] = useState<string | undefined>();
 	useEffect(() => {
-		setBgImage(cardData && cardData.length > 1 ? cardData[0].img : RESOURCE_IMAGE + props.images[0].src);
-	}, [RESOURCE_IMAGE, cardData, props.images]);
+		const images = props.images;
+		setBgImage(cardData && cardData.length > 0 ? cardData[0].img : RESOURCE_IMAGE + images.length > 0 ? images[0].src : "");
+	}, [cardData, props.images]);
 
 	const addCartItemFc = useCallback(
 		(size: string) => {
@@ -78,7 +80,7 @@ export default function CardProduct(props: ProductCardProp) {
 							</Badge>
 						))}
 					<div className=''></div>
-					{props.icon_thumbnail && <img className={"size-7 object-fill"} src={props.icon_thumbnail?.src} alt={props.title} />}
+					{props.icon_thumbnail && <img className={"size-7 object-fill"} loading={"lazy"} src={props.icon_thumbnail?.src} alt={props.title} />}
 				</div>
 
 				<span className={"absolute top-2 left-2 flex items-center font-bold"}>
@@ -89,7 +91,7 @@ export default function CardProduct(props: ProductCardProp) {
 
 				{props.icon_thumbnail && (
 					<div className='absolute bottom-0'>
-						<img className={"rounded-b-lg"} src={props.icon_thumbnail.src} alt={props.title} />
+						<img className={"rounded-b-lg"} loading={"lazy"} src={props.icon_thumbnail.src} alt={props.title} />
 					</div>
 				)}
 

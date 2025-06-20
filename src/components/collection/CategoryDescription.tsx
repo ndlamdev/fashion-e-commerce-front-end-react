@@ -1,8 +1,12 @@
 import { CategoryDescriptionProps } from "@/components/collection/props/CategoryDescription.props.ts";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible.tsx";
 import { Button } from "@/components/ui/button.tsx";
+import { useTranslation } from "react-i18next";
 
 export default function CategoryDescription(props: CategoryDescriptionProps) {
+	const { t } = useTranslation(undefined, {
+		keyPrefix: "page.collection"
+	});
 	return (
 		<>
 			<Collapsible className={"group bg-gray-200 p-6 text-left text-sm"}>
@@ -15,7 +19,7 @@ export default function CategoryDescription(props: CategoryDescriptionProps) {
 				<div className='mt-4 flex justify-center'>
 					<CollapsibleTrigger asChild>
 						<Button className={"h-10 w-1/5 rounded-lg md:w-1/10 lg:rounded-2xl"} variant='default' size='sm'>
-							Xem thêm
+							{t('see_more')}
 						</Button>
 					</CollapsibleTrigger>
 				</div>

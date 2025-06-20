@@ -1,6 +1,6 @@
 import { ZoneOfProductsProps } from "@/components/collection/props/zoneOfProducts.props.ts";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select.tsx";
-import ProductResponseType from "@/types/product/productResponse.type.ts";
+import ProductResponseType from "@/domain/response/product.response";
 import CardProduct from "@/components/card-product/CardProduct.tsx";
 import { memo } from "react";
 import { CollectionFilterProps } from "@/components/collection/props/collectionFilter.props.ts";

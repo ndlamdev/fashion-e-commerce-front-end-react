@@ -8,10 +8,10 @@
   client
   có thể gửi `auth-code` của mình lấy được từ phía google và gửi về phía backed
 
-* Nếu backend viết riêng cho từng platform thì không cần gửi `auth-code` mà có thể gửi luôn `access-token` cho phía
+* Nếu backend viết riêng cho từng platform thì không cần gửi `auth-code` mà có thể gửi luôn `access_token` cho phía
   backend và backend sẽ dùng để xác thực người dùng
 
-Trong phần note này sẽ ví dụ cho phần triển khai dùng `auth-code` để gửi và phía backend và nhận `access-token` từ phía
+Trong phần note này sẽ ví dụ cho phần triển khai dùng `auth-code` để gửi và phía backend và nhận `access_token` từ phía
 backend generate
 
 ### Các thư viện cần có

@@ -61,6 +61,8 @@ const addCartItem = async (variantId: string, quantity: number) => {
 
 		toast.success("Thêm vào giỏ hàng thành công");
 
+		appDispatch(cartApi.util.invalidateTags(["Cart"]));
+
 		return data;
 	});
 };
