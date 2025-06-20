@@ -8,16 +8,16 @@
 import { DetailedHTMLProps, HTMLAttributes } from "react";
 
 function ShippingManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>) {
-	return (
-		<div {...props}>
-			<div>
-				<label className={"flex items-center gap-2"}>
-					<input type='checkbox' className={"aspect-square w-4"} />
-					<span>This is a physical product</span>
-				</label>
-			</div>
-		</div>
-	);
+  return (
+    <div {...props}>
+      <div>
+        <label className={"flex items-center gap-2"}>
+          <input type='checkbox' className={"aspect-square w-4"} />
+          <span>Đây là sản phẩm vật lý</span>
+        </label>
+      </div>
+    </div>
+  );
 }
 
 export default ShippingManager;

@@ -1,0 +1,735 @@
+{
+	"language": {
+		"vi": "Vietnamese",
+		"en": "English",
+		"title": "Language"
+	},
+	"header": {
+		"product_types": {
+			"male": "Male",
+			"female": "Female",
+			"sport": "Sport"
+		},
+		"customer_care_center": "Customer care center",
+		"about": "About KimiFashion",
+		"blog": "Blog",
+		"admin": "Store management",
+		"login": "Login",
+		"logout": "Logout",
+		"return_home": "Return to home",
+		"outstanding": "Outstanding",
+		"explore": {
+			"men": "Explore Men's Fashion",
+			"women": "Explore Women's Fashion",
+			"sport": "Explore Sports Fashion"
+		},
+		"search": {
+			"placeholder": "Search for products...",
+			"no_results": "No results found",
+			"error": "An error occurred while searching",
+			"hint": "Enter the product you want to find."
+		},
+		"cart": {
+			"view_all": "View all",
+			"empty": "Your cart is empty :( please choose some items to buy"
+		},
+		"free_shipping": "Free shipping on orders over 1,000,000 VND",
+    "dialog": {
+      "confirm_logout": "Are you sure you want to log out?"
+    }
+	},
+	"footer": {
+		"shopping": {
+			"title": "Shopping",
+			"shipping": "Shipping",
+			"payment": "Payment",
+			"return": "Return",
+			"store_locator": "Store Locator",
+			"magazine": "Magazine"
+		},
+		"company_info": {
+			"title": "Company Information",
+			"careers": "Career Opportunities at KimiFashion",
+			"about": "About KimiFashion",
+			"sustainability": "Sustainable Fashion - KimiFashion",
+			"press": "Press",
+			"investor_relations": "Investor Relations",
+			"corporate_governance": "Corporate Governance"
+		},
+		"help": {
+			"title": "Help",
+			"customer_service": "Customer Service",
+			"my_account": "My Account",
+			"terms_conditions": "Terms & Conditions",
+			"contact": "Contact",
+			"cookie_info": "Cookie Information",
+			"payment_info": "Payment Information",
+			"order_success": "Order Success",
+			"cookie_settings": "Cookie Settings"
+		},
+		"join_now": {
+			"title": "Join Now",
+			"text": "Join KimiFashion and enjoy a 10% discount on your next purchase!",
+			"read_more": "Read more"
+		},
+		"social_media": "Follow us on social media",
+		"copyright": "Content on this page is copyrighted and is the property of KimiFashion."
+	},
+	"page": {
+		"home": {
+			"title": "KimiFashion - Home Page",
+			"description": "Discover the latest trends in fashion at KimiFashion.",
+			"product_types": {
+				"male": {
+					"title": "Men's Fashion",
+					"items": {
+						"shirts": "Shirts",
+						"tshirts": "T-Shirts",
+						"jeans": "Jeans",
+						"jackets": "Jackets",
+						"shoes": "Shoes",
+						"pants": "Pants",
+						"shorts": "Shorts",
+						"boxers": "Boxers",
+						"accessories": "Accessories"
+					}
+				},
+				"female": {
+					"title": "Women's Fashion",
+					"items": {
+						"bra_&_leggings": "Bra & Leggings",
+						"sports_top": "Sports Top",
+						"sports_pants": "Sports Pants",
+						"accessories": "Accessories"
+					}
+				}
+			},
+			"collections": {
+				"male": {
+					"title": "Men's Collection",
+					"code": "Enter CM10 Get 10% off up to 100k",
+					"buy_now": "Buy Now"
+				},
+				"female": {
+					"title": "Women's Collection",
+					"code": "Enter CM10 Get 10% off up to 100k",
+					"buy_now": "Buy Now"
+				}
+			},
+			"discover": {
+				"title": "Everyday Wear",
+				"description": "Comfortable, elegant | Enter CM10 to get 10% off orders from 600",
+				"button": "Explore Now",
+				"sub_title": "EVERYDAY WEAR PRODUCTS"
+			},
+			"running": {
+				"title": "Running Gear",
+				"description": "Stretchy, breathable | Buy combo packs and save up to 30%",
+				"button": "Explore Now",
+				"sub_title": "RUNNING PRODUCTS"
+			}
+		},
+		"product_details": {
+			"breadcrumb": {
+				"home": "Home",
+				"product_details": "Product Details"
+			},
+			"dialog": {
+				"refer_friend": {
+					"title": "Refer friends and get 10% KimiCash instantly",
+					"description": "You will receive 10% of your friend's first order value, paid in KimiCash, when they become a CoolClub member and purchase any Kimi product.",
+					"send_refer_code_to_your_friend": "Send referral code to your friends",
+					"send_refer_link_to_your_friend": "Send referral link to your friends",
+					"copy": "Copy",
+					"copied": "Referral code copied",
+					"share": "Share",
+					"to_given_cash": "You will receive CoolCash when:",
+					"to_given_cash_tick_1": "Your friend joins KimiClub",
+					"to_given_cash_tick_2": "Your friend completes their first order on the website",
+					"to_given_cash_tick_3": "Your friend completes their first order on the website",
+					"terms_and_policies": "Terms and Policies"
+				},
+				"guide_choose_size": {
+					"guide_choose_size_tab": "Size Guide",
+					"table_size_tab": "Size Chart",
+					"height": "Height",
+					"weight": "Weight",
+					"suggest": "Kimi Suggests",
+					"long_shirt": "Shirt Length",
+					"wide_chest": "Chest Width",
+					"long_sleeves": "Sleeve Length",
+					"description": "If your measurements fall between two sizes: For t-shirts, prioritize your height. For example, if your height corresponds to size L and your weight corresponds to size M, choose size L. 97% of our customers chose the right size this way."
+				}
+			},
+			"share": "Share",
+			"free_ship": "Freeship",
+			"discount_code": "Discount Code",
+			"no_available_discount_code": "No available discount code",
+			"to_get_discount": "to get discount",
+			"save_discount_code_success": "Save discount code successfully",
+			"size_guide": "Size Choice Guide",
+			"warning_max_bought": "The maximum number of products you can buy is {{max}} products",
+			"be_refunded": "Be refunded",
+			"coolcash_refund_info": "This is the estimated CoolCash you will receive when purchasing this product today, corresponding to the membership level",
+			"new_member": "New Member",
+			"chat_support": "Chat for KimiFashion support now (8:30 AM - 10:00 PM)",
+			"add_to_cart": "Add to Cart",
+			"choose_size": "Choose Size",
+			"exchange_policy": "Easy exchange with just a phone number",
+			"return_policy": "60-day return for any reason",
+			"hotline_info": "Hotline 0855.354.919 support from 8:30 AM - 10:00 PM daily",
+			"delivery_info": "Delivery to your location, refund within 24 hours",
+			"read_more": "Read More",
+			"product_description": "Product Description",
+			"suggested_products": "Suggested Products",
+			"product_reviews": "Product Reviews",
+			"based_on": "Based on",
+			"from_customer": "from customers",
+			"search_review_placeholder": "Search reviews",
+			"rating_classification": "Rating classification",
+			"rating_classification_description": "All reviews come from customers who have actually purchased from Coolmate",
+			"all_reviews": "All reviews",
+			"filter_feedback": "Filter feedback",
+			"feedback_received": "Feedback received",
+			"feedback_has_image_only": "Image only",
+			"show_reviews": "Show reivews",
+			"rating_high_to_low": "Rating: High to Low",
+			"rating_low_to_high": "Rating: Low to High",
+			"products_you_viewed": "Products you viewed",
+			"color": "Color",
+			"size": "Size",
+			"enter": "Enter",
+			"review_product": "Review product"
+		},
+		"collection": {
+			"breadcrumb": {
+				"home": "Home",
+				"collection": "Collection"
+			},
+			"size": "Size",
+			"color": "Color",
+			"colors": {
+				"mix": "Mix",
+				"black": "Black",
+				"gray": "Gray",
+				"white": "White",
+				"beige": "Beige",
+				"blue": "Blue",
+				"green": "Green",
+				"red": "Red",
+				"orange": "Orange",
+				"pink": "Pink",
+				"dark_blue": "Dark Blue",
+				"turquoise": "Turquoise",
+				"gray_black": "Gray Black"
+			},
+			"search": "Search",
+			"see_more": "see more"
+		},
+		"profile": {
+			"info_tab": {
+				"title": "Account Information",
+				"full_name": "Full Name",
+				"phone": "Phone Number",
+				"not_updated_yet": "Not updated yet",
+				"gender": "Gender",
+				"birthday": "Birthday",
+				"update_birthday": "Update your birthday to receive a special gift from Kimi",
+				"height": "Height",
+				"weight": "Weight",
+				"update": "Update",
+				"sign_in_info": "Sign-in Information",
+				"email": "Email",
+				"password": "Password"
+			},
+			"refer_friend_tab": {
+				"title": "Refer Friends",
+				"given_cash": "Receive 10% KimiCash",
+				"simple_refer": "Referring Kimi to your friends and family is super easy",
+				"get_code_or_link": "Get referral code or link",
+				"club": "Choose products or visit the KimiClub page to get your referral code or link.",
+				"share_with_friend": "Share with friends",
+				"gift": "Your friends will get 50k off their first order of 200k or more when using your referral code or link",
+				"receiver_cash": "Receive KimiCash",
+				"give_cash_by_percent_order": "You will receive 10% CoolCash of their order value after 7 days from successful delivery.",
+				"refer_code": "Your referral code",
+				"copy": "Copy",
+				"refer_link": "Your referral link",
+				"copied_code": "Referral code copied",
+				"share_description": "Share your referral code or link by copying and sending it to your friends or sharing it on social media.",
+				"given_point": "Points received",
+				"finished": "completed",
+				"processing": "processing",
+				"joined": "Friend joined",
+				"friend": "Friend",
+				"status": "Status",
+				"value": "Value"
+			},
+			"orders_history_tab": {
+				"title": "Order History",
+				"your_orders": "Your Orders",
+				"total": "Total",
+				"booking_date": "Order Date",
+				"status": "Status",
+				"order": "order",
+				"sum_of": "out of total",
+				"display": "Show",
+				"not_have_order": "You haven't made any purchases on the website yet",
+				"error": "error system!"
+			},
+			"points_tab": {
+				"title": "Point History",
+				"your_points": "Your Points",
+				"awarded_point": "Points Awarded",
+				"expired": "Expired"
+			},
+			"voucher_wallet_tab": {
+				"title": "Voucher Wallet",
+				"not_have": "You haven't saved any discount codes!"
+			},
+			"addresses_tab": {
+				"title": "Address Book",
+				"my_addresses": "My Addresses",
+				"add_address": "Add New Address",
+				"not_found": "Address not found",
+				"item": {
+					"failure": "Failure",
+					"success": "Success",
+					"update": "Update",
+					"delete": "Delete",
+					"default": "Default",
+					"set_default": "Set default"
+				}
+			},
+			"reviews_tab": {
+				"title": "Reviews and Feedback",
+				"not_have": "You have no reviews..."
+			},
+			"faq_tab": {
+				"title": "Policies & FAQs",
+				"heading": "FAQ - Frequently Asked Questions",
+				"faq": {
+					"faq_1": {
+						"title": "Why should I join CoolClub?",
+						"content": "CoolClub is a membership program for all Coolmate customers, offering many benefits. Members can accumulate spending to rank up, enjoy exclusive gifts and promotions, earn CoolCash on every order, redeem rewards, and much more."
+					},
+					"faq_2": {
+						"title": "Is there a fee to join CoolClub? How to register?",
+						"content": "You can register for CoolClub completely free by creating an account on Coolmate.me. Once registered, you’ll receive all benefits of the New Member tier and an instant 15% shopping voucher (up to 50,000 VND)."
+					},
+					"faq_3": {
+						"title": "When did the old CoolClub end? What’s new?",
+						"content": "The old CoolClub program ended on 25/09/2023 for an upgrade. In the new version, you’ll enjoy better experiences with more tiered privileges, CoolCash rebates, reward redemption, and many exclusive offers."
+					},
+					"faq_4": {
+						"title": "Does CoolCash expire? If yes, when?",
+						"content": "CoolCash accumulates after each valid order during 4 quarters and gets its expiry date on the 1st day of each quarter: 01/01, 01/04, 01/07, and 01/10."
+					},
+					"faq_5": {
+						"title": "Can I combine membership and other promotions?",
+						"content": "Yes. CoolClub benefits will be applied automatically on top of other available promotions. However, some benefits may vary depending on the campaign policy."
+					},
+					"faq_6": {
+						"title": "When does my membership level get updated?",
+						"content": "Membership levels update as soon as you reach the required spending. Levels are reviewed quarterly on 01/01, 01/04, 01/07, and 01/10."
+					},
+					"faq_7": {
+						"title": "How do I earn CoolCash?",
+						"content": "After registering for CoolClub, you'll earn CoolCash from every order depending on your membership level. 1 CoolCash = 1 VND in payment value."
+					},
+					"faq_8": {
+						"title": "Can I use CoolCash as a discount?",
+						"content": "Yes. You can deduct CoolCash directly from your order value:\n- If you have less than 50% of order value in CoolCash: all will be used.\n- If you have more than 50%: only up to 50% will be used and the rest saved for next time."
+					},
+					"faq_9": {
+						"title": "Do returns affect CoolCash and membership level?",
+						"content": "Yes. CoolCash and level are based on successful order values. Returns may reduce the final value."
+					},
+					"faq_10": {
+						"title": "Do orders from e-commerce platforms count toward CoolClub?",
+						"content": "Currently, CoolClub is only for purchases made on the Coolmate website. Orders from third-party platforms are not counted."
+					}
+				}
+			},
+			"logout_tab": {
+				"title": "Logout",
+				"confirm": "Are you sure you want to log out?",
+				"cancel": "Cancel",
+				"ok": "Confirm"
+			},
+			"ranking": {
+				"hi": "Hi",
+				"spend_extra": "Spend more",
+				"to_up_rank": "to rank up",
+				"update_rank_at": "Membership rank was last reviewed on",
+				"update_rank_next": "Next rank review date",
+				"pending": "Pending",
+				"having": "You currently have",
+				"will_have_point": "These are the points you will receive once the pending orders are completed"
+			}
+		},
+		"auth": {
+			"login": {
+				"login_now": "Log in now",
+				"login_by": "Login by",
+				"description": "Many privileges and shopping benefits await you",
+				"login_method": "Or log in with your account",
+				"login": "Log in",
+				"register": "Register",
+				"password": "Password",
+				"forget_password": "Forgot password",
+				"invalid_email": "Please enter a valid email address"
+			},
+			"register": {
+				"register_now": "Register now",
+				"description": "Many privileges and shopping benefits await you",
+				"invalid_phone": "Please enter your phone number",
+				"invalid_email": "Please enter a valid email address",
+				"login": "Log in",
+				"another_register": "Or register an account",
+				"your_name": "Your name",
+				"invalid_full_name": "Please enter your name",
+				"your_phone": "Your phone number",
+				"your_email": "Your email",
+				"password": "Password",
+				"invalid_password": "Password must be at least 8 characters, including uppercase, lowercase, numbers, special characters",
+				"renter_password": "Re-enter password",
+				"invalid_renter_password": "Please re-enter your password",
+				"invalid_correct_password": "Password re-enter incorrect",
+				"register": "Register"
+			},
+			"new_password": {
+				"title": "Reset password",
+				"invalid_password": "Password must be at least 8 characters, including uppercase, lowercase, numbers, and special characters",
+				"enter_password": "Enter your password",
+				"renter_password": "Re-enter your password",
+				"invalid_renter_password": "Please re-enter your password",
+				"incorrect_password": "Re-entered password does not match",
+				"submit": "Confirm",
+				"watch": "Check",
+				"your_email": "Your email",
+				"invalid_email": "Please enter a valid email address"
+			},
+			"otp": {
+				"invalid_opt": "Please enter the complete code",
+				"enter_otp": "Enter verification code",
+				"submit": "Confirm",
+				"resend_opt": "Resend new code"
+			},
+			"forgot_password": {
+				"title": "Reset password",
+				"watch": "Watch",
+				"your_email": "Your email",
+				"invalid_email": "Please enter a valid email address"
+			}
+		},
+		"admin": {
+			"charts": {
+				"day": "Day",
+				"week": "Week",
+				"month": "Month",
+				"year": "Year",
+				"today": "Today",
+				"total_revenue": "Total Revenue",
+				"return_customer_rate": "Return Customer Rate",
+				"no_finish_order": "Number of Completed Orders",
+				"no_order": "Number of Orders",
+				"total_revenue_over_time": "Total Revenue Over Time",
+				"return_order_rate": "Return Order Rate",
+				"average_order_value": "Average Order Value",
+				"cart_abandonment_rate": "Cart Abandonment Rate",
+				"management": "Dashboard"
+			},
+			"customers": {
+				"customer": "Customer",
+				"import": "Import",
+				"export": "Export",
+				"add": "Add Customer",
+				"error_loading_list": "Failed to load customer list!",
+				"error_loading_history": "Failed to load purchase history!",
+				"error_loading_info": "Failed to load customer info!",
+				"error_loading_display_list": "Failed to load shipping addresses!",
+				"more_actions": "Actions",
+				"merge": "Merge Customers",
+				"request_data": "Request Customer Data",
+				"erase_data": "Erase Customer Data",
+				"management": "Customer Management",
+				"amount_spent": "Amount spent",
+				"orders": "Orders",
+				"customer_since": "Customer since",
+				"days": "days",
+				"rfm_group": "RFM Group",
+				"no_orders_yet": "This customer hasn’t placed any orders yet",
+				"create_order": "Create Order",
+				"column": {
+					"name": "Name",
+					"email": "Email",
+					"no_order": "Number of Orders",
+					"amount_spend": "Amount Spent",
+					"create_at": "Created At",
+					"actions": "Actions",
+					"watch_detail": "View Details",
+					"status": "Status"
+				},
+				"customer_info": {
+					"copy_mail_success": "Email copied successfully",
+					"copy_mail_failure": "Failed to copy email",
+					"customer": "Customer",
+					"edit_contact_info": "Edit Contact Info",
+					"edit_marketing_info": "Edit marketing information",
+					"contact_info": "Contact Info",
+					"default_address": "Default Address",
+					"marketing": "Marketing",
+					"email_subscribed": "Email Subscribed",
+					"sms_subscribed": "SMS Subscribed",
+					"title_question": "Do you want to delete this?",
+					"orders": "Orders"
+				}
+			},
+			"collections": {
+				"collection": "Collection",
+				"error": "Failed to load collection info!",
+				"import": "Import",
+				"export": "Export",
+				"add": "Add Collection",
+				"management": "Collection Management",
+				"column": {
+					"id": "Collection ID",
+					"name": "Collection Name",
+					"type": "Collection Type",
+					"total": "Total Products",
+					"create_at": "Created At",
+					"actions": "Actions",
+					"watch_detail": "View Details",
+					"status": "Status"
+				}
+			},
+			"inventory": {
+				"error": "Failed to load inventory info!",
+				"available": "Inventory",
+				"import": "Import",
+				"export": "Export",
+				"add": "Add Inventory",
+				"management": "Inventory Management",
+				"dialog": {
+					"update_status": {
+						"title": "Update Variant Quantity",
+						"confirm_cancel": "Are you sure you want to cancel the update?",
+						"confirm_submit": "Are you sure you want to update the variant quantity?",
+						"update_success": "Update inventory successfully",
+						"update_failure": "Update inventory failed",
+						"confirm": "Confirm",
+						"cancel": "Cancel",
+						"submit": "Update"
+					}
+				},
+				"column": {
+					"id": "Inventory ID",
+					"product_id": "Product ID",
+					"sku": "SKU",
+					"variant_name": "Variant Name",
+					"option": "Option",
+					"price": "Selling Price",
+					"compare_price": "Compare Price",
+					"quality": "Quantity",
+					"create_at": "Created At",
+					"actions": "Actions",
+					"watch_detail": "View Details",
+					"status": "Status",
+					"update_quantity": "Update Quantity"
+				}
+			},
+			"media": {
+				"error": "Failed to load media info!",
+				"available": "Media",
+				"import": "Import",
+				"export": "Export",
+				"add": "Add Image",
+				"management": "Media Management",
+				"column": {
+					"id": "ID",
+					"title": "Title",
+					"path": "Image",
+					"option": "Extension",
+					"create_at": "Created At",
+					"actions": "Actions",
+					"watch_detail": "View Details",
+					"status": "Status"
+				}
+			},
+			"orders": {
+				"error": "System Error",
+				"error_detail_order": "Failed to load order details",
+				"more_actions": "Actions",
+				"order": "Order",
+				"delete": "Delete Order",
+				"product": "Product",
+				"payment": "Payment",
+				"management": "Order Management",
+				"export": "Export",
+				"add": "Create order",
+				"column": {
+					"id": "Order ID",
+					"status": "Status",
+					"email": "Email",
+					"full_name": "Full Name",
+					"total": "Total Amount",
+					"create_at": "Created At",
+					"actions": "Actions",
+					"watch_detail": "View Details",
+					"delete_order": "Delete Order"
+				},
+				"customer_info": {
+					"copy_mail_success": "Email copied successfully",
+					"copy_mail_failure": "Failed to copy email",
+					"customer": "Customer",
+					"edit_contact_info": "Edit Contact Info",
+					"contact_info": "Contact Info",
+					"default_address": "Default Address",
+					"marketing": "Marketing",
+					"email_subscribed": "Email Subscribed",
+					"sms_subscribed": "SMS Subscribed",
+					"title_question": "Do you want to delete this?"
+				},
+				"payment_info": {
+					"subtotal": "Subtotal",
+					"total": "Total",
+					"item": "item",
+					"discount": "Discount",
+					"shipping_fee": "Shipping fee",
+					"method": "Method"
+				}
+			},
+			"products": {
+				"price": "Price",
+				"inventory": "Inventory",
+				"transport": "Shipping",
+				"variant": "Variant",
+				"status": "Status",
+				"active": "Active",
+				"draft": "Draft",
+				"publish": "Publish",
+				"product_org": "Product Organization",
+				"error_loading_product": "Failed to load product info!",
+				"management": "Product Management",
+				"product": "Product",
+				"import": "Import",
+				"export": "Export",
+				"add_product": "Add Product",
+				"update_info_product": "Update Product Info",
+				"column": {
+					"id": "Product ID",
+					"name": "Product Name",
+					"variant_total": "Total Variants",
+					"inventory_total": "Total Inventory",
+					"create_at": "Created At",
+					"actions": "Actions",
+					"watch_detail": "View Details",
+					"status": "Status"
+				},
+				"variant_management": {
+					"add_option_note": "Add options like color, size",
+					"option_type": "Option type",
+					"color": "Color",
+					"size": "Size",
+					"option_value": "Option value",
+					"done": "Done",
+					"add_another_option": "Add another option"
+				}
+			},
+			"vertical_menu": {
+				"dashboard": "Dashboard",
+				"orders": "Orders",
+				"customers": "Customers",
+				"products": "Products",
+				"categories": "Categories",
+				"inventories": "Inventories",
+				"media": "Media",
+				"draft": "Drafts",
+				"abandoned_checkouts": "Abnandoned Checkouts",
+				"purchase_orders": "Purchase Orders",
+				"segments": "Segments",
+				"discounts": "Discounts"
+			}
+		},
+		"cart": {
+			"cart": "Cart",
+			"checkout": "Checkout",
+			"empty_cart_message": "Your cart is currently empty.",
+			"all_products": "all products",
+			"remove_all": "Remove all",
+			"quantity": "Quantity",
+			"price": "Price",
+			"remove_voucher": "Remove voucher",
+			"enter_voucher": "Enter discount code",
+			"apply_voucher": "Apply voucher",
+			"voucher_applied": "Discount code has been applied",
+			"discount": "Discount",
+			"shipping_fee": "Shipping fee",
+			"total": "Total",
+			"subTotal": "Subtotal",
+			"confirm_clear_cart": "Do you want to remove all items from the cart?",
+			"no": "No",
+			"yes": "Yes",
+			"customer_info": {
+				"title": "Mr./Ms.",
+				"select_province": "Please select a province/city",
+				"select_district": "Please select a district",
+				"select_ward": "Please select a ward",
+				"order_info": "Order Information",
+				"full_name": "Full name",
+				"male": "Mr.",
+				"female": "Ms.",
+				"secret": "Prefer not to say",
+				"enter_full_name": "Enter your full name",
+				"name_required": "Name cannot be empty",
+				"phone": "Phone number",
+				"enter_phone": "Enter your phone number",
+				"phone_required": "Phone number cannot be empty",
+				"please_enter_phone": "Please enter your phone number",
+				"email": "Email",
+				"email_note": "Order tracking will be sent via ZNS email",
+				"email_required": "Email cannot be empty",
+				"invalid_email": "Please enter a valid email",
+				"address_ex": "Address (e.g., 123 Van Phuc, Van Phuc ward)",
+				"address": "Address",
+				"address_required": "Address cannot be empty",
+				"not_found_data": "Data not found",
+				"select_ward_label": "Select Ward",
+				"note": "Add a note (e.g., Deliver during business hours)",
+				"receiver_other": "Call another person to receive the package (if any)",
+				"gender_male": "Male",
+				"gender_female": "Female",
+				"receiver_name": "Recipient's full name",
+				"receiver_phone": "Recipient's phone number",
+				"payment_cod": "Cash on Delivery",
+				"payment_momo": "MoMo Wallet",
+				"payment_zalopay": "Pay with ZaloPay",
+				"payment_support_all": "Supports all payment methods",
+				"payment_payos": "PayOs e-wallet",
+				"payment_qr": "Scan QR to pay",
+				"return_policy": "Not satisfied with our product? You can return it. Learn more",
+				"learn_more": "here"
+			}
+		}
+	},
+	"recent_activities": {
+		"title": "EXCLUSIVE FOR 363,688 KIMICLUB MEMBERS",
+		"viewed_products": "Recently Viewed Products",
+		"sub_title": "RECENT ACTIVITIES",
+		"join_now": {
+			"text": "JOIN KIMICLUB NOW"
+		}
+	},
+	"button": {
+		"cancel": "Cancel",
+		"ok": "Submit"
+	},
+	"data_table": {
+		"search": "Search",
+		"column": "Column",
+		"no_data": "No data available",
+		"row_showing": "Showing rows",
+		"page_info": "Page {{currentPage}} of {{totalPages}}"
+	}
+}

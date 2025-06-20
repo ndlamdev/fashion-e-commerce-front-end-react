@@ -8,7 +8,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { ApiResponse } from "@/domain/ApiResponse.ts";
 import { createBaseQueryWithDispatch } from "@/redux/api/baseQueryWithDispatch.ts";
-import CreateOrderResponse from "@/domain/response/createOrder.response.ts";
+import OrderDetailResponse from "@/domain/response/orderDetail.response";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL + "/payment/v1";
 
@@ -17,7 +17,7 @@ export const paymentApi = createApi({
 	baseQuery: createBaseQueryWithDispatch(BASE_URL),
 	tagTypes: ["payment"],
 	endpoints: (build) => ({
-		cancelPayment: build.mutation<ApiResponse<CreateOrderResponse>, number>({
+		cancelPayment: build.mutation<ApiResponse<OrderDetailResponse>, number>({
 			query: (orderCode) => ({
 				url: `/${orderCode}`,
 				method: "PUT",

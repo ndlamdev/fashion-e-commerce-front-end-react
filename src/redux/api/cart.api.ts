@@ -47,7 +47,6 @@ export const cartApi = createApi({
 					quantity: arg.quantity,
 				},
 			}),
-			invalidatesTags: ["Cart"],
 		}),
 		deleteCartItem: build.mutation<ApiResponse<void>, { cartItemId: number }>({
 			query: (arg) => ({

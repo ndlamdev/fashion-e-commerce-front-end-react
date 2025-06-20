@@ -6,7 +6,13 @@
  *  User: kimin
  **/
 
+import { useEffect } from "react";
+
 function OrderDetailPage() {
+ useEffect(() => {
+    document.title = "KimiFashion - Chi tiết đơn hàng";
+  }, []);
+
 	return <div></div>;
 }
 

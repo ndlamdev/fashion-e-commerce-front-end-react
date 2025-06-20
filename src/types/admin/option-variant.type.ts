@@ -11,6 +11,7 @@ type OptionVariantType = {
 	values: {
 		oldValue: string;
 		newValue: string;
+		canRemove?: boolean;
 	}[];
 	canAddNewValueOption: boolean;
 };

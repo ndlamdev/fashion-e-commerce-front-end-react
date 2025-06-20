@@ -8,11 +8,11 @@ const PieChartDonutActiveData: PieChartLabelProps[] = [
 ];
 const PieChartLabelConfig = {
 	Abandonment: {
-		label: "Abandonment",
+		label: "Chưa đặt",
 		color: "var(--chart-3)",
 	},
 	Total: {
-		label: "Total",
+		label: "Tổng",
 		color: "var(--chart-5)",
 	},
 } satisfies ChartConfig;

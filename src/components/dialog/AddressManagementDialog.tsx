@@ -7,17 +7,16 @@ import Address from "@/components/profile/tab/AddressTab.tsx";
 
 export default function AddressManagementDialog() {
 	const dispatch = useDispatch();
-	const {dialog} = useSelector((state:RootState) => state.dialog);
+	const { dialog } = useSelector((state: RootState) => state.dialog);
 
 	return (
 		<Dialog open={dialog === 'manage-addresses'} onOpenChange={() => dispatch(hiddenDialog())}>
 			<DialogContent classIcon={"bg-black text-white p-2 sm:p-5 cursor-pointer !rounded-lg sm:!rounded-full -translate-y-3 sm:-translate-y-10 translate-x-3 sm:translate-x-10 opacity-100 "}>
 				<DialogTitle />
-				<DialogDescription>
-					<ScrollArea className={'max-h-[50hw] overflow-y-auto'}>
-						<Address />
-					</ScrollArea>
-				</DialogDescription>
+				<DialogDescription> </DialogDescription>
+				<ScrollArea className={'max-h-[50dvh] overflow-y-auto px-5'}>
+					<Address />
+				</ScrollArea>
 			</DialogContent>
 		</Dialog>
 	);

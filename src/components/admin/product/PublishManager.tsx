@@ -23,11 +23,11 @@ function PublishManager(
 	return (
 		<div {...props}>
 			<div>
-				<h5 className={"text-sm font-[510] text-gray-700"}>Sales channels</h5>
+				<h5 className={"text-sm font-[510] text-gray-700"}>Kênh phân phối</h5>
 				<div className={"mt-0.5 flex items-center justify-between"}>
 					<div className={"flex items-center gap-2"}>
 						<span className={"block h-2 w-2 rounded-[2px] border-1 border-gray-500"} />
-						<span className={"text-[13px] text-gray-500"}>Online Store</span>
+						<span className={"text-[13px] text-gray-500"}>Cửa hàng trực tuyến</span>
 					</div>
 					<HealthiconsIScheduleSchoolDateTimeOutline width={20} height={20} color={"gray"} className={"cursor-pointer"} onClick={() => setOpen(true)} />
 					<div className={"hidden"}>
@@ -38,11 +38,11 @@ function PublishManager(
 				</div>
 			</div>
 			<div>
-				<h5 className={"mt-2 text-sm font-[510] text-gray-700"}>Markets</h5>
+				<h5 className={"mt-2 text-sm font-[510] text-gray-700"}>Địa điểm</h5>
 				<div className={"mt-0.5 flex items-center justify-between"}>
 					<div className={"flex items-center gap-2"}>
 						<span className={"block h-2 w-2 rounded-[2px] border-1 border-gray-500"} />
-						<span className={"text-[13px] text-gray-500"}>Vietnam</span>
+						<span className={"text-[13px] text-gray-500"}>Việt Nam</span>
 					</div>
 				</div>
 			</div>

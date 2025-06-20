@@ -17,5 +17,5 @@ type ContentJwtPayload = { refreshTokenId: string; roles: string[]; useId: numbe
 const getPayloadToken = (token: string) => jwtDecode<MyJwtPayload<ContentJwtPayload>>(token).payload;
 
 export default {
-	decodedToken: getPayloadToken,
+	getPayload: getPayloadToken,
 };

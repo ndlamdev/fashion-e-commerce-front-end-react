@@ -102,12 +102,13 @@ async function login(data: LoginRequest) {
 	return await api
 		.post<any, AxiosResponseCustom<LoginResponse>, LoginRequest>(PATH_BASE_URL + "/login", data, { withCredentials: true })
 		.then((result) => {
-			const token = result.data.data["access-token"];
+			const token = result.data.data.access_token;
 			const user = result.data.data.user;
 			appDispatch(loginSuccess({ access_token: token, user: user }));
 			LocalStorage.setValue("ACCESS_TOKEN", token);
 			LocalStorage.setObjectValue("USER", user);
 			toast.message(result.data.message);
+			return result.data;
 		})
 		.catch((error) => {
 			return showError(error);
@@ -198,10 +199,11 @@ const loginWithGoogle = async (data: LoginWithGoogleRequest) => {
 			return Promise.reject(error);
 		}
 
-		const token = data.data["access-token"];
+		const token = data.data.access_token;
 		appDispatch(loginSuccess({ access_token: token, user: data.data.user }));
 		LocalStorage.setValue("ACCESS_TOKEN", token);
 		LocalStorage.setObjectValue("USER", data.data.user);
+		return data;
 	});
 };
 
@@ -215,7 +217,7 @@ const registerWithGoogle = async (data: RegisterWithGoogleRequest) => {
 			detail: "Don't have any token",
 		} as ApiResponseError<string>);
 	}
-	data.register_token = token;
+	data.token = token;
 	return await appDispatch(authApi.endpoints.registerWithGoogle.initiate(data, { track: false })).then(({ error }) => {
 		if (error) {
 			const response = (error as any).data as ApiResponseError<string>;
@@ -237,7 +239,7 @@ const registerWithFacebook = async (data: RegisterWithFacebookRequest) => {
 			detail: "Don't have any token",
 		} as ApiResponseError<string>);
 	}
-	data.register_token = token;
+	data.token = token;
 	return await appDispatch(authApi.endpoints.registerWithFacebook.initiate(data, { track: false })).then(({ error }) => {
 		if (error) {
 			SessionStorage.deleteValue("REGISTER_TOKEN_USING_FACEBOOK");
@@ -256,10 +258,11 @@ const loginWithFacebook = async (data: AccessTokenRequest) => {
 			return Promise.reject(error);
 		}
 
-		const token = data.data["access-token"];
+		const token = data.data.access_token;
 		appDispatch(loginSuccess({ access_token: token, user: data.data.user }));
 		LocalStorage.setValue("ACCESS_TOKEN", token);
 		LocalStorage.setObjectValue("USER", data.data.user);
+		return data;
 	});
 };
 

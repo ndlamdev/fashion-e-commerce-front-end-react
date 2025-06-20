@@ -10,18 +10,20 @@ import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import { authApi } from "@/redux/api/auth.api.ts";
 import { authSlice } from "@/redux/slice/auth.slice.ts";
-import { profileApi } from "@/services/profile.service.ts";
+import { adminProfileApi, profileApi } from "@/redux/api/profile.api";
 import addressSlice from "@/redux/slice/address.slice.ts";
-import { addressCoolMateApi } from "@/redux/api/addressCoolMate.api.ts";
-import { addressApi } from "@/redux/api/address.api.ts";
+import { addressApi, adminAddressApi } from "@/redux/api/address.api.ts";
 import { cartApi } from "@/redux/api/cart.api.ts";
 import { cartSlice } from "@/redux/slice/cart.slice.ts";
-import { productApi } from "@/services/product.service.ts";
+import { adminProductApi, productApi } from "@/redux/api/product.api";
 import { dialogSlice } from "@/redux/slice/dialog.slice.ts";
 import { sheetSlice } from "@/redux/slice/sheet.slice.ts";
 import { collectionApi } from "@/services/collection.service.ts";
-import { orderApi } from "@/redux/api/order.api.ts";
+import { adminOrderApi, orderApi } from "@/redux/api/order.api.ts";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
+import { adminCollectionApi } from "@/redux/api/collection.api";
+import { adminInventoryApi } from "@/redux/api/inventory.api";
+import { adminMediaApi } from "@/redux/api/media.api";
 
 const store = configureStore({
 	reducer: {
@@ -35,24 +37,36 @@ const store = configureStore({
 		/*===========================for api======================*/
 		[authApi.reducerPath]: authApi.reducer,
 		[profileApi.reducerPath]: profileApi.reducer,
-		[addressCoolMateApi.reducerPath]: addressCoolMateApi.reducer,
 		[collectionApi.reducerPath]: collectionApi.reducer,
 		[productApi.reducerPath]: productApi.reducer,
 		[cartApi.reducerPath]: cartApi.reducer,
 		[addressApi.reducerPath]: addressApi.reducer,
 		[orderApi.reducerPath]: orderApi.reducer,
+		[adminOrderApi.reducerPath]: adminOrderApi.reducer,
+		[adminProfileApi.reducerPath]: adminProfileApi.reducer,
+		[adminAddressApi.reducerPath]: adminAddressApi.reducer,
+		[adminProductApi.reducerPath]: adminProductApi.reducer,
+		[adminCollectionApi.reducerPath]: adminCollectionApi.reducer,
+		[adminInventoryApi.reducerPath]: adminInventoryApi.reducer,
+		[adminMediaApi.reducerPath]: adminMediaApi.reducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware()
 			.concat(logger)
 			.concat(authApi.middleware)
 			.concat(profileApi.middleware)
-			.concat(addressCoolMateApi.middleware)
 			.concat(addressApi.middleware)
 			.concat(cartApi.middleware)
 			.concat(productApi.middleware)
 			.concat(collectionApi.middleware)
-			.concat(orderApi.middleware),
+			.concat(orderApi.middleware)
+			.concat(adminOrderApi.middleware)
+			.concat(adminProfileApi.middleware)
+			.concat(adminAddressApi.middleware)
+			.concat(adminProductApi.middleware)
+			.concat(adminCollectionApi.middleware)
+			.concat(adminInventoryApi.middleware)
+			.concat(adminMediaApi.middleware),
 });
 
 // Get the type of our slice variable

@@ -15,19 +15,19 @@ function OrganizationManager(props: DetailedHTMLProps<HTMLAttributes<HTMLDivElem
 	return (
 		<div {...props}>
 			<label className={"fw-semibold text-sm text-gray-700"}>
-				<span>Type</span>
+				<span>Loại</span>
 				<Input type='text' className={`mt-1 text-sm ${createProductPageContext.borderStyle}`} />
 			</label>
 			<label className={"fw-semibold text-sm text-gray-700"}>
-				<span>Vendor</span>
+				<span>Nhà cung cấp</span>
 				<Input type='text' className={`mt-1 text-sm ${createProductPageContext.borderStyle}`} />
 			</label>
 			<label className={"fw-semibold text-sm text-gray-700"}>
-				<span>Collections</span>
+				<span>Bộ sưu tập</span>
 				<Input type='text' className={`mt-1 text-sm ${createProductPageContext.borderStyle}`} />
 			</label>
 			<label className={"fw-semibold text-sm text-gray-700"}>
-				<span>Tags</span>
+				<span>Thẻ</span>
 				<Input type='text' className={`mt-1 text-sm ${createProductPageContext.borderStyle}`} />
 			</label>
 		</div>

@@ -12,7 +12,7 @@ type OrderStatusResponse = {
   status: OrderStatusEnum;
   note: string;
   lock: string;
-  updateAt: number[];
+  update_at: number[];
 }
 
 export default OrderStatusResponse;
